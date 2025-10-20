@@ -1,0 +1,421 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, MapPin, Users, DollarSign, BookOpen, Filter, Grid2x2 as Grid, List } from 'lucide-react';
+import './universities-page.css';
+
+interface University {
+  id: string;
+  name: string;
+  englishName: string;
+  location: string;
+  tuition: number;
+  acceptanceRate: number;
+  satRange: string;
+  actRange: string;
+  image: string;
+  type: string;
+  size: string;
+}
+
+// Mock university data
+const universities: University[] = [
+  {
+    id: '1',
+    name: '하버드 대학교',
+    englishName: 'Harvard University',
+    location: '메사추세츠 케임브리지',
+    tuition: 54269,
+    acceptanceRate: 5.4,
+    satRange: '1460-1570',
+    actRange: '33-35',
+    image: 'https://images.pexels.com/photos/207684/pexels-photo-207684.jpeg?auto=compress&cs=tinysrgb&w=400',
+    type: '사립',
+    size: '중간 (5,000-15,000)',
+  },
+  {
+    id: '2',
+    name: '스탠퍼드 대학교',
+    englishName: 'Stanford University',
+    location: '캘리포니아 스탠퍼드',
+    tuition: 56169,
+    acceptanceRate: 4.8,
+    satRange: '1440-1570',
+    actRange: '32-35',
+    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
+    type: '사립',
+    size: '중간 (5,000-15,000)',
+  },
+  {
+    id: '3',
+    name: '메사추세츠 공과대학교',
+    englishName: 'Massachusetts Institute of Technology (MIT)',
+    location: '메사추세츠 케임브리지',
+    tuition: 53790,
+    acceptanceRate: 7.3,
+    satRange: '1470-1570',
+    actRange: '33-35',
+    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
+    type: '사립',
+    size: '작음 (<5,000)',
+  },
+  {
+    id: '4',
+    name: '캘리포니아 대학교 버클리',
+    englishName: 'University of California, Berkeley',
+    location: '캘리포니아 버클리',
+    tuition: 44007,
+    acceptanceRate: 17.5,
+    satRange: '1330-1530',
+    actRange: '30-35',
+    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
+    type: '공립',
+    size: '큼 (15,000+)',
+  },
+  {
+    id: '5',
+    name: '뉴욕 대학교',
+    englishName: 'New York University (NYU)',
+    location: '뉴욕 뉴욕',
+    tuition: 53308,
+    acceptanceRate: 21.1,
+    satRange: '1350-1530',
+    actRange: '30-34',
+    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
+    type: '사립',
+    size: '큼 (15,000+)',
+  },
+  {
+    id: '6',
+    name: '펜실베이니아 주립대학교',
+    englishName: 'Pennsylvania State University',
+    location: '펜실베이니아 유니버시티 파크',
+    tuition: 35514,
+    acceptanceRate: 76.0,
+    satRange: '1160-1360',
+    actRange: '25-30',
+    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
+    type: '공립',
+    size: '큼 (15,000+)',
+  },
+];
+
+const UniversitiesPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [filters, setFilters] = useState({
+    types: [] as string[],
+    sortBy: '',
+    tuitionRange: [0, 60000] as [number, number],
+    satRange: [800, 1600] as [number, number],
+  });
+
+  const filteredUniversities = universities.filter(uni => {
+    const matchesSearch = uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         uni.location.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesType = filters.types.length === 0 || filters.types.includes(uni.type);
+    const matchesTuition = uni.tuition >= filters.tuitionRange[0] && uni.tuition <= filters.tuitionRange[1];
+    
+    // Parse SAT range (e.g., "1460-1570" -> [1460, 1570])
+    const satParts = uni.satRange.split('-').map(s => parseInt(s.trim()));
+    const uniSatMin = satParts[0] || 800;
+    const uniSatMax = satParts[1] || 1600;
+    const matchesSat = uniSatMax >= filters.satRange[0] && uniSatMin <= filters.satRange[1];
+
+    return matchesSearch && matchesType && matchesTuition && matchesSat;
+  });
+
+  // Sort filtered universities
+  const sortedUniversities = [...filteredUniversities].sort((a, b) => {
+    switch (filters.sortBy) {
+      case 'name-asc':
+        return a.name.localeCompare(b.name);
+      case 'name-desc':
+        return b.name.localeCompare(a.name);
+      case 'sat-asc':
+        const aSatMin = parseInt(a.satRange.split('-')[0]);
+        const bSatMin = parseInt(b.satRange.split('-')[0]);
+        return aSatMin - bSatMin;
+      case 'sat-desc':
+        const aSatMax = parseInt(a.satRange.split('-')[1]);
+        const bSatMax = parseInt(b.satRange.split('-')[1]);
+        return bSatMax - aSatMax;
+      default:
+        return 0;
+    }
+  });
+
+  const handleTypeToggle = (type: string) => {
+    setFilters(prev => ({
+      ...prev,
+      types: prev.types.includes(type)
+        ? prev.types.filter(t => t !== type)
+        : [...prev.types, type]
+    }));
+  };
+
+  const handleSortChange = (sortBy: string) => {
+    setFilters(prev => ({ ...prev, sortBy }));
+  };
+
+  const handleTuitionRangeChange = (range: [number, number]) => {
+    setFilters(prev => ({ ...prev, tuitionRange: range }));
+  };
+
+  const handleSatRangeChange = (range: [number, number]) => {
+    setFilters(prev => ({ ...prev, satRange: range }));
+  };
+
+  return (
+    <div className="universities-page">
+      <div className="universities-container">
+        <div className="universities-header">
+          <h1 className="universities-title">
+            대학 찾기
+          </h1>
+          <p className="universities-description">
+            미국 대학을 둘러보고 나에게 맞는 학교를 찾아보세요.
+          </p>
+        </div>
+
+        <div className="universities-controls">
+          <div className="universities-search-row">
+            <div className="universities-search-wrapper">
+              <Search className="universities-search-icon h-5 w-5" />
+              <input
+                type="text"
+                placeholder="이름 또는 지역으로 검색"
+                className="universities-search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
+            <div className="universities-view-toggle">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`universities-view-button ${viewMode === 'grid' ? 'active' : ''}`}
+              >
+                <Grid className="h-5 w-5" />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`universities-view-button ${viewMode === 'list' ? 'active' : ''}`}
+              >
+                <List className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+
+          <div className="universities-filters">
+            <div className="universities-filters-header">
+              <Filter className="h-5 w-5" style={{color: '#082F49'}} />
+              <span className="universities-filters-title">필터</span>
+            </div>
+
+            <div className="universities-filters-content">
+              <div className="universities-filter-group">
+                <label className="universities-filter-label">소유 형태</label>
+                <div className="universities-filter-buttons">
+                  <button
+                    onClick={() => handleTypeToggle('Private')}
+                    className={`universities-filter-button ${filters.types.includes('Private') ? 'active' : ''}`}
+                  >
+                    사립
+                  </button>
+                  <button
+                    onClick={() => handleTypeToggle('Public')}
+                    className={`universities-filter-button ${filters.types.includes('Public') ? 'active' : ''}`}
+                  >
+                    공립
+                  </button>
+                </div>
+              </div>
+
+              <div className="universities-filter-group">
+                <label className="universities-filter-label">정렬</label>
+                <select
+                  value={filters.sortBy}
+                  onChange={(e) => handleSortChange(e.target.value)}
+                  className="universities-filter-select"
+                >
+                  <option value="">기본</option>
+                  <option value="name-asc">알파벳순 (A–Z)</option>
+                  <option value="name-desc">알파벳순 (Z–A)</option>
+                  <option value="sat-asc">SAT 범위순 (오름차순)</option>
+                  <option value="sat-desc">SAT 범위순 (내림차순)</option>
+                </select>
+              </div>
+
+              <div className="universities-filter-group">
+                <label className="universities-filter-label">
+                  학비: ${filters.tuitionRange[0].toLocaleString()} - ${filters.tuitionRange[1].toLocaleString()}
+                </label>
+                  <div className="px-2">
+                    <input
+                      type="range"
+                      min="0"
+                      max="60000"
+                      step="1000"
+                      value={filters.tuitionRange[0]}
+                      onChange={(e) => handleTuitionRangeChange([parseInt(e.target.value), filters.tuitionRange[1]])}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                    />
+                    <input
+                      type="range"
+                      min="0"
+                      max="60000"
+                      step="1000"
+                      value={filters.tuitionRange[1]}
+                      onChange={(e) => handleTuitionRangeChange([filters.tuitionRange[0], parseInt(e.target.value)])}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider mt-2"
+                    />
+                  </div>
+                </div>
+
+              <div className="universities-filter-group">
+                <label className="universities-filter-label">
+                  SAT 범위: {filters.satRange[0]} - {filters.satRange[1]}
+                </label>
+                  <div className="px-2">
+                    <input
+                      type="range"
+                      min="800"
+                      max="1600"
+                      step="10"
+                      value={filters.satRange[0]}
+                      onChange={(e) => handleSatRangeChange([parseInt(e.target.value), filters.satRange[1]])}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                    />
+                    <input
+                      type="range"
+                      min="800"
+                      max="1600"
+                      step="10"
+                      value={filters.satRange[1]}
+                      onChange={(e) => handleSatRangeChange([filters.satRange[0], parseInt(e.target.value)])}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider mt-2"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={{marginBottom: '24px'}}>
+            <p className="universities-description">
+              전체 {universities.length}개 학교 중 {sortedUniversities.length}개 학교
+            </p>
+          </div>
+
+        <div className={viewMode === 'grid' ? 'universities-grid' : 'universities-list'}>
+          {sortedUniversities.map(university => (
+            viewMode === 'grid' ? (
+              <Link
+                key={university.id}
+                to={`/university/${university.id}`}
+                className="university-card"
+              >
+                <img
+                  src={university.image}
+                  alt={university.name}
+                  className="university-card-image"
+                />
+                <div className="university-card-content">
+                  <h3 className="university-card-title">{university.name}</h3>
+                  <p className="university-card-subtitle">{university.englishName}</p>
+
+                  <div className="university-card-location">
+                    <MapPin className="h-4 w-4" />
+                    <span>{university.location} • {university.type}</span>
+                  </div>
+
+                  <div className="university-card-stats">
+                    <div className="university-card-stat">
+                      <Users className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">합격률 {university.acceptanceRate}%</span>
+                    </div>
+                    <div className="university-card-stat">
+                      <DollarSign className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">${university.tuition.toLocaleString()}</span>
+                    </div>
+                    <div className="university-card-stat">
+                      <BookOpen className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">SAT: {university.satRange}</span>
+                    </div>
+                    <div className="university-card-stat">
+                      <BookOpen className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">ACT: {university.actRange}</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <Link
+                key={university.id}
+                to={`/university/${university.id}`}
+                className="university-list-item"
+              >
+                <img
+                  src={university.image}
+                  alt={university.name}
+                  className="university-list-image"
+                />
+                <div className="university-list-content">
+                  <div className="university-list-header">
+                    <h3 className="university-list-title">{university.name}</h3>
+                    <p className="university-list-subtitle">{university.englishName}</p>
+                    <div className="university-card-location" style={{marginTop: '8px'}}>
+                      <MapPin className="h-4 w-4" />
+                      <span>{university.location} • {university.type}</span>
+                    </div>
+                  </div>
+                  <div className="university-list-stats">
+                    <div className="university-card-stat">
+                      <Users className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">합격률 {university.acceptanceRate}%</span>
+                    </div>
+                    <div className="university-card-stat">
+                      <DollarSign className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">${university.tuition.toLocaleString()}</span>
+                    </div>
+                    <div className="university-card-stat">
+                      <BookOpen className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">SAT: {university.satRange}</span>
+                    </div>
+                    <div className="university-card-stat">
+                      <BookOpen className="university-card-stat-icon h-4 w-4" />
+                      <span className="university-card-stat-text">ACT: {university.actRange}</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            )
+          ))}
+        </div>
+
+        {sortedUniversities.length === 0 && (
+          <div className="universities-empty">
+            <BookOpen className="universities-empty-icon" />
+            <h3 className="universities-empty-title">해당되는 학교가 없습니다</h3>
+            <p className="universities-empty-text">필터를 해제하고 다시 시도해보세요.</p>
+            <button
+              onClick={() => setFilters({
+                types: [],
+                sortBy: '',
+                tuitionRange: [0, 60000],
+                satRange: [800, 1600]
+              })}
+              className="universities-filter-button active" style={{marginTop: '16px'}}
+            >
+              필터 해제
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default UniversitiesPage;

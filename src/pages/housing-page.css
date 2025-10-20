@@ -1,0 +1,359 @@
+/* Housing Page - Following Homepage Design System */
+
+.housing-page {
+  background: #FCF8F0;
+  min-height: 100vh;
+}
+
+/* Search Section */
+.housing-search-section {
+  padding: 80px 32px;
+  background: #FCF8F0;
+}
+
+.housing-search-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.housing-search-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 43px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  margin-bottom: 16px;
+}
+
+.housing-search-description {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  opacity: 0.8;
+  margin-bottom: 32px;
+}
+
+.housing-search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 20px;
+  background: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.housing-search-input-wrapper:focus-within {
+  border-color: #FACC15;
+  background: #FFFBEB;
+}
+
+.housing-search-icon {
+  width: 20px;
+  height: 20px;
+  color: rgba(8, 47, 73, 0.4);
+  flex-shrink: 0;
+}
+
+.housing-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #082F49;
+  outline: none;
+}
+
+.housing-search-input::placeholder {
+  color: rgba(8, 47, 73, 0.4);
+}
+
+/* Listings Section */
+.housing-listings-section {
+  padding: 80px 32px;
+  background: #FCF8F0;
+}
+
+.housing-listings-container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.housing-section-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  margin-bottom: 32px;
+}
+
+.housing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Housing Card */
+.housing-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px rgba(8, 47, 73, 0.08);
+  transition: all 0.3s ease;
+}
+
+.housing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 8px 24px rgba(8, 47, 73, 0.12);
+}
+
+.housing-card-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.housing-card-content {
+  padding: 24px;
+}
+
+.housing-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.housing-card-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  flex: 1;
+}
+
+.housing-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+.housing-badge.available {
+  background: #FFFBEB;
+  color: #F59E0B;
+  border: 1px solid #FACC15;
+}
+
+.housing-card-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.7;
+}
+
+.housing-card-location-separator {
+  color: rgba(8, 47, 73, 0.3);
+}
+
+.housing-card-price-container {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.housing-card-price {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+.housing-card-price-period {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.6;
+}
+
+.housing-card-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.housing-amenity-tag {
+  padding: 8px 12px;
+  background: #FFFBEB;
+  border-radius: 8px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #082F49;
+}
+
+.housing-card-button {
+  width: 100%;
+  padding: 14px 20px;
+  background: #082F49;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.housing-card-button:hover {
+  background: #0a415f;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 12px rgba(8, 47, 73, 0.2);
+}
+
+/* Features Section */
+.housing-features-section {
+  padding: 80px 32px;
+  background: #FFFFFF;
+}
+
+.housing-features-container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.housing-features-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 43px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.housing-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 48px;
+}
+
+.housing-feature-item {
+  text-align: center;
+}
+
+.housing-feature-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.housing-feature-icon-wrapper.location {
+  background: #FFFBEB;
+}
+
+.housing-feature-icon-wrapper.search {
+  background: #DCFCE7;
+}
+
+.housing-feature-icon-wrapper.expert {
+  background: #FEF3C7;
+}
+
+.housing-feature-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  margin-bottom: 16px;
+}
+
+.housing-feature-description {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.7;
+}
+
+/* Hero Image Section */
+.housing-hero-image {
+  width: 100%;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.housing-hero-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(8, 47, 73, 0.1) 0%, rgba(8, 47, 73, 0.3) 100%);
+}

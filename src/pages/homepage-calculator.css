@@ -1,0 +1,147 @@
+.homepage-calculator-result {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px;
+  gap: 24px;
+  flex: 1;
+  border: 3px solid #FFFFFF;
+  border-radius: 16px;
+}
+
+.homepage-calculator-result-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 16px;
+  width: 100%;
+  flex: 1;
+  align-self: stretch;
+}
+
+.homepage-calculator-score-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 4px;
+  width: 100%;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+}
+
+.homepage-calculator-score-label {
+  width: 81px;
+  height: 21px;
+  font-family: 'Wanted Sans Variable';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.homepage-calculator-score-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0px;
+  gap: 8px;
+  min-width: 198px;
+  height: 60px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.homepage-calculator-score-value {
+  height: 60px;
+  font-family: 'Wanted Sans Variable';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 60px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: #FACC15;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  white-space: nowrap;
+}
+
+.homepage-calculator-score-total {
+  width: 115px;
+  height: 43px;
+  font-family: 'Wanted Sans Variable';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 43px;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.homepage-calculator-description {
+  width: 100%;
+  font-family: 'Wanted Sans Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+}
+
+.homepage-calculator-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 10px;
+  width: 100%;
+  height: 48px;
+  background: #FACC15;
+  border-radius: 12px;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.homepage-calculator-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.homepage-calculator-button-text {
+  width: 162px;
+  height: 16px;
+  font-family: 'Wanted Sans Variable';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}

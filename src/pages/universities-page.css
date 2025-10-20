@@ -1,0 +1,466 @@
+/* Universities Page - Following Homepage Design System */
+
+.universities-page {
+  background: #FCF8F0;
+  min-height: 100vh;
+  padding: 60px 24px;
+}
+
+.universities-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.universities-header {
+  margin-bottom: 40px;
+}
+
+.universities-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 57px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  margin-bottom: 12px;
+}
+
+.universities-description {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  opacity: 0.8;
+}
+
+/* Search and Controls */
+.universities-controls {
+  margin-bottom: 32px;
+}
+
+.universities-search-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.universities-search-wrapper {
+  flex: 1;
+  min-width: 280px;
+  position: relative;
+}
+
+.universities-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(8, 47, 73, 0.4);
+}
+
+.universities-search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #082F49;
+  transition: all 0.2s ease;
+}
+
+.universities-search-input::placeholder {
+  color: rgba(8, 47, 73, 0.4);
+}
+
+.universities-search-input:focus {
+  outline: none;
+  border-color: #FACC15;
+  background: #FFFBEB;
+}
+
+/* View Toggle */
+.universities-view-toggle {
+  display: flex;
+  background: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.universities-view-button {
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.universities-view-button.active {
+  background: #082F49;
+  color: #FFFFFF;
+}
+
+.universities-view-button:hover:not(.active) {
+  background: #F3F4F6;
+  color: #082F49;
+}
+
+/* Filters */
+.universities-filters {
+  background: #FFFFFF;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0px 2px 8px rgba(8, 47, 73, 0.08);
+  margin-bottom: 32px;
+}
+
+.universities-filters-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.universities-filters-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.universities-filters-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.universities-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.universities-filter-label {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.universities-filter-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.universities-filter-button {
+  padding: 10px 16px;
+  background: #FAFAFA;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #082F49;
+}
+
+.universities-filter-button.active {
+  background: #FACC15;
+  border-color: #FACC15;
+  color: #082F49;
+}
+
+.universities-filter-button:hover:not(.active) {
+  border-color: #FACC15;
+  background: #FFFBEB;
+}
+
+.universities-filter-select {
+  padding: 12px 14px;
+  background: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #082F49;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.universities-filter-select:focus {
+  outline: none;
+  border-color: #FACC15;
+  background: #FFFBEB;
+}
+
+/* Grid View */
+.universities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.university-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px rgba(8, 47, 73, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.university-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 8px 24px rgba(8, 47, 73, 0.12);
+}
+
+.university-card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.university-card-content {
+  padding: 20px;
+}
+
+.university-card-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  margin-bottom: 4px;
+}
+
+.university-card-subtitle {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.6;
+  margin-bottom: 12px;
+}
+
+.university-card-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.7;
+}
+
+.university-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.university-card-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.university-card-stat-icon {
+  color: #FACC15;
+}
+
+.university-card-stat-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+/* List View */
+.universities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.university-list-item {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0px 2px 8px rgba(8, 47, 73, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.university-list-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 8px 24px rgba(8, 47, 73, 0.12);
+}
+
+.university-list-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.university-list-content {
+  flex: 1;
+}
+
+.university-list-header {
+  margin-bottom: 12px;
+}
+
+.university-list-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  margin-bottom: 4px;
+}
+
+.university-list-subtitle {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.6;
+}
+
+.university-list-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* Empty State */
+.universities-empty {
+  text-align: center;
+  padding: 80px 24px;
+}
+
+.universities-empty-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  color: rgba(8, 47, 73, 0.2);
+}
+
+.universities-empty-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  margin-bottom: 8px;
+}
+
+.universities-empty-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .universities-page {
+    padding: 40px 16px;
+  }
+
+  .universities-title {
+    font-size: 36px;
+    line-height: 43px;
+  }
+
+  .universities-description {
+    font-size: 16px;
+  }
+
+  .universities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .university-list-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .university-list-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .universities-filters-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .universities-search-row {
+    flex-direction: column;
+  }
+
+  .universities-view-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+}

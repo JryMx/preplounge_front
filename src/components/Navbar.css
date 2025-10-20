@@ -1,0 +1,304 @@
+/* Navbar Styles - Matching Homepage Design System */
+
+.navbar-container {
+  background: #FCF8F0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+/* Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-logo img {
+  height: 24px;
+}
+
+/* Desktop Navigation */
+.navbar-desktop-nav {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .navbar-desktop-nav {
+    display: flex;
+  }
+}
+
+.navbar-menu-item {
+  position: relative;
+}
+
+.navbar-menu-button,
+.navbar-menu-link {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  transition: color 0.3s ease;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.navbar-menu-button:hover,
+.navbar-menu-link:hover {
+  color: rgba(8, 47, 73, 0.6);
+}
+
+/* Dropdown Menu */
+.navbar-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  min-width: 192px;
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+}
+
+.navbar-dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.navbar-dropdown-item:hover {
+  background: #F5F5F4;
+}
+
+/* Right Side Actions */
+.navbar-actions {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .navbar-actions {
+    display: flex;
+  }
+}
+
+.navbar-language {
+  display: flex;
+  align-items: center;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  gap: 4px;
+}
+
+.navbar-language svg {
+  color: #082F49;
+}
+
+.navbar-auth-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  background: #082F49;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  text-decoration: none;
+}
+
+.navbar-auth-button:hover {
+  background: #0a3b5e;
+}
+
+.navbar-auth-button-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+/* Mobile Menu Button */
+.navbar-mobile-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  color: #082F49;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-mobile-button:hover {
+  opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+  .navbar-mobile-button {
+    display: none;
+  }
+}
+
+/* Mobile Navigation */
+.navbar-mobile-nav {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .navbar-mobile-nav {
+    display: none;
+  }
+}
+
+.navbar-mobile-content {
+  padding: 0.5rem;
+  background: #FFFFFF;
+  border-top: 1px solid #E7E5E4;
+}
+
+.navbar-mobile-menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navbar-mobile-menu-button:hover {
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.navbar-mobile-submenu {
+  padding-left: 1.5rem;
+}
+
+.navbar-mobile-link {
+  display: block;
+  padding: 12px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-mobile-link:hover {
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.navbar-mobile-submenu-link {
+  display: block;
+  padding: 10px 12px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar-mobile-submenu-link:hover {
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.navbar-mobile-divider {
+  border-top: 1px solid #E7E5E4;
+  padding-top: 1rem;
+}
+
+.navbar-mobile-auth-button {
+  display: block;
+  margin: 0.5rem 0.75rem;
+  padding: 12px;
+  text-align: center;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  background: #082F49;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.navbar-mobile-auth-button:hover {
+  background: #0a3b5e;
+}
+
+.chevron-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}

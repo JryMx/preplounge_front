@@ -1,0 +1,802 @@
+/* Consulting Page Styles - Matching Homepage Design System */
+
+/* Main Container */
+.consulting-page-container {
+  min-height: 100vh;
+  background: #FCF8F0;
+  padding: 60px 24px;
+}
+
+.consulting-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.consulting-header {
+  margin-bottom: 8px;
+}
+
+.consulting-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 57px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  margin-bottom: 12px;
+}
+
+.consulting-subtitle {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  opacity: 0.8;
+}
+
+/* Notice Banner */
+.consulting-notice-banner {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.consulting-notice-banner:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.consulting-notice-image {
+  width: 33.33%;
+  height: 280px;
+  object-fit: cover;
+}
+
+.consulting-notice-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 40px 40px 40px;
+  gap: 32px;
+  flex: 1;
+  min-height: 280px;
+}
+
+.consulting-notice-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: #FFFBEB;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.consulting-notice-badge-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.consulting-notice-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  margin-top: 16px;
+}
+
+.consulting-notice-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 10px;
+  background: #082F49;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: fit-content;
+}
+
+.consulting-notice-button:hover {
+  background: #0a3b5e;
+}
+
+.consulting-notice-button-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+/* Search Section */
+.consulting-search-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 0;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  border-radius: 16px;
+}
+
+.consulting-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.consulting-search-icon {
+  position: absolute;
+  left: 12px;
+  width: 20px;
+  height: 20px;
+  color: rgba(8, 47, 73, 0.4);
+}
+
+.consulting-search-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 14px 12px 14px 44px;
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  border-radius: 8px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #082F49;
+  transition: border-color 0.3s ease;
+}
+
+.consulting-search-input::placeholder {
+  color: rgba(8, 47, 73, 0.4);
+}
+
+.consulting-search-input:focus {
+  outline: none;
+  border-color: #082F49;
+}
+
+/* Tags Section */
+.consulting-tags-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 16px;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  border-radius: 16px;
+}
+
+.consulting-tags-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.consulting-tags-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+.consulting-tags-clear {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #0284C7;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.consulting-tags-clear:hover {
+  opacity: 0.8;
+}
+
+.consulting-tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.consulting-tag {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 6px;
+  background: #F5F5F4;
+  border: 1px solid #E7E5E4;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.consulting-tag:hover {
+  background: #E7E5E4;
+}
+
+.consulting-tag.active {
+  background: #082F49;
+  border-color: #082F49;
+}
+
+.consulting-tag-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.consulting-tag.active .consulting-tag-text {
+  color: #FFFFFF;
+}
+
+.consulting-selected-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid #E7E5E4;
+}
+
+.consulting-selected-tags-label {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+.consulting-selected-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.consulting-selected-tag {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  gap: 6px;
+  background: #FFFBEB;
+  border-radius: 9999px;
+}
+
+.consulting-selected-tag-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.consulting-selected-tag-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #082F49;
+  font-size: 16px;
+  line-height: 1;
+  transition: opacity 0.3s ease;
+}
+
+.consulting-selected-tag-remove:hover {
+  opacity: 0.7;
+}
+
+/* Selection Alert */
+.consulting-selection-alert {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 16px;
+  width: 100%;
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  border-radius: 12px;
+}
+
+.consulting-selection-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.consulting-selection-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #92400E;
+}
+
+.consulting-selection-description {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #78350F;
+}
+
+.consulting-compare-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  background: #082F49;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  white-space: nowrap;
+}
+
+.consulting-compare-button:hover {
+  background: #0a3b5e;
+}
+
+.consulting-compare-button-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+/* Results Info */
+.consulting-results-info {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+/* Program List */
+.consulting-programs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Program Card */
+.consulting-program-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 24px;
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.consulting-program-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.consulting-program-card.selected {
+  border: 2px solid #0284C7;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+}
+
+.consulting-program-image {
+  width: 200px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.consulting-program-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.consulting-program-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.consulting-program-name {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+.consulting-program-location {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.consulting-program-location-icon {
+  width: 16px;
+  height: 16px;
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.consulting-program-location-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.consulting-program-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.consulting-program-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.consulting-program-stat-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.consulting-program-stat-icon.rating {
+  color: #FACC15;
+}
+
+.consulting-program-stat-icon.users {
+  color: #0284C7;
+}
+
+.consulting-program-stat-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+.consulting-program-success-rate {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #16A34A;
+}
+
+.consulting-program-description {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+.consulting-program-specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.consulting-specialty-tag {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: #FFFBEB;
+  border-radius: 12px;
+}
+
+.consulting-specialty-tag-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.consulting-program-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid #E7E5E4;
+  gap: 16px;
+}
+
+.consulting-program-contact {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.consulting-program-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.consulting-program-contact-icon {
+  width: 16px;
+  height: 16px;
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.consulting-program-contact-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: rgba(8, 47, 73, 0.6);
+}
+
+.consulting-program-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.consulting-program-select-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  background: #F5F5F4;
+  border: 1px solid #E7E5E4;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.consulting-program-select-button:hover {
+  background: #E7E5E4;
+}
+
+.consulting-program-select-button.selected {
+  background: #0284C7;
+  border-color: #0284C7;
+}
+
+.consulting-program-select-button-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.consulting-program-select-button.selected .consulting-program-select-button-text {
+  color: #FFFFFF;
+}
+
+.consulting-program-contact-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  background: #082F49;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.consulting-program-contact-button:hover {
+  background: #0a3b5e;
+}
+
+.consulting-program-contact-button-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+/* Empty State */
+.consulting-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+}
+
+.consulting-empty-icon {
+  width: 48px;
+  height: 48px;
+  color: rgba(8, 47, 73, 0.4);
+}
+
+.consulting-empty-message {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: rgba(8, 47, 73, 0.6);
+  text-align: center;
+}
+
+.consulting-empty-button {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #0284C7;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.consulting-empty-button:hover {
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .consulting-notice-banner {
+    flex-direction: column;
+  }
+
+  .consulting-notice-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .consulting-program-card {
+    flex-direction: column;
+  }
+
+  .consulting-program-image {
+    width: 100%;
+    height: 180px;
+  }
+
+  .consulting-selection-alert {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .consulting-compare-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .consulting-page-container {
+    padding: 60px 20px;
+  }
+
+  .consulting-title {
+    font-size: 36px;
+    line-height: 43px;
+  }
+
+  .consulting-subtitle {
+    font-size: 16px;
+  }
+
+  .consulting-notice-title {
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  .consulting-program-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .consulting-program-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .consulting-program-select-button,
+  .consulting-program-contact-button {
+    width: 100%;
+  }
+}
