@@ -83,11 +83,11 @@ const HomePage: React.FC = () => {
           <div className="profile-calculator-header">
             <div className="profile-calculator-title-group">
               <h2 className="profile-calculator-title">
-                합격 가능성 미리보기
+                {t('home.calculator.title')}
               </h2>
             </div>
             <p className="profile-calculator-subtitle">
-              성적 정보를 입력하고 프로필 점수를 확인해 보세요.
+              {t('home.calculator.subtitle')}
             </p>
           </div>
 
@@ -96,7 +96,7 @@ const HomePage: React.FC = () => {
             <div className="profile-calculator-form">
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
-                  GPA (4.0점 만점)
+                  {t('home.calculator.gpa')}
                 </label>
                 <input
                   type="number"
@@ -107,12 +107,13 @@ const HomePage: React.FC = () => {
                   onChange={(e) => setGpa(e.target.value)}
                   className="profile-calculator-input"
                   placeholder="3.8"
+                  data-testid="input-gpa"
                 />
               </div>
 
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
-                  SAT EBRW (800점 만점)
+                  {t('home.calculator.sat.ebrw')}
                 </label>
                 <input
                   type="number"
@@ -122,12 +123,13 @@ const HomePage: React.FC = () => {
                   onChange={(e) => setSatMath(e.target.value)}
                   className="profile-calculator-input"
                   placeholder="720"
+                  data-testid="input-sat-ebrw"
                 />
               </div>
 
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
-                  SAT Math (800점 만점)
+                  {t('home.calculator.sat.math')}
                 </label>
                 <input
                   type="number"
@@ -137,6 +139,7 @@ const HomePage: React.FC = () => {
                   onChange={(e) => setSatEBRW(e.target.value)}
                   className="profile-calculator-input"
                   placeholder="730"
+                  data-testid="input-sat-math"
                 />
               </div>
             </div>
@@ -145,17 +148,19 @@ const HomePage: React.FC = () => {
             <div className="homepage-calculator-result">
               <div className="homepage-calculator-result-content">
                 <div className="homepage-calculator-score-group">
-                  <span className="homepage-calculator-score-label">프로필 점수</span>
+                  <span className="homepage-calculator-score-label">{t('home.calculator.score')}</span>
                   <div className="homepage-calculator-score-display">
                     <span className="homepage-calculator-score-value">
                       {(gpa && satEBRW && satMath) ? calculateSimpleScore() : '--'}
                     </span>
-                    <span className="homepage-calculator-score-total">/ 100점</span>
+                    <span className="homepage-calculator-score-total">{t('home.calculator.score.total')}</span>
                   </div>
                 </div>
 
                 <p className="homepage-calculator-description">
-                 GPA와 SAT 점수를 기반으로 한 간단한 계산입니다.<br></br>과외활동, 에세이, 개인화된 대학 추천을 포함한 종합적인<br></br>분석을 위해서는 전체 프로필을 완성해주세요.
+                  {t('home.calculator.description').split('\n').map((line, i) => (
+                    <span key={i}>{line}{i < 2 && <br />}</span>
+                  ))}
                 </p>
               </div>
 
@@ -163,15 +168,17 @@ const HomePage: React.FC = () => {
                 <Link
                   to="/student-profile"
                   className="homepage-calculator-button"
+                  data-testid="link-detailed-analysis"
                 >
-                  <span className="homepage-calculator-button-text">합격 가능성 상세 분석하기</span>
+                  <span className="homepage-calculator-button-text">{t('home.calculator.button')}</span>
                 </Link>
               ) : (
                 <button
                   disabled
                   className="homepage-calculator-button"
+                  data-testid="button-detailed-analysis-disabled"
                 >
-                  <span className="homepage-calculator-button-text">합격 가능성 상세 분석하기</span>
+                  <span className="homepage-calculator-button-text">{t('home.calculator.button')}</span>
                 </button>
               )}
             </div>
@@ -184,10 +191,10 @@ const HomePage: React.FC = () => {
         <div className="features-container">
           <div className="features-header">
             <h2 className="features-title">
-              핵심 서비스
+              {t('home.features.title')}
             </h2>
             <p className="features-subtitle">
-              프렙라운지는 국제학교 학생들의 성공적인 대입을 위한 다양한 서비스를 제공합니다.
+              {t('home.features.subtitle')}
             </p>
           </div>
 
@@ -195,51 +202,63 @@ const HomePage: React.FC = () => {
             <div className="feature-card">
               <div className="feature-card-content">
                 <div className="feature-title-row">
-                  <h3 className="feature-card-title">학교 정보<br></br>모아보기</h3>
+                  <h3 className="feature-card-title">
+                    {t('home.features.schools.title').split('\n').map((line, i) => (
+                      <span key={i}>{line}{i === 0 && <br />}</span>
+                    ))}
+                  </h3>
                   <div className="feature-icon-wrapper blue">
                     <Search className="feature-icon" />
                   </div>
                 </div>
                 <p className="feature-description">
-                  입학에 필요한 서류와 지원 일정 등, 미국 1,200여 개 대학의 입학 정보를 한눈에 확인하세요.
+                  {t('home.features.schools.description')}
                 </p>
               </div>
-              <Link to="/universities" className="feature-link blue">
-                바로가기 →
+              <Link to="/universities" className="feature-link blue" data-testid="link-schools-feature">
+                {t('home.features.link')}
               </Link>
             </div>
 
             <div className="feature-card">
               <div className="feature-card-content">
                 <div className="feature-title-row">
-                  <h3 className="feature-card-title">개인 맞춤<br></br>프로필 분석</h3>
+                  <h3 className="feature-card-title">
+                    {t('home.features.profile.title').split('\n').map((line, i) => (
+                      <span key={i}>{line}{i === 0 && <br />}</span>
+                    ))}
+                  </h3>
                   <div className="feature-icon-wrapper green">
                     <Target className="feature-icon" />
                   </div>
                 </div>
                 <p className="feature-description">
-                  학생의 성적과 대외활동 경력을 토대로 AI가 입학 가능성을 분석해줘요.
+                  {t('home.features.profile.description')}
                 </p>
               </div>
-              <Link to="/student-profile" className="feature-link green">
-                바로가기 →
+              <Link to="/student-profile" className="feature-link green" data-testid="link-profile-feature">
+                {t('home.features.link')}
               </Link>
             </div>
 
             <div className="feature-card">
               <div className="feature-card-content">
                 <div className="feature-title-row">
-                  <h3 className="feature-card-title">컨설팅 프로그램<br></br> 비교/추천</h3>
+                  <h3 className="feature-card-title">
+                    {t('home.features.consulting.title').split('\n').map((line, i) => (
+                      <span key={i}>{line}{i === 0 && <br />}</span>
+                    ))}
+                  </h3>
                   <div className="feature-icon-wrapper orange">
                     <Users className="feature-icon" />
                   </div>
                 </div>
                 <p className="feature-description">
-                  국내 컨설팅 학원을 비교하고 프로필 강화를 위한 최적의 프로그램을 만나보세요.
+                  {t('home.features.consulting.description')}
                 </p>
               </div>
-              <Link to="/consulting" className="feature-link orange">
-                바로가기 →
+              <Link to="/consulting" className="feature-link orange" data-testid="link-consulting-feature">
+                {t('home.features.link')}
               </Link>
             </div>
           </div>
@@ -251,10 +270,12 @@ const HomePage: React.FC = () => {
         <div className="majors-container">
           <div className="majors-header">
             <h2 className="majors-title">
-              전공 선택, 아직도 고민되시나요?
+              {t('home.majors.title')}
             </h2>
             <p className="majors-subtitle">
-              간단한 테스트로 나에게 맞는 전공을 찾아보세요.<br></br>* 평균 연봉과 취업률은 추정치입니다.
+              {t('home.majors.subtitle').split('\n').map((line, i) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))}
             </p>
           </div>
 
@@ -264,19 +285,19 @@ const HomePage: React.FC = () => {
                 <BookOpen className="major-icon" />
               </div>
               <div className="major-content">
-                <h3 className="major-card-title">공학 (Engineering)</h3>
+                <h3 className="major-card-title">{t('home.majors.engineering')}</h3>
                 <div className="major-details">
-                  <p className="major-specializations">컴퓨터 과학, 전기공학, 기계공학</p>
+                  <p className="major-specializations">{t('home.majors.engineering.specializations')}</p>
                 </div>
                 <div className="major-stats">
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">평균 연봉 $85,000</span>
+                    <span className="major-stat-text">{t('home.majors.engineering.salary')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">취업률 94%</span>
+                    <span className="major-stat-text">{t('home.majors.engineering.employment')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">STEM OPT 3년 가능</span>
+                    <span className="major-stat-text">{t('home.majors.engineering.opt')}</span>
                   </div>
                 </div>
               </div>
@@ -287,19 +308,19 @@ const HomePage: React.FC = () => {
                 <Trophy className="major-icon" />
               </div>
               <div className="major-content">
-                <h3 className="major-card-title">경영 (Business)</h3>
+                <h3 className="major-card-title">{t('home.majors.business')}</h3>
                 <div className="major-details">
-                  <p className="major-specializations">경영학, 경제학, 금융학, 마케팅</p>
+                  <p className="major-specializations">{t('home.majors.business.specializations')}</p>
                 </div>
                 <div className="major-stats">
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">평균 연봉 $78,000</span>
+                    <span className="major-stat-text">{t('home.majors.business.salary')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">취업률 88%</span>
+                    <span className="major-stat-text">{t('home.majors.business.employment')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">네트워킹 기회 풍부</span>
+                    <span className="major-stat-text">{t('home.majors.business.networking')}</span>
                   </div>
                 </div>
               </div>
@@ -310,19 +331,19 @@ const HomePage: React.FC = () => {
                 <BookOpen className="major-icon" />
               </div>
               <div className="major-content">
-                <h3 className="major-card-title">인문학 (Liberal Arts)</h3>
+                <h3 className="major-card-title">{t('home.majors.liberal')}</h3>
                 <div className="major-details">
-                  <p className="major-specializations">문학, 철학, 역사, 언어학, 문화연구</p>
+                  <p className="major-specializations">{t('home.majors.liberal.specializations')}</p>
                 </div>
                 <div className="major-stats">
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">평균 연봉 $65,000</span>
+                    <span className="major-stat-text">{t('home.majors.liberal.salary')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">취업률 82%</span>
+                    <span className="major-stat-text">{t('home.majors.liberal.employment')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">비판적 사고력 개발</span>
+                    <span className="major-stat-text">{t('home.majors.liberal.thinking')}</span>
                   </div>
                 </div>
               </div>
@@ -333,19 +354,19 @@ const HomePage: React.FC = () => {
                 <Globe className="major-icon" />
               </div>
               <div className="major-content">
-                <h3 className="major-card-title">자연과학 (Natural Sciences)</h3>
+                <h3 className="major-card-title">{t('home.majors.natural')}</h3>
                 <div className="major-details">
-                  <p className="major-specializations">생물학, 화학, 물리학, 수학, 환경과학</p>
+                  <p className="major-specializations">{t('home.majors.natural.specializations')}</p>
                 </div>
                 <div className="major-stats">
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">평균 연봉 $72,000</span>
+                    <span className="major-stat-text">{t('home.majors.natural.salary')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">취업률 85%</span>
+                    <span className="major-stat-text">{t('home.majors.natural.employment')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">대학원 진학률 높음</span>
+                    <span className="major-stat-text">{t('home.majors.natural.graduate')}</span>
                   </div>
                 </div>
               </div>
@@ -356,19 +377,19 @@ const HomePage: React.FC = () => {
                 <Search className="major-icon" />
               </div>
               <div className="major-content">
-                <h3 className="major-card-title">사회과학 (Social Sciences)</h3>
+                <h3 className="major-card-title">{t('home.majors.social')}</h3>
                 <div className="major-details">
-                  <p className="major-specializations">심리학, 정치학, 사회학, 국제관계학</p>
+                  <p className="major-specializations">{t('home.majors.social.specializations')}</p>
                 </div>
                 <div className="major-stats">
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">평균 연봉 $68,000</span>
+                    <span className="major-stat-text">{t('home.majors.social.salary')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">취업률 83%</span>
+                    <span className="major-stat-text">{t('home.majors.social.employment')}</span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">사회 문제 해결</span>
+                    <span className="major-stat-text">{t('home.majors.social.problem')}</span>
                   </div>
                 </div>
               </div>
