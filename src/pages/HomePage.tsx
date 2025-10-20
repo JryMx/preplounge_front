@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Target, Users, ArrowRight, BookOpen, Trophy, Globe, Calculator, MapPin } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 import '../hero-section-style.css';
 import './profile-calculator.css';
 import './homepage-calculator.css';
 import './homepage.css';
 
 const HomePage: React.FC = () => {
+  const { t } = useLanguage();
   const [gpa, setGpa] = useState('');
   const [satEBRW, setSatEBRW] = useState('');
   const [satMath, setSatMath] = useState('');
@@ -44,23 +46,24 @@ const HomePage: React.FC = () => {
         <div className="hero-content">
           <div className="hero-titles">
             <p className="hero-subtitle">
-              AI가 분석하는 나만의 유학 로드맵
+              {t('home.hero.subtitle')}
             </p>
             <h1 className="hero-title">
-              꿈의 대학, 현실이 됩니다
+              {t('home.hero.title')}
             </h1>
           </div>
           <p className="hero-description">
-            복잡한 입시 정보를 한눈에, 개인 맞춤 유학 플랜까지<br />
-            프렙라운지와 함께 성공적인 미국 유학을 시작하세요.
+            {t('home.hero.description').split('\n').map((line, i) => (
+              <span key={i}>{line}{i === 0 && <br />}</span>
+            ))}
           </p>
         </div>
         <div className="hero-buttons">
-          <Link to="/student-profile" className="btn-primary">
-            합격 예측 해보기
+          <Link to="/student-profile" className="btn-primary" data-testid="link-predict">
+            {t('home.hero.cta.predict')}
           </Link>
-          <Link to="/universities" className="btn-secondary">
-            입시 정보 둘러보기
+          <Link to="/universities" className="btn-secondary" data-testid="link-browse">
+            {t('home.hero.cta.input')}
           </Link>
         </div>
       </section>

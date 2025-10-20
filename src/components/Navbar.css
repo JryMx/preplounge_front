@@ -129,6 +129,17 @@
   letter-spacing: -0.01em;
   color: #082F49;
   gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.navbar-language:hover {
+  background-color: rgba(8, 47, 73, 0.05);
+  color: rgba(8, 47, 73, 0.8);
 }
 
 .navbar-language svg {

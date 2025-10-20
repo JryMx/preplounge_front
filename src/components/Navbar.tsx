@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import './Navbar.css';
 
 const Navbar: React.FC = () => {
@@ -9,7 +10,12 @@ const Navbar: React.FC = () => {
   const [isUniversitiesMenuOpen, setIsUniversitiesMenuOpen] = useState(false);
   const [isMobileUniversitiesMenuOpen, setIsMobileUniversitiesMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
+  
+  const toggleLanguage = () => {
+    setLanguage(language === 'ko' ? 'en' : 'ko');
+  };
 
   const handleLogout = () => {
     logout();
@@ -36,44 +42,44 @@ const Navbar: React.FC = () => {
               onMouseLeave={() => setIsUniversitiesMenuOpen(false)}
             >
               <button className="navbar-menu-button">
-                학교 모아보기
+                {t('nav.universities')}
                 <ChevronDown className="chevron-icon" />
               </button>
               {isUniversitiesMenuOpen && (
                 <div className="navbar-dropdown">
                   <Link to="/universities" className="navbar-dropdown-item">
-                    전체 학교 보기
+                    {t('nav.universities.all')}
                   </Link>
                   <Link to="/compare" className="navbar-dropdown-item">
-                    학교 비교하기
+                    {t('nav.universities.compare')}
                   </Link>
                 </div>
               )}
             </div>
             <Link to="/student-profile" className="navbar-menu-link">
-              프로필 분석
+              {t('nav.profile')}
             </Link>
             <Link to="/consulting" className="navbar-menu-link">
-              컨설팅 추천
+              {t('nav.consulting')}
             </Link>
             <Link to="/housing" className="navbar-menu-link">
-              주거 지원
+              {t('nav.housing')}
             </Link>
           </div>
 
           <div className="navbar-actions">
-            <div className="navbar-language">
+            <button onClick={toggleLanguage} className="navbar-language" data-testid="button-language">
               <Globe size={16} />
-              <span>English</span>
-            </div>
+              <span>{t('nav.language')}</span>
+            </button>
 
             {isAuthenticated ? (
               <Link to="/dashboard" className="navbar-auth-button">
-                <span className="navbar-auth-button-text">대시보드</span>
+                <span className="navbar-auth-button-text">{t('nav.dashboard')}</span>
               </Link>
             ) : (
               <Link to="/login" className="navbar-auth-button">
-                <span className="navbar-auth-button-text">로그인</span>
+                <span className="navbar-auth-button-text">{t('nav.login')}</span>
               </Link>
             )}
           </div>
@@ -94,7 +100,7 @@ const Navbar: React.FC = () => {
                   onClick={() => setIsMobileUniversitiesMenuOpen(!isMobileUniversitiesMenuOpen)}
                   className="navbar-mobile-menu-button"
                 >
-                  학교 모아보기
+                  {t('nav.universities')}
                   <ChevronDown className={`chevron-icon ${isMobileUniversitiesMenuOpen ? 'rotated' : ''}`} />
                 </button>
                 {isMobileUniversitiesMenuOpen && (
@@ -104,14 +110,14 @@ const Navbar: React.FC = () => {
                       className="navbar-mobile-submenu-link"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      전체 학교 보기
+                      {t('nav.universities.all')}
                     </Link>
                     <Link
                       to="/compare"
                       className="navbar-mobile-submenu-link"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      학교 비교하기
+                      {t('nav.universities.compare')}
                     </Link>
                   </div>
                 )}
@@ -121,21 +127,21 @@ const Navbar: React.FC = () => {
                 className="navbar-mobile-link"
                 onClick={() => setIsMenuOpen(false)}
               >
-                프로필 분석
+                {t('nav.profile')}
               </Link>
               <Link
                 to="/consulting"
                 className="navbar-mobile-link"
                 onClick={() => setIsMenuOpen(false)}
               >
-                컨설팅 추천
+                {t('nav.consulting')}
               </Link>
               <Link
                 to="/housing"
                 className="navbar-mobile-link"
                 onClick={() => setIsMenuOpen(false)}
               >
-                주거 지원
+                {t('nav.housing')}
               </Link>
               <div className="navbar-mobile-divider">
                 {isAuthenticated ? (
@@ -144,7 +150,7 @@ const Navbar: React.FC = () => {
                     className="navbar-mobile-auth-button"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    대시보드
+                    {t('nav.dashboard')}
                   </Link>
                 ) : (
                   <Link
@@ -152,7 +158,7 @@ const Navbar: React.FC = () => {
                     className="navbar-mobile-auth-button"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    로그인
+                    {t('nav.login')}
                   </Link>
                 )}
               </div>
