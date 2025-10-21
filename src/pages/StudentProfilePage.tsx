@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, BookOpen, Award, Target, ArrowRight, Plus, X, Search, Calculator, CheckCircle, XCircle, ClipboardList } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
+import { useLanguage } from '../context/LanguageContext';
 import './student-profile-page.css';
 
 const StudentProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
+  const { t } = useLanguage();
 
   const [activeTab, setActiveTab] = useState<'academic' | 'non-academic'>('academic');
   const [searchQuery, setSearchQuery] = useState('');
@@ -164,10 +166,10 @@ const StudentProfilePage: React.FC = () => {
       <div className="profile-hero-section">
         <div className="profile-hero-content">
           <h1 className="profile-hero-title">
-            프로필 분석
+            {t('profile.hero.title')}
           </h1>
           <p className="profile-hero-description">
-            교과 및 비교과 프로필을 완성하여 종합적인 프로필 점수와 개인 맞춤 대학 추천을 받아보세요.
+            {t('profile.hero.description')}
           </p>
         </div>
       </div>
@@ -179,18 +181,18 @@ const StudentProfilePage: React.FC = () => {
             <div className="profile-calculator-result-no-border" style={{width: '100%', height: '100%', maxWidth: '600px', margin: '0 auto'}}>
               <div className="profile-calculator-result-content">
                 <div className="profile-calculator-score-group">
-                  <span className="profile-calculator-score-label">프로필 점수</span>
+                  <span className="profile-calculator-score-label">{t('profile.score.label')}</span>
                   <div className="profile-calculator-score-display">
                     <span className="profile-calculator-score-value">{currentScore === 0 ? '--' : currentScore}</span>
                     <span className="profile-calculator-score-total">/100</span>
                   </div>
                 </div>
                 <p className="profile-calculator-description">
-                  {currentScore === 0 ? '개선 필요' :
-                   currentScore >= 90 ? '우수함' :
-                   currentScore >= 80 ? '매우 좋음' :
-                   currentScore >= 70 ? '좋음' :
-                   currentScore >= 60 ? '보통' : '개선 필요'}
+                  {currentScore === 0 ? t('profile.score.needs-improvement') :
+                   currentScore >= 90 ? t('profile.score.excellent') :
+                   currentScore >= 80 ? t('profile.score.very-good') :
+                   currentScore >= 70 ? t('profile.score.good') :
+                   currentScore >= 60 ? t('profile.score.fair') : t('profile.score.needs-improvement')}
                 </p>
               </div>
             </div>
@@ -200,24 +202,23 @@ const StudentProfilePage: React.FC = () => {
         <div className="application-checker-section">
           <div className="application-checker-header">
             <ClipboardList className="h-6 w-6" style={{color: '#082F49'}} />
-            <h2 className="application-checker-title">지원서 구성 요소 체크리스트</h2>
+            <h2 className="application-checker-title">{t('profile.checklist.title')}</h2>
           </div>
 
           <p className="application-checker-description">
-            완료했거나 가지고 있는 항목을 체크하세요. 지원 준비 상태를 확인하는 데 도움이 됩니다.<br></br>
-            모든 항목이 필수는 아니며 학교마다 요구 사항이 다를 수 있습니다.
+            {t('profile.checklist.description')}
           </p>
 
           <div className="application-components-grid">
               {[
-                { key: 'secondarySchoolGPA', label: '고등학교 GPA', description: 'Secondary school GPA' },
-                { key: 'secondarySchoolRank', label: '고등학교 석차', description: 'Secondary school rank' },
-                { key: 'secondarySchoolRecord', label: '고등학교 성적표', description: 'Secondary school transcript' },
-                { key: 'collegePrepProgram', label: '대학 준비 프로그램', description: 'College-preparatory program' },
-                { key: 'recommendations', label: '추천서', description: 'Recommendations' },
-                { key: 'extracurricularActivities', label: '대외활동', description: 'Extracurricular activities' },
-                { key: 'essay', label: '자기소개서/에세이', description: 'Personal statement or essay' },
-                { key: 'testScores', label: '시험 점수', description: 'Test scores' },
+                { key: 'secondarySchoolGPA', label: t('profile.checklist.gpa'), description: t('profile.checklist.gpa.desc') },
+                { key: 'secondarySchoolRank', label: t('profile.checklist.rank'), description: t('profile.checklist.rank.desc') },
+                { key: 'secondarySchoolRecord', label: t('profile.checklist.transcript'), description: t('profile.checklist.transcript.desc') },
+                { key: 'collegePrepProgram', label: t('profile.checklist.college-prep'), description: t('profile.checklist.college-prep.desc') },
+                { key: 'recommendations', label: t('profile.checklist.recommendations'), description: t('profile.checklist.recommendations.desc') },
+                { key: 'extracurricularActivities', label: t('profile.checklist.extracurriculars'), description: t('profile.checklist.extracurriculars.desc') },
+                { key: 'essay', label: t('profile.checklist.essay'), description: t('profile.checklist.essay.desc') },
+                { key: 'testScores', label: t('profile.checklist.test-scores'), description: t('profile.checklist.test-scores.desc') },
               ].map((component) => (
                 <div
                   key={component.key}
@@ -256,26 +257,26 @@ const StudentProfilePage: React.FC = () => {
               className={`profile-tab-button ${activeTab === 'academic' ? 'active' : ''}`}
             >
               <BookOpen className="h-5 w-5" />
-              교과
+              {t('profile.tabs.academic')}
             </button>
             <button
               onClick={() => setActiveTab('non-academic')}
               className={`profile-tab-button ${activeTab === 'non-academic' ? 'active' : ''}`}
             >
               <Award className="h-5 w-5" />
-              비교과
+              {t('profile.tabs.non-academic')}
             </button>
           </div>
 
           <div className="profile-tab-content">
             {activeTab === 'academic' && (
               <div>
-                <h2 className="profile-section-title">교과 정보</h2>
+                <h2 className="profile-section-title">{t('profile.academic.title')}</h2>
 
                 <div className="profile-form-grid">
                   <div className="profile-form-group">
                     <label className="profile-form-label">
-                      GPA (4.0 만점) *
+                      {t('profile.academic.gpa')}
                     </label>
                     <input
                       type="number"
@@ -292,35 +293,35 @@ const StudentProfilePage: React.FC = () => {
 
                   <div className="profile-form-group">
                     <label className="profile-form-label">
-                      희망 전공
+                      {t('profile.academic.major')}
                     </label>
                     <select
                       value={academicData.intendedMajor}
                       onChange={(e) => handleAcademicChange('intendedMajor', e.target.value)}
                       className="profile-form-select"
                     >
-                      <option value="">전공을 선택하세요</option>
-                      <option value="Computer Science">컴퓨터과학</option>
-                      <option value="Engineering">공학</option>
-                      <option value="Business">경영학</option>
-                      <option value="Medicine">의학</option>
-                      <option value="Liberal Arts">인문학</option>
-                      <option value="Sciences">자연과학</option>
-                      <option value="Mathematics">수학</option>
-                      <option value="Other">기타</option>
+                      <option value="">{t('profile.academic.major.placeholder')}</option>
+                      <option value="Computer Science">{t('profile.academic.major.cs')}</option>
+                      <option value="Engineering">{t('profile.academic.major.engineering')}</option>
+                      <option value="Business">{t('profile.academic.major.business')}</option>
+                      <option value="Medicine">{t('profile.academic.major.medicine')}</option>
+                      <option value="Liberal Arts">{t('profile.academic.major.liberal-arts')}</option>
+                      <option value="Sciences">{t('profile.academic.major.sciences')}</option>
+                      <option value="Mathematics">{t('profile.academic.major.math')}</option>
+                      <option value="Other">{t('profile.academic.major.other')}</option>
                     </select>
                   </div>
 
                   <div className="profile-form-group full-width">
                     <label className="profile-form-label">
-                      입학 시험
+                      {t('profile.academic.test')}
                     </label>
                     <select
                       value={academicData.standardizedTest}
                       onChange={(e) => handleAcademicChange('standardizedTest', e.target.value)}
                       className="profile-form-select"
                     >
-                      <option value="">시험을 선택하세요 (선택사항)</option>
+                      <option value="">{t('profile.academic.test.placeholder')}</option>
                       <option value="SAT">SAT</option>
                       <option value="ACT">ACT</option>
                     </select>
@@ -330,7 +331,7 @@ const StudentProfilePage: React.FC = () => {
                     <>
                       <div className="profile-form-group">
                         <label className="profile-form-label">
-                          SAT EBRW (800점 만점)
+                          {t('profile.academic.sat.ebrw')}
                         </label>
                         <input
                           type="number"
@@ -345,7 +346,7 @@ const StudentProfilePage: React.FC = () => {
 
                       <div className="profile-form-group">
                         <label className="profile-form-label">
-                          SAT Math (800점 만점)
+                          {t('profile.academic.sat.math')}
                         </label>
                         <input
                           type="number"
@@ -363,7 +364,7 @@ const StudentProfilePage: React.FC = () => {
                   {academicData.standardizedTest === 'ACT' && (
                     <div className="profile-form-group">
                       <label className="profile-form-label">
-                        ACT 점수 (36점 만점)
+                        {t('profile.academic.act')}
                       </label>
                       <input
                         type="number"
@@ -379,14 +380,14 @@ const StudentProfilePage: React.FC = () => {
 
                   <div className="profile-form-group full-width">
                     <label className="profile-form-label">
-                      영어 능력 시험 (국제학생용)
+                      {t('profile.academic.english')}
                     </label>
                     <select
                       value={academicData.englishProficiencyTest}
                       onChange={(e) => handleAcademicChange('englishProficiencyTest', e.target.value)}
                       className="profile-form-select"
                     >
-                      <option value="">시험을 선택하세요 (선택사항)</option>
+                      <option value="">{t('profile.academic.english.placeholder')}</option>
                       <option value="TOEFL iBT">TOEFL iBT</option>
                       <option value="IELTS">IELTS</option>
                       <option value="Cambridge">Cambridge</option>
@@ -434,33 +435,33 @@ const StudentProfilePage: React.FC = () => {
 
             {activeTab === 'non-academic' && (
               <div>
-                <h2 className="profile-section-title">비교과 정보</h2>
+                <h2 className="profile-section-title">{t('profile.non-academic.title')}</h2>
 
                 <div className="profile-form-group full-width" style={{marginBottom: '32px'}}>
                   <label className="profile-form-label">
-                    자기소개서 (Common App 에세이)
+                    {t('profile.non-academic.essay')}
                   </label>
                   <textarea
                     value={nonAcademicData.personalStatement}
                     onChange={(e) => handleNonAcademicChange('personalStatement', e.target.value)}
                     className="profile-form-textarea"
                     rows={8}
-                    placeholder="자기소개서를 작성하세요..."
+                    placeholder={t('profile.non-academic.essay.placeholder')}
                   />
                   <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '8px'}}>
-                    {nonAcademicData.personalStatement.length} 글자
+                    {nonAcademicData.personalStatement.length} {t('profile.non-academic.essay.count')}
                   </p>
                 </div>
 
                 <div className="extracurriculars-section">
                   <div className="extracurriculars-header">
-                    <h3 className="profile-section-title" style={{marginBottom: 0}}>대외활동</h3>
+                    <h3 className="profile-section-title" style={{marginBottom: 0}}>{t('profile.extracurriculars.title')}</h3>
                     <button
                       onClick={addExtracurricular}
                       className="profile-btn-add"
                     >
                       <Plus className="h-4 w-4" />
-                      활동 추가
+                      {t('profile.extracurriculars.add')}
                     </button>
                   </div>
 
@@ -473,45 +474,45 @@ const StudentProfilePage: React.FC = () => {
                         >
                           <X className="h-5 w-5" />
                         </button>
-                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>활동 {index + 1}</h4>
+                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>{t('profile.extracurriculars.activity')} {index + 1}</h4>
 
                         <div className="profile-form-grid">
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              활동 유형
+                              {t('profile.extracurriculars.type')}
                             </label>
                             <select
                               value={activity.type}
                               onChange={(e) => updateExtracurricular(activity.id, 'type', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="Sports">스포츠</option>
-                              <option value="Arts">예술</option>
-                              <option value="Community Service">봉사활동</option>
-                              <option value="Research">연구</option>
-                              <option value="Academic Clubs">학술 동아리</option>
-                              <option value="Leadership">리더십</option>
-                              <option value="Work Experience">근무 경험</option>
-                              <option value="Other">기타</option>
+                              <option value="Sports">{t('profile.extracurriculars.type.sports')}</option>
+                              <option value="Arts">{t('profile.extracurriculars.type.arts')}</option>
+                              <option value="Community Service">{t('profile.extracurriculars.type.community')}</option>
+                              <option value="Research">{t('profile.extracurriculars.type.research')}</option>
+                              <option value="Academic Clubs">{t('profile.extracurriculars.type.academic')}</option>
+                              <option value="Leadership">{t('profile.extracurriculars.type.leadership')}</option>
+                              <option value="Work Experience">{t('profile.extracurriculars.type.work')}</option>
+                              <option value="Other">{t('profile.extracurriculars.type.other')}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              활동명
+                              {t('profile.extracurriculars.name')}
                             </label>
                             <input
                               type="text"
                               value={activity.name}
                               onChange={(e) => updateExtracurricular(activity.id, 'name', e.target.value)}
                               className="profile-form-input"
-                              placeholder="예: 축구부"
+                              placeholder={t('profile.extracurriculars.name.placeholder')}
                             />
                           </div>
 
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                              참여 학년 (해당하는 모든 학년 선택)
+                              {t('profile.extracurriculars.grades')}
                             </label>
                             <div className="grid grid-cols-4 gap-2">
                               {['9', '10', '11', '12'].map(grade => (
@@ -528,7 +529,7 @@ const StudentProfilePage: React.FC = () => {
                                     }}
                                     className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
                                   />
-                                  <span className="text-sm">{grade}학년</span>
+                                  <span className="text-sm">{grade}{t('profile.extracurriculars.grade')}</span>
                                 </label>
                               ))}
                             </div>
@@ -536,23 +537,23 @@ const StudentProfilePage: React.FC = () => {
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              인정 수준
+                              {t('profile.extracurriculars.recognition')}
                             </label>
                             <select
                               value={activity.recognitionLevel}
                               onChange={(e) => updateExtracurricular(activity.id, 'recognitionLevel', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="Local">지역</option>
-                              <option value="Regional">광역</option>
-                              <option value="National">전국</option>
-                              <option value="International">국제</option>
+                              <option value="Local">{t('profile.extracurriculars.recognition.local')}</option>
+                              <option value="Regional">{t('profile.extracurriculars.recognition.regional')}</option>
+                              <option value="National">{t('profile.extracurriculars.recognition.national')}</option>
+                              <option value="International">{t('profile.extracurriculars.recognition.international')}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              주당 시간
+                              {t('profile.extracurriculars.hours')}
                             </label>
                             <input
                               type="number"
@@ -568,14 +569,14 @@ const StudentProfilePage: React.FC = () => {
 
                         <div className="profile-form-group full-width" style={{marginTop: '16px'}}>
                           <label className="profile-form-label">
-                            설명
+                            {t('profile.extracurriculars.description')}
                           </label>
                           <textarea
                             value={activity.description}
                             onChange={(e) => updateExtracurricular(activity.id, 'description', e.target.value)}
                             className="profile-form-textarea"
                             rows={2}
-                            placeholder="역할과 성과를 설명하세요..."
+                            placeholder={t('profile.extracurriculars.description.placeholder')}
                           />
                         </div>
                       </div>
@@ -584,8 +585,8 @@ const StudentProfilePage: React.FC = () => {
                     {extracurriculars.length === 0 && (
                       <div className="text-center py-8 text-gray-500">
                         <Award className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                        <p>아직 추가된 대외활동이 없습니다.</p>
-                        <p className="text-sm">"활동 추가"를 클릭하여 시작하세요.</p>
+                        <p>{t('profile.extracurriculars.empty')}</p>
+                        <p className="text-sm">{t('profile.extracurriculars.empty.action')}</p>
                       </div>
                     )}
                   </div>
@@ -593,13 +594,13 @@ const StudentProfilePage: React.FC = () => {
 
                 <div className="extracurriculars-section">
                   <div className="extracurriculars-header">
-                    <h3 className="profile-section-title" style={{marginBottom: 0}}>추천서</h3>
+                    <h3 className="profile-section-title" style={{marginBottom: 0}}>{t('profile.recommendations.title')}</h3>
                     <button
                       onClick={addRecommendationLetter}
                       className="profile-btn-add"
                     >
                       <Plus className="h-4 w-4" />
-                      추천서 추가
+                      {t('profile.recommendations.add')}
                     </button>
                   </div>
 
@@ -612,54 +613,54 @@ const StudentProfilePage: React.FC = () => {
                         >
                           <X className="h-5 w-5" />
                         </button>
-                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>추천서 {index + 1}</h4>
+                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>{t('profile.recommendations.letter')} {index + 1}</h4>
 
                         <div className="profile-form-grid">
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              추천인
+                              {t('profile.recommendations.source')}
                             </label>
                             <select
                               value={letter.source}
                               onChange={(e) => updateRecommendationLetter(letter.id, 'source', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="Teacher">교사</option>
-                              <option value="Counselor">상담교사</option>
-                              <option value="Principal">교장</option>
-                              <option value="Coach">코치</option>
-                              <option value="Employer">고용주</option>
-                              <option value="Other">기타</option>
+                              <option value="Teacher">{t('profile.recommendations.source.teacher')}</option>
+                              <option value="Counselor">{t('profile.recommendations.source.counselor')}</option>
+                              <option value="Principal">{t('profile.recommendations.source.principal')}</option>
+                              <option value="Coach">{t('profile.recommendations.source.coach')}</option>
+                              <option value="Employer">{t('profile.recommendations.source.employer')}</option>
+                              <option value="Other">{t('profile.recommendations.source.other')}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              관계의 깊이
+                              {t('profile.recommendations.depth')}
                             </label>
                             <select
                               value={letter.depth || 'knows somewhat'}
                               onChange={(e) => updateRecommendationLetter(letter.id, 'depth', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="knows deeply">깊이 알고 있음</option>
-                              <option value="knows somewhat">어느 정도 알고 있음</option>
-                              <option value="barely knows">거의 모름</option>
+                              <option value="knows deeply">{t('profile.recommendations.depth.deep')}</option>
+                              <option value="knows somewhat">{t('profile.recommendations.depth.somewhat')}</option>
+                              <option value="barely knows">{t('profile.recommendations.depth.barely')}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              과목/분야 관련성
+                              {t('profile.recommendations.relevance')}
                             </label>
                             <select
                               value={letter.relevance || 'not relevant or not available'}
                               onChange={(e) => updateRecommendationLetter(letter.id, 'relevance', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="highly relevant to intended major">희망 전공과 매우 관련 있음</option>
-                              <option value="somewhat relevant to intended major">희망 전공과 어느 정도 관련 있음</option>
-                              <option value="not relevant or not available">관련 없음 또는 해당 없음</option>
+                              <option value="highly relevant to intended major">{t('profile.recommendations.relevance.highly')}</option>
+                              <option value="somewhat relevant to intended major">{t('profile.recommendations.relevance.somewhat')}</option>
+                              <option value="not relevant or not available">{t('profile.recommendations.relevance.not')}</option>
                             </select>
                           </div>
                         </div>
@@ -669,8 +670,8 @@ const StudentProfilePage: React.FC = () => {
                     {recommendationLetters.length === 0 && (
                       <div className="text-center py-8 text-gray-500">
                         <User className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                        <p>아직 추가된 추천서가 없습니다.</p>
-                        <p className="text-sm">"추천서 추가"를 클릭하여 시작하세요.</p>
+                        <p>{t('profile.recommendations.empty')}</p>
+                        <p className="text-sm">{t('profile.recommendations.empty.action')}</p>
                       </div>
                     )}
                   </div>
@@ -680,7 +681,7 @@ const StudentProfilePage: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      가족 내 동문 여부
+                      {t('profile.legacy.title')}
                     </label>
                     <div className="flex items-center space-x-4">
                       <label className="flex items-center">
@@ -691,7 +692,7 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('legacyStatus', true)}
                           className="mr-2"
                         />
-                        예
+                        {t('profile.legacy.yes')}
                       </label>
                       <label className="flex items-center">
                         <input
@@ -701,14 +702,14 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('legacyStatus', false)}
                           className="mr-2"
                         />
-                        아니오
+                        {t('profile.legacy.no')}
                       </label>
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      시민권
+                      {t('profile.citizenship.title')}
                     </label>
                     <div className="flex items-center space-x-4">
                       <label className="flex items-center">
@@ -719,7 +720,7 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('citizenship', 'domestic')}
                           className="mr-2"
                         />
-                        국내
+                        {t('profile.citizenship.domestic')}
                       </label>
                       <label className="flex items-center">
                         <input
@@ -729,7 +730,7 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('citizenship', 'international')}
                           className="mr-2"
                         />
-                        국제
+                        {t('profile.citizenship.international')}
                       </label>
                     </div>
                   </div>
@@ -744,21 +745,21 @@ const StudentProfilePage: React.FC = () => {
               className="profile-btn-primary" style={{width: '100%'}}
             >
               <Calculator className="h-5 w-5" />
-              프로필 점수 계산하기
+              {t('profile.save')}
             </button>
           </div>
         </div>
 
         <div className="profile-tabs-container">
           <div className="profile-tab-content">
-            <h2 className="profile-section-title">학교 비교</h2>
+            <h2 className="profile-section-title">{t('profile.comparison.title')}</h2>
           
             <div style={{display: 'flex', gap: '12px', marginBottom: '24px'}}>
               <div style={{flex: 1, position: 'relative'}}>
                 <Search className="h-5 w-5" style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(8, 47, 73, 0.4)'}} />
                 <input
                   type="text"
-                  placeholder="학교명으로 검색..."
+                  placeholder={t('profile.comparison.search.placeholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="profile-form-input"
@@ -769,13 +770,13 @@ const StudentProfilePage: React.FC = () => {
                 onClick={handleSearch}
                 className="profile-btn-primary"
               >
-                검색
+                {t('profile.comparison.search.button')}
               </button>
             </div>
 
             {showResults && searchResults.length > 0 && (
               <div>
-                <h3 className="profile-form-label" style={{marginBottom: '16px'}}>검색 결과</h3>
+                <h3 className="profile-form-label" style={{marginBottom: '16px'}}>{t('profile.comparison.results')}</h3>
                 {searchResults.map(school => (
                   <div
                     key={school.id}
@@ -789,7 +790,7 @@ const StudentProfilePage: React.FC = () => {
                   <div className="flex justify-between items-start">
                     <div>
                       <h4 className="font-semibold text-gray-900">{school.name}</h4>
-                      <p className="text-sm text-gray-600">#{school.ranking} • 합격률 {school.acceptanceRate}%</p>
+                      <p className="text-sm text-gray-600">#{school.ranking} • {t('profile.comparison.ranking')} {school.acceptanceRate}%</p>
                     </div>
                     <div className="text-right">
                       <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
@@ -797,23 +798,23 @@ const StudentProfilePage: React.FC = () => {
                         school.category === 'target' ? 'bg-orange-100 text-orange-800' :
                         'bg-red-100 text-red-800'
                       }`}>
-                        {school.category === 'safety' ? '안전권' : 
-                         school.category === 'target' ? '적정권' : '도전권'}
+                        {school.category === 'safety' ? t('profile.comparison.category.safety') : 
+                         school.category === 'target' ? t('profile.comparison.category.target') : t('profile.comparison.category.reach')}
                       </div>
                     </div>
                   </div>
                   
                   <div className="grid md:grid-cols-3 gap-4 mt-4 text-sm">
                     <div>
-                      <span className="font-medium text-gray-600">필요 점수:</span>
+                      <span className="font-medium text-gray-600">{t('profile.comparison.required-score')}</span>
                       <span className="ml-2 font-bold">{school.requiredScore}/100</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">내 점수:</span>
+                      <span className="font-medium text-gray-600">{t('profile.comparison.my-score')}</span>
                       <span className="ml-2 font-bold">{currentScore}/100</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">비율:</span>
+                      <span className="font-medium text-gray-600">{t('profile.comparison.ratio')}</span>
                       <span className="ml-2 font-bold">{school.comparisonRatio}</span>
                     </div>
                   </div>
@@ -825,15 +826,15 @@ const StudentProfilePage: React.FC = () => {
           {showResults && searchResults.length === 0 && searchQuery.trim() && (
             <div className="text-center py-8 text-gray-500">
               <Search className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p>"{searchQuery}"와 일치하는 학교를 찾을 수 없습니다</p>
-              <p className="text-sm">다른 이름으로 검색해보세요.</p>
+              <p>"{searchQuery}" {t('profile.comparison.no-results')}</p>
+              <p className="text-sm">{t('profile.comparison.no-results.action')}</p>
             </div>
           )}
 
             {!showResults && (
               <div className="text-center py-8 text-gray-500">
                 <Target className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                <p>프로필을 완성하고 비교 결과를 확인하세요.</p>
+                <p>{t('profile.comparison.empty')}</p>
               </div>
             )}
           </div>
