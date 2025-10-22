@@ -82,6 +82,55 @@
   color: rgba(8, 47, 73, 0.4);
 }
 
+.housing-search-button {
+  padding: 12px 24px;
+  background: #FACC15;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #082F49;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.housing-search-button:hover {
+  background: #EAB308;
+  transform: translateY(-1px);
+}
+
+.housing-loading,
+.housing-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #082F49;
+  opacity: 0.6;
+}
+
+.housing-loading {
+  gap: 16px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 /* Listings Section */
 .housing-listings-section {
   padding: 80px 32px;
