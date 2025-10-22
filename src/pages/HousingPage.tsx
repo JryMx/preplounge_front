@@ -199,9 +199,15 @@ const HousingPage = () => {
                         ))}
                       </div>
                     )}
-                    <button className="housing-card-button" data-testid={`button-details-${listing.id}`}>
+                    <a 
+                      href={listing.url ? `https://cozying.ai/${listing.url}` : 'https://cozying.ai/'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="housing-card-button"
+                      data-testid={`button-details-${listing.id}`}
+                    >
                       {t('housing.button.details')}
-                    </button>
+                    </a>
                   </div>
                 </div>
               ))}

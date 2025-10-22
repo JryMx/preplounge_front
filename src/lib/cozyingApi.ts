@@ -14,6 +14,7 @@ export interface CozyingListing {
   sqft?: number;
   propertyType?: string;
   images?: string[];
+  url?: string;
 }
 
 export interface CozyingSearchParams {
@@ -87,6 +88,7 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
       propertyType: home.cozyingPropertyType || home.propertyType || home.homeType,
       amenities: home.amenities || [],
       available: home.homeStatus === 'Active' || true,
+      url: home.url || '',
     }));
   } catch (error) {
     console.error('Error fetching Cozying listings:', error);
