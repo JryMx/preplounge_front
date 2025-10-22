@@ -74,17 +74,7 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
     // Transform the API response to our format
     const homes = data.homes || data.data || data || [];
     
-    // Placeholder images from Unsplash - reliable and work without authentication
-    const placeholderImages = [
-      'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1576941089067-2de3c901e126?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&h=400&fit=crop',
-    ];
-    
-    return homes.map((home: any, index: number) => ({
+    return homes.map((home: any) => ({
       id: home.homeId || home.id || home._id || `home-${Math.random()}`,
       title: home.fullAddress || home.address || 'Property',
       address: home.fullAddress || home.address || '',
@@ -93,8 +83,8 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
       price: home.price || 0,
       bedrooms: home.beds || home.bedrooms,
       bathrooms: home.baths || home.bathrooms,
-      // Use placeholder images since Trestle API images require authentication
-      imageUrl: placeholderImages[index % placeholderImages.length],
+      // Use real images from the API
+      imageUrl: home.images?.[0] || home.image || home.photos?.[0] || '',
       images: home.images || home.photos || [],
       sqft: home.size || home.sqft,
       propertyType: home.cozyingPropertyType || home.propertyType || home.homeType,

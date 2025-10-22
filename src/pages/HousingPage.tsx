@@ -153,6 +153,8 @@ const HousingPage = () => {
                     alt={listing.title}
                     className="housing-card-image"
                     data-testid={`img-listing-${listing.id}`}
+                    crossOrigin="anonymous"
+                    referrerPolicy="no-referrer"
                     loading="lazy"
                   />
                   <div className="housing-card-content">
