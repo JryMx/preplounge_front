@@ -149,15 +149,11 @@ const HousingPage = () => {
               {listings.slice(0, 6).map((listing) => (
                 <div key={listing.id} className="housing-card" data-testid={`card-listing-${listing.id}`}>
                   <img
-                    src={listing.imageUrl || 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600'}
+                    src={listing.imageUrl}
                     alt={listing.title}
                     className="housing-card-image"
                     data-testid={`img-listing-${listing.id}`}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600';
-                    }}
+                    loading="lazy"
                   />
                   <div className="housing-card-content">
                     <div className="housing-card-header">
