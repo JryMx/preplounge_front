@@ -201,6 +201,26 @@ const translations = {
     'profile.comparison.no-results': '와 일치하는 학교를 찾을 수 없습니다',
     'profile.comparison.no-results.action': '다른 이름으로 검색해보세요.',
     'profile.comparison.empty': '프로필을 완성하고 비교 결과를 확인하세요.',
+    
+    // Housing Page
+    'housing.hero.subtitle': 'Searching for your Dream Home',
+    'housing.hero.title': '캠퍼스 근처, 완벽한 집을 찾아보세요.',
+    'housing.hero.description': '대학 주변의 모든 매물을 한눈에!\n온라인으로 쉽고 간편하게 원하는 조건에 맞는 집을 구경하세요.',
+    'housing.hero.button': '지금 바로 매물 찾기',
+    'housing.search.title': '원하는 조건으로 간편하게 검색',
+    'housing.search.description': '필터 하나만 클릭하면 딱 맞는 집이 나타납니다',
+    'housing.search.placeholder': '대학교 지역을 입력하세요.',
+    'housing.listings.title': '하버드 근처 새로 나온 집',
+    'housing.badge.available': '입주가능',
+    'housing.price.period': '/월',
+    'housing.button.details': '자세히 보기',
+    'housing.features.title': '더 쉽고 빠르게 집을 찾는 방법',
+    'housing.features.location.title': '대학교 주변 매물만 모아서',
+    'housing.features.location.description': '대학교 지역을 검색하면 캠퍼스 주변 매물만 자동으로 필터링됩니다.\n수천 개의 불필요한 매물 대신 정말 필요한 집만 찾아보세요.',
+    'housing.features.search.title': '원하는 조건으로 검색',
+    'housing.features.search.description': '예산, 방 개수, 거리, 집 타입 등 원하는 조건을 선택하면 딱 맞는 매물만 보여드립니다.\n복잡한 검색 없이 클릭 몇 번으로 완벽한 집을 찾으세요.',
+    'housing.features.expert.title': '처음이라면 전문가와 상담',
+    'housing.features.expert.description': '미국 집 구하기가 처음이라 막막하신가요? 현지 부동산 전문가와 카카오톡으로 편하게 상담할 수 있습니다.',
   },
   en: {
     // Navbar
@@ -392,6 +412,26 @@ const translations = {
     'profile.comparison.no-results': 'No schools found matching',
     'profile.comparison.no-results.action': 'Try searching with a different name.',
     'profile.comparison.empty': 'Complete your profile to view comparison results.',
+    
+    // Housing Page
+    'housing.hero.subtitle': 'Searching for your Dream Home',
+    'housing.hero.title': 'Find Your Perfect Home Near Campus.',
+    'housing.hero.description': 'Browse all listings near your university at a glance!\nFind your ideal home online, easily and conveniently.',
+    'housing.hero.button': 'Find Properties Now',
+    'housing.search.title': 'Search Easily with Your Preferences',
+    'housing.search.description': 'Just one click on a filter and the perfect home appears',
+    'housing.search.placeholder': 'Enter university location.',
+    'housing.listings.title': 'New Listings Near Harvard',
+    'housing.badge.available': 'Available',
+    'housing.price.period': '/mo',
+    'housing.button.details': 'View Details',
+    'housing.features.title': 'Easier and Faster Way to Find Housing',
+    'housing.features.location.title': 'Curated Near Universities',
+    'housing.features.location.description': 'Search by university location and automatically filter for properties near campus.\nFind only the homes you need instead of thousands of irrelevant listings.',
+    'housing.features.search.title': 'Search by Your Preferences',
+    'housing.features.search.description': 'Select your preferred criteria like budget, bedrooms, distance, and property type to see only matching listings.\nFind your perfect home with just a few clicks without complex searches.',
+    'housing.features.expert.title': 'Expert Consultation for First-Timers',
+    'housing.features.expert.description': 'Finding housing in the U.S. for the first time and feeling overwhelmed? Get convenient consultation with local real estate experts via KakaoTalk.',
   },
 };
 
