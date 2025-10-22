@@ -29,7 +29,8 @@ async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
   const apiKey = import.meta.env.VITE_COZYING_API_KEY;
   
   if (!apiKey) {
-    throw new Error('COZYING_API_KEY is not configured');
+    console.warn('COZYING_API_KEY is not configured');
+    throw new Error('API key not configured');
   }
 
   const headers = {
@@ -38,16 +39,23 @@ async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
     ...options.headers,
   };
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers,
-  });
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      ...options,
+      headers,
+    });
 
-  if (!response.ok) {
-    throw new Error(`Cozying API error: ${response.status} ${response.statusText}`);
+    if (!response.ok) {
+      const text = await response.text();
+      console.error(`Cozying API error: ${response.status}`, text);
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw error;
   }
-
-  return response.json();
 }
 
 export async function searchListings(params: CozyingSearchParams = {}): Promise<CozyingListing[]> {
@@ -65,10 +73,11 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
   
   try {
     const data = await fetchWithAuth(endpoint);
+    console.log('API Response:', data);
     return data.items || data.data || data || [];
   } catch (error) {
     console.error('Error fetching Cozying listings:', error);
-    return [];
+    throw error; // Throw error so we can handle it in the component
   }
 }
 

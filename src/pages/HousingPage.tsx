@@ -23,11 +23,17 @@ const HousingPage = () => {
         university: location || searchLocation,
         limit: 6,
       });
-      setListings(results);
+      
+      if (results && results.length > 0) {
+        setListings(results);
+      } else {
+        console.warn('No results from API, using mock data');
+        setListings(getMockListings(location || searchLocation));
+      }
     } catch (error) {
-      console.error('Failed to load listings:', error);
+      console.error('Failed to load listings, using mock data:', error);
       // Fallback to mock data if API fails
-      setListings(getMockListings());
+      setListings(getMockListings(location || searchLocation));
     } finally {
       setLoading(false);
     }
@@ -255,12 +261,12 @@ const HousingPage = () => {
 };
 
 // Mock data fallback
-function getMockListings(): CozyingListing[] {
-  return [
+function getMockListings(location: string = 'Harvard'): CozyingListing[] {
+  const baseListings = [
     {
       id: 'mock-1',
-      title: 'Harvard Yard Dormitory',
-      address: '123 Harvard St',
+      title: `${location} Yard Dormitory`,
+      address: `123 ${location} St`,
       city: 'Cambridge',
       state: 'MA',
       price: 1800,
@@ -271,7 +277,7 @@ function getMockListings(): CozyingListing[] {
     },
     {
       id: 'mock-2',
-      title: 'Modern Studio Near Harvard',
+      title: `Modern Studio Near ${location}`,
       address: '456 Mass Ave',
       city: 'Cambridge',
       state: 'MA',
@@ -293,7 +299,45 @@ function getMockListings(): CozyingListing[] {
       amenities: ['Garden', 'Shared Kitchen', 'Laundry'],
       available: true,
     },
+    {
+      id: 'mock-4',
+      title: 'Luxury Apartment with View',
+      address: '321 University Ave',
+      city: 'Cambridge',
+      state: 'MA',
+      price: 3200,
+      imageUrl: 'https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg?auto=compress&cs=tinysrgb&w=600',
+      distance: '0.5 miles',
+      amenities: ['Balcony', 'Pool', 'Concierge'],
+      available: true,
+    },
+    {
+      id: 'mock-5',
+      title: 'Student-Friendly 2BR',
+      address: '555 College Road',
+      city: 'Cambridge',
+      state: 'MA',
+      price: 2000,
+      imageUrl: 'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=600',
+      distance: '0.6 miles',
+      amenities: ['Furnished', 'WiFi', 'Utilities Included'],
+      available: true,
+    },
+    {
+      id: 'mock-6',
+      title: 'Quiet Single Room',
+      address: '888 Oak Street',
+      city: 'Cambridge',
+      state: 'MA',
+      price: 1200,
+      imageUrl: 'https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=600',
+      distance: '1.2 miles',
+      amenities: ['Quiet Area', 'Desk', 'Closet'],
+      available: true,
+    },
   ];
+
+  return baseListings;
 }
 
 export default HousingPage;
