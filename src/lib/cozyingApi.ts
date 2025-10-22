@@ -11,92 +11,147 @@ export interface CozyingListing {
   distance?: string;
   amenities?: string[];
   available: boolean;
+  sqft?: number;
+  propertyType?: string;
+  images?: string[];
 }
 
 export interface CozyingSearchParams {
-  location?: string;
-  university?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  bedrooms?: number;
-  limit?: number;
-  offset?: number;
+  city?: string;
+  state?: string;
+  sorted?: 'newest' | 'oldest' | 'price_low' | 'price_high';
+  currentPage?: number;
+  homesPerGroup?: number;
 }
 
 const API_BASE_URL = 'https://dev.cozying.ai/cozying-api/v1';
 
-async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
-  const apiKey = import.meta.env.VITE_COZYING_API_KEY;
-  
-  if (!apiKey) {
-    console.warn('COZYING_API_KEY is not configured');
-    throw new Error('API key not configured');
+// Helper functions to extract city/state from address
+function extractCity(address: string): string {
+  if (!address) return '';
+  // Format: "123 Main St, City, STATE 12345"
+  const parts = address.split(',');
+  if (parts.length >= 2) {
+    return parts[parts.length - 2].trim();
   }
+  return '';
+}
 
-  const headers = {
-    'Authorization': `Bearer ${apiKey}`,
-    'Content-Type': 'application/json',
-    ...options.headers,
-  };
-
-  try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      headers,
-    });
-
-    if (!response.ok) {
-      const text = await response.text();
-      console.error(`Cozying API error: ${response.status}`, text);
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error('Fetch error:', error);
-    throw error;
+function extractState(address: string): string {
+  if (!address) return '';
+  // Format: "123 Main St, City, STATE 12345"
+  const parts = address.split(',');
+  if (parts.length >= 3) {
+    const lastPart = parts[parts.length - 1].trim();
+    const stateMatch = lastPart.match(/^([A-Z]{2})/);
+    return stateMatch ? stateMatch[1] : '';
   }
+  return '';
 }
 
 export async function searchListings(params: CozyingSearchParams = {}): Promise<CozyingListing[]> {
   const queryParams = new URLSearchParams();
   
-  if (params.location) queryParams.append('location', params.location);
-  if (params.university) queryParams.append('university', params.university);
-  if (params.minPrice) queryParams.append('minPrice', params.minPrice.toString());
-  if (params.maxPrice) queryParams.append('maxPrice', params.maxPrice.toString());
-  if (params.bedrooms) queryParams.append('bedrooms', params.bedrooms.toString());
-  if (params.limit) queryParams.append('limit', params.limit.toString());
-  if (params.offset) queryParams.append('offset', params.offset.toString());
+  if (params.city) queryParams.append('city', params.city);
+  if (params.state) queryParams.append('state', params.state);
+  queryParams.append('sorted', params.sorted || 'newest');
+  queryParams.append('currentPage', (params.currentPage || 1).toString());
+  queryParams.append('homesPerGroup', (params.homesPerGroup || 200).toString());
 
-  const endpoint = `/search/listings?${queryParams.toString()}`;
+  const endpoint = `/home/list?${queryParams.toString()}`;
   
   try {
-    const data = await fetchWithAuth(endpoint);
+    const response = await fetch(`${API_BASE_URL}${endpoint}`);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
     console.log('API Response:', data);
-    return data.items || data.data || data || [];
+    
+    // Transform the API response to our format
+    const homes = data.homes || data.data || data || [];
+    return homes.map((home: any) => ({
+      id: home.homeId || home.id || home._id || `home-${Math.random()}`,
+      title: home.fullAddress || home.address || 'Property',
+      address: home.fullAddress || home.address || '',
+      city: extractCity(home.fullAddress) || home.city || '',
+      state: extractState(home.fullAddress) || home.state || '',
+      price: home.price || 0,
+      bedrooms: home.beds || home.bedrooms,
+      bathrooms: home.baths || home.bathrooms,
+      imageUrl: home.images?.[0] || home.image || 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600',
+      images: home.images || home.photos || [],
+      sqft: home.size || home.sqft,
+      propertyType: home.cozyingPropertyType || home.propertyType || home.homeType,
+      amenities: home.amenities || [],
+      available: home.homeStatus === 'Active' || true,
+    }));
   } catch (error) {
     console.error('Error fetching Cozying listings:', error);
-    throw error; // Throw error so we can handle it in the component
-  }
-}
-
-export async function getHomeList(): Promise<CozyingListing[]> {
-  try {
-    const data = await fetchWithAuth('/home/list');
-    return data.items || data.data || data || [];
-  } catch (error) {
-    console.error('Error fetching home list:', error);
-    return [];
+    throw error;
   }
 }
 
 export async function autocompleteSearch(query: string): Promise<string[]> {
   try {
-    const data = await fetchWithAuth(`/search/autocomplete?q=${encodeURIComponent(query)}`);
+    const response = await fetch(`${API_BASE_URL}/search/autocomplete?q=${encodeURIComponent(query)}`);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
     return data.suggestions || data || [];
   } catch (error) {
     console.error('Error with autocomplete:', error);
     return [];
   }
+}
+
+// Helper to parse location into city and state
+export function parseLocation(location: string): { city?: string; state?: string } {
+  const parts = location.split(',').map(p => p.trim());
+  
+  if (parts.length === 2) {
+    return { city: parts[0], state: parts[1] };
+  } else if (parts.length === 1) {
+    // Assume it's a city name, we'll try common university cities
+    return { city: parts[0] };
+  }
+  
+  return {};
+}
+
+// Map university names to cities
+export function getUniversityLocation(university: string): { city: string; state: string } | null {
+  const universityMap: Record<string, { city: string; state: string }> = {
+    'harvard': { city: 'Cambridge', state: 'MA' },
+    'mit': { city: 'Cambridge', state: 'MA' },
+    'stanford': { city: 'Stanford', state: 'CA' },
+    'berkeley': { city: 'Berkeley', state: 'CA' },
+    'ucla': { city: 'Los Angeles', state: 'CA' },
+    'usc': { city: 'Los Angeles', state: 'CA' },
+    'columbia': { city: 'New York', state: 'NY' },
+    'nyu': { city: 'New York', state: 'NY' },
+    'yale': { city: 'New Haven', state: 'CT' },
+    'princeton': { city: 'Princeton', state: 'NJ' },
+    'penn': { city: 'Philadelphia', state: 'PA' },
+    'upenn': { city: 'Philadelphia', state: 'PA' },
+    'cornell': { city: 'Ithaca', state: 'NY' },
+    'brown': { city: 'Providence', state: 'RI' },
+    'dartmouth': { city: 'Hanover', state: 'NH' },
+    'duke': { city: 'Durham', state: 'NC' },
+    'northwestern': { city: 'Evanston', state: 'IL' },
+    'uchicago': { city: 'Chicago', state: 'IL' },
+    'chicago': { city: 'Chicago', state: 'IL' },
+    'umich': { city: 'Ann Arbor', state: 'MI' },
+    'michigan': { city: 'Ann Arbor', state: 'MI' },
+    'uva': { city: 'Charlottesville', state: 'VA' },
+    'virginia': { city: 'Charlottesville', state: 'VA' },
+  };
+  
+  const normalized = university.toLowerCase().trim();
+  return universityMap[normalized] || null;
 }

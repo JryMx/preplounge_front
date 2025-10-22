@@ -11,34 +11,38 @@ Integrated the Housing Support page with Cozying API for real estate listings:
 #### Implementation:
 1. **API Client Library** (`src/lib/cozyingApi.ts`):
    - Created TypeScript interfaces for Cozying listings and search parameters
-   - Implemented authentication with Bearer token from environment variable
-   - Added functions for: searchListings(), getHomeList(), autocompleteSearch()
-   - Error handling with fallback to mock data
+   - No authentication required - API is publicly accessible
+   - Added functions for: searchListings(), autocompleteSearch()
+   - Data transformation to map Cozying API response to app format
+   - Helper functions to parse university names to city/state (20+ universities mapped)
+   - City/state extraction from full addresses
 
-2. **Environment Configuration**:
-   - COZYING_API_KEY stored in Replit Secrets
-   - Exposed as VITE_COZYING_API_KEY for frontend access
-   - Secure API key management following best practices
-
-3. **Enhanced HousingPage Features**:
-   - Real-time data fetching from Cozying API on page load
-   - Search functionality with university location filtering
+2. **Enhanced HousingPage Features**:
+   - Real-time data fetching from Cozying API on page load (starts with Fresno, CA)
+   - Search functionality with:
+     - University name recognition (e.g., "Harvard" → "Cambridge, MA")
+     - City, State format (e.g., "Fresno, CA")
+     - City-only searches with default states
    - Loading states with spinner animation
-   - Empty states for no results
-   - Fallback to mock data if API fails
+   - Empty states when no listings found
+   - Displays real property data: images, prices, beds/baths, addresses
    - Complete bilingual support maintained
+   - Shows up to 6 listings per search
 
-4. **User Interface Updates**:
+3. **User Interface Updates**:
    - Interactive search input with Enter key support
-   - Search button added to input wrapper
+   - Search button with yellow theme matching design system
    - Loading and empty state styling
    - Data-testid attributes for all interactive elements
-   - Dynamic rendering of listings with real data
+   - Dynamic rendering with real listing data from Cozying API
+   - Property cards show: images, full address, price, bedrooms, bathrooms
 
 #### API Endpoints Used:
-- `/search/listings` - Search for properties with filters
-- `/home/list` - Get list of available homes
-- `/search/autocomplete` - Autocomplete search suggestions
+- `GET /home/list?city={city}&state={state}&sorted=newest&currentPage=1&homesPerGroup=12` - Main endpoint for property listings
+- No authentication required - publicly accessible API
+
+#### Supported University Searches:
+Harvard, MIT, Stanford, Berkeley, UCLA, USC, Columbia, NYU, Yale, Princeton, Penn/UPenn, Cornell, Brown, Dartmouth, Duke, Northwestern, UChicago, Michigan/UMich, Virginia/UVA, and more
 
 ### October 22, 2025 - Housing Support Page Translation ✅
 Complete bilingual translation of the Housing Support page with 17 translation keys:

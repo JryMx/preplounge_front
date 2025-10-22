@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, Users, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { searchListings, CozyingListing } from '../lib/cozyingApi';
+import { searchListings, CozyingListing, parseLocation, getUniversityLocation } from '../lib/cozyingApi';
 import '../hero-section-style.css';
 import './housing-page.css';
 
@@ -10,39 +10,48 @@ const HousingPage = () => {
   const [listings, setListings] = useState<CozyingListing[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchLocation, setSearchLocation] = useState('Harvard');
+  const [currentLocation, setCurrentLocation] = useState('Fresno, CA');
 
   useEffect(() => {
-    loadListings();
+    // Start with Fresno, CA which has listings
+    loadListings('Fresno', 'CA');
   }, []);
 
-  const loadListings = async (location?: string) => {
+  const loadListings = async (city: string, state: string) => {
     setLoading(true);
     try {
       const results = await searchListings({
-        university: location || searchLocation,
-        limit: 6,
+        city,
+        state,
+        sorted: 'newest',
+        currentPage: 1,
+        homesPerGroup: 12,
       });
       
-      if (results && results.length > 0) {
-        setListings(results);
-      } else {
-        console.warn('No results from API, using mock data');
-        setListings(getMockListings(location || searchLocation));
-      }
+      setListings(results);
+      setCurrentLocation(`${city}, ${state}`);
     } catch (error) {
-      console.error('Failed to load listings, using mock data:', error);
-      // Fallback to mock data if API fails
-      setListings(getMockListings(location || searchLocation));
+      console.error('Failed to load listings:', error);
+      setListings([]);
     } finally {
       setLoading(false);
     }
   };
 
   const handleSearch = () => {
-    if (searchQuery.trim()) {
-      setSearchLocation(searchQuery);
-      loadListings(searchQuery);
+    if (!searchQuery.trim()) return;
+
+    // First, try to match a university name
+    const universityLocation = getUniversityLocation(searchQuery);
+    if (universityLocation) {
+      loadListings(universityLocation.city, universityLocation.state);
+      return;
+    }
+
+    // Otherwise, parse as city, state
+    const parsed = parseLocation(searchQuery);
+    if (parsed.city) {
+      loadListings(parsed.city, parsed.state || 'CA');
     }
   };
 
@@ -114,7 +123,7 @@ const HousingPage = () => {
               className="housing-search-button"
               data-testid="button-search"
             >
-              {t('housing.search.title')}
+              Search
             </button>
           </div>
         </div>
@@ -123,7 +132,7 @@ const HousingPage = () => {
       <section className="housing-listings-section">
         <div className="housing-listings-container">
           <h3 className="housing-section-title" data-testid="text-listings-title">
-            {t('housing.listings.title')}
+            New Listings Near {currentLocation}
           </h3>
 
           {loading ? (
@@ -133,11 +142,11 @@ const HousingPage = () => {
             </div>
           ) : listings.length === 0 ? (
             <div className="housing-empty" data-testid="empty-listings">
-              <p>No listings found for this location. Try searching for a different university.</p>
+              <p>No listings found for {currentLocation}. Try searching for a different location.</p>
             </div>
           ) : (
             <div className="housing-grid">
-              {listings.map((listing) => (
+              {listings.slice(0, 6).map((listing) => (
                 <div key={listing.id} className="housing-card" data-testid={`card-listing-${listing.id}`}>
                   <img
                     src={listing.imageUrl || 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600'}
@@ -150,17 +159,23 @@ const HousingPage = () => {
                       <h4 className="housing-card-title" data-testid={`text-title-${listing.id}`}>
                         {listing.title}
                       </h4>
-                      <span className={`housing-badge ${listing.available ? 'available' : 'unavailable'}`} data-testid={`badge-status-${listing.id}`}>
+                      <span className="housing-badge available" data-testid={`badge-status-${listing.id}`}>
                         {t('housing.badge.available')}
                       </span>
                     </div>
                     <div className="housing-card-location" data-testid={`text-location-${listing.id}`}>
                       <MapPin className="h-4 w-4" />
                       <span>{listing.city}, {listing.state}</span>
-                      {listing.distance && (
+                      {listing.bedrooms && (
                         <>
                           <span className="housing-card-location-separator">•</span>
-                          <span>{listing.distance}</span>
+                          <span>{listing.bedrooms} bed</span>
+                        </>
+                      )}
+                      {listing.bathrooms && (
+                        <>
+                          <span className="housing-card-location-separator">•</span>
+                          <span>{listing.bathrooms} bath</span>
                         </>
                       )}
                     </div>
@@ -259,85 +274,5 @@ const HousingPage = () => {
     </div>
   );
 };
-
-// Mock data fallback
-function getMockListings(location: string = 'Harvard'): CozyingListing[] {
-  const baseListings = [
-    {
-      id: 'mock-1',
-      title: `${location} Yard Dormitory`,
-      address: `123 ${location} St`,
-      city: 'Cambridge',
-      state: 'MA',
-      price: 1800,
-      imageUrl: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600',
-      distance: 'On Campus',
-      amenities: ['WiFi', 'Dining Hall', 'Study Room'],
-      available: true,
-    },
-    {
-      id: 'mock-2',
-      title: `Modern Studio Near ${location}`,
-      address: '456 Mass Ave',
-      city: 'Cambridge',
-      state: 'MA',
-      price: 2400,
-      imageUrl: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=600',
-      distance: '0.3 miles',
-      amenities: ['Kitchen', 'Gym', 'Parking'],
-      available: true,
-    },
-    {
-      id: 'mock-3',
-      title: 'Cozy Shared House',
-      address: '789 Broadway',
-      city: 'Cambridge',
-      state: 'MA',
-      price: 1500,
-      imageUrl: 'https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=600',
-      distance: '0.8 miles',
-      amenities: ['Garden', 'Shared Kitchen', 'Laundry'],
-      available: true,
-    },
-    {
-      id: 'mock-4',
-      title: 'Luxury Apartment with View',
-      address: '321 University Ave',
-      city: 'Cambridge',
-      state: 'MA',
-      price: 3200,
-      imageUrl: 'https://images.pexels.com/photos/1571468/pexels-photo-1571468.jpeg?auto=compress&cs=tinysrgb&w=600',
-      distance: '0.5 miles',
-      amenities: ['Balcony', 'Pool', 'Concierge'],
-      available: true,
-    },
-    {
-      id: 'mock-5',
-      title: 'Student-Friendly 2BR',
-      address: '555 College Road',
-      city: 'Cambridge',
-      state: 'MA',
-      price: 2000,
-      imageUrl: 'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=600',
-      distance: '0.6 miles',
-      amenities: ['Furnished', 'WiFi', 'Utilities Included'],
-      available: true,
-    },
-    {
-      id: 'mock-6',
-      title: 'Quiet Single Room',
-      address: '888 Oak Street',
-      city: 'Cambridge',
-      state: 'MA',
-      price: 1200,
-      imageUrl: 'https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=600',
-      distance: '1.2 miles',
-      amenities: ['Quiet Area', 'Desk', 'Closet'],
-      available: true,
-    },
-  ];
-
-  return baseListings;
-}
 
 export default HousingPage;
