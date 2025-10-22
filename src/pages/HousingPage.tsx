@@ -153,6 +153,11 @@ const HousingPage = () => {
                     alt={listing.title}
                     className="housing-card-image"
                     data-testid={`img-listing-${listing.id}`}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=600';
+                    }}
                   />
                   <div className="housing-card-content">
                     <div className="housing-card-header">
