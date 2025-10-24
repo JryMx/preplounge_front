@@ -25,7 +25,7 @@ export interface CozyingSearchParams {
   homesPerGroup?: number;
 }
 
-const API_BASE_URL = 'https://dev.cozying.ai/cozying-api/v1';
+const API_BASE_URL = 'https://cozying.ai/cozying-api/v1';
 
 // Helper functions to extract city/state from address
 function extractCity(address: string): string {
