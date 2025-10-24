@@ -25,7 +25,7 @@ export interface CozyingSearchParams {
   homesPerGroup?: number;
 }
 
-const API_BASE_URL = 'https://cozying.ai/cozying-api/v1';
+const API_BASE_URL = 'https://dev.cozying.ai/cozying-api/v1';
 
 // Helper functions to extract city/state from address
 function extractCity(address: string): string {
@@ -101,6 +101,10 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
     }));
   } catch (error) {
     console.error('Error fetching Cozying listings:', error);
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error name:', error.name);
+    }
     throw error;
   }
 }
