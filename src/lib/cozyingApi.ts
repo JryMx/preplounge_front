@@ -25,7 +25,7 @@ export interface CozyingSearchParams {
   homesPerGroup?: number;
 }
 
-const API_BASE_URL = 'https://cozying.ai/cozying-api/v1';
+const API_BASE_URL = 'https://dev.cozying.ai/cozying-api/v1';
 
 // Helper functions to extract city/state from address
 function extractCity(address: string): string {
@@ -60,12 +60,19 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
   queryParams.append('homesPerGroup', (params.homesPerGroup || 200).toString());
 
   const endpoint = `/home/list?${queryParams.toString()}`;
+  const fullUrl = `${API_BASE_URL}${endpoint}`;
   
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`);
+    console.log('Fetching from:', fullUrl);
+    const response = await fetch(fullUrl);
+    
+    console.log('Response status:', response.status);
+    console.log('Response ok:', response.ok);
     
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error('API error response:', errorText);
+      throw new Error(`API error: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
