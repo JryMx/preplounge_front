@@ -200,7 +200,6 @@ const HousingPage = () => {
                       <span className="housing-card-price" data-testid={`text-price-${listing.id}`}>
                         ${listing.price.toLocaleString()}
                       </span>
-                      <span className="housing-card-price-period">{t('housing.price.period')}</span>
                     </div>
                     {listing.amenities && listing.amenities.length > 0 && (
                       <div className="housing-card-amenities">
