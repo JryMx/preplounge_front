@@ -63,20 +63,13 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
   const fullUrl = `${API_BASE_URL}${endpoint}`;
   
   try {
-    console.log('Fetching from:', fullUrl);
     const response = await fetch(fullUrl);
     
-    console.log('Response status:', response.status);
-    console.log('Response ok:', response.ok);
-    
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('API error response:', errorText);
-      throw new Error(`API error: ${response.status} - ${errorText}`);
+      throw new Error(`API error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('API Response:', data);
     
     // Transform the API response to our format
     const homes = data.homes || data.data || data || [];
@@ -101,10 +94,6 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
     }));
   } catch (error) {
     console.error('Error fetching Cozying listings:', error);
-    if (error instanceof Error) {
-      console.error('Error message:', error.message);
-      console.error('Error name:', error.name);
-    }
     throw error;
   }
 }
