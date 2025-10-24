@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, Users, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { searchListings, CozyingListing, parseLocation, getUniversityLocation } from '../lib/cozyingApi';
+import { searchListings, CozyingListing, parseLocation, getUniversityLocation, getCityState } from '../lib/cozyingApi';
 import '../hero-section-style.css';
 import './housing-page.css';
 
@@ -48,8 +48,22 @@ const HousingPage = () => {
       return;
     }
 
-    // Otherwise, parse as city, state
+    // Try parsing as "City, State" format
     const parsed = parseLocation(searchQuery);
+    if (parsed.city && parsed.state) {
+      // Has both city and state
+      loadListings(parsed.city, parsed.state);
+      return;
+    }
+
+    // Try matching city name to known cities
+    const cityLocation = getCityState(searchQuery);
+    if (cityLocation) {
+      loadListings(cityLocation.city, cityLocation.state);
+      return;
+    }
+
+    // If nothing matches, try the search query as-is with a default state
     if (parsed.city) {
       loadListings(parsed.city, parsed.state || 'CA');
     }

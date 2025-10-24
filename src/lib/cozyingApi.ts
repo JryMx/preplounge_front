@@ -159,3 +159,78 @@ export function getUniversityLocation(university: string): { city: string; state
   const normalized = university.toLowerCase().trim();
   return universityMap[normalized] || null;
 }
+
+// Map major U.S. cities to their states
+export function getCityState(cityName: string): { city: string; state: string } | null {
+  const cityMap: Record<string, { city: string; state: string }> = {
+    // Major cities
+    'boston': { city: 'Boston', state: 'MA' },
+    'new york': { city: 'New York', state: 'NY' },
+    'nyc': { city: 'New York', state: 'NY' },
+    'los angeles': { city: 'Los Angeles', state: 'CA' },
+    'la': { city: 'Los Angeles', state: 'CA' },
+    'chicago': { city: 'Chicago', state: 'IL' },
+    'houston': { city: 'Houston', state: 'TX' },
+    'phoenix': { city: 'Phoenix', state: 'AZ' },
+    'philadelphia': { city: 'Philadelphia', state: 'PA' },
+    'san antonio': { city: 'San Antonio', state: 'TX' },
+    'san diego': { city: 'San Diego', state: 'CA' },
+    'dallas': { city: 'Dallas', state: 'TX' },
+    'san jose': { city: 'San Jose', state: 'CA' },
+    'austin': { city: 'Austin', state: 'TX' },
+    'jacksonville': { city: 'Jacksonville', state: 'FL' },
+    'fort worth': { city: 'Fort Worth', state: 'TX' },
+    'columbus': { city: 'Columbus', state: 'OH' },
+    'charlotte': { city: 'Charlotte', state: 'NC' },
+    'san francisco': { city: 'San Francisco', state: 'CA' },
+    'sf': { city: 'San Francisco', state: 'CA' },
+    'indianapolis': { city: 'Indianapolis', state: 'IN' },
+    'seattle': { city: 'Seattle', state: 'WA' },
+    'denver': { city: 'Denver', state: 'CO' },
+    'washington': { city: 'Washington', state: 'DC' },
+    'dc': { city: 'Washington', state: 'DC' },
+    'nashville': { city: 'Nashville', state: 'TN' },
+    'el paso': { city: 'El Paso', state: 'TX' },
+    'detroit': { city: 'Detroit', state: 'MI' },
+    'portland': { city: 'Portland', state: 'OR' },
+    'memphis': { city: 'Memphis', state: 'TN' },
+    'louisville': { city: 'Louisville', state: 'KY' },
+    'baltimore': { city: 'Baltimore', state: 'MD' },
+    'milwaukee': { city: 'Milwaukee', state: 'WI' },
+    'albuquerque': { city: 'Albuquerque', state: 'NM' },
+    'tucson': { city: 'Tucson', state: 'AZ' },
+    'fresno': { city: 'Fresno', state: 'CA' },
+    'sacramento': { city: 'Sacramento', state: 'CA' },
+    'kansas city': { city: 'Kansas City', state: 'MO' },
+    'mesa': { city: 'Mesa', state: 'AZ' },
+    'atlanta': { city: 'Atlanta', state: 'GA' },
+    'colorado springs': { city: 'Colorado Springs', state: 'CO' },
+    'raleigh': { city: 'Raleigh', state: 'NC' },
+    'omaha': { city: 'Omaha', state: 'NE' },
+    'miami': { city: 'Miami', state: 'FL' },
+    'oakland': { city: 'Oakland', state: 'CA' },
+    'minneapolis': { city: 'Minneapolis', state: 'MN' },
+    'tulsa': { city: 'Tulsa', state: 'OK' },
+    'cleveland': { city: 'Cleveland', state: 'OH' },
+    'wichita': { city: 'Wichita', state: 'KS' },
+    'arlington': { city: 'Arlington', state: 'TX' },
+    'new orleans': { city: 'New Orleans', state: 'LA' },
+    // College towns
+    'cambridge': { city: 'Cambridge', state: 'MA' },
+    'palo alto': { city: 'Palo Alto', state: 'CA' },
+    'berkeley': { city: 'Berkeley', state: 'CA' },
+    'new haven': { city: 'New Haven', state: 'CT' },
+    'princeton': { city: 'Princeton', state: 'NJ' },
+    'ithaca': { city: 'Ithaca', state: 'NY' },
+    'providence': { city: 'Providence', state: 'RI' },
+    'hanover': { city: 'Hanover', state: 'NH' },
+    'durham': { city: 'Durham', state: 'NC' },
+    'evanston': { city: 'Evanston', state: 'IL' },
+    'ann arbor': { city: 'Ann Arbor', state: 'MI' },
+    'charlottesville': { city: 'Charlottesville', state: 'VA' },
+    'stanford': { city: 'Stanford', state: 'CA' },
+  };
+  
+  const normalized = cityName.toLowerCase().trim();
+  return cityMap[normalized] || null;
+}
