@@ -140,6 +140,58 @@ const STATE_NAME_TO_CODE: Record<string, string> = Object.entries(US_STATES).red
   {} as Record<string, string>
 );
 
+// Geocode using Nominatim (OpenStreetMap) - converts "boston" to "Boston, MA"
+export async function geocodeLocation(query: string): Promise<{ city: string; state: string } | null> {
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?` + 
+      `q=${encodeURIComponent(query)}, United States` +
+      `&format=json` +
+      `&addressdetails=1` +
+      `&limit=1`;
+    
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'PrepLounge/1.0 (Student housing search app)'
+      }
+    });
+    
+    if (!response.ok) {
+      return null;
+    }
+    
+    const data = await response.json();
+    
+    if (data && data.length > 0) {
+      const result = data[0];
+      const address = result.address;
+      
+      // Extract city (try different fields)
+      const city = address.city || 
+                   address.town || 
+                   address.village || 
+                   address.municipality ||
+                   address.county;
+      
+      // Extract state
+      const state = address.state;
+      
+      if (city && state) {
+        // Convert state name to code
+        const stateCode = STATE_NAME_TO_CODE[state.toLowerCase()];
+        return {
+          city,
+          state: stateCode || state
+        };
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Geocoding error:', error);
+    return null;
+  }
+}
+
 // Smart location parser - handles various formats without hardcoded city lists
 export function parseLocation(location: string): { city: string; state: string } | null {
   if (!location || !location.trim()) {

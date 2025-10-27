@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, Users, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { searchListings, CozyingListing, parseLocation } from '../lib/cozyingApi';
+import { searchListings, CozyingListing, parseLocation, geocodeLocation } from '../lib/cozyingApi';
 import '../hero-section-style.css';
 import './housing-page.css';
 
@@ -41,24 +41,41 @@ const HousingPage = () => {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!searchQuery.trim()) return;
 
-    // Use smart location parser
+    // First, try parsing structured formats like "Boston, MA"
     const parsed = parseLocation(searchQuery);
-    console.log('Search query:', searchQuery);
-    console.log('Parsed result:', parsed);
     
     if (parsed && parsed.city && parsed.state) {
-      // Successfully parsed city and state
-      console.log('Loading listings for:', parsed.city, parsed.state);
+      // Successfully parsed - has both city and state
       loadListings(parsed.city, parsed.state);
       setErrorMessage('');
-    } else {
-      // Ambiguous location - need more info
-      console.log('Could not parse location, showing error');
+      return;
+    }
+    
+    // If parsing failed, try geocoding (converts "boston" → "Boston, MA")
+    setLoading(true);
+    setErrorMessage('');
+    
+    try {
+      const geocoded = await geocodeLocation(searchQuery);
+      
+      if (geocoded && geocoded.city && geocoded.state) {
+        // Successfully geocoded
+        loadListings(geocoded.city, geocoded.state);
+      } else {
+        // Geocoding failed - show error
+        setLoading(false);
+        setErrorMessage(
+          `Could not find "${searchQuery}". Try: "Boston", "Austin, TX", or "Seattle WA"`
+        );
+      }
+    } catch (error) {
+      console.error('Geocoding error:', error);
+      setLoading(false);
       setErrorMessage(
-        `Please specify the state for "${searchQuery}". Try formats like: "${searchQuery}, CA" or "${searchQuery} California"`
+        `Error searching for "${searchQuery}". Please try again.`
       );
     }
   };
