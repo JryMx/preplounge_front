@@ -5,59 +5,67 @@ PrepLounge is a study abroad platform focused on helping students plan their jou
 
 ## Recent Changes
 
+### October 27, 2025 - Smart Location Search System ✅
+Replaced hardcoded location mappings with an intelligent, generalizable location parser:
+
+#### Problem Solved:
+- ❌ **Old System**: Hardcoded lists of 20 universities and 60+ cities caused bugs like "New York City" → "New York City, CA"
+- ✅ **New System**: Smart parser that handles any city/state combination without hardcoded lists
+
+#### Implementation Details:
+
+1. **Smart Location Parser** (`parseLocation()` in `src/lib/cozyingApi.ts`):
+   - **No hardcoded city lists** - works with ANY U.S. city
+   - Recognizes all 50 U.S. states + DC by both codes (e.g., "NY") and full names (e.g., "New York")
+   - Handles multiple input formats:
+     - Comma-separated: "Boston, MA" or "Boston, Massachusetts"
+     - Space-separated: "Boston MA" or "Boston Massachusetts"
+     - City only: Returns null to prompt user for state (prevents incorrect defaults)
+   - State validation ensures only valid U.S. states are accepted
+
+2. **Improved Search Logic** (`src/pages/HousingPage.tsx`):
+   - Uses smart parser to extract city and state from user input
+   - Shows helpful error messages for ambiguous locations
+   - Error message includes examples: "Boston, MA" • "Austin, Texas" • "Seattle WA"
+   - No more defaulting to California for unknown cities
+   - Clear user feedback when state is needed
+
+3. **User Experience Improvements**:
+   - Price display fixed: Removed "/mo" suffix (listings are purchase prices, not rentals)
+   - Error messages with format examples when location is ambiguous
+   - Prevents incorrect searches (no more "New York City, CA")
+   - Works for any U.S. city/state combination without code changes
+
+#### Supported Input Formats:
+```
+✅ "Boston, MA"           → Boston, Massachusetts
+✅ "Austin, Texas"        → Austin, Texas  
+✅ "Seattle WA"           → Seattle, Washington
+✅ "San Francisco, CA"    → San Francisco, California
+✅ "Portland Oregon"      → Portland, Oregon
+❌ "New York City"        → Shows error: "Please specify state"
+❌ "Boston"               → Shows error: "Please specify state"
+```
+
 ### October 24, 2025 - Cozying Production API Integration ✅
 Successfully integrated the Housing Support page with Cozying's production API for real estate listings:
-
-#### Implementation:
-1. **API Client Library** (`src/lib/cozyingApi.ts`):
-   - Created TypeScript interfaces for Cozying listings and search parameters
-   - Production API endpoint: `https://cozying.ai/cozying-api/v1`
-   - CORS whitelisted for Replit domain
-   - Added functions for: searchListings(), autocompleteSearch()
-   - Data transformation to map Cozying API response to app format
-   - Helper functions to parse university names to city/state (20+ universities mapped)
-   - City/state mapping for 60+ major U.S. cities
-   - City/state extraction from full addresses
-
-2. **Enhanced HousingPage Features**:
-   - Real-time data fetching from Cozying production API on page load (starts with Fresno, CA)
-   - Advanced search functionality with:
-     - University name recognition (e.g., "Harvard" → "Cambridge, MA")
-     - City, State format (e.g., "Boston, MA")
-     - City-only searches (e.g., "Boston" → "Boston, MA")
-     - Support for common abbreviations (NYC, LA, SF, DC)
-   - Loading states with spinner animation
-   - Empty states when no listings found
-   - Displays real property data with actual images from HomeJunction CDN
-   - Complete bilingual support maintained (Korean/English)
-   - Shows up to 6 listings per search
-
-3. **User Interface Updates**:
-   - Interactive search input with Enter key support
-   - Search button with yellow theme matching design system
-   - Loading and empty state styling
-   - Data-testid attributes for all interactive elements
-   - Dynamic rendering with real listing data from Cozying API
-   - Property cards show: images, full address, price, bedrooms, bathrooms
-   - Functional "View Details" buttons linking to full property pages on Cozying.ai
 
 #### API Integration Details:
 - **Production Endpoint**: `https://cozying.ai/cozying-api/v1/home/list`
 - **Image CDN**: HomeJunction (`https://listing-images.homejunction.com`)
-- **CORS**: Domain whitelisted by Cozying team
+- **CORS**: Domain whitelisted for public Replit domain (not localhost)
 - **No authentication required**: Publicly accessible API
 - **Response Format**: JSON with homes array containing property details and image URLs
 
-#### Supported Search Options:
-**Universities (20+)**: Harvard, MIT, Stanford, Berkeley, UCLA, USC, Columbia, NYU, Yale, Princeton, Penn/UPenn, Cornell, Brown, Dartmouth, Duke, Northwestern, UChicago, Michigan/UMich, Virginia/UVA
-
-**Major Cities (60+)**: Boston, New York, Los Angeles, Chicago, Houston, Phoenix, Philadelphia, San Diego, Dallas, San Francisco, Seattle, Denver, Atlanta, Miami, and more
-
-**Search Formats**:
-- University name: "Harvard", "MIT"
-- City only: "Boston", "Seattle"
-- City, State: "Austin, TX", "Portland, OR"
-- Abbreviations: "NYC", "LA", "SF", "DC"
+#### Features:
+- Real-time data fetching from Cozying production API
+- Displays real property data with actual images from HomeJunction CDN
+- Loading states with spinner animation
+- Empty states when no listings found
+- Complete bilingual support maintained (Korean/English)
+- Shows up to 6 listings per search
+- Property cards show: images, full address, price, bedrooms, bathrooms
+- Functional "View Details" buttons linking to Cozying.ai
 
 ### October 22, 2025 - Housing Support Page Translation ✅
 Complete bilingual translation of the Housing Support page with 17 translation keys:
