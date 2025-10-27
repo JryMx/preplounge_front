@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { User, Search, Calculator, Plus, X, Target } from 'lucide-react';
-import { useStudentProfile, RecommendationLetter } from '../context/StudentProfileContext';
+import { Search, Calculator, Target } from 'lucide-react';
+import { useStudentProfile } from '../context/StudentProfileContext';
 import { useLanguage } from '../context/LanguageContext';
 import './student-profile-page.css';
 
@@ -20,38 +20,8 @@ const StudentProfilePage: React.FC = () => {
     actScore: profile?.actScore?.toString() || '',
   });
 
-  // Legacy and citizenship data
-  const [legacyStatus, setLegacyStatus] = useState(profile?.legacyStatus || false);
-  const [citizenship, setCitizenship] = useState(profile?.citizenship || 'domestic');
-
-  const [recommendationLetters, setRecommendationLetters] = useState<RecommendationLetter[]>(
-    profile?.recommendationLetters || []
-  );
-
   const handleAcademicChange = (field: string, value: string) => {
     setAcademicData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const addRecommendationLetter = () => {
-    const newLetter: RecommendationLetter = {
-      id: Date.now().toString(),
-      source: 'Teacher',
-      depth: 'knows somewhat',
-      relevance: 'not relevant or not available',
-    };
-    setRecommendationLetters(prev => [...prev, newLetter]);
-  };
-
-  const updateRecommendationLetter = (id: string, field: keyof RecommendationLetter, value: string) => {
-    setRecommendationLetters(prev =>
-      prev.map(letter =>
-        letter.id === id ? { ...letter, [field]: value } : letter
-      )
-    );
-  };
-
-  const removeRecommendationLetter = (id: string) => {
-    setRecommendationLetters(prev => prev.filter(letter => letter.id !== id));
   };
 
   const handleSaveProfile = () => {
@@ -65,10 +35,10 @@ const StudentProfilePage: React.FC = () => {
       toeflScore: 0,
       intendedMajor: '',
       personalStatement: '',
-      legacyStatus,
-      citizenship: citizenship as 'domestic' | 'international',
+      legacyStatus: false,
+      citizenship: 'domestic' as 'domestic' | 'international',
       extracurriculars: [],
-      recommendationLetters,
+      recommendationLetters: [],
       applicationComponents: {
         secondarySchoolGPA: false,
         secondarySchoolRank: false,
@@ -105,10 +75,10 @@ const StudentProfilePage: React.FC = () => {
     ibScore: 0,
     toeflScore: 0,
     personalStatement: '',
-    legacyStatus,
-    citizenship,
+    legacyStatus: false,
+    citizenship: 'domestic',
     extracurriculars: [],
-    recommendationLetters,
+    recommendationLetters: [],
   });
 
   return (
@@ -126,7 +96,7 @@ const StudentProfilePage: React.FC = () => {
 
       <div className="profile-container">
 
-        {(profile || Object.values(academicData).some(v => v) || legacyStatus || citizenship !== 'domestic') && (
+        {(profile || Object.values(academicData).some(v => v)) && (
           <div className="profile-calculator-section" style={{marginBottom: '24px', padding: '40px 32px', borderRadius: '16px'}}>
             <div className="profile-calculator-result-no-border" style={{width: '100%', height: '100%', maxWidth: '600px', margin: '0 auto'}}>
               <div className="profile-calculator-result-content">
@@ -149,12 +119,12 @@ const StudentProfilePage: React.FC = () => {
           </div>
         )}
 
-        <div className="profile-tabs-container">
+        <div className="profile-tabs-container" style={{maxWidth: '800px', margin: '0 auto'}}>
           <div className="profile-tab-content">
-            <h2 className="profile-section-title">{t('profile.academic.title')}</h2>
+            <h2 className="profile-section-title" style={{textAlign: 'center', marginBottom: '32px'}}>{t('profile.academic.title')}</h2>
 
-            <div className="profile-form-grid">
-              <div className="profile-form-group">
+            <div className="profile-form-grid" style={{maxWidth: '600px', margin: '0 auto'}}>
+              <div className="profile-form-group" style={{gridColumn: '1 / -1'}}>
                 <label className="profile-form-label" data-testid="label-gpa">
                   {t('profile.academic.gpa')}
                 </label>
@@ -172,7 +142,7 @@ const StudentProfilePage: React.FC = () => {
                 />
               </div>
 
-              <div className="profile-form-group full-width">
+              <div className="profile-form-group" style={{gridColumn: '1 / -1'}}>
                 <label className="profile-form-label" data-testid="label-test">
                   {t('profile.academic.test')}
                 </label>
@@ -225,7 +195,7 @@ const StudentProfilePage: React.FC = () => {
               )}
 
               {academicData.standardizedTest === 'ACT' && (
-                <div className="profile-form-group">
+                <div className="profile-form-group" style={{gridColumn: '1 / -1'}}>
                   <label className="profile-form-label" data-testid="label-act">
                     {t('profile.academic.act')}
                   </label>
@@ -243,161 +213,7 @@ const StudentProfilePage: React.FC = () => {
               )}
             </div>
 
-            {/* Recommendations Section */}
-            <div className="extracurriculars-section" style={{marginTop: '32px'}}>
-              <div className="extracurriculars-header">
-                <h3 className="profile-section-title" style={{marginBottom: 0}}>{t('profile.recommendations.title')}</h3>
-                <button
-                  onClick={addRecommendationLetter}
-                  className="profile-btn-add"
-                  data-testid="button-add-recommendation"
-                >
-                  <Plus className="h-4 w-4" />
-                  {t('profile.recommendations.add')}
-                </button>
-              </div>
-
-              <div style={{marginTop: '16px'}}>
-                {recommendationLetters.map((letter, index) => (
-                  <div key={letter.id} className="extracurricular-card" data-testid={`card-recommendation-${letter.id}`}>
-                    <button
-                      onClick={() => removeRecommendationLetter(letter.id)}
-                      className="extracurricular-remove-btn"
-                      data-testid={`button-remove-recommendation-${letter.id}`}
-                    >
-                      <X className="h-5 w-5" />
-                    </button>
-                    <h4 className="profile-form-label" style={{marginBottom: '16px'}}>{t('profile.recommendations.letter')} {index + 1}</h4>
-
-                    <div className="profile-form-grid">
-                      <div className="profile-form-group">
-                        <label className="profile-form-label" data-testid={`label-recommendation-source-${letter.id}`}>
-                          {t('profile.recommendations.source')}
-                        </label>
-                        <select
-                          value={letter.source}
-                          onChange={(e) => updateRecommendationLetter(letter.id, 'source', e.target.value)}
-                          className="profile-form-select"
-                          data-testid={`select-recommendation-source-${letter.id}`}
-                        >
-                          <option value="Teacher">{t('profile.recommendations.source.teacher')}</option>
-                          <option value="Counselor">{t('profile.recommendations.source.counselor')}</option>
-                          <option value="Principal">{t('profile.recommendations.source.principal')}</option>
-                          <option value="Coach">{t('profile.recommendations.source.coach')}</option>
-                          <option value="Employer">{t('profile.recommendations.source.employer')}</option>
-                          <option value="Other">{t('profile.recommendations.source.other')}</option>
-                        </select>
-                      </div>
-
-                      <div className="profile-form-group">
-                        <label className="profile-form-label" data-testid={`label-recommendation-depth-${letter.id}`}>
-                          {t('profile.recommendations.depth')}
-                        </label>
-                        <select
-                          value={letter.depth || 'knows somewhat'}
-                          onChange={(e) => updateRecommendationLetter(letter.id, 'depth', e.target.value)}
-                          className="profile-form-select"
-                          data-testid={`select-recommendation-depth-${letter.id}`}
-                        >
-                          <option value="knows deeply">{t('profile.recommendations.depth.deep')}</option>
-                          <option value="knows somewhat">{t('profile.recommendations.depth.somewhat')}</option>
-                          <option value="barely knows">{t('profile.recommendations.depth.barely')}</option>
-                        </select>
-                      </div>
-
-                      <div className="profile-form-group">
-                        <label className="profile-form-label" data-testid={`label-recommendation-relevance-${letter.id}`}>
-                          {t('profile.recommendations.relevance')}
-                        </label>
-                        <select
-                          value={letter.relevance || 'not relevant or not available'}
-                          onChange={(e) => updateRecommendationLetter(letter.id, 'relevance', e.target.value)}
-                          className="profile-form-select"
-                          data-testid={`select-recommendation-relevance-${letter.id}`}
-                        >
-                          <option value="highly relevant to intended major">{t('profile.recommendations.relevance.highly')}</option>
-                          <option value="somewhat relevant to intended major">{t('profile.recommendations.relevance.somewhat')}</option>
-                          <option value="not relevant or not available">{t('profile.recommendations.relevance.not')}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-                {recommendationLetters.length === 0 && (
-                  <div className="text-center py-8 text-gray-500" data-testid="empty-recommendations">
-                    <User className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                    <p>{t('profile.recommendations.empty')}</p>
-                    <p className="text-sm">{t('profile.recommendations.empty.action')}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Legacy Status and Citizenship */}
-            <div className="grid md:grid-cols-2 gap-6" style={{marginTop: '32px'}}>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2" data-testid="label-legacy">
-                  {t('profile.legacy.title')}
-                </label>
-                <div className="flex items-center space-x-4">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="legacyStatus"
-                      checked={legacyStatus === true}
-                      onChange={() => setLegacyStatus(true)}
-                      className="mr-2"
-                      data-testid="radio-legacy-yes"
-                    />
-                    {t('profile.legacy.yes')}
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="legacyStatus"
-                      checked={legacyStatus === false}
-                      onChange={() => setLegacyStatus(false)}
-                      className="mr-2"
-                      data-testid="radio-legacy-no"
-                    />
-                    {t('profile.legacy.no')}
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2" data-testid="label-citizenship">
-                  {t('profile.citizenship.title')}
-                </label>
-                <div className="flex items-center space-x-4">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="citizenship"
-                      checked={citizenship === 'domestic'}
-                      onChange={() => setCitizenship('domestic')}
-                      className="mr-2"
-                      data-testid="radio-citizenship-domestic"
-                    />
-                    {t('profile.citizenship.domestic')}
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="citizenship"
-                      checked={citizenship === 'international'}
-                      onChange={() => setCitizenship('international')}
-                      className="mr-2"
-                      data-testid="radio-citizenship-international"
-                    />
-                    {t('profile.citizenship.international')}
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div className="profile-actions" style={{padding: '32px 0'}}>
+            <div className="profile-actions" style={{padding: '32px 0', maxWidth: '600px', margin: '0 auto'}}>
               <button
                 onClick={handleSaveProfile}
                 className="profile-btn-primary"

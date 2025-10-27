@@ -5,41 +5,45 @@ PrepLounge is a study abroad platform focused on helping students plan their jou
 
 ## Recent Changes
 
-### October 27, 2025 - Student Profile Page Simplification ✅
-Simplified the Student Profile page by removing unnecessary sections and focusing on core admissions data:
+### October 27, 2025 - Student Profile Page Ultra-Simplification ✅
+Drastically simplified the Student Profile page to focus solely on core test scores:
 
-#### Sections Removed:
+#### All Removed Sections:
 1. ❌ **English Proficiency Test**: Removed TOEFL/IELTS/Duolingo test selection and scoring
 2. ❌ **Intended Major**: Removed major selection dropdown
-3. ❌ **Application Checklist**: Removed 8-item progress tracker (GPA, rank, transcript, college prep, recommendations, extracurriculars, essay, test scores)
-4. ❌ **Non-Academic Tab**: Removed entire tab including:
-   - Personal statement/essay textarea
-   - Extracurriculars section (type, name, grades, recognition, hours, description)
-   - Tab navigation UI (Academic/Non-Academic tabs)
+3. ❌ **Application Checklist**: Removed 8-item progress tracker
+4. ❌ **Non-Academic Tab**: Removed entire tab with essays and extracurriculars
+5. ❌ **Recommendation Letters**: Removed entire recommendations section
+6. ❌ **Legacy Status**: Removed legacy admission status radio buttons
+7. ❌ **Citizenship**: Removed domestic/international selection
 
-#### Sections Retained:
-- ✅ **Profile Score Display**: Shows calculated score out of 100
-- ✅ **Academic Information**:
+#### Final Minimal Structure:
+- ✅ **Profile Score Display**: Shows calculated score out of 100 (when data entered)
+- ✅ **Academic Information Only**:
   - GPA input (0.00-4.00 scale)
   - Standardized test selection (SAT or ACT)
-  - SAT scores (EBRW and Math, 200-800 each)
-  - ACT composite score (1-36)
-- ✅ **Recommendations**: Add multiple recommendation letters with source, depth, and relevance
-- ✅ **Legacy & Citizenship**: Radio buttons for legacy status and domestic/international citizenship
-- ✅ **School Comparison**: Search schools and see safety/target/reach categorization based on profile score
+  - SAT scores (EBRW and Math, 200-800 each) - shown when SAT selected
+  - ACT composite score (1-36) - shown when ACT selected
+- ✅ **School Comparison**: Search schools and see safety/target/reach categorization
 
-#### Technical Changes:
-- Removed state variables: `activeTab`, `applicationComponents`, `nonAcademicData`, `extracurriculars`
-- Simplified state to: `academicData`, `legacyStatus`, `citizenship`, `recommendationLetters`
-- Removed unused functions: `handleNonAcademicChange`, `handleApplicationComponentChange`, `addExtracurricular`, `updateExtracurricular`, `removeExtracurricular`
-- Updated `handleSaveProfile` to use simplified state structure
-- Single-section layout (no tabs)
-- All interactive elements maintain proper `data-testid` attributes for testing
+#### Technical Implementation:
+- State reduced to: `academicData` and `searchQuery` only
+- Removed state: `activeTab`, `applicationComponents`, `nonAcademicData`, `extracurriculars`, `recommendationLetters`, `legacyStatus`, `citizenship`
+- Removed unused functions: all recommendation/extracurricular/legacy management functions
+- Form is now centered with max-width of 600px
+- Standardized test dropdown spans full width (no longer too long)
+- All interactive elements maintain proper `data-testid` attributes
+
+#### Layout Improvements:
+- **Centered design**: Form container max-width 800px, form fields max-width 600px
+- **Title centered**: "교과 정보" / "Academic Information" centered above form
+- **Better field widths**: GPA and test selection span full width, SAT scores side-by-side
+- **Clean spacing**: Proper padding and margins throughout
 
 #### User Experience:
-- Cleaner, more focused interface
-- Faster to complete (fewer fields)
-- Emphasizes core admissions factors: GPA, test scores, recommendations
+- Ultra-minimal interface - only 2-4 fields visible
+- Takes 30 seconds to complete
+- Focuses exclusively on GPA and standardized test scores
 - Maintains full bilingual support (Korean/English)
 
 ### October 27, 2025 - Smart Location Search with Geocoding ✅
