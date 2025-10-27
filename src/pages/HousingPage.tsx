@@ -175,7 +175,11 @@ const HousingPage = () => {
             </div>
           ) : listings.length === 0 ? (
             <div className="housing-empty" data-testid="empty-listings">
-              <p>No listings found for {currentLocation}. Try searching for a different location.</p>
+              <p className="text-lg font-semibold mb-2">No listings found for {currentLocation}</p>
+              <p className="text-gray-600 mb-4">The housing database currently has listings primarily in California.</p>
+              <p className="text-sm text-gray-500">
+                Try searching: <span className="font-medium">Fresno</span>, <span className="font-medium">Los Angeles</span>, <span className="font-medium">San Francisco</span>, or other California cities
+              </p>
             </div>
           ) : (
             <div className="housing-grid">
