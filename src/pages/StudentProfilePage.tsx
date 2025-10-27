@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { User, Search, Calculator, Plus, X } from 'lucide-react';
+import { User, Search, Calculator, Plus, X, Target } from 'lucide-react';
 import { useStudentProfile, RecommendationLetter } from '../context/StudentProfileContext';
 import { useLanguage } from '../context/LanguageContext';
 import './student-profile-page.css';
 
 const StudentProfilePage: React.FC = () => {
-  const navigate = useNavigate();
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
   const { t } = useLanguage();
 
@@ -128,7 +126,7 @@ const StudentProfilePage: React.FC = () => {
 
       <div className="profile-container">
 
-        {(profile || Object.values(academicData).some(v => v) || Object.values(nonAcademicData).some(v => v)) && (
+        {(profile || Object.values(academicData).some(v => v) || legacyStatus || citizenship !== 'domestic') && (
           <div className="profile-calculator-section" style={{marginBottom: '24px', padding: '40px 32px', borderRadius: '16px'}}>
             <div className="profile-calculator-result-no-border" style={{width: '100%', height: '100%', maxWidth: '600px', margin: '0 auto'}}>
               <div className="profile-calculator-result-content">
