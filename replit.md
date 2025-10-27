@@ -5,47 +5,53 @@ PrepLounge is a study abroad platform focused on helping students plan their jou
 
 ## Recent Changes
 
-### October 27, 2025 - Smart Location Search System ✅
-Replaced hardcoded location mappings with an intelligent, generalizable location parser:
+### October 27, 2025 - Smart Location Search with Geocoding ✅
+Implemented intelligent location search using OpenStreetMap's Nominatim API:
 
 #### Problem Solved:
-- ❌ **Old System**: Hardcoded lists of 20 universities and 60+ cities caused bugs like "New York City" → "New York City, CA"
-- ✅ **New System**: Smart parser that handles any city/state combination without hardcoded lists
+- ❌ **Old System**: Required exact formats like "Boston, MA" - users couldn't just type "boston"
+- ✅ **New System**: Type any city name and it automatically finds the city and state
 
 #### Implementation Details:
 
-1. **Smart Location Parser** (`parseLocation()` in `src/lib/cozyingApi.ts`):
-   - **No hardcoded city lists** - works with ANY U.S. city
-   - Recognizes all 50 U.S. states + DC by both codes (e.g., "NY") and full names (e.g., "New York")
-   - Handles multiple input formats:
-     - Comma-separated: "Boston, MA" or "Boston, Massachusetts"
-     - Space-separated: "Boston MA" or "Boston Massachusetts"
-     - City only: Returns null to prompt user for state (prevents incorrect defaults)
-   - State validation ensures only valid U.S. states are accepted
+1. **Nominatim Geocoding Integration** (`geocodeLocation()` in `src/lib/cozyingApi.ts`):
+   - **Free OpenStreetMap API** - No API key required
+   - Automatically converts simple city names to "City, State" format
+   - Examples: "boston" → "Boston, MA", "austin" → "Austin, TX"
+   - Handles misspellings and partial matches
+   - Rate-limited to 1 request/second (sufficient for user searches)
 
-2. **Improved Search Logic** (`src/pages/HousingPage.tsx`):
-   - Uses smart parser to extract city and state from user input
-   - Shows helpful error messages for ambiguous locations
-   - Error message includes examples: "Boston, MA" • "Austin, Texas" • "Seattle WA"
-   - No more defaulting to California for unknown cities
-   - Clear user feedback when state is needed
+2. **Two-Stage Search Logic** (`src/pages/HousingPage.tsx`):
+   - **Stage 1**: Try parsing structured input (e.g., "Boston, MA", "Seattle WA")
+   - **Stage 2**: If parsing fails, geocode the query (e.g., "boston" → "Boston, MA")
+   - Shows loading state during geocoding
+   - Clear error messages if location not found
 
-3. **User Experience Improvements**:
+3. **User Experience**:
+   - **Super simple**: Just type "boston", "austin", "seattle" - no state needed!
+   - Also supports structured formats: "Boston, MA", "Austin, Texas", "Seattle WA"
    - Price display fixed: Removed "/mo" suffix (listings are purchase prices, not rentals)
-   - Error messages with format examples when location is ambiguous
-   - Prevents incorrect searches (no more "New York City, CA")
-   - Works for any U.S. city/state combination without code changes
+   - Helpful error messages with examples if search fails
+   - Works for ANY U.S. city without code changes
 
 #### Supported Input Formats:
 ```
-✅ "Boston, MA"           → Boston, Massachusetts
-✅ "Austin, Texas"        → Austin, Texas  
-✅ "Seattle WA"           → Seattle, Washington
-✅ "San Francisco, CA"    → San Francisco, California
-✅ "Portland Oregon"      → Portland, Oregon
-❌ "New York City"        → Shows error: "Please specify state"
-❌ "Boston"               → Shows error: "Please specify state"
+✅ "boston"               → Boston, MA (via geocoding)
+✅ "austin"               → Austin, TX (via geocoding)
+✅ "new york"             → New York, NY (via geocoding)
+✅ "Boston, MA"           → Boston, MA (direct parse)
+✅ "Austin, Texas"        → Austin, TX (direct parse)
+✅ "Seattle WA"           → Seattle, WA (direct parse)
+✅ "San Francisco, CA"    → San Francisco, CA (direct parse)
+✅ "Portland Oregon"      → Portland, OR (direct parse)
 ```
+
+#### Technical Details:
+- **Geocoding API**: Nominatim (OpenStreetMap)
+- **Endpoint**: `https://nominatim.openstreetmap.org/search`
+- **Cost**: Free (open-source)
+- **Rate Limit**: 1 request/second
+- **Coverage**: All U.S. cities and towns
 
 ### October 24, 2025 - Cozying Production API Integration ✅
 Successfully integrated the Housing Support page with Cozying's production API for real estate listings:
