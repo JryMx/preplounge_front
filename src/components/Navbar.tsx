@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -12,6 +12,7 @@ const Navbar: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
   const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
   
   const toggleLanguage = () => {
     setLanguage(language === 'ko' ? 'en' : 'ko');
@@ -20,6 +21,19 @@ const Navbar: React.FC = () => {
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  const scrollToCalculator = () => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById('profile-calculator');
+        element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    } else {
+      const element = document.getElementById('profile-calculator');
+      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -56,9 +70,9 @@ const Navbar: React.FC = () => {
                 </div>
               )}
             </div>
-            <Link to="/student-profile" className="navbar-menu-link">
+            <button onClick={scrollToCalculator} className="navbar-menu-link" data-testid="link-profile">
               {t('nav.profile')}
-            </Link>
+            </button>
             <Link to="/consulting" className="navbar-menu-link">
               {t('nav.consulting')}
             </Link>
@@ -122,13 +136,16 @@ const Navbar: React.FC = () => {
                   </div>
                 )}
               </div>
-              <Link
-                to="/student-profile"
+              <button
+                onClick={() => {
+                  scrollToCalculator();
+                  setIsMenuOpen(false);
+                }}
                 className="navbar-mobile-link"
-                onClick={() => setIsMenuOpen(false)}
+                data-testid="link-profile-mobile"
               >
                 {t('nav.profile')}
-              </Link>
+              </button>
               <Link
                 to="/consulting"
                 className="navbar-mobile-link"

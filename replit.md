@@ -5,6 +5,22 @@ PrepLounge is a study abroad platform focused on helping students plan their jou
 
 ## Recent Changes
 
+### October 27, 2025 - Profile Analysis Navigation Update ✅
+Changed the "Profile Analysis" navigation link to scroll to the calculator section on the homepage instead of navigating to a separate page:
+
+#### Implementation:
+- Added `id="profile-calculator"` to the calculator section on the homepage
+- Modified navbar to use `scrollToCalculator()` function instead of Link component
+- Function checks current location and navigates to homepage first if needed
+- Then smoothly scrolls to the calculator section
+- Works on both desktop and mobile navigation
+
+#### User Experience:
+- Clicking "프로필 분석" / "Profile Analysis" in navbar scrolls to calculator
+- No page navigation required - instant access to calculator
+- Smooth scroll animation for better UX
+- Mobile menu closes automatically after clicking
+
 ### October 27, 2025 - Student Profile Page Ultra-Simplification ✅
 Drastically simplified the Student Profile page to focus solely on core test scores:
 

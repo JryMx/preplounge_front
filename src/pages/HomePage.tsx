@@ -78,7 +78,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Quick Profile Calculator */}
-      <section className="profile-calculator-section">
+      <section id="profile-calculator" className="profile-calculator-section">
         <div className="profile-calculator-container">
           <div className="profile-calculator-header">
             <div className="profile-calculator-title-group">
