@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, Users, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { searchListings, CozyingListing, parseLocation, getUniversityLocation, getCityState } from '../lib/cozyingApi';
+import { searchListings, CozyingListing, parseLocation } from '../lib/cozyingApi';
 import '../hero-section-style.css';
 import './housing-page.css';
 
@@ -11,6 +11,7 @@ const HousingPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentLocation, setCurrentLocation] = useState('Fresno, CA');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     // Start with Fresno, CA which has listings
@@ -19,6 +20,7 @@ const HousingPage = () => {
 
   const loadListings = async (city: string, state: string) => {
     setLoading(true);
+    setErrorMessage('');
     try {
       const results = await searchListings({
         city,
@@ -33,6 +35,7 @@ const HousingPage = () => {
     } catch (error) {
       console.error('Failed to load listings:', error);
       setListings([]);
+      setErrorMessage('Failed to load listings. Please try a different location.');
     } finally {
       setLoading(false);
     }
@@ -41,31 +44,18 @@ const HousingPage = () => {
   const handleSearch = () => {
     if (!searchQuery.trim()) return;
 
-    // First, try to match a university name
-    const universityLocation = getUniversityLocation(searchQuery);
-    if (universityLocation) {
-      loadListings(universityLocation.city, universityLocation.state);
-      return;
-    }
-
-    // Try parsing as "City, State" format
+    // Use smart location parser
     const parsed = parseLocation(searchQuery);
-    if (parsed.city && parsed.state) {
-      // Has both city and state
+    
+    if (parsed && parsed.city && parsed.state) {
+      // Successfully parsed city and state
       loadListings(parsed.city, parsed.state);
-      return;
-    }
-
-    // Try matching city name to known cities
-    const cityLocation = getCityState(searchQuery);
-    if (cityLocation) {
-      loadListings(cityLocation.city, cityLocation.state);
-      return;
-    }
-
-    // If nothing matches, try the search query as-is with a default state
-    if (parsed.city) {
-      loadListings(parsed.city, parsed.state || 'CA');
+      setErrorMessage('');
+    } else {
+      // Ambiguous location - need more info
+      setErrorMessage(
+        `Please specify the state for "${searchQuery}". Try formats like: "${searchQuery}, CA" or "${searchQuery} California"`
+      );
     }
   };
 
@@ -140,6 +130,14 @@ const HousingPage = () => {
               Search
             </button>
           </div>
+          {errorMessage && (
+            <div className="housing-error-message" data-testid="error-message">
+              <p className="text-red-600 mt-4 text-sm">{errorMessage}</p>
+              <p className="text-gray-600 mt-1 text-xs">
+                Examples: "Boston, MA" • "Austin, Texas" • "Seattle WA"
+              </p>
+            </div>
+          )}
         </div>
       </section>
 

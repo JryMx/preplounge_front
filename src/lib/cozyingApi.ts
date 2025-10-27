@@ -114,123 +114,95 @@ export async function autocompleteSearch(query: string): Promise<string[]> {
   }
 }
 
-// Helper to parse location into city and state
-export function parseLocation(location: string): { city?: string; state?: string } {
-  const parts = location.split(',').map(p => p.trim());
+// US States mapping - standard reference data for validation
+const US_STATES: Record<string, string> = {
+  'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas',
+  'CA': 'California', 'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware',
+  'FL': 'Florida', 'GA': 'Georgia', 'HI': 'Hawaii', 'ID': 'Idaho',
+  'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa', 'KS': 'Kansas',
+  'KY': 'Kentucky', 'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland',
+  'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota', 'MS': 'Mississippi',
+  'MO': 'Missouri', 'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada',
+  'NH': 'New Hampshire', 'NJ': 'New Jersey', 'NM': 'New Mexico', 'NY': 'New York',
+  'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio', 'OK': 'Oklahoma',
+  'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
+  'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah',
+  'VT': 'Vermont', 'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia',
+  'WI': 'Wisconsin', 'WY': 'Wyoming', 'DC': 'District of Columbia',
+};
+
+// Create reverse lookup: state name -> code
+const STATE_NAME_TO_CODE: Record<string, string> = Object.entries(US_STATES).reduce(
+  (acc, [code, name]) => {
+    acc[name.toLowerCase()] = code;
+    return acc;
+  },
+  {} as Record<string, string>
+);
+
+// Smart location parser - handles various formats without hardcoded city lists
+export function parseLocation(location: string): { city: string; state: string } | null {
+  if (!location || !location.trim()) {
+    return null;
+  }
+
+  const input = location.trim();
   
-  if (parts.length === 2) {
-    return { city: parts[0], state: parts[1] };
-  } else if (parts.length === 1) {
-    // Assume it's a city name, we'll try common university cities
-    return { city: parts[0] };
+  // Try comma-separated format first: "City, State" or "City, ST"
+  if (input.includes(',')) {
+    const parts = input.split(',').map(p => p.trim());
+    
+    if (parts.length >= 2) {
+      const city = parts[0];
+      const statePart = parts[parts.length - 1];
+      
+      // Check if it's a 2-letter state code
+      const stateUpper = statePart.toUpperCase();
+      if (stateUpper.length === 2 && US_STATES[stateUpper]) {
+        return { city, state: stateUpper };
+      }
+      
+      // Check if it's a full state name
+      const stateCode = STATE_NAME_TO_CODE[statePart.toLowerCase()];
+      if (stateCode) {
+        return { city, state: stateCode };
+      }
+      
+      // If we can't recognize the state, return what we have
+      return { city, state: statePart };
+    }
   }
   
-  return {};
-}
-
-// Map university names to cities
-export function getUniversityLocation(university: string): { city: string; state: string } | null {
-  const universityMap: Record<string, { city: string; state: string }> = {
-    'harvard': { city: 'Cambridge', state: 'MA' },
-    'mit': { city: 'Cambridge', state: 'MA' },
-    'stanford': { city: 'Stanford', state: 'CA' },
-    'berkeley': { city: 'Berkeley', state: 'CA' },
-    'ucla': { city: 'Los Angeles', state: 'CA' },
-    'usc': { city: 'Los Angeles', state: 'CA' },
-    'columbia': { city: 'New York', state: 'NY' },
-    'nyu': { city: 'New York', state: 'NY' },
-    'yale': { city: 'New Haven', state: 'CT' },
-    'princeton': { city: 'Princeton', state: 'NJ' },
-    'penn': { city: 'Philadelphia', state: 'PA' },
-    'upenn': { city: 'Philadelphia', state: 'PA' },
-    'cornell': { city: 'Ithaca', state: 'NY' },
-    'brown': { city: 'Providence', state: 'RI' },
-    'dartmouth': { city: 'Hanover', state: 'NH' },
-    'duke': { city: 'Durham', state: 'NC' },
-    'northwestern': { city: 'Evanston', state: 'IL' },
-    'uchicago': { city: 'Chicago', state: 'IL' },
-    'chicago': { city: 'Chicago', state: 'IL' },
-    'umich': { city: 'Ann Arbor', state: 'MI' },
-    'michigan': { city: 'Ann Arbor', state: 'MI' },
-    'uva': { city: 'Charlottesville', state: 'VA' },
-    'virginia': { city: 'Charlottesville', state: 'VA' },
-  };
+  // Try to extract state from the end of the string
+  const words = input.split(/\s+/);
   
-  const normalized = university.toLowerCase().trim();
-  return universityMap[normalized] || null;
-}
-
-// Map major U.S. cities to their states
-export function getCityState(cityName: string): { city: string; state: string } | null {
-  const cityMap: Record<string, { city: string; state: string }> = {
-    // Major cities
-    'boston': { city: 'Boston', state: 'MA' },
-    'new york': { city: 'New York', state: 'NY' },
-    'nyc': { city: 'New York', state: 'NY' },
-    'los angeles': { city: 'Los Angeles', state: 'CA' },
-    'la': { city: 'Los Angeles', state: 'CA' },
-    'chicago': { city: 'Chicago', state: 'IL' },
-    'houston': { city: 'Houston', state: 'TX' },
-    'phoenix': { city: 'Phoenix', state: 'AZ' },
-    'philadelphia': { city: 'Philadelphia', state: 'PA' },
-    'san antonio': { city: 'San Antonio', state: 'TX' },
-    'san diego': { city: 'San Diego', state: 'CA' },
-    'dallas': { city: 'Dallas', state: 'TX' },
-    'san jose': { city: 'San Jose', state: 'CA' },
-    'austin': { city: 'Austin', state: 'TX' },
-    'jacksonville': { city: 'Jacksonville', state: 'FL' },
-    'fort worth': { city: 'Fort Worth', state: 'TX' },
-    'columbus': { city: 'Columbus', state: 'OH' },
-    'charlotte': { city: 'Charlotte', state: 'NC' },
-    'san francisco': { city: 'San Francisco', state: 'CA' },
-    'sf': { city: 'San Francisco', state: 'CA' },
-    'indianapolis': { city: 'Indianapolis', state: 'IN' },
-    'seattle': { city: 'Seattle', state: 'WA' },
-    'denver': { city: 'Denver', state: 'CO' },
-    'washington': { city: 'Washington', state: 'DC' },
-    'dc': { city: 'Washington', state: 'DC' },
-    'nashville': { city: 'Nashville', state: 'TN' },
-    'el paso': { city: 'El Paso', state: 'TX' },
-    'detroit': { city: 'Detroit', state: 'MI' },
-    'portland': { city: 'Portland', state: 'OR' },
-    'memphis': { city: 'Memphis', state: 'TN' },
-    'louisville': { city: 'Louisville', state: 'KY' },
-    'baltimore': { city: 'Baltimore', state: 'MD' },
-    'milwaukee': { city: 'Milwaukee', state: 'WI' },
-    'albuquerque': { city: 'Albuquerque', state: 'NM' },
-    'tucson': { city: 'Tucson', state: 'AZ' },
-    'fresno': { city: 'Fresno', state: 'CA' },
-    'sacramento': { city: 'Sacramento', state: 'CA' },
-    'kansas city': { city: 'Kansas City', state: 'MO' },
-    'mesa': { city: 'Mesa', state: 'AZ' },
-    'atlanta': { city: 'Atlanta', state: 'GA' },
-    'colorado springs': { city: 'Colorado Springs', state: 'CO' },
-    'raleigh': { city: 'Raleigh', state: 'NC' },
-    'omaha': { city: 'Omaha', state: 'NE' },
-    'miami': { city: 'Miami', state: 'FL' },
-    'oakland': { city: 'Oakland', state: 'CA' },
-    'minneapolis': { city: 'Minneapolis', state: 'MN' },
-    'tulsa': { city: 'Tulsa', state: 'OK' },
-    'cleveland': { city: 'Cleveland', state: 'OH' },
-    'wichita': { city: 'Wichita', state: 'KS' },
-    'arlington': { city: 'Arlington', state: 'TX' },
-    'new orleans': { city: 'New Orleans', state: 'LA' },
-    // College towns
-    'cambridge': { city: 'Cambridge', state: 'MA' },
-    'palo alto': { city: 'Palo Alto', state: 'CA' },
-    'berkeley': { city: 'Berkeley', state: 'CA' },
-    'new haven': { city: 'New Haven', state: 'CT' },
-    'princeton': { city: 'Princeton', state: 'NJ' },
-    'ithaca': { city: 'Ithaca', state: 'NY' },
-    'providence': { city: 'Providence', state: 'RI' },
-    'hanover': { city: 'Hanover', state: 'NH' },
-    'durham': { city: 'Durham', state: 'NC' },
-    'evanston': { city: 'Evanston', state: 'IL' },
-    'ann arbor': { city: 'Ann Arbor', state: 'MI' },
-    'charlottesville': { city: 'Charlottesville', state: 'VA' },
-    'stanford': { city: 'Stanford', state: 'CA' },
-  };
+  // Check if last word is a state code (e.g., "New York NY")
+  if (words.length >= 2) {
+    const lastWord = words[words.length - 1].toUpperCase();
+    if (lastWord.length === 2 && US_STATES[lastWord]) {
+      const city = words.slice(0, -1).join(' ');
+      return { city, state: lastWord };
+    }
+  }
   
-  const normalized = cityName.toLowerCase().trim();
-  return cityMap[normalized] || null;
+  // Check if last 2 words are a state name (e.g., "Boston Massachusetts")
+  if (words.length >= 2) {
+    const lastTwoWords = words.slice(-2).join(' ').toLowerCase();
+    const stateCode = STATE_NAME_TO_CODE[lastTwoWords];
+    if (stateCode) {
+      const city = words.slice(0, -2).join(' ');
+      return { city, state: stateCode };
+    }
+    
+    const lastWord = words[words.length - 1].toLowerCase();
+    const lastWordStateCode = STATE_NAME_TO_CODE[lastWord];
+    if (lastWordStateCode) {
+      const city = words.slice(0, -1).join(' ');
+      return { city, state: lastWordStateCode };
+    }
+  }
+  
+  // No state found - return null to indicate ambiguous location
+  // Don't default to any state, let the calling code handle it
+  return null;
 }
