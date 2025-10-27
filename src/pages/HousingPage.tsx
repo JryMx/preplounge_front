@@ -46,13 +46,17 @@ const HousingPage = () => {
 
     // Use smart location parser
     const parsed = parseLocation(searchQuery);
+    console.log('Search query:', searchQuery);
+    console.log('Parsed result:', parsed);
     
     if (parsed && parsed.city && parsed.state) {
       // Successfully parsed city and state
+      console.log('Loading listings for:', parsed.city, parsed.state);
       loadListings(parsed.city, parsed.state);
       setErrorMessage('');
     } else {
       // Ambiguous location - need more info
+      console.log('Could not parse location, showing error');
       setErrorMessage(
         `Please specify the state for "${searchQuery}". Try formats like: "${searchQuery}, CA" or "${searchQuery} California"`
       );
