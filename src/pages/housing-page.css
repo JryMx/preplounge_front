@@ -17,6 +17,23 @@
   text-align: center;
 }
 
+/* Availability Notice Banner */
+.housing-availability-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 12px;
+  margin-bottom: 32px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #1E40AF;
+}
+
 .housing-search-title {
   font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-style: normal;

@@ -41,20 +41,32 @@ const HousingPage = () => {
     }
   };
 
+  const isValidState = (state: string): boolean => {
+    const normalizedState = state.toUpperCase();
+    return normalizedState === 'CA' || normalizedState === 'CALIFORNIA' || 
+           normalizedState === 'GA' || normalizedState === 'GEORGIA';
+  };
+
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
 
-    // First, try parsing structured formats like "Boston, MA"
+    // First, try parsing structured formats like "Los Angeles, CA"
     const parsed = parseLocation(searchQuery);
     
     if (parsed && parsed.city && parsed.state) {
-      // Successfully parsed - has both city and state
+      // Check if state is CA or GA
+      if (!isValidState(parsed.state)) {
+        setLoading(false);
+        setErrorMessage(t('housing.search.error.invalid-state'));
+        return;
+      }
+      // Successfully parsed and valid state
       loadListings(parsed.city, parsed.state);
       setErrorMessage('');
       return;
     }
     
-    // If parsing failed, try geocoding (converts "boston" → "Boston, MA")
+    // If parsing failed, try geocoding (converts "Los Angeles" → "Los Angeles, CA")
     setLoading(true);
     setErrorMessage('');
     
@@ -62,21 +74,23 @@ const HousingPage = () => {
       const geocoded = await geocodeLocation(searchQuery);
       
       if (geocoded && geocoded.city && geocoded.state) {
-        // Successfully geocoded
+        // Check if geocoded state is CA or GA
+        if (!isValidState(geocoded.state)) {
+          setLoading(false);
+          setErrorMessage(t('housing.search.error.invalid-state'));
+          return;
+        }
+        // Successfully geocoded and valid state
         loadListings(geocoded.city, geocoded.state);
       } else {
         // Geocoding failed - show error
         setLoading(false);
-        setErrorMessage(
-          `Could not find "${searchQuery}". Try: "Boston", "Austin, TX", or "Seattle WA"`
-        );
+        setErrorMessage(t('housing.search.error.invalid-state'));
       }
     } catch (error) {
       console.error('Geocoding error:', error);
       setLoading(false);
-      setErrorMessage(
-        `Error searching for "${searchQuery}". Please try again.`
-      );
+      setErrorMessage(t('housing.search.error.invalid-state'));
     }
   };
 
@@ -126,6 +140,12 @@ const HousingPage = () => {
 
       <section className="housing-search-section">
         <div className="housing-search-container">
+          {/* Availability Notice Banner */}
+          <div className="housing-availability-notice" data-testid="text-availability-notice">
+            <MapPin className="h-5 w-5 text-blue-600" />
+            <span>{t('housing.availability.notice')}</span>
+          </div>
+
           <h2 className="housing-search-title" data-testid="text-search-title">
             {t('housing.search.title')}
           </h2>
@@ -153,9 +173,9 @@ const HousingPage = () => {
           </div>
           {errorMessage && (
             <div className="housing-error-message" data-testid="error-message">
-              <p className="text-red-600 mt-4 text-sm">{errorMessage}</p>
-              <p className="text-gray-600 mt-1 text-xs">
-                Examples: "Boston, MA" • "Austin, Texas" • "Seattle WA"
+              <p className="text-red-600 mt-4 text-sm font-medium">{errorMessage}</p>
+              <p className="text-gray-600 mt-2 text-sm">
+                {t('housing.search.error.examples')}
               </p>
             </div>
           )}
@@ -175,11 +195,12 @@ const HousingPage = () => {
             </div>
           ) : listings.length === 0 ? (
             <div className="housing-empty" data-testid="empty-listings">
-              <p className="text-lg font-semibold mb-2">No listings found for {currentLocation}</p>
-              <p className="text-gray-600 mb-4">The housing database currently has listings primarily in California.</p>
-              <p className="text-sm text-gray-500">
-                Try searching: <span className="font-medium">Fresno</span>, <span className="font-medium">Los Angeles</span>, <span className="font-medium">San Francisco</span>, or other California cities
-              </p>
+              <p className="text-lg font-semibold mb-2">{t('housing.empty.title')} {currentLocation}</p>
+              <p className="text-gray-600 mb-4">{t('housing.empty.description')}</p>
+              <div className="text-sm text-gray-600 space-y-2">
+                <p className="font-medium">{t('housing.empty.examples')}</p>
+                <p className="font-medium">{t('housing.empty.examples.ga')}</p>
+              </div>
             </div>
           ) : (
             <div className="housing-grid">
