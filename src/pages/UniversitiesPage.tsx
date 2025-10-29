@@ -177,14 +177,16 @@ const UniversitiesPage: React.FC = () => {
                 <label className="universities-filter-label">{t('universities.filter.type')}</label>
                 <div className="universities-filter-buttons">
                   <button
-                    onClick={() => handleTypeToggle('Private')}
-                    className={`universities-filter-button ${filters.types.includes('Private') ? 'active' : ''}`}
+                    onClick={() => handleTypeToggle('사립')}
+                    className={`universities-filter-button ${filters.types.includes('사립') ? 'active' : ''}`}
+                    data-testid="button-filter-private"
                   >
                     {t('universities.filter.type.private')}
                   </button>
                   <button
-                    onClick={() => handleTypeToggle('Public')}
-                    className={`universities-filter-button ${filters.types.includes('Public') ? 'active' : ''}`}
+                    onClick={() => handleTypeToggle('공립')}
+                    className={`universities-filter-button ${filters.types.includes('공립') ? 'active' : ''}`}
+                    data-testid="button-filter-public"
                   >
                     {t('universities.filter.type.public')}
                   </button>
