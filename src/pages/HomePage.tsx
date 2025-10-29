@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Target, Users, ArrowRight, BookOpen, Trophy, Globe, Calculator, MapPin, Loader2 } from 'lucide-react';
+import { Search, Target, Users, BookOpen, Trophy, Globe, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
 import '../hero-section-style.css';
