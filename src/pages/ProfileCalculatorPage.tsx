@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { Loader2 } from 'lucide-react';
+import universitiesData from '../data/universities.json';
 import './profile-calculator.css';
 
 interface School {
@@ -119,6 +120,23 @@ const ProfileCalculatorPage: React.FC = () => {
 
   const getDisplayState = (fullState: string) => {
     return language === 'ko' ? fullState.match(/\(([^)]+)\)/)?.[1] || fullState : fullState.split(' (')[0];
+  };
+
+  const findUniversityId = (schoolName: string): string | null => {
+    const englishName = extractEnglishName(schoolName);
+    const koreanName = extractKoreanName(schoolName);
+    
+    const university = universitiesData.find((uni: any) => 
+      uni.englishName === englishName || uni.name === koreanName
+    );
+    
+    return university ? university.id : null;
+  };
+
+  const getTopQualitySchools = (schools: School[], count: number = 3): School[] => {
+    return [...schools]
+      .sort((a, b) => b.quality_score - a.quality_score)
+      .slice(0, count);
   };
 
   return (
@@ -289,19 +307,32 @@ const ProfileCalculatorPage: React.FC = () => {
                 {results.recommendations.safety.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title safety" data-testid="title-safety-schools">
-                      {language === 'ko' ? '안전권 대학' : 'Safety Schools'}
-                      <span className="category-count">({results.recommendations.safety.length})</span>
+                      {language === 'ko' ? '안전권 대학 (상위 3개)' : 'Safety Schools (Top 3)'}
+                      <span className="category-count">({results.recommendations.safety.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {results.recommendations.safety.slice(0, 6).map((school, idx) => (
-                        <div key={idx} className="school-card" data-testid={`school-safety-${idx}`}>
-                          <div className="school-name">{getDisplayName(school.name)}</div>
-                          <div className="school-state">{getDisplayState(school.state)}</div>
-                          <div className="school-probability">
-                            {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                      {getTopQualitySchools(results.recommendations.safety, 3).map((school, idx) => {
+                        const universityId = findUniversityId(school.name);
+                        const cardContent = (
+                          <>
+                            <div className="school-name">{getDisplayName(school.name)}</div>
+                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-probability">
+                              {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                            </div>
+                          </>
+                        );
+                        
+                        return universityId ? (
+                          <Link key={idx} to={`/university/${universityId}`} className="school-card clickable" data-testid={`school-safety-${idx}`}>
+                            {cardContent}
+                          </Link>
+                        ) : (
+                          <div key={idx} className="school-card" data-testid={`school-safety-${idx}`}>
+                            {cardContent}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -310,19 +341,32 @@ const ProfileCalculatorPage: React.FC = () => {
                 {results.recommendations.target.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title target" data-testid="title-target-schools">
-                      {language === 'ko' ? '적정권 대학' : 'Target Schools'}
-                      <span className="category-count">({results.recommendations.target.length})</span>
+                      {language === 'ko' ? '적정권 대학 (상위 3개)' : 'Target Schools (Top 3)'}
+                      <span className="category-count">({results.recommendations.target.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {results.recommendations.target.slice(0, 6).map((school, idx) => (
-                        <div key={idx} className="school-card" data-testid={`school-target-${idx}`}>
-                          <div className="school-name">{getDisplayName(school.name)}</div>
-                          <div className="school-state">{getDisplayState(school.state)}</div>
-                          <div className="school-probability">
-                            {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                      {getTopQualitySchools(results.recommendations.target, 3).map((school, idx) => {
+                        const universityId = findUniversityId(school.name);
+                        const cardContent = (
+                          <>
+                            <div className="school-name">{getDisplayName(school.name)}</div>
+                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-probability">
+                              {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                            </div>
+                          </>
+                        );
+                        
+                        return universityId ? (
+                          <Link key={idx} to={`/university/${universityId}`} className="school-card clickable" data-testid={`school-target-${idx}`}>
+                            {cardContent}
+                          </Link>
+                        ) : (
+                          <div key={idx} className="school-card" data-testid={`school-target-${idx}`}>
+                            {cardContent}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -331,19 +375,32 @@ const ProfileCalculatorPage: React.FC = () => {
                 {results.recommendations.reach.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title reach" data-testid="title-reach-schools">
-                      {language === 'ko' ? '상향권 대학' : 'Reach Schools'}
-                      <span className="category-count">({results.recommendations.reach.length})</span>
+                      {language === 'ko' ? '상향권 대학 (상위 3개)' : 'Reach Schools (Top 3)'}
+                      <span className="category-count">({results.recommendations.reach.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {results.recommendations.reach.slice(0, 6).map((school, idx) => (
-                        <div key={idx} className="school-card" data-testid={`school-reach-${idx}`}>
-                          <div className="school-name">{getDisplayName(school.name)}</div>
-                          <div className="school-state">{getDisplayState(school.state)}</div>
-                          <div className="school-probability">
-                            {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                      {getTopQualitySchools(results.recommendations.reach, 3).map((school, idx) => {
+                        const universityId = findUniversityId(school.name);
+                        const cardContent = (
+                          <>
+                            <div className="school-name">{getDisplayName(school.name)}</div>
+                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-probability">
+                              {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                            </div>
+                          </>
+                        );
+                        
+                        return universityId ? (
+                          <Link key={idx} to={`/university/${universityId}`} className="school-card clickable" data-testid={`school-reach-${idx}`}>
+                            {cardContent}
+                          </Link>
+                        ) : (
+                          <div key={idx} className="school-card" data-testid={`school-reach-${idx}`}>
+                            {cardContent}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
@@ -352,19 +409,32 @@ const ProfileCalculatorPage: React.FC = () => {
                 {results.recommendations.prestige.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title prestige" data-testid="title-prestige-schools">
-                      {language === 'ko' ? '명문 대학' : 'Prestige Schools'}
-                      <span className="category-count">({results.recommendations.prestige.length})</span>
+                      {language === 'ko' ? '명문 대학 (상위 3개)' : 'Prestige Schools (Top 3)'}
+                      <span className="category-count">({results.recommendations.prestige.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {results.recommendations.prestige.slice(0, 6).map((school, idx) => (
-                        <div key={idx} className="school-card" data-testid={`school-prestige-${idx}`}>
-                          <div className="school-name">{getDisplayName(school.name)}</div>
-                          <div className="school-state">{getDisplayState(school.state)}</div>
-                          <div className="school-probability">
-                            {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                      {getTopQualitySchools(results.recommendations.prestige, 3).map((school, idx) => {
+                        const universityId = findUniversityId(school.name);
+                        const cardContent = (
+                          <>
+                            <div className="school-name">{getDisplayName(school.name)}</div>
+                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-probability">
+                              {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
+                            </div>
+                          </>
+                        );
+                        
+                        return universityId ? (
+                          <Link key={idx} to={`/university/${universityId}`} className="school-card clickable" data-testid={`school-prestige-${idx}`}>
+                            {cardContent}
+                          </Link>
+                        ) : (
+                          <div key={idx} className="school-card" data-testid={`school-prestige-${idx}`}>
+                            {cardContent}
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}
