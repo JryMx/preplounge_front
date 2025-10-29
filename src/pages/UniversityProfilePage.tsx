@@ -178,6 +178,116 @@ const UniversityProfilePage: React.FC = () => {
             </div>
           )}
         </div>
+
+        {/* Two Column Layout: Application Requirements & Academic Information */}
+        <div className="university-profile-two-column">
+          {/* Left Column: Application Requirements */}
+          <div className="university-profile-section">
+            <h2 className="university-profile-section-title" data-testid="title-application-requirements">
+              <BookOpen className="h-6 w-6" />
+              {language === 'ko' ? '지원 요건' : 'Application Requirements'}
+            </h2>
+            <div className="university-profile-requirements-list">
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '고등학교 GPA' : 'High School GPA'}</span>
+                <span className="requirement-badge required" data-testid="badge-gpa-required">
+                  {language === 'ko' ? '필수' : 'Required'}
+                </span>
+              </div>
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '고등학교 석차' : 'High School Rank'}</span>
+                <span className="requirement-badge optional" data-testid="badge-rank-optional">
+                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
+                </span>
+              </div>
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '고등학교 성적표' : 'High School Transcript'}</span>
+                <span className="requirement-badge required" data-testid="badge-transcript-required">
+                  {language === 'ko' ? '필수' : 'Required'}
+                </span>
+              </div>
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '대학 준비 프로그램 이수' : 'College Prep Program Completion'}</span>
+                <span className="requirement-badge optional" data-testid="badge-prep-optional">
+                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
+                </span>
+              </div>
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '추천서' : 'Recommendation'}</span>
+                <span className="requirement-badge required" data-testid="badge-recommendation-required">
+                  {language === 'ko' ? '필수' : 'Required'}
+                </span>
+              </div>
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '과외활동' : 'Extracurricular Activities'}</span>
+                <span className="requirement-badge optional" data-testid="badge-extracurricular-optional">
+                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
+                </span>
+              </div>
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '자기소개서/에세이' : 'Personal Statement/Essay'}</span>
+                <span className="requirement-badge required" data-testid="badge-essay-required">
+                  {language === 'ko' ? '필수' : 'Required'}
+                </span>
+              </div>
+              <div className="requirement-item">
+                <span className="requirement-name">{language === 'ko' ? '등록 자녀 여부' : 'Legacy Status'}</span>
+                <span className="requirement-badge optional" data-testid="badge-legacy-optional">
+                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Academic Information */}
+          <div className="university-profile-section">
+            <h2 className="university-profile-section-title" data-testid="title-academic-info">
+              <BookOpen className="h-6 w-6" />
+              {language === 'ko' ? '학업 정보' : 'Academic Information'}
+            </h2>
+            <div className="academic-info-content">
+              {/* Graduation Rate */}
+              <div className="academic-info-item">
+                <span className="academic-info-label">{language === 'ko' ? '졸업률' : 'Graduation Rate'}</span>
+                <span className="academic-info-value graduation-rate" data-testid="text-graduation-rate">97%</span>
+              </div>
+
+              {/* Average Salary */}
+              <div className="academic-info-item">
+                <span className="academic-info-label">{language === 'ko' ? '졸업 후 평균 연봉' : 'Average Salary After Graduation'}</span>
+                <div className="academic-info-value-wrapper">
+                  <span className="academic-info-value" data-testid="text-average-salary">$95,000</span>
+                  <span className="academic-info-source">
+                    {language === 'ko' ? '출처: College Scorecard' : 'Source: College Scorecard'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Degree Types */}
+              <div className="academic-info-item">
+                <span className="academic-info-label">{language === 'ko' ? '제공 학위 유형' : 'Degree Types Offered'}</span>
+                <div className="degree-types" data-testid="section-degree-types">
+                  <span className="degree-badge">{language === 'ko' ? '학사' : 'Bachelor\'s'}</span>
+                  <span className="degree-badge">{language === 'ko' ? '석사' : 'Master\'s'}</span>
+                  <span className="degree-badge">{language === 'ko' ? '박사' : 'Doctoral'}</span>
+                </div>
+              </div>
+
+              {/* Available Majors */}
+              <div className="academic-info-item">
+                <span className="academic-info-label">{language === 'ko' ? '개설 전공' : 'Available Majors'}</span>
+                <div className="majors-list" data-testid="section-majors">
+                  <div className="major-item">{language === 'ko' ? '인문과학' : 'Humanities'}</div>
+                  <div className="major-item">{language === 'ko' ? '경영학' : 'Business'}</div>
+                  <div className="major-item">{language === 'ko' ? '컴퓨터과학' : 'Computer Science'}</div>
+                  <div className="major-item">{language === 'ko' ? '공학' : 'Engineering'}</div>
+                  <div className="major-item">{language === 'ko' ? '의학' : 'Medicine'}</div>
+                  <div className="major-item">{language === 'ko' ? '법학' : 'Law'}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

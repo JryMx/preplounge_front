@@ -514,6 +514,213 @@
   color: #FACC15;
 }
 
+/* Two Column Layout */
+.university-profile-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.university-profile-section {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0px 2px 8px rgba(8, 47, 73, 0.08);
+}
+
+.university-profile-section-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+  color: #082F49;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Application Requirements */
+.university-profile-requirements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.requirement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(8, 47, 73, 0.1);
+}
+
+.requirement-item:last-child {
+  border-bottom: none;
+}
+
+.requirement-name {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.requirement-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+.requirement-badge.required {
+  background: #FEE2E2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+}
+
+.requirement-badge.optional {
+  background: #FEF3C7;
+  color: #D97706;
+  border: 1px solid #FDE68A;
+}
+
+/* Academic Information */
+.academic-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.academic-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.academic-info-label {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.7;
+}
+
+.academic-info-value-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.academic-info-value {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: #082F49;
+}
+
+.academic-info-value.graduation-rate {
+  color: #16A34A;
+}
+
+.academic-info-source {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  opacity: 0.5;
+}
+
+/* Degree Types */
+.degree-types {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.degree-badge {
+  padding: 8px 16px;
+  background: #DCFCE7;
+  border: 1px solid #86EFAC;
+  border-radius: 20px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #16A34A;
+}
+
+/* Majors List */
+.majors-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.major-item {
+  padding: 12px 16px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+  transition: all 0.2s ease;
+}
+
+.major-item:hover {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+}
+
+/* Scrollbar Styling for Majors List */
+.majors-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.majors-list::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 3px;
+}
+
+.majors-list::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+
+.majors-list::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .university-profile-main-grid {
@@ -522,6 +729,10 @@
 
   .university-profile-stats {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .university-profile-two-column {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -561,6 +772,10 @@
   }
 
   .university-profile-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .majors-list {
     grid-template-columns: 1fr;
   }
 }
