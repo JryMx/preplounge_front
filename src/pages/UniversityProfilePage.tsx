@@ -26,6 +26,16 @@ const getUniversityData = (id: string) => {
   return universities.find(uni => uni.id === id);
 };
 
+const translateSize = (size: string, language: 'ko' | 'en'): string => {
+  if (language === 'ko') return size;
+  
+  if (size === '큼 (15,000+)') return 'Large (15,000+)';
+  if (size === '중간 (5,000-15,000)') return 'Medium (5,000-15,000)';
+  if (size === '작음 (<5,000)') return 'Small (<5,000)';
+  
+  return size;
+};
+
 const UniversityProfilePage: React.FC = () => {
   const { id } = useParams();
   const { t, language } = useLanguage();
@@ -104,7 +114,7 @@ const UniversityProfilePage: React.FC = () => {
                 </div>
                 <div className="university-profile-detail-item">
                   <span className="university-profile-detail-label">{t('university.size')}:</span>
-                  <span className="university-profile-detail-value">{university.size}</span>
+                  <span className="university-profile-detail-value">{translateSize(university.size, language)}</span>
                 </div>
               </div>
             </div>

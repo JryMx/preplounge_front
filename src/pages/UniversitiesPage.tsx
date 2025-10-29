@@ -29,7 +29,7 @@ const UniversitiesPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
   const [filters, setFilters] = useState({
     types: [] as string[],
     sortBy: '',
