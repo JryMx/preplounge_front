@@ -44,10 +44,12 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
     - Three status types: Required (red badge), Optional/Considered if submitted (yellow badge), Not Considered (gray badge)
     - Fully data-driven from Excel source, showing only applicable requirements per school
   - **Academic Information section**: Displays real data from IPEDS 2023
-    - Graduation rates: Actual 4-year completion rates for each institution
+    - Graduation rates: Actual 4-year completion rates for each institution (e.g., 84% for University of Miami)
     - Degree types: Shows which programs the school offers (Bachelor's, Master's, Doctoral)
-    - Available programs: Scrollable list of all actual programs offered (26,145 total program entries mapped across universities)
-    - Programs organized by 26 major categories with full Korean translations
+    - Available programs: Scrollable list of all actual programs offered by each university
+      - 26,145 total program entries mapped across all 1,234 universities
+      - Programs organized by 26 major categories from IPEDS data
+      - Full Korean translations for all program categories
     - Custom scrollbar styling for improved UX
   - **Action Buttons**: Two interactive buttons for future functionality
     - "Check Admission Probability" (primary button) - Links to Profile Calculator

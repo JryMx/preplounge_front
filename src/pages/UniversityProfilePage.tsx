@@ -392,17 +392,6 @@ const UniversityProfilePage: React.FC = () => {
                 </div>
               )}
 
-              {/* Average Salary */}
-              <div className="academic-info-item">
-                <span className="academic-info-label">{language === 'ko' ? '졸업 후 평균 연봉' : 'Average Salary After Graduation'}</span>
-                <div className="academic-info-value-wrapper">
-                  <span className="academic-info-value" data-testid="text-average-salary">$95,000</span>
-                  <span className="academic-info-source">
-                    {language === 'ko' ? '출처: College Scorecard' : 'Source: College Scorecard'}
-                  </span>
-                </div>
-              </div>
-
               {/* Degree Types */}
               {university.academicInfo?.degreeTypes && (
                 <div className="academic-info-item">
