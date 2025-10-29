@@ -27,6 +27,8 @@ const UniversitiesPage: React.FC = () => {
   const { t, language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
   const [filters, setFilters] = useState({
     types: [] as string[],
     sortBy: '',
@@ -88,18 +90,38 @@ const UniversitiesPage: React.FC = () => {
         ? prev.types.filter(t => t !== type)
         : [...prev.types, type]
     }));
+    setCurrentPage(1);
   };
 
   const handleSortChange = (sortBy: string) => {
     setFilters(prev => ({ ...prev, sortBy }));
+    setCurrentPage(1);
   };
 
   const handleTuitionRangeChange = (range: [number, number]) => {
     setFilters(prev => ({ ...prev, tuitionRange: range }));
+    setCurrentPage(1);
+  };
+  
+  const handleSearchChange = (term: string) => {
+    setSearchTerm(term);
+    setCurrentPage(1);
   };
 
   const handleSatRangeChange = (range: [number, number]) => {
     setFilters(prev => ({ ...prev, satRange: range }));
+    setCurrentPage(1); // Reset to first page when filters change
+  };
+
+  // Calculate pagination
+  const totalPages = Math.ceil(sortedUniversities.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedUniversities = sortedUniversities.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -123,7 +145,7 @@ const UniversitiesPage: React.FC = () => {
                 placeholder={t('universities.search.placeholder')}
                 className="universities-search-input"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
               />
             </div>
 
@@ -245,7 +267,7 @@ const UniversitiesPage: React.FC = () => {
           </div>
 
         <div className={viewMode === 'grid' ? 'universities-grid' : 'universities-list'}>
-          {sortedUniversities.map(university => (
+          {paginatedUniversities.map(university => (
             viewMode === 'grid' ? (
               <Link
                 key={university.id}
@@ -350,6 +372,101 @@ const UniversitiesPage: React.FC = () => {
             >
               {t('universities.empty.reset')}
             </button>
+          </div>
+        )}
+
+        {/* Pagination Controls */}
+        {sortedUniversities.length > 0 && totalPages > 1 && (
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '12px',
+            marginTop: '40px',
+            marginBottom: '40px'
+          }}>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: currentPage === 1 ? '#e5e7eb' : '#1e3a8a',
+                color: currentPage === 1 ? '#9ca3af' : 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                fontWeight: '500',
+                fontSize: '14px'
+              }}
+              data-testid="button-prev-page"
+            >
+              {language === 'ko' ? '이전' : 'Previous'}
+            </button>
+
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (currentPage <= 3) {
+                  pageNum = i + 1;
+                } else if (currentPage >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = currentPage - 2 + i;
+                }
+                
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    style={{
+                      padding: '10px 16px',
+                      backgroundColor: currentPage === pageNum ? '#1e3a8a' : 'white',
+                      color: currentPage === pageNum ? 'white' : '#1e3a8a',
+                      border: '2px solid #1e3a8a',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      fontWeight: '500',
+                      fontSize: '14px',
+                      minWidth: '44px'
+                    }}
+                    data-testid={`button-page-${pageNum}`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: currentPage === totalPages ? '#e5e7eb' : '#1e3a8a',
+                color: currentPage === totalPages ? '#9ca3af' : 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                fontWeight: '500',
+                fontSize: '14px'
+              }}
+              data-testid="button-next-page"
+            >
+              {language === 'ko' ? '다음' : 'Next'}
+            </button>
+
+            <span style={{
+              marginLeft: '16px',
+              color: '#6b7280',
+              fontSize: '14px'
+            }}>
+              {language === 'ko' 
+                ? `${currentPage} / ${totalPages} 페이지` 
+                : `Page ${currentPage} of ${totalPages}`
+              }
+            </span>
           </div>
         )}
       </div>
