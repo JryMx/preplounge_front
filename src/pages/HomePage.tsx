@@ -349,11 +349,11 @@ const HomePage: React.FC = () => {
                 {results.recommendations.safety.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title safety" data-testid="title-safety-schools-home">
-                      {language === 'ko' ? '안전권 대학 (상위 12개)' : 'Safety Schools (Top 12)'}
+                      {language === 'ko' ? '안전권 대학 (상위 3개)' : 'Safety Schools (Top 3)'}
                       <span className="category-count">({results.recommendations.safety.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {getTopQualitySchools(results.recommendations.safety, 12).map((school, idx) => {
+                      {getTopQualitySchools(results.recommendations.safety, 3).map((school, idx) => {
                         const universityId = findUniversityId(school.name);
                         const cardContent = (
                           <>
@@ -383,11 +383,11 @@ const HomePage: React.FC = () => {
                 {results.recommendations.target.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title target" data-testid="title-target-schools-home">
-                      {language === 'ko' ? '적정권 대학 (상위 12개)' : 'Target Schools (Top 12)'}
+                      {language === 'ko' ? '적정권 대학 (상위 3개)' : 'Target Schools (Top 3)'}
                       <span className="category-count">({results.recommendations.target.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {getTopQualitySchools(results.recommendations.target, 12).map((school, idx) => {
+                      {getTopQualitySchools(results.recommendations.target, 3).map((school, idx) => {
                         const universityId = findUniversityId(school.name);
                         const cardContent = (
                           <>
@@ -417,11 +417,11 @@ const HomePage: React.FC = () => {
                 {results.recommendations.reach.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title reach" data-testid="title-reach-schools-home">
-                      {language === 'ko' ? '상향권 대학 (상위 12개)' : 'Reach Schools (Top 12)'}
+                      {language === 'ko' ? '상향권 대학 (상위 3개)' : 'Reach Schools (Top 3)'}
                       <span className="category-count">({results.recommendations.reach.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {getTopQualitySchools(results.recommendations.reach, 12).map((school, idx) => {
+                      {getTopQualitySchools(results.recommendations.reach, 3).map((school, idx) => {
                         const universityId = findUniversityId(school.name);
                         const cardContent = (
                           <>
@@ -451,11 +451,11 @@ const HomePage: React.FC = () => {
                 {results.recommendations.prestige.length > 0 && (
                   <div className="school-category">
                     <h4 className="category-title prestige" data-testid="title-prestige-schools-home">
-                      {language === 'ko' ? '명문 대학 (상위 12개)' : 'Prestige Schools (Top 12)'}
+                      {language === 'ko' ? '명문 대학 (상위 3개)' : 'Prestige Schools (Top 3)'}
                       <span className="category-count">({results.recommendations.prestige.length} {language === 'ko' ? '개 중' : 'total'})</span>
                     </h4>
                     <div className="schools-grid">
-                      {getTopQualitySchools(results.recommendations.prestige, 12).map((school, idx) => {
+                      {getTopQualitySchools(results.recommendations.prestige, 3).map((school, idx) => {
                         const universityId = findUniversityId(school.name);
                         const cardContent = (
                           <>
@@ -483,11 +483,13 @@ const HomePage: React.FC = () => {
 
                 <Link
                   to="/profile-calculator"
-                  className="profile-calculator-button"
-                  style={{ marginTop: '30px' }}
-                  data-testid="button-full-analysis-home"
+                  className="detailed-analysis-button"
+                  data-testid="button-detailed-analysis-home"
                 >
-                  <span>{language === 'ko' ? '전체 분석 페이지로 이동' : 'Go to Full Analysis Page'}</span>
+                  <span>{language === 'ko' ? '더 자세한 분석 보기' : 'More Detailed Analysis'}</span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </Link>
               </div>
             )}
