@@ -43,9 +43,9 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - **Academic Information section**: Graduation rate (97%), average salary ($95k), degree types (Bachelor's, Master's, Doctoral), available majors (6 categories)
   - Full bilingual support with complete language separation
 - **University Browsing & Detail**: 
-  - Displays 1,254 curated U.S. universities (filtered from verified list)
+  - Displays 1,234 curated U.S. universities (filtered from verified list with duplicates removed)
   - 12 schools per page pagination for efficient browsing
-  - Dual-slider range filters for tuition ($0-$60k) and SAT scores (800-1600) with slider dot collision prevention
+  - Single dual-handle range sliders for tuition ($0-$60k) and SAT scores (800-1600) with automatic handle collision prevention
   - "Recommended" sort (default) prioritizes schools with official logos and verified data
   - Additional sorting: Alphabetical (A-Z, Z-A), SAT Range (ascending/descending)
   - Full bilingual support with complete language separation
