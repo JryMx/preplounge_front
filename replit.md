@@ -24,12 +24,20 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 - **Pagination**: Implemented for efficient display and loading of university listings, with smart controls and auto-reset on search/filter.
 
 ### Feature Specifications
-- **AI-Powered Profile Analysis**: Calculates a student's profile score based on GPA and standardized test scores (SAT/ACT), accessible via a dedicated page.
+- **AI-Powered Profile Analysis**: 
+  - Dedicated page at `/profile-calculator` with full API integration
+  - Connects to PrepLounge AI API (`https://dev.preplounge.ai/`) for real admission predictions
+  - Supports both SAT (Math + EBRW) and ACT scoring systems with toggle
+  - Returns comprehensive university recommendations categorized as Safety/Target/Reach/Prestige
+  - Displays top 6 schools per category with admission probabilities
+  - Full bilingual support for all results (Korean/English)
+  - Real-time analysis with loading states and error handling
 - **University Browsing & Detail**: Allows searching, filtering, and viewing detailed profiles for 1,696 unique U.S. universities, with full bilingual support and key statistics (acceptance rate, tuition, SAT/ACT ranges, GPA).
 - **Housing Support**: Provides real estate listings, currently restricted to California and Georgia, with clear messaging and validation for state-specific searches.
-- **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, StudentProfilePage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
+- **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 
 ## External Dependencies
+- **PrepLounge AI API**: For real-time admission probability analysis and university recommendations (`https://dev.preplounge.ai/`). No authentication required.
 - **OpenStreetMap Nominatim API**: For geocoding locations in the housing search (rate limit: 1 request/second).
 - **Cozying Production API**: For real estate listings (`https://cozying.ai/cozying-api/v1/home/list`).
 - **HomeJunction CDN**: For displaying property images in housing listings (`https://listing-images.homejunction.com`).
