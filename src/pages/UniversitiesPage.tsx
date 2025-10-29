@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, MapPin, Users, DollarSign, BookOpen, Filter, Grid2x2 as Grid, List } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { DualRangeSlider } from '../components/DualRangeSlider';
 import universitiesData from '../data/universities.json';
 import './universities-page.css';
 
@@ -225,53 +226,31 @@ const UniversitiesPage: React.FC = () => {
                 <label className="universities-filter-label">
                   {t('universities.filter.tuition')}: ${filters.tuitionRange[0].toLocaleString()} - ${filters.tuitionRange[1].toLocaleString()}
                 </label>
-                  <div className="px-2">
-                    <input
-                      type="range"
-                      min="0"
-                      max="60000"
-                      step="1000"
-                      value={filters.tuitionRange[0]}
-                      onChange={(e) => handleTuitionRangeChange([parseInt(e.target.value), filters.tuitionRange[1]])}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                    />
-                    <input
-                      type="range"
-                      min="0"
-                      max="60000"
-                      step="1000"
-                      value={filters.tuitionRange[1]}
-                      onChange={(e) => handleTuitionRangeChange([filters.tuitionRange[0], parseInt(e.target.value)])}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider mt-2"
-                    />
-                  </div>
+                <div className="px-2">
+                  <DualRangeSlider
+                    min={0}
+                    max={60000}
+                    step={1000}
+                    value={filters.tuitionRange}
+                    onChange={handleTuitionRangeChange}
+                  />
                 </div>
+              </div>
 
               <div className="universities-filter-group">
                 <label className="universities-filter-label">
                   {t('universities.filter.sat')}: {filters.satRange[0]} - {filters.satRange[1]}
                 </label>
-                  <div className="px-2">
-                    <input
-                      type="range"
-                      min="800"
-                      max="1600"
-                      step="10"
-                      value={filters.satRange[0]}
-                      onChange={(e) => handleSatRangeChange([parseInt(e.target.value), filters.satRange[1]])}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                    />
-                    <input
-                      type="range"
-                      min="800"
-                      max="1600"
-                      step="10"
-                      value={filters.satRange[1]}
-                      onChange={(e) => handleSatRangeChange([filters.satRange[0], parseInt(e.target.value)])}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider mt-2"
-                    />
-                  </div>
+                <div className="px-2">
+                  <DualRangeSlider
+                    min={800}
+                    max={1600}
+                    step={10}
+                    value={filters.satRange}
+                    onChange={handleSatRangeChange}
+                  />
                 </div>
+              </div>
               </div>
             </div>
           </div>

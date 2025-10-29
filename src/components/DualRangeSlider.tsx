@@ -6,7 +6,6 @@ interface DualRangeSliderProps {
   step: number;
   value: [number, number];
   onChange: (value: [number, number]) => void;
-  formatLabel?: (value: number) => string;
 }
 
 export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
@@ -15,7 +14,6 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
   step,
   value,
   onChange,
-  formatLabel = (v) => v.toString(),
 }) => {
   const [minVal, setMinVal] = useState(value[0]);
   const [maxVal, setMaxVal] = useState(value[1]);
