@@ -3780,20 +3780,6 @@
     "estimatedGPA": 3.45
   },
   {
-    "id": "398",
-    "name": "앤더슨 대학교",
-    "englishName": "Anderson University",
-    "location": "United States",
-    "tuition": 35640,
-    "acceptanceRate": 53,
-    "satRange": "940 - 1170",
-    "actRange": "16 - 23",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": 3.45
-  },
-  {
     "id": "399",
     "name": "볼 주립대학교",
     "englishName": "Ball State University",
@@ -3819,34 +3805,6 @@
     "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
     "type": "사립",
     "size": "작음 (<5,000)",
-    "estimatedGPA": 3
-  },
-  {
-    "id": "401",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 33320,
-    "acceptanceRate": 99,
-    "satRange": "940 - 1190",
-    "actRange": "19 - 24",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": 3
-  },
-  {
-    "id": "402",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 33320,
-    "acceptanceRate": 99,
-    "satRange": "940 - 1190",
-    "actRange": "19 - 24",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "중간 (5,000-15,000)",
     "estimatedGPA": 3
   },
   {
@@ -4127,20 +4085,6 @@
     "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
     "type": "사립",
     "size": "큼 (15,000+)",
-    "estimatedGPA": null
-  },
-  {
-    "id": "423",
-    "name": "마리안 대학교",
-    "englishName": "Marian University",
-    "location": "United States",
-    "tuition": 39100,
-    "acceptanceRate": 95,
-    "satRange": "1000 - 1300",
-    "actRange": "20 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
     "estimatedGPA": null
   },
   {
@@ -7210,48 +7154,6 @@
     "estimatedGPA": null
   },
   {
-    "id": "671",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 42930,
-    "acceptanceRate": 91,
-    "satRange": "1065 - 1240",
-    "actRange": "23 - 29",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "큼 (15,000+)",
-    "estimatedGPA": 3
-  },
-  {
-    "id": "672",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 42930,
-    "acceptanceRate": 91,
-    "satRange": "1065 - 1240",
-    "actRange": "23 - 29",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "중간 (5,000-15,000)",
-    "estimatedGPA": 3
-  },
-  {
-    "id": "673",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 42930,
-    "acceptanceRate": 91,
-    "satRange": "1065 - 1240",
-    "actRange": "23 - 29",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": 3
-  },
-  {
     "id": "674",
     "name": "칼튼 칼리지",
     "englishName": "Carleton College",
@@ -7547,20 +7449,6 @@
   },
   {
     "id": "696",
-    "name": "세인트 토마스 대학교",
-    "englishName": "University of St Thomas",
-    "location": "United States",
-    "tuition": 52284,
-    "acceptanceRate": 85,
-    "satRange": "1223 - 1416",
-    "actRange": "25 - 30",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "중간 (5,000-15,000)",
-    "estimatedGPA": 3.49
-  },
-  {
-    "id": "697",
     "name": "세인트 토마스 대학교",
     "englishName": "University of St Thomas",
     "location": "United States",
@@ -10402,20 +10290,6 @@
     "estimatedGPA": null
   },
   {
-    "id": "946",
-    "name": "유니언 칼리지",
-    "englishName": "Union College",
-    "location": "United States",
-    "tuition": 66456,
-    "acceptanceRate": 44,
-    "satRange": "1310 - 1480",
-    "actRange": "30 - 33",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Union_college_f1795_logo.png",
-    "type": "사립",
-    "size": "큼 (15,000+)",
-    "estimatedGPA": 3.89
-  },
-  {
     "id": "949",
     "name": "미국 육군사관학교",
     "englishName": "United States Military Academy",
@@ -12698,20 +12572,6 @@
     "estimatedGPA": 3.94
   },
   {
-    "id": "1169",
-    "name": "링컨 대학교",
-    "englishName": "Lincoln University",
-    "location": "United States",
-    "tuition": 12512,
-    "acceptanceRate": 78,
-    "satRange": "870 - 1050",
-    "actRange": "18 - 22",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "공립",
-    "size": "큼 (15,000+)",
-    "estimatedGPA": 3.02
-  },
-  {
     "id": "1170",
     "name": "라이커밍 칼리지",
     "englishName": "Lycoming College",
@@ -13496,34 +13356,6 @@
     "estimatedGPA": 3.54
   },
   {
-    "id": "1229",
-    "name": "앤더슨 대학교",
-    "englishName": "Anderson University",
-    "location": "United States",
-    "tuition": 33580,
-    "acceptanceRate": 53,
-    "satRange": "1090 - 1290",
-    "actRange": "22 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "큼 (15,000+)",
-    "estimatedGPA": 3.45
-  },
-  {
-    "id": "1230",
-    "name": "앤더슨 대학교",
-    "englishName": "Anderson University",
-    "location": "United States",
-    "tuition": 33580,
-    "acceptanceRate": 53,
-    "satRange": "1090 - 1290",
-    "actRange": "22 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": 3.45
-  },
-  {
     "id": "1231",
     "name": "찰스턴 서던 대학교",
     "englishName": "Charleston Southern University",
@@ -13633,20 +13465,6 @@
     "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
     "type": "사립",
     "size": "큼 (15,000+)",
-    "estimatedGPA": null
-  },
-  {
-    "id": "1240",
-    "name": "컬럼비아 칼리지",
-    "englishName": "Columbia College",
-    "location": "United States",
-    "tuition": 21450,
-    "acceptanceRate": 96,
-    "satRange": "1000 - 1300",
-    "actRange": "20 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
     "estimatedGPA": null
   },
   {
@@ -14054,48 +13872,6 @@
     "type": "사립",
     "size": "큼 (15,000+)",
     "estimatedGPA": 3.61
-  },
-  {
-    "id": "1273",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 18168,
-    "acceptanceRate": 97,
-    "satRange": "625 - 1100",
-    "actRange": "16 - 24",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "중간 (5,000-15,000)",
-    "estimatedGPA": 3
-  },
-  {
-    "id": "1274",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 18168,
-    "acceptanceRate": 97,
-    "satRange": "625 - 1100",
-    "actRange": "16 - 24",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "중간 (5,000-15,000)",
-    "estimatedGPA": 3
-  },
-  {
-    "id": "1275",
-    "name": "베델 대학교",
-    "englishName": "Bethel University",
-    "location": "United States",
-    "tuition": 18168,
-    "acceptanceRate": 97,
-    "satRange": "625 - 1100",
-    "actRange": "16 - 24",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": 3
   },
   {
     "id": "1277",
@@ -14894,34 +14670,6 @@
     "type": "사립",
     "size": "작음 (<5,000)",
     "estimatedGPA": 3.32
-  },
-  {
-    "id": "1357",
-    "name": "세인트 토마스 대학교",
-    "englishName": "University of St Thomas",
-    "location": "United States",
-    "tuition": 33660,
-    "acceptanceRate": 93,
-    "satRange": "1075 - 1340",
-    "actRange": "22 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": 3.49
-  },
-  {
-    "id": "1358",
-    "name": "세인트 토마스 대학교",
-    "englishName": "University of St Thomas",
-    "location": "United States",
-    "tuition": 33660,
-    "acceptanceRate": 93,
-    "satRange": "1075 - 1340",
-    "actRange": "22 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": 3.49
   },
   {
     "id": "1359",
@@ -16392,34 +16140,6 @@
     "type": "사립",
     "size": "작음 (<5,000)",
     "estimatedGPA": 3.73
-  },
-  {
-    "id": "1522",
-    "name": "마리안 대학교",
-    "englishName": "Marian University",
-    "location": "United States",
-    "tuition": 33000,
-    "acceptanceRate": 67,
-    "satRange": "1000 - 1300",
-    "actRange": "20 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": null
-  },
-  {
-    "id": "1523",
-    "name": "마리안 대학교",
-    "englishName": "Marian University",
-    "location": "United States",
-    "tuition": 33000,
-    "acceptanceRate": 67,
-    "satRange": "1000 - 1300",
-    "actRange": "20 - 28",
-    "image": "https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400",
-    "type": "사립",
-    "size": "작음 (<5,000)",
-    "estimatedGPA": null
   },
   {
     "id": "1524",
