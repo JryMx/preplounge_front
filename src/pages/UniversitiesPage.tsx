@@ -284,13 +284,13 @@ const UniversitiesPage: React.FC = () => {
                 />
                 <div className="university-card-content">
                   <h3 className="university-card-title">{language === 'ko' ? university.name : university.englishName}</h3>
-                  {university.name !== university.englishName && (
-                    <p className="university-card-subtitle">{language === 'ko' ? university.englishName : university.name}</p>
+                  {language === 'ko' && university.name !== university.englishName && (
+                    <p className="university-card-subtitle">{university.englishName}</p>
                   )}
 
                   <div className="university-card-location">
                     <MapPin className="h-4 w-4" />
-                    <span>{university.location} • {university.type}</span>
+                    <span>{university.location} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
                   </div>
 
                   <div className="university-card-stats">
@@ -327,12 +327,12 @@ const UniversitiesPage: React.FC = () => {
                 <div className="university-list-content">
                   <div className="university-list-header">
                     <h3 className="university-list-title">{language === 'ko' ? university.name : university.englishName}</h3>
-                    {university.name !== university.englishName && (
-                      <p className="university-list-subtitle">{language === 'ko' ? university.englishName : university.name}</p>
+                    {language === 'ko' && university.name !== university.englishName && (
+                      <p className="university-list-subtitle">{university.englishName}</p>
                     )}
                     <div className="university-card-location" style={{marginTop: '8px'}}>
                       <MapPin className="h-4 w-4" />
-                      <span>{university.location} • {university.type}</span>
+                      <span>{university.location} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
                     </div>
                   </div>
                   <div className="university-list-stats">

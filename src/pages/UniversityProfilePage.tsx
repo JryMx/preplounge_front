@@ -89,7 +89,7 @@ const UniversityProfilePage: React.FC = () => {
                 <MapPin className="h-5 w-5" />
                 <span>{university.location}</span>
                 <span>•</span>
-                <span>{university.type}</span>
+                <span>{university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
               </div>
 
               {/* School Details */}
@@ -100,7 +100,7 @@ const UniversityProfilePage: React.FC = () => {
                 </div>
                 <div className="university-profile-detail-item">
                   <span className="university-profile-detail-label">{t('university.type')}:</span>
-                  <span className="university-profile-detail-value">{university.type}</span>
+                  <span className="university-profile-detail-value">{university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
                 </div>
                 <div className="university-profile-detail-item">
                   <span className="university-profile-detail-label">{t('university.size')}:</span>
