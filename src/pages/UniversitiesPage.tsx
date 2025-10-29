@@ -74,7 +74,9 @@ const UniversitiesPage: React.FC = () => {
         const bSatMax = parseInt(b.satRange.split('-')[1]);
         return bSatMax - aSatMax;
       default:
-        // Default: Show universities with real logos first
+        // Default/Recommended Sort: Prioritize universities with official logos
+        // These schools typically have verified data and complete profiles
+        // Schools with real logos from wikimedia or logos-world appear first
         const aHasLogo = a.image.includes('upload.wikimedia.org') || a.image.includes('logos-world.net');
         const bHasLogo = b.image.includes('upload.wikimedia.org') || b.image.includes('logos-world.net');
         if (aHasLogo && !bHasLogo) return -1;
