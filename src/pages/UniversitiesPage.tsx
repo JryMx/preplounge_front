@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, MapPin, Users, DollarSign, BookOpen, Filter, Grid2x2 as Grid, List } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import universitiesData from '../data/universities.json';
 import './universities-page.css';
 
 interface University {
@@ -18,87 +19,8 @@ interface University {
   size: string;
 }
 
-// Mock university data
-const universities: University[] = [
-  {
-    id: '1',
-    name: '하버드 대학교',
-    englishName: 'Harvard University',
-    location: '메사추세츠 케임브리지',
-    tuition: 54269,
-    acceptanceRate: 5.4,
-    satRange: '1460-1570',
-    actRange: '33-35',
-    image: 'https://images.pexels.com/photos/207684/pexels-photo-207684.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '사립',
-    size: '중간 (5,000-15,000)',
-  },
-  {
-    id: '2',
-    name: '스탠퍼드 대학교',
-    englishName: 'Stanford University',
-    location: '캘리포니아 스탠퍼드',
-    tuition: 56169,
-    acceptanceRate: 4.8,
-    satRange: '1440-1570',
-    actRange: '32-35',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '사립',
-    size: '중간 (5,000-15,000)',
-  },
-  {
-    id: '3',
-    name: '메사추세츠 공과대학교',
-    englishName: 'Massachusetts Institute of Technology (MIT)',
-    location: '메사추세츠 케임브리지',
-    tuition: 53790,
-    acceptanceRate: 7.3,
-    satRange: '1470-1570',
-    actRange: '33-35',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '사립',
-    size: '작음 (<5,000)',
-  },
-  {
-    id: '4',
-    name: '캘리포니아 대학교 버클리',
-    englishName: 'University of California, Berkeley',
-    location: '캘리포니아 버클리',
-    tuition: 44007,
-    acceptanceRate: 17.5,
-    satRange: '1330-1530',
-    actRange: '30-35',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '공립',
-    size: '큼 (15,000+)',
-  },
-  {
-    id: '5',
-    name: '뉴욕 대학교',
-    englishName: 'New York University (NYU)',
-    location: '뉴욕 뉴욕',
-    tuition: 53308,
-    acceptanceRate: 21.1,
-    satRange: '1350-1530',
-    actRange: '30-34',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '사립',
-    size: '큼 (15,000+)',
-  },
-  {
-    id: '6',
-    name: '펜실베이니아 주립대학교',
-    englishName: 'Pennsylvania State University',
-    location: '펜실베이니아 유니버시티 파크',
-    tuition: 35514,
-    acceptanceRate: 76.0,
-    satRange: '1160-1360',
-    actRange: '25-30',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '공립',
-    size: '큼 (15,000+)',
-  },
-];
+// Load real university data from JSON file
+const universities: University[] = universitiesData as University[];
 
 const UniversitiesPage: React.FC = () => {
   const navigate = useNavigate();
