@@ -6,26 +6,29 @@ PrepLounge is a study abroad platform designed to assist students in their journ
 ## Recent Changes
 
 ### October 29, 2025 - Real University Data Integration ✅
-Integrated real university data from Excel file into the Universities page:
+Integrated real university data from CSV file into the Universities page:
 
 **Data Source:**
-- Extracted data from Excel file containing 1,240 U.S. universities
-- All 1,240 universities included in the application
+- Extracted data from comprehensive CSV file containing 1,698 U.S. universities
+- All 1,698 universities included in the application
 
 **Real Data Included:**
-- Authentic university names (e.g., Alabama A & M University, Auburn University)
-- Real locations (city and state)
-- Institution sizes and types (Public/Private)
-- Placeholder values for tuition, acceptance rates, and test scores
+- Authentic university names in both English and Korean (e.g., Alabama A & M University / 앨라배마 A&M 대학교)
+- Real tuition data from actual university statistics
+- Authentic acceptance rates (ranging from 3% to 100%)
+- Real SAT and ACT score ranges
+- Institution sizes and types
 
 **Implementation:**
-- Created `src/data/universities.json` with processed university data
+- Created `src/data/universities.json` with processed university data from CSV
 - Updated `UniversitiesPage.tsx` to import and use real data
 - Maintained all existing filtering, sorting, and search functionality
+- Full bilingual support with Korean university names
 
 **Performance:**
-- Complete dataset of 1,240 real U.S. universities
+- Complete dataset of 1,698 real U.S. universities
 - All filtering, sorting, and search features work with full dataset
+- Seamless bilingual display in both Korean and English
 
 ### October 29, 2025 - Universities Page Translation ✅
 Added full bilingual support to the Universities (Browse Schools) page:
