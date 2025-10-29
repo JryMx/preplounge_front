@@ -58,7 +58,7 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 - **University Browsing & Detail**: 
   - Displays 1,234 curated U.S. universities (filtered from verified list with duplicates removed)
   - 12 schools per page pagination for efficient browsing
-  - Single dual-handle range sliders for tuition ($0-$60k) and SAT scores (800-1600) with automatic handle collision prevention
+  - Single dual-handle range sliders for tuition ($0-$70k) and SAT scores (800-1600) with automatic handle collision prevention
   - "Recommended" sort (default) prioritizes schools with official logos and verified data
   - Additional sorting: Alphabetical (A-Z, Z-A), SAT Range (ascending/descending)
   - Full bilingual support with complete language separation

@@ -33,7 +33,7 @@ const UniversitiesPage: React.FC = () => {
   const [filters, setFilters] = useState({
     types: [] as string[],
     sortBy: '',
-    tuitionRange: [0, 60000] as [number, number],
+    tuitionRange: [0, 70000] as [number, number],
     satRange: [800, 1600] as [number, number],
   });
 
@@ -229,7 +229,7 @@ const UniversitiesPage: React.FC = () => {
                 <div className="px-2">
                   <DualRangeSlider
                     min={0}
-                    max={60000}
+                    max={70000}
                     step={1000}
                     value={filters.tuitionRange}
                     onChange={handleTuitionRangeChange}
@@ -354,7 +354,7 @@ const UniversitiesPage: React.FC = () => {
               onClick={() => setFilters({
                 types: [],
                 sortBy: '',
-                tuitionRange: [0, 60000],
+                tuitionRange: [0, 70000],
                 satRange: [800, 1600]
               })}
               className="universities-filter-button active" style={{marginTop: '16px'}}
