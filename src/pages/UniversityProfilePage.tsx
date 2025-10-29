@@ -168,39 +168,6 @@ const UniversityProfilePage: React.FC = () => {
             </div>
           )}
         </div>
-
-        {/* Main Content Grid */}
-        <div className="university-profile-main-grid">
-          {/* Left Column - Admission Requirements */}
-          <div className="university-profile-section">
-            <h2 className="university-profile-section-title">
-              {t('university.requirements.title')}
-            </h2>
-            
-            <div className="university-profile-requirements-list">
-              <div className="university-profile-requirement-item">
-                <span className="university-profile-requirement-label">
-                  {t('university.requirements.gpa')}
-                </span>
-                <span className="university-profile-requirement-badge required">
-                  {t('university.requirements.required')}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - School Information */}
-          <div className="university-profile-section">
-            <h2 className="university-profile-section-title">
-              {t('university.info.title')}
-            </h2>
-            
-            <div className="university-profile-info-item">
-              <span className="university-profile-info-label">{t('university.info.graduation')}:</span>
-              <span className="university-profile-info-value">97%</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
