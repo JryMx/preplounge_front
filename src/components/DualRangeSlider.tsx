@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 interface DualRangeSliderProps {
   min: number;
@@ -22,8 +22,10 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
   const range = useRef<HTMLDivElement>(null);
 
   // Convert to percentage
-  const getPercent = (value: number) =>
-    Math.round(((value - min) / (max - min)) * 100);
+  const getPercent = useCallback(
+    (value: number) => Math.round(((value - min) / (max - min)) * 100),
+    [min, max]
+  );
 
   // Set width of the range to decrease from the left side
   useEffect(() => {
@@ -34,7 +36,7 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
       range.current.style.left = `${minPercent}%`;
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [minVal, max, min]);
+  }, [minVal, getPercent]);
 
   // Set width of the range to decrease from the right side
   useEffect(() => {
@@ -44,14 +46,26 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
     if (range.current) {
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [maxVal, max, min]);
+  }, [maxVal, getPercent]);
 
-  // Update refs and trigger onChange
+  // Update refs
   useEffect(() => {
     minValRef.current = minVal;
     maxValRef.current = maxVal;
-    onChange([minVal, maxVal]);
-  }, [minVal, maxVal, onChange]);
+  }, [minVal, maxVal]);
+
+  // Trigger onChange only when values actually change from user interaction
+  const handleMinChange = (newMin: number) => {
+    const validMin = Math.min(newMin, maxVal - step);
+    setMinVal(validMin);
+    onChange([validMin, maxVal]);
+  };
+
+  const handleMaxChange = (newMax: number) => {
+    const validMax = Math.max(newMax, minVal + step);
+    setMaxVal(validMax);
+    onChange([minVal, validMax]);
+  };
 
   return (
     <div className="dual-range-slider-container">
@@ -61,10 +75,7 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
         max={max}
         step={step}
         value={minVal}
-        onChange={(event) => {
-          const value = Math.min(Number(event.target.value), maxVal - step);
-          setMinVal(value);
-        }}
+        onChange={(event) => handleMinChange(Number(event.target.value))}
         className="dual-range-slider thumb-left"
         style={{ zIndex: minVal > max - 100 ? 5 : 3 }}
       />
@@ -74,10 +85,7 @@ export const DualRangeSlider: React.FC<DualRangeSliderProps> = ({
         max={max}
         step={step}
         value={maxVal}
-        onChange={(event) => {
-          const value = Math.max(Number(event.target.value), minVal + step);
-          setMaxVal(value);
-        }}
+        onChange={(event) => handleMaxChange(Number(event.target.value))}
         className="dual-range-slider thumb-right"
       />
 
