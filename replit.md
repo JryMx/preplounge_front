@@ -25,13 +25,14 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 
 ### Feature Specifications
 - **AI-Powered Profile Analysis**: 
-  - Dedicated page at `/profile-calculator` with full API integration
+  - Available in TWO locations: Dedicated page (`/profile-calculator`) AND HomePage calculator section
   - Connects to PrepLounge AI API (`https://dev.preplounge.ai/`) for real admission predictions
   - Supports both SAT (Math + EBRW) and ACT scoring systems with toggle
   - Returns comprehensive university recommendations categorized as Safety/Target/Reach/Prestige
   - Displays top 6 schools per category with admission probabilities
   - Full bilingual support for all results (Korean/English)
   - Real-time analysis with loading states and error handling
+  - Identical functionality on both HomePage and dedicated Profile Calculator page
 - **University Browsing & Detail**: Allows searching, filtering, and viewing detailed profiles for 1,696 unique U.S. universities, with full bilingual support and key statistics (acceptance rate, tuition, SAT/ACT ranges, GPA).
 - **Housing Support**: Provides real estate listings, currently restricted to California and Georgia, with clear messaging and validation for state-specific searches.
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
