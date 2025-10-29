@@ -10,7 +10,7 @@ Integrated real university data from Excel file into the Universities page:
 
 **Data Source:**
 - Extracted data from Excel file containing 1,240 U.S. universities
-- Transformed and optimized to 200 universities for performance
+- All 1,240 universities included in the application
 
 **Real Data Included:**
 - Authentic university names (e.g., Alabama A & M University, Auburn University)
@@ -24,8 +24,8 @@ Integrated real university data from Excel file into the Universities page:
 - Maintained all existing filtering, sorting, and search functionality
 
 **Performance:**
-- Reduced dataset to 200 universities to ensure fast page loads
-- All features work smoothly with real data
+- Complete dataset of 1,240 real U.S. universities
+- All filtering, sorting, and search features work with full dataset
 
 ### October 29, 2025 - Universities Page Translation ✅
 Added full bilingual support to the Universities (Browse Schools) page:
