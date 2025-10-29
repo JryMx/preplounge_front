@@ -596,6 +596,12 @@
   border: 1px solid #FDE68A;
 }
 
+.requirement-badge.not-considered {
+  background: #F3F4F6;
+  color: #6B7280;
+  border: 1px solid #D1D5DB;
+}
+
 /* Academic Information */
 .academic-info-content {
   display: flex;

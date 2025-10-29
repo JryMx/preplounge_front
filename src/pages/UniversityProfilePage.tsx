@@ -5,6 +5,20 @@ import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
 import './university-profile-page.css';
 
+interface ApplicationRequirements {
+  gpa?: string;
+  rank?: string;
+  record?: string;
+  prepProgram?: string;
+  recommendations?: string;
+  competencies?: string;
+  workExperience?: string;
+  essay?: string;
+  legacyStatus?: string;
+  testScores?: string;
+  englishProficiency?: string;
+}
+
 interface University {
   id: string;
   name: string;
@@ -18,6 +32,7 @@ interface University {
   type: string;
   size: string;
   estimatedGPA?: number | null;
+  applicationRequirements?: ApplicationRequirements;
 }
 
 const universities: University[] = universitiesData as University[];
@@ -34,6 +49,29 @@ const translateSize = (size: string, language: 'ko' | 'en'): string => {
   if (size === '작음 (<5,000)') return 'Small (<5,000)';
   
   return size;
+};
+
+const getRequirementBadgeType = (status?: string): 'required' | 'optional' | 'not-considered' => {
+  if (!status) return 'not-considered';
+  if (status.includes('Required')) return 'required';
+  if (status.includes('Not required') || status.includes('considered if submitted')) return 'optional';
+  return 'not-considered';
+};
+
+const translateRequirementStatus = (language: 'ko' | 'en', status?: string): string => {
+  if (!status) return language === 'ko' ? '고려 안 됨' : 'Not Considered';
+  
+  if (status.includes('Required')) {
+    return language === 'ko' ? '필수' : 'Required';
+  }
+  if (status.includes('Not required') || status.includes('considered if submitted')) {
+    return language === 'ko' ? '선택 (제출 시 고려)' : 'Optional (Considered if submitted)';
+  }
+  if (status.includes('Not considered')) {
+    return language === 'ko' ? '고려 안 됨' : 'Not Considered';
+  }
+  
+  return status;
 };
 
 const UniversityProfilePage: React.FC = () => {
@@ -55,7 +93,6 @@ const UniversityProfilePage: React.FC = () => {
   }
 
   const universityName = language === 'ko' ? university.name : university.englishName;
-  const alternativeName = language === 'ko' ? university.englishName : university.name;
 
   return (
     <div className="university-profile-page">
@@ -188,54 +225,94 @@ const UniversityProfilePage: React.FC = () => {
               {language === 'ko' ? '지원 요건' : 'Application Requirements'}
             </h2>
             <div className="university-profile-requirements-list">
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '고등학교 GPA' : 'High School GPA'}</span>
-                <span className="requirement-badge required" data-testid="badge-gpa-required">
-                  {language === 'ko' ? '필수' : 'Required'}
-                </span>
-              </div>
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '고등학교 석차' : 'High School Rank'}</span>
-                <span className="requirement-badge optional" data-testid="badge-rank-optional">
-                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
-                </span>
-              </div>
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '고등학교 성적표' : 'High School Transcript'}</span>
-                <span className="requirement-badge required" data-testid="badge-transcript-required">
-                  {language === 'ko' ? '필수' : 'Required'}
-                </span>
-              </div>
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '대학 준비 프로그램 이수' : 'College Prep Program Completion'}</span>
-                <span className="requirement-badge optional" data-testid="badge-prep-optional">
-                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
-                </span>
-              </div>
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '추천서' : 'Recommendation'}</span>
-                <span className="requirement-badge required" data-testid="badge-recommendation-required">
-                  {language === 'ko' ? '필수' : 'Required'}
-                </span>
-              </div>
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '과외활동' : 'Extracurricular Activities'}</span>
-                <span className="requirement-badge optional" data-testid="badge-extracurricular-optional">
-                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
-                </span>
-              </div>
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '자기소개서/에세이' : 'Personal Statement/Essay'}</span>
-                <span className="requirement-badge required" data-testid="badge-essay-required">
-                  {language === 'ko' ? '필수' : 'Required'}
-                </span>
-              </div>
-              <div className="requirement-item">
-                <span className="requirement-name">{language === 'ko' ? '등록 자녀 여부' : 'Legacy Status'}</span>
-                <span className="requirement-badge optional" data-testid="badge-legacy-optional">
-                  {language === 'ko' ? '선택 (예외 시 고려)' : 'Optional (Considered in exceptions)'}
-                </span>
-              </div>
+              {university.applicationRequirements?.gpa && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '고등학교 GPA' : 'High School GPA'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.gpa)}`} data-testid="badge-gpa">
+                    {translateRequirementStatus(language, university.applicationRequirements.gpa)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.rank && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '고등학교 석차' : 'High School Rank'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.rank)}`} data-testid="badge-rank">
+                    {translateRequirementStatus(language, university.applicationRequirements.rank)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.record && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '고등학교 성적표' : 'High School Transcript'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.record)}`} data-testid="badge-transcript">
+                    {translateRequirementStatus(language, university.applicationRequirements.record)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.prepProgram && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '대학 준비 프로그램 이수' : 'College Prep Program Completion'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.prepProgram)}`} data-testid="badge-prep">
+                    {translateRequirementStatus(language, university.applicationRequirements.prepProgram)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.recommendations && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '추천서' : 'Recommendation'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.recommendations)}`} data-testid="badge-recommendation">
+                    {translateRequirementStatus(language, university.applicationRequirements.recommendations)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.competencies && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '역량 증명' : 'Demonstration of Competencies'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.competencies)}`} data-testid="badge-competencies">
+                    {translateRequirementStatus(language, university.applicationRequirements.competencies)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.workExperience && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '업무 경험' : 'Work Experience'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.workExperience)}`} data-testid="badge-work-experience">
+                    {translateRequirementStatus(language, university.applicationRequirements.workExperience)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.essay && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '자기소개서/에세이' : 'Personal Statement/Essay'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.essay)}`} data-testid="badge-essay">
+                    {translateRequirementStatus(language, university.applicationRequirements.essay)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.legacyStatus && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '동문 자녀 여부' : 'Legacy Status'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.legacyStatus)}`} data-testid="badge-legacy">
+                    {translateRequirementStatus(language, university.applicationRequirements.legacyStatus)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.testScores && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '입학시험 점수' : 'Admission Test Scores'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.testScores)}`} data-testid="badge-test-scores">
+                    {translateRequirementStatus(language, university.applicationRequirements.testScores)}
+                  </span>
+                </div>
+              )}
+              {university.applicationRequirements?.englishProficiency && (
+                <div className="requirement-item">
+                  <span className="requirement-name">{language === 'ko' ? '영어 능력 시험' : 'English Proficiency Test'}</span>
+                  <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.englishProficiency)}`} data-testid="badge-english">
+                    {translateRequirementStatus(language, university.applicationRequirements.englishProficiency)}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
