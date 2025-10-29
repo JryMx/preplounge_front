@@ -379,13 +379,14 @@ const UniversitiesPage: React.FC = () => {
               disabled={currentPage === 1}
               style={{
                 padding: '10px 20px',
-                backgroundColor: currentPage === 1 ? '#e5e7eb' : '#1e3a8a',
-                color: currentPage === 1 ? '#9ca3af' : 'white',
+                backgroundColor: currentPage === 1 ? '#f3f4f6' : '#FACC15',
+                color: currentPage === 1 ? '#9ca3af' : '#082F49',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-                fontWeight: '500',
-                fontSize: '14px'
+                fontWeight: '600',
+                fontSize: '14px',
+                transition: 'all 0.2s ease'
               }}
               data-testid="button-prev-page"
             >
@@ -411,14 +412,15 @@ const UniversitiesPage: React.FC = () => {
                     onClick={() => handlePageChange(pageNum)}
                     style={{
                       padding: '10px 16px',
-                      backgroundColor: currentPage === pageNum ? '#1e3a8a' : 'white',
-                      color: currentPage === pageNum ? 'white' : '#1e3a8a',
-                      border: '2px solid #1e3a8a',
+                      backgroundColor: currentPage === pageNum ? '#FACC15' : 'white',
+                      color: currentPage === pageNum ? '#082F49' : '#64748b',
+                      border: currentPage === pageNum ? '2px solid #FACC15' : '2px solid #e2e8f0',
                       borderRadius: '8px',
                       cursor: 'pointer',
-                      fontWeight: '500',
+                      fontWeight: currentPage === pageNum ? '600' : '500',
                       fontSize: '14px',
-                      minWidth: '44px'
+                      minWidth: '44px',
+                      transition: 'all 0.2s ease'
                     }}
                     data-testid={`button-page-${pageNum}`}
                   >
@@ -433,13 +435,14 @@ const UniversitiesPage: React.FC = () => {
               disabled={currentPage === totalPages}
               style={{
                 padding: '10px 20px',
-                backgroundColor: currentPage === totalPages ? '#e5e7eb' : '#1e3a8a',
-                color: currentPage === totalPages ? '#9ca3af' : 'white',
+                backgroundColor: currentPage === totalPages ? '#f3f4f6' : '#FACC15',
+                color: currentPage === totalPages ? '#9ca3af' : '#082F49',
                 border: 'none',
                 borderRadius: '8px',
                 cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-                fontWeight: '500',
-                fontSize: '14px'
+                fontWeight: '600',
+                fontSize: '14px',
+                transition: 'all 0.2s ease'
               }}
               data-testid="button-next-page"
             >
