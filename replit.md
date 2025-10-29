@@ -5,13 +5,18 @@ PrepLounge is a study abroad platform designed to assist students in their journ
 
 ## Recent Changes
 
-### October 29, 2025 - GPA Data Integration ✅
-Added estimated GPA data from CSV file to all universities:
+### October 29, 2025 - Institution Type and GPA Data Integration ✅
+Added institution type and estimated GPA data from CSV file to all universities:
 
-**Data Integration:**
+**Institution Type Data:**
+- Updated institution type for all 1,698 universities from CSV
+- Public universities marked as "공립", Private as "사립"
+- Filter functionality now works correctly with updated data
+
+**GPA Data Integration:**
 - Successfully integrated GPA data for 870 out of 1,698 universities
 - GPA values range from 3.0 to 4.0 based on real admission statistics
-- Created Python script to merge CSV GPA data into universities.json
+- Created Python script to merge CSV data into universities.json
 - GPA displays conditionally (only shown if data is available)
 
 **UI Updates:**
