@@ -100,7 +100,13 @@ const UniversitiesPage: React.FC = () => {
   };
 
   const handleTuitionRangeChange = (range: [number, number]) => {
-    setFilters(prev => ({ ...prev, tuitionRange: range }));
+    // Ensure min doesn't exceed max and max doesn't go below min
+    const [min, max] = range;
+    const validRange: [number, number] = [
+      Math.min(min, max),
+      Math.max(min, max)
+    ];
+    setFilters(prev => ({ ...prev, tuitionRange: validRange }));
     setCurrentPage(1);
   };
   
@@ -110,7 +116,13 @@ const UniversitiesPage: React.FC = () => {
   };
 
   const handleSatRangeChange = (range: [number, number]) => {
-    setFilters(prev => ({ ...prev, satRange: range }));
+    // Ensure min doesn't exceed max and max doesn't go below min
+    const [min, max] = range;
+    const validRange: [number, number] = [
+      Math.min(min, max),
+      Math.max(min, max)
+    ];
+    setFilters(prev => ({ ...prev, satRange: validRange }));
     setCurrentPage(1); // Reset to first page when filters change
   };
 
