@@ -18,6 +18,8 @@ Integrated real university data from CSV file into the Universities page:
 - Authentic acceptance rates (ranging from 3% to 100%)
 - Real SAT and ACT score ranges
 - Institution sizes and types
+- Real university logo images for 84 top universities (Harvard, Yale, Stanford, MIT, Princeton, etc.)
+- Placeholder images for remaining universities
 
 **Implementation:**
 - Created `src/data/universities.json` with processed university data from CSV
