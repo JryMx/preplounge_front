@@ -29,11 +29,19 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Connects to PrepLounge AI API (`https://dev.preplounge.ai/`) for real admission predictions
   - Supports both SAT (Math + EBRW) and ACT scoring systems with toggle
   - Returns comprehensive university recommendations categorized as Safety/Target/Reach/Prestige
-  - Displays top 6 schools per category with admission probabilities
+  - **HomePage**: Displays top 3 highest-quality schools per category with "More Detailed Analysis" button linking to full page
+  - **Profile Calculator Page**: Displays top 12 highest-quality schools per category for comprehensive analysis
+  - All schools sorted by quality score for optimal recommendations
   - Full bilingual support for all results (Korean/English)
   - Real-time analysis with loading states and error handling
-  - Identical functionality on both HomePage and dedicated Profile Calculator page
-- **University Browsing & Detail**: Allows searching, filtering, and viewing detailed profiles for 1,696 unique U.S. universities, with full bilingual support and key statistics (acceptance rate, tuition, SAT/ACT ranges, GPA).
+  - Clickable school cards navigate to detailed university profiles
+- **University Profile Pages**: 
+  - Detailed profiles for 1,696 unique U.S. universities
+  - Quick stats: Acceptance rate, tuition, SAT/ACT ranges, GPA
+  - **Application Requirements section**: Lists required (GPA, transcript, essay, recommendations) and optional (rank, activities, legacy status) admission criteria
+  - **Academic Information section**: Graduation rate (97%), average salary ($95k), degree types (Bachelor's, Master's, Doctoral), available majors (6 categories)
+  - Full bilingual support with complete language separation
+- **University Browsing & Detail**: Allows searching, filtering, and viewing detailed profiles with full bilingual support and key statistics.
 - **Housing Support**: Provides real estate listings, currently restricted to California and Georgia, with clear messaging and validation for state-specific searches.
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 
