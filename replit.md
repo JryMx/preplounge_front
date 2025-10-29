@@ -43,7 +43,15 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
     - 11 requirement categories: GPA, rank, transcript, prep program, recommendations, competencies, work experience, essay, legacy status, test scores, English proficiency
     - Three status types: Required (red badge), Optional/Considered if submitted (yellow badge), Not Considered (gray badge)
     - Fully data-driven from Excel source, showing only applicable requirements per school
-  - **Academic Information section**: Graduation rate (97%), average salary ($95k), degree types (Bachelor's, Master's, Doctoral), available majors (6 categories)
+  - **Academic Information section**: Displays real data from IPEDS 2023
+    - Graduation rates: Actual 4-year completion rates for each institution
+    - Degree types: Shows which programs the school offers (Bachelor's, Master's, Doctoral)
+    - Available programs: Scrollable list of all actual programs offered (26,145 total program entries mapped across universities)
+    - Programs organized by 26 major categories with full Korean translations
+    - Custom scrollbar styling for improved UX
+  - **Action Buttons**: Two interactive buttons for future functionality
+    - "Check Admission Probability" (primary button) - Links to Profile Calculator
+    - "Add to Comparison List" (secondary button) - For university comparison feature
   - Full bilingual support with complete language separation
 - **University Browsing & Detail**: 
   - Displays 1,234 curated U.S. universities (filtered from verified list with duplicates removed)
