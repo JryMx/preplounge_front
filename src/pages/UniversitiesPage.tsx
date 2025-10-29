@@ -255,12 +255,6 @@ const UniversitiesPage: React.FC = () => {
             </div>
           </div>
 
-          <div style={{marginBottom: '24px'}}>
-            <p className="universities-description">
-              {t('universities.results').replace('{total}', universities.length.toString()).replace('{filtered}', sortedUniversities.length.toString())}
-            </p>
-          </div>
-
         <div className={viewMode === 'grid' ? 'universities-grid' : 'universities-list'}>
           {paginatedUniversities.map(university => (
             viewMode === 'grid' ? (
