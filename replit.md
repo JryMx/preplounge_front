@@ -37,9 +37,12 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Real-time analysis with loading states and error handling
   - Clickable school cards navigate to detailed university profiles
 - **University Profile Pages**: 
-  - Detailed profiles for 1,696 unique U.S. universities
+  - Detailed profiles for 1,234 unique U.S. universities
   - Quick stats: Acceptance rate, tuition, SAT/ACT ranges, GPA
-  - **Application Requirements section**: Lists required (GPA, transcript, essay, recommendations) and optional (rank, activities, legacy status) admission criteria
+  - **Application Requirements section**: Displays accurate, school-specific requirements from IPEDS data (2023)
+    - 11 requirement categories: GPA, rank, transcript, prep program, recommendations, competencies, work experience, essay, legacy status, test scores, English proficiency
+    - Three status types: Required (red badge), Optional/Considered if submitted (yellow badge), Not Considered (gray badge)
+    - Fully data-driven from Excel source, showing only applicable requirements per school
   - **Academic Information section**: Graduation rate (97%), average salary ($95k), degree types (Bachelor's, Master's, Doctoral), available majors (6 categories)
   - Full bilingual support with complete language separation
 - **University Browsing & Detail**: 
