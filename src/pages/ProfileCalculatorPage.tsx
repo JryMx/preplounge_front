@@ -70,14 +70,23 @@ const ProfileCalculatorPage: React.FC = () => {
         return;
       }
 
-      const response = await fetch(url);
-      if (!response.ok) throw new Error('API request failed');
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
       
       const data: APIResponse = await response.json();
       setResults(data);
     } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+      console.error('API error:', errorMessage, err);
       setError(language === 'ko' ? '분석 중 오류가 발생했습니다. 다시 시도해주세요.' : 'An error occurred during analysis. Please try again.');
-      console.error('API error:', err);
     } finally {
       setLoading(false);
     }
