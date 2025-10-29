@@ -250,6 +250,26 @@ const translations = {
     'universities.empty.title': '해당되는 학교가 없습니다',
     'universities.empty.description': '필터를 해제하고 다시 시도해보세요.',
     'universities.empty.reset': '필터 해제',
+    
+    // University Profile Page
+    'university.back': '학교 목록으로 돌아가기',
+    'university.commonapp.yes': 'Common App 지원 가능',
+    'university.commonapp.no': '학교별 지원서 필요',
+    'university.compare': '비교하기',
+    'university.location': '위치',
+    'university.type': '유형',
+    'university.size': '규모',
+    'university.stat.acceptance': '합격률',
+    'university.stat.tuition': '등록금',
+    'university.stat.sat': 'SAT 범위',
+    'university.stat.act': 'ACT 범위',
+    'university.requirements.title': '지원 요건',
+    'university.requirements.gpa': '고등학교 GPA',
+    'university.requirements.required': '필수',
+    'university.info.title': '학업 정보',
+    'university.info.graduation': '졸업률',
+    'university.notfound.title': '학교를 찾을 수 없습니다',
+    'university.notfound.back': '학교 목록으로 돌아가기',
   },
   en: {
     // Navbar
@@ -490,6 +510,26 @@ const translations = {
     'universities.empty.title': 'No schools match your criteria',
     'universities.empty.description': 'Try resetting the filters or search again.',
     'universities.empty.reset': 'Reset Filters',
+    
+    // University Profile Page
+    'university.back': 'Back to Schools List',
+    'university.commonapp.yes': 'Common App Available',
+    'university.commonapp.no': 'School-Specific Application Required',
+    'university.compare': 'Compare',
+    'university.location': 'Location',
+    'university.type': 'Type',
+    'university.size': 'Size',
+    'university.stat.acceptance': 'Acceptance Rate',
+    'university.stat.tuition': 'Tuition',
+    'university.stat.sat': 'SAT Range',
+    'university.stat.act': 'ACT Range',
+    'university.requirements.title': 'Admission Requirements',
+    'university.requirements.gpa': 'High School GPA',
+    'university.requirements.required': 'Required',
+    'university.info.title': 'Academic Information',
+    'university.info.graduation': 'Graduation Rate',
+    'university.notfound.title': 'School Not Found',
+    'university.notfound.back': 'Back to Schools List',
   },
 };
 
