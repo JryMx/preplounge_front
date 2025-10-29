@@ -17,6 +17,7 @@ interface University {
   image: string;
   type: string;
   size: string;
+  estimatedGPA?: number | null;
 }
 
 // Load real university data from JSON file

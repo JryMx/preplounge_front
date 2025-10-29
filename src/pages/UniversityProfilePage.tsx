@@ -17,6 +17,7 @@ interface University {
   image: string;
   type: string;
   size: string;
+  estimatedGPA?: number | null;
 }
 
 const universities: University[] = universitiesData as University[];
@@ -154,6 +155,18 @@ const UniversityProfilePage: React.FC = () => {
               {university.actRange}
             </div>
           </div>
+
+          {university.estimatedGPA && (
+            <div className="university-profile-stat-card" data-testid="card-gpa">
+              <div className="university-profile-stat-header">
+                <BookOpen className="h-5 w-5" style={{color: '#082F49'}} />
+                <span className="university-profile-stat-label">{t('university.stat.gpa')}</span>
+              </div>
+              <div className="university-profile-stat-value" data-testid="text-gpa">
+                {university.estimatedGPA.toFixed(2)}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Main Content Grid */}

@@ -5,6 +5,27 @@ PrepLounge is a study abroad platform designed to assist students in their journ
 
 ## Recent Changes
 
+### October 29, 2025 - GPA Data Integration ✅
+Added estimated GPA data from CSV file to all universities:
+
+**Data Integration:**
+- Successfully integrated GPA data for 870 out of 1,698 universities
+- GPA values range from 3.0 to 4.0 based on real admission statistics
+- Created Python script to merge CSV GPA data into universities.json
+- GPA displays conditionally (only shown if data is available)
+
+**UI Updates:**
+- Added 5th stat card on University Detail Page showing "Average GPA" (평균 GPA)
+- GPA displays with 2 decimal places (e.g., 3.00, 3.74, 3.63)
+- Updated TypeScript interfaces to include optional `estimatedGPA` field
+- Added bilingual translation keys: `university.stat.gpa`
+
+**Technical Implementation:**
+- Updated `universities.json` with estimatedGPA field
+- Modified `UniversityProfilePage.tsx` to display GPA stat card
+- Modified `UniversitiesPage.tsx` interface to include GPA
+- Only displays GPA card when data is available (conditional rendering)
+
 ### October 29, 2025 - University Detail Page with Bilingual Support ✅
 Created comprehensive university detail page that displays when clicking on a school:
 
@@ -12,7 +33,7 @@ Created comprehensive university detail page that displays when clicking on a sc
 - Full bilingual support (Korean/English) for all content
 - Displays language-appropriate university names (Korean name for Korean mode, English for English mode)
 - Real university data from CSV including logos, tuition, acceptance rates, test scores
-- Four prominent stat cards: Acceptance Rate, Tuition, SAT Range, ACT Range
+- Five prominent stat cards: Acceptance Rate, Tuition, SAT Range, ACT Range, Average GPA
 - Back navigation to universities list
 - Common App availability badge
 - Compare button for future functionality
