@@ -5,6 +5,33 @@ PrepLounge is a study abroad platform designed to assist students in their journ
 
 ## Recent Changes
 
+### October 29, 2025 - Complete Language Separation & Data Cleanup ✅
+Implemented complete bilingual support with zero language mixing and cleaned up duplicate data:
+
+**Complete Language Separation:**
+- Added translation function for university size field:
+  - Korean: "큼 (15,000+)" → English: "Large (15,000+)"
+  - Korean: "중간 (5,000-15,000)" → English: "Medium (5,000-15,000)"
+  - Korean: "작음 (<5,000)" → English: "Small (<5,000)"
+- All university data now displays 100% in the selected language
+- No Korean text appears in English mode, no English text in Korean mode
+- Applies to university names, institution types, sizes, and all UI elements
+
+**Pagination Update:**
+- Changed from 4 to 6 universities per page for better browsing experience
+- Reduced total pages from ~425 to ~283 pages
+- Maintains fast load times with improved content density
+
+**Data Cleanup:**
+- Removed duplicate Union College entries (IDs 503 and 947)
+- Reduced total universities from 1,698 to 1,696 (2 duplicates removed)
+- Now displays only unique universities with accurate data
+
+**Technical Implementation:**
+- Created `translateSize()` function in `UniversityProfilePage.tsx`
+- Uses language context to conditionally render appropriate language
+- Clean separation of concerns for maintainability
+
 ### October 29, 2025 - Institution Type and GPA Data Integration ✅
 Added institution type and estimated GPA data from CSV file to all universities:
 

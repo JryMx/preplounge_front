@@ -7028,20 +7028,6 @@
     "estimatedGPA": 3.89
   },
   {
-    "id": "503",
-    "name": "유니언 대학교",
-    "englishName": "Union College",
-    "location": "United States",
-    "tuition": 30946,
-    "acceptanceRate": 55.0,
-    "satRange": "920 - 1105",
-    "actRange": "14 - 21",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Union_college_f1795_logo.png",
-    "type": "사립",
-    "size": "중간 (5,000-15,000)",
-    "estimatedGPA": 3.89
-  },
-  {
     "id": "504",
     "name": "웨스턴 켄터키 대학교",
     "englishName": "Western Kentucky University",
@@ -13232,20 +13218,6 @@
   {
     "id": "946",
     "name": "유니언 칼리지",
-    "englishName": "Union College",
-    "location": "United States",
-    "tuition": 66456,
-    "acceptanceRate": 44.0,
-    "satRange": "1310 - 1480",
-    "actRange": "30 - 33",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Union_college_f1795_logo.png",
-    "type": "사립",
-    "size": "큼 (15,000+)",
-    "estimatedGPA": 3.89
-  },
-  {
-    "id": "947",
-    "name": "유니언 대학교",
     "englishName": "Union College",
     "location": "United States",
     "tuition": 66456,
