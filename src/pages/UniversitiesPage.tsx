@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, MapPin, Users, DollarSign, BookOpen, Filter, Grid2x2 as Grid, List } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 import './universities-page.css';
 
 interface University {
@@ -101,6 +102,7 @@ const universities: University[] = [
 
 const UniversitiesPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [filters, setFilters] = useState({
@@ -172,10 +174,10 @@ const UniversitiesPage: React.FC = () => {
       <div className="universities-container">
         <div className="universities-header">
           <h1 className="universities-title">
-            대학 찾기
+            {t('universities.title')}
           </h1>
           <p className="universities-description">
-            미국 대학을 둘러보고 나에게 맞는 학교를 찾아보세요.
+            {t('universities.description')}
           </p>
         </div>
 
@@ -185,7 +187,7 @@ const UniversitiesPage: React.FC = () => {
               <Search className="universities-search-icon h-5 w-5" />
               <input
                 type="text"
-                placeholder="이름 또는 지역으로 검색"
+                placeholder={t('universities.search.placeholder')}
                 className="universities-search-input"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -211,46 +213,46 @@ const UniversitiesPage: React.FC = () => {
           <div className="universities-filters">
             <div className="universities-filters-header">
               <Filter className="h-5 w-5" style={{color: '#082F49'}} />
-              <span className="universities-filters-title">필터</span>
+              <span className="universities-filters-title">{t('universities.filter.title')}</span>
             </div>
 
             <div className="universities-filters-content">
               <div className="universities-filter-group">
-                <label className="universities-filter-label">소유 형태</label>
+                <label className="universities-filter-label">{t('universities.filter.type')}</label>
                 <div className="universities-filter-buttons">
                   <button
                     onClick={() => handleTypeToggle('Private')}
                     className={`universities-filter-button ${filters.types.includes('Private') ? 'active' : ''}`}
                   >
-                    사립
+                    {t('universities.filter.type.private')}
                   </button>
                   <button
                     onClick={() => handleTypeToggle('Public')}
                     className={`universities-filter-button ${filters.types.includes('Public') ? 'active' : ''}`}
                   >
-                    공립
+                    {t('universities.filter.type.public')}
                   </button>
                 </div>
               </div>
 
               <div className="universities-filter-group">
-                <label className="universities-filter-label">정렬</label>
+                <label className="universities-filter-label">{t('universities.filter.sort')}</label>
                 <select
                   value={filters.sortBy}
                   onChange={(e) => handleSortChange(e.target.value)}
                   className="universities-filter-select"
                 >
-                  <option value="">기본</option>
-                  <option value="name-asc">알파벳순 (A–Z)</option>
-                  <option value="name-desc">알파벳순 (Z–A)</option>
-                  <option value="sat-asc">SAT 범위순 (오름차순)</option>
-                  <option value="sat-desc">SAT 범위순 (내림차순)</option>
+                  <option value="">{t('universities.filter.sort.default')}</option>
+                  <option value="name-asc">{t('universities.filter.sort.name-asc')}</option>
+                  <option value="name-desc">{t('universities.filter.sort.name-desc')}</option>
+                  <option value="sat-asc">{t('universities.filter.sort.sat-asc')}</option>
+                  <option value="sat-desc">{t('universities.filter.sort.sat-desc')}</option>
                 </select>
               </div>
 
               <div className="universities-filter-group">
                 <label className="universities-filter-label">
-                  학비: ${filters.tuitionRange[0].toLocaleString()} - ${filters.tuitionRange[1].toLocaleString()}
+                  {t('universities.filter.tuition')}: ${filters.tuitionRange[0].toLocaleString()} - ${filters.tuitionRange[1].toLocaleString()}
                 </label>
                   <div className="px-2">
                     <input
@@ -276,7 +278,7 @@ const UniversitiesPage: React.FC = () => {
 
               <div className="universities-filter-group">
                 <label className="universities-filter-label">
-                  SAT 범위: {filters.satRange[0]} - {filters.satRange[1]}
+                  {t('universities.filter.sat')}: {filters.satRange[0]} - {filters.satRange[1]}
                 </label>
                   <div className="px-2">
                     <input
@@ -305,7 +307,7 @@ const UniversitiesPage: React.FC = () => {
 
           <div style={{marginBottom: '24px'}}>
             <p className="universities-description">
-              전체 {universities.length}개 학교 중 {sortedUniversities.length}개 학교
+              {t('universities.results').replace('{total}', universities.length.toString()).replace('{filtered}', sortedUniversities.length.toString())}
             </p>
           </div>
 
@@ -334,7 +336,7 @@ const UniversitiesPage: React.FC = () => {
                   <div className="university-card-stats">
                     <div className="university-card-stat">
                       <Users className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">합격률 {university.acceptanceRate}%</span>
+                      <span className="university-card-stat-text">{t('universities.acceptance')} {university.acceptanceRate}%</span>
                     </div>
                     <div className="university-card-stat">
                       <DollarSign className="university-card-stat-icon h-4 w-4" />
@@ -374,7 +376,7 @@ const UniversitiesPage: React.FC = () => {
                   <div className="university-list-stats">
                     <div className="university-card-stat">
                       <Users className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">합격률 {university.acceptanceRate}%</span>
+                      <span className="university-card-stat-text">{t('universities.acceptance')} {university.acceptanceRate}%</span>
                     </div>
                     <div className="university-card-stat">
                       <DollarSign className="university-card-stat-icon h-4 w-4" />
@@ -398,8 +400,8 @@ const UniversitiesPage: React.FC = () => {
         {sortedUniversities.length === 0 && (
           <div className="universities-empty">
             <BookOpen className="universities-empty-icon" />
-            <h3 className="universities-empty-title">해당되는 학교가 없습니다</h3>
-            <p className="universities-empty-text">필터를 해제하고 다시 시도해보세요.</p>
+            <h3 className="universities-empty-title">{t('universities.empty.title')}</h3>
+            <p className="universities-empty-text">{t('universities.empty.description')}</p>
             <button
               onClick={() => setFilters({
                 types: [],
@@ -409,7 +411,7 @@ const UniversitiesPage: React.FC = () => {
               })}
               className="universities-filter-button active" style={{marginTop: '16px'}}
             >
-              필터 해제
+              {t('universities.empty.reset')}
             </button>
           </div>
         )}
