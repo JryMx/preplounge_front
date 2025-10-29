@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import './profile-calculator.css';
 
 const ProfileCalculatorPage: React.FC = () => {
+  const { t } = useLanguage();
   const [gpa, setGpa] = useState('');
   const [satEBRW, setSatEBRW] = useState('');
   const [satMath, setSatMath] = useState('');
@@ -24,11 +26,11 @@ const ProfileCalculatorPage: React.FC = () => {
           <div className="profile-calculator-header">
             <div className="profile-calculator-title-group">
               <h2 className="profile-calculator-title">
-                합격 가능성 미리보기
+                {t('home.calculator.title')}
               </h2>
             </div>
             <p className="profile-calculator-subtitle">
-              성적 정보를 입력하고 프로필 점수를 확인해 보세요.
+              {t('home.calculator.subtitle')}
             </p>
           </div>
 
@@ -36,7 +38,7 @@ const ProfileCalculatorPage: React.FC = () => {
             <div className="profile-calculator-form">
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
-                  GPA (4.0점 만점)
+                  {t('home.calculator.gpa')}
                 </label>
                 <input
                   type="number"
@@ -47,12 +49,13 @@ const ProfileCalculatorPage: React.FC = () => {
                   onChange={(e) => setGpa(e.target.value)}
                   className="profile-calculator-input"
                   placeholder="3.8"
+                  data-testid="input-gpa"
                 />
               </div>
 
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
-                  SAT Math (800점 만점)
+                  {t('home.calculator.sat.math')}
                 </label>
                 <input
                   type="number"
@@ -62,12 +65,13 @@ const ProfileCalculatorPage: React.FC = () => {
                   onChange={(e) => setSatMath(e.target.value)}
                   className="profile-calculator-input"
                   placeholder="720"
+                  data-testid="input-sat-math"
                 />
               </div>
 
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
-                  SAT English (800점 만점)
+                  {t('home.calculator.sat.ebrw')}
                 </label>
                 <input
                   type="number"
@@ -77,6 +81,7 @@ const ProfileCalculatorPage: React.FC = () => {
                   onChange={(e) => setSatEBRW(e.target.value)}
                   className="profile-calculator-input"
                   placeholder="730"
+                  data-testid="input-sat-ebrw"
                 />
               </div>
             </div>
@@ -84,17 +89,17 @@ const ProfileCalculatorPage: React.FC = () => {
             <div className="profile-calculator-result">
               <div className="profile-calculator-result-content">
                 <div className="profile-calculator-score-group">
-                  <span className="profile-calculator-score-label">프로필 점수</span>
+                  <span className="profile-calculator-score-label">{t('home.calculator.score')}</span>
                   <div className="profile-calculator-score-display">
-                    <span className="profile-calculator-score-value">
+                    <span className="profile-calculator-score-value" data-testid="text-score">
                       {(gpa && satEBRW && satMath) ? calculateSimpleScore() : '--'}
                     </span>
-                    <span className="profile-calculator-score-total">/ 100점</span>
+                    <span className="profile-calculator-score-total">{t('home.calculator.score.total')}</span>
                   </div>
                 </div>
 
                 <p className="profile-calculator-description">
-                 GPA와 SAT를 기반으로 한 간단한 계산입니다.<br></br>과외활동, 에세이, 개인화된 대학 추천을 포함한 종합적인<br></br>분석을 위해서는 전체 프로필을 완성해주세요.
+                  {t('home.calculator.description')}
                 </p>
               </div>
 
@@ -102,15 +107,17 @@ const ProfileCalculatorPage: React.FC = () => {
                 <Link
                   to="/student-profile"
                   className="profile-calculator-button"
+                  data-testid="button-analyze"
                 >
-                  <span className="profile-calculator-button-text">합격 가능성 상세 분석하기</span>
+                  <span className="profile-calculator-button-text">{t('home.calculator.button')}</span>
                 </Link>
               ) : (
                 <button
                   disabled
                   className="profile-calculator-button"
+                  data-testid="button-analyze-disabled"
                 >
-                  <span className="profile-calculator-button-text">합격 가능성 상세 분석하기</span>
+                  <span className="profile-calculator-button-text">{t('home.calculator.button')}</span>
                 </button>
               )}
             </div>

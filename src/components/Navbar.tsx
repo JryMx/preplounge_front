@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -9,32 +9,13 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUniversitiesMenuOpen, setIsUniversitiesMenuOpen] = useState(false);
   const [isMobileUniversitiesMenuOpen, setIsMobileUniversitiesMenuOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { language, setLanguage, t } = useLanguage();
-  const navigate = useNavigate();
-  const location = useLocation();
   
   const toggleLanguage = () => {
     setLanguage(language === 'ko' ? 'en' : 'ko');
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
-  const scrollToCalculator = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        const element = document.getElementById('profile-calculator');
-        element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    } else {
-      const element = document.getElementById('profile-calculator');
-      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   return (
     <nav className="navbar-container">
@@ -70,9 +51,9 @@ const Navbar: React.FC = () => {
                 </div>
               )}
             </div>
-            <button onClick={scrollToCalculator} className="navbar-menu-link" data-testid="link-profile">
+            <Link to="/profile-calculator" className="navbar-menu-link" data-testid="link-profile">
               {t('nav.profile')}
-            </button>
+            </Link>
             <Link to="/consulting" className="navbar-menu-link">
               {t('nav.consulting')}
             </Link>
@@ -136,16 +117,14 @@ const Navbar: React.FC = () => {
                   </div>
                 )}
               </div>
-              <button
-                onClick={() => {
-                  scrollToCalculator();
-                  setIsMenuOpen(false);
-                }}
+              <Link
+                to="/profile-calculator"
                 className="navbar-mobile-link"
+                onClick={() => setIsMenuOpen(false)}
                 data-testid="link-profile-mobile"
               >
                 {t('nav.profile')}
-              </button>
+              </Link>
               <Link
                 to="/consulting"
                 className="navbar-mobile-link"
