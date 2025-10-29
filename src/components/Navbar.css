@@ -76,15 +76,23 @@
 /* Dropdown Menu */
 .navbar-dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 4px);
   left: 0;
-  margin-top: 8px;
   min-width: 192px;
   background: #FFFFFF;
   border: 1px solid #E7E5E4;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 8px 0;
+}
+
+.navbar-dropdown::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 4px;
 }
 
 .navbar-dropdown-item {
