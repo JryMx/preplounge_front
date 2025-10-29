@@ -19,6 +19,15 @@ interface ApplicationRequirements {
   englishProficiency?: string;
 }
 
+interface AcademicInfo {
+  graduationRate?: number;
+  degreeTypes?: {
+    bachelors: boolean;
+    masters: boolean;
+    doctoral: boolean;
+  };
+}
+
 interface University {
   id: string;
   name: string;
@@ -33,6 +42,8 @@ interface University {
   size: string;
   estimatedGPA?: number | null;
   applicationRequirements?: ApplicationRequirements;
+  academicInfo?: AcademicInfo;
+  programs?: string[];
 }
 
 const universities: University[] = universitiesData as University[];
@@ -72,6 +83,54 @@ const translateRequirementStatus = (language: 'ko' | 'en', status?: string): str
   }
   
   return status;
+};
+
+// Simplified program name translations (key categories)
+const translateProgramName = (program: string, language: 'ko' | 'en'): string => {
+  if (language === 'en') return program;
+  
+  const translations: Record<string, string> = {
+    'Agricultural/Animal/Plant/Veterinary Science and Related Fields': '농업/동물/식물/수의학',
+    'Natural Resources and Conservation': '자연자원 및 보존',
+    'Architecture and Related Services': '건축학',
+    'Area, Ethnic, Cultural, Gender, and Group Studies': '지역/민족/문화/젠더 연구',
+    'Communication, Journalism, and Related Programs': '커뮤니케이션 및 저널리즘',
+    'Communications Technologies/Technicians and Support Services': '통신 기술',
+    'Computer and Information Sciences and Support Services': '컴퓨터 및 정보과학',
+    'Personal and Culinary Services': '요리 및 개인 서비스',
+    'Education': '교육학',
+    'Engineering': '공학',
+    'Engineering/Engineering-related Technologies/Technicians': '공학 기술',
+    'Foreign Languages, Literatures, and Linguistics': '외국어 및 언어학',
+    'Family and Consumer Sciences/Human Sciences': '가정학',
+    'Legal Professions and Studies': '법학',
+    'English Language and Literature/Letters': '영문학',
+    'Liberal Arts and Sciences, General Studies and Humanities': '인문교양',
+    'Library Science': '도서관학',
+    'Biological and Biomedical Sciences': '생물학 및 의생명과학',
+    'Mathematics and Statistics': '수학 및 통계학',
+    'Military Science and Military Technologies': '군사학',
+    'Multi/Interdisciplinary Studies': '융합전공',
+    'Parks, Recreation, Leisure, and Fitness Studies': '레저 및 체육학',
+    'Philosophy and Religious Studies': '철학 및 종교학',
+    'Theology and Religious Vocations': '신학',
+    'Physical Sciences': '물리학',
+    'Science Technologies/Technicians': '과학 기술',
+    'Psychology': '심리학',
+    'Homeland Security, Law Enforcement, Firefighting and Related': '공공안전',
+    'Public Administration and Social Service Professions': '행정학 및 사회복지',
+    'Social Sciences': '사회과학',
+    'Construction Trades': '건설 기술',
+    'Mechanic and Repair Technologies/Technicians': '정비 기술',
+    'Precision Production': '정밀 생산',
+    'Transportation and Materials Moving': '운송학',
+    'Visual and Performing Arts': '예술',
+    'Health Professions and Related Programs': '보건의료',
+    'Business, Management, Marketing, and Related Support Services': '경영학',
+    'History': '역사학'
+  };
+  
+  return translations[program] || program;
 };
 
 const UniversityProfilePage: React.FC = () => {
@@ -324,10 +383,14 @@ const UniversityProfilePage: React.FC = () => {
             </h2>
             <div className="academic-info-content">
               {/* Graduation Rate */}
-              <div className="academic-info-item">
-                <span className="academic-info-label">{language === 'ko' ? '졸업률' : 'Graduation Rate'}</span>
-                <span className="academic-info-value graduation-rate" data-testid="text-graduation-rate">97%</span>
-              </div>
+              {university.academicInfo?.graduationRate !== undefined && (
+                <div className="academic-info-item">
+                  <span className="academic-info-label">{language === 'ko' ? '졸업률' : 'Graduation Rate'}</span>
+                  <span className="academic-info-value graduation-rate" data-testid="text-graduation-rate">
+                    {university.academicInfo.graduationRate}%
+                  </span>
+                </div>
+              )}
 
               {/* Average Salary */}
               <div className="academic-info-item">
@@ -341,27 +404,59 @@ const UniversityProfilePage: React.FC = () => {
               </div>
 
               {/* Degree Types */}
-              <div className="academic-info-item">
-                <span className="academic-info-label">{language === 'ko' ? '제공 학위 유형' : 'Degree Types Offered'}</span>
-                <div className="degree-types" data-testid="section-degree-types">
-                  <span className="degree-badge">{language === 'ko' ? '학사' : 'Bachelor\'s'}</span>
-                  <span className="degree-badge">{language === 'ko' ? '석사' : 'Master\'s'}</span>
-                  <span className="degree-badge">{language === 'ko' ? '박사' : 'Doctoral'}</span>
+              {university.academicInfo?.degreeTypes && (
+                <div className="academic-info-item">
+                  <span className="academic-info-label">{language === 'ko' ? '제공 학위 유형' : 'Degree Types Offered'}</span>
+                  <div className="degree-types" data-testid="section-degree-types">
+                    {university.academicInfo.degreeTypes.bachelors && (
+                      <span className="degree-badge">{language === 'ko' ? '학사' : 'Bachelor\'s'}</span>
+                    )}
+                    {university.academicInfo.degreeTypes.masters && (
+                      <span className="degree-badge">{language === 'ko' ? '석사' : 'Master\'s'}</span>
+                    )}
+                    {university.academicInfo.degreeTypes.doctoral && (
+                      <span className="degree-badge">{language === 'ko' ? '박사' : 'Doctoral'}</span>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Available Majors */}
-              <div className="academic-info-item">
-                <span className="academic-info-label">{language === 'ko' ? '개설 전공' : 'Available Majors'}</span>
-                <div className="majors-list" data-testid="section-majors">
-                  <div className="major-item">{language === 'ko' ? '인문과학' : 'Humanities'}</div>
-                  <div className="major-item">{language === 'ko' ? '경영학' : 'Business'}</div>
-                  <div className="major-item">{language === 'ko' ? '컴퓨터과학' : 'Computer Science'}</div>
-                  <div className="major-item">{language === 'ko' ? '공학' : 'Engineering'}</div>
-                  <div className="major-item">{language === 'ko' ? '의학' : 'Medicine'}</div>
-                  <div className="major-item">{language === 'ko' ? '법학' : 'Law'}</div>
+              {/* Available Majors/Programs */}
+              {university.programs && university.programs.length > 0 && (
+                <div className="academic-info-item">
+                  <span className="academic-info-label">{language === 'ko' ? '개설 전공' : 'Available Majors'}</span>
+                  <div className="majors-list" data-testid="section-majors">
+                    {university.programs.map((program, index) => (
+                      <div key={index} className="major-item">
+                        {translateProgramName(program, language)}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="university-profile-actions">
+              <Link 
+                to="/profile-calculator" 
+                className="action-button primary"
+                data-testid="button-check-admission"
+              >
+                <BookOpen className="h-5 w-5" />
+                {language === 'ko' ? '합격 가능성 확인하기' : 'Check Admission Probability'}
+              </Link>
+              <button 
+                className="action-button secondary"
+                data-testid="button-add-comparison"
+                onClick={() => {
+                  // TODO: Implement comparison list functionality
+                  console.log('Add to comparison:', university.name);
+                }}
+              >
+                <Plus className="h-5 w-5" />
+                {language === 'ko' ? '비교 목록에 추가' : 'Add to Comparison List'}
+              </button>
             </div>
           </div>
         </div>
