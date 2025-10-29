@@ -12,6 +12,7 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 - **Bilingual Support**: Comprehensive internationalization for Korean and English, with language preferences persisted.
 - **Responsive Design**: Layouts are optimized for both desktop and mobile, with dynamic adjustments for content length (e.g., hero sections).
 - **Streamlined User Experience**: The Student Profile page is simplified for efficient data input, and forms/content areas are centered with `max-width` for readability.
+- **Compact Layouts**: Profile Calculator page optimized for reduced scrolling with tighter spacing (48px section padding, 24px container gap, 12px form fields), horizontal form-results layout, and flex-start alignment to prevent unnecessary vertical stretching.
 - **Navigation**: Utilizes both scroll-based navigation for quick access to homepage sections and dedicated page navigation for deeper content.
 
 ### Technical Implementations
