@@ -24,7 +24,7 @@ const universities: University[] = universitiesData as University[];
 
 const UniversitiesPage: React.FC = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [filters, setFilters] = useState({
@@ -36,6 +36,7 @@ const UniversitiesPage: React.FC = () => {
 
   const filteredUniversities = universities.filter(uni => {
     const matchesSearch = uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         uni.englishName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          uni.location.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesType = filters.types.length === 0 || filters.types.includes(uni.type);
@@ -54,9 +55,13 @@ const UniversitiesPage: React.FC = () => {
   const sortedUniversities = [...filteredUniversities].sort((a, b) => {
     switch (filters.sortBy) {
       case 'name-asc':
-        return a.name.localeCompare(b.name);
+        const nameA = language === 'ko' ? a.name : a.englishName;
+        const nameB = language === 'ko' ? b.name : b.englishName;
+        return nameA.localeCompare(nameB);
       case 'name-desc':
-        return b.name.localeCompare(a.name);
+        const nameDescA = language === 'ko' ? a.name : a.englishName;
+        const nameDescB = language === 'ko' ? b.name : b.englishName;
+        return nameDescB.localeCompare(nameDescA);
       case 'sat-asc':
         const aSatMin = parseInt(a.satRange.split('-')[0]);
         const bSatMin = parseInt(b.satRange.split('-')[0]);
@@ -243,12 +248,14 @@ const UniversitiesPage: React.FC = () => {
               >
                 <img
                   src={university.image}
-                  alt={university.name}
+                  alt={language === 'ko' ? university.name : university.englishName}
                   className="university-card-image"
                 />
                 <div className="university-card-content">
-                  <h3 className="university-card-title">{university.name}</h3>
-                  <p className="university-card-subtitle">{university.englishName}</p>
+                  <h3 className="university-card-title">{language === 'ko' ? university.name : university.englishName}</h3>
+                  {university.name !== university.englishName && (
+                    <p className="university-card-subtitle">{language === 'ko' ? university.englishName : university.name}</p>
+                  )}
 
                   <div className="university-card-location">
                     <MapPin className="h-4 w-4" />
@@ -283,13 +290,15 @@ const UniversitiesPage: React.FC = () => {
               >
                 <img
                   src={university.image}
-                  alt={university.name}
+                  alt={language === 'ko' ? university.name : university.englishName}
                   className="university-list-image"
                 />
                 <div className="university-list-content">
                   <div className="university-list-header">
-                    <h3 className="university-list-title">{university.name}</h3>
-                    <p className="university-list-subtitle">{university.englishName}</p>
+                    <h3 className="university-list-title">{language === 'ko' ? university.name : university.englishName}</h3>
+                    {university.name !== university.englishName && (
+                      <p className="university-list-subtitle">{language === 'ko' ? university.englishName : university.name}</p>
+                    )}
                     <div className="university-card-location" style={{marginTop: '8px'}}>
                       <MapPin className="h-4 w-4" />
                       <span>{university.location} • {university.type}</span>
