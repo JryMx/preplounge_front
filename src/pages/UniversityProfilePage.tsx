@@ -411,15 +411,17 @@ const UniversityProfilePage: React.FC = () => {
               )}
 
               {/* Available Majors/Programs */}
-              {university.programs && university.programs.length > 0 && (
+              {university.programs && university.programs.filter(p => p !== 'Grand total').length > 0 && (
                 <div className="academic-info-item">
                   <span className="academic-info-label">{language === 'ko' ? '개설 전공' : 'Available Majors'}</span>
                   <div className="majors-list" data-testid="section-majors">
-                    {university.programs.map((program, index) => (
-                      <div key={index} className="major-item">
-                        {translateProgramName(program, language)}
-                      </div>
-                    ))}
+                    {university.programs
+                      .filter(program => program !== 'Grand total')
+                      .map((program, index) => (
+                        <div key={index} className="major-item">
+                          {translateProgramName(program, language)}
+                        </div>
+                      ))}
                   </div>
                 </div>
               )}
