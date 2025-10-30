@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
+import { useLanguage } from '../context/LanguageContext';
 import './student-profile-page.css';
 
 const StudentProfilePage: React.FC = () => {
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
+  const { language } = useLanguage();
 
   const [activeTab, setActiveTab] = useState<'academic' | 'non-academic'>('academic');
   const [searchQuery, setSearchQuery] = useState('');
@@ -158,10 +160,12 @@ const StudentProfilePage: React.FC = () => {
       <div className="profile-hero-section">
         <div className="profile-hero-content">
           <h1 className="profile-hero-title">
-            프로필 분석
+            {language === 'ko' ? '프로필 분석' : 'Profile Analysis'}
           </h1>
           <p className="profile-hero-description">
-            교과 및 비교과 프로필을 완성하여 종합적인 프로필 점수와 개인 맞춤 대학 추천을 받아보세요.
+            {language === 'ko' 
+              ? '교과 및 비교과 프로필을 완성하여 종합적인 프로필 점수와 개인 맞춤 대학 추천을 받아보세요.'
+              : 'Complete your academic and extracurricular profile to receive a comprehensive profile score and personalized university recommendations.'}
           </p>
         </div>
       </div>
@@ -173,18 +177,28 @@ const StudentProfilePage: React.FC = () => {
             <div className="profile-calculator-result-no-border" style={{width: '100%', height: '100%', maxWidth: '600px', margin: '0 auto'}}>
               <div className="profile-calculator-result-content">
                 <div className="profile-calculator-score-group">
-                  <span className="profile-calculator-score-label">프로필 점수</span>
+                  <span className="profile-calculator-score-label">
+                    {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                  </span>
                   <div className="profile-calculator-score-display">
                     <span className="profile-calculator-score-value">{currentScore === 0 ? '--' : currentScore}</span>
                     <span className="profile-calculator-score-total">/100</span>
                   </div>
                 </div>
                 <p className="profile-calculator-description">
-                  {currentScore === 0 ? '개선 필요' :
-                   currentScore >= 90 ? '우수함' :
-                   currentScore >= 80 ? '매우 좋음' :
-                   currentScore >= 70 ? '좋음' :
-                   currentScore >= 60 ? '보통' : '개선 필요'}
+                  {language === 'ko' ? (
+                    currentScore === 0 ? '개선 필요' :
+                    currentScore >= 90 ? '우수함' :
+                    currentScore >= 80 ? '매우 좋음' :
+                    currentScore >= 70 ? '좋음' :
+                    currentScore >= 60 ? '보통' : '개선 필요'
+                  ) : (
+                    currentScore === 0 ? 'Needs Improvement' :
+                    currentScore >= 90 ? 'Excellent' :
+                    currentScore >= 80 ? 'Very Good' :
+                    currentScore >= 70 ? 'Good' :
+                    currentScore >= 60 ? 'Fair' : 'Needs Improvement'
+                  )}
                 </p>
               </div>
             </div>
@@ -194,24 +208,35 @@ const StudentProfilePage: React.FC = () => {
         <div className="application-checker-section">
           <div className="application-checker-header">
             <ClipboardList className="h-6 w-6" style={{color: '#082F49'}} />
-            <h2 className="application-checker-title">지원서 구성 요소 체크리스트</h2>
+            <h2 className="application-checker-title">
+              {language === 'ko' ? '지원서 구성 요소 체크리스트' : 'Application Components Checklist'}
+            </h2>
           </div>
 
           <p className="application-checker-description">
-            완료했거나 가지고 있는 항목을 체크하세요. 지원 준비 상태를 확인하는 데 도움이 됩니다.<br></br>
-            모든 항목이 필수는 아니며 학교마다 요구 사항이 다를 수 있습니다.
+            {language === 'ko' ? (
+              <>
+                완료했거나 가지고 있는 항목을 체크하세요. 지원 준비 상태를 확인하는 데 도움이 됩니다.<br></br>
+                모든 항목이 필수는 아니며 학교마다 요구 사항이 다를 수 있습니다.
+              </>
+            ) : (
+              <>
+                Check the items you have completed or possess. This helps you assess your application readiness.<br></br>
+                Not all items are required, and requirements vary by school.
+              </>
+            )}
           </p>
 
           <div className="application-components-grid">
               {[
-                { key: 'secondarySchoolGPA', label: '고등학교 GPA', description: 'Secondary school GPA' },
-                { key: 'secondarySchoolRank', label: '고등학교 석차', description: 'Secondary school rank' },
-                { key: 'secondarySchoolRecord', label: '고등학교 성적표', description: 'Secondary school transcript' },
-                { key: 'collegePrepProgram', label: '대학 준비 프로그램', description: 'College-preparatory program' },
-                { key: 'recommendations', label: '추천서', description: 'Recommendations' },
-                { key: 'extracurricularActivities', label: '대외활동', description: 'Extracurricular activities' },
-                { key: 'essay', label: '자기소개서/에세이', description: 'Personal statement or essay' },
-                { key: 'testScores', label: '시험 점수', description: 'Test scores' },
+                { key: 'secondarySchoolGPA', labelKo: '고등학교 GPA', labelEn: 'Secondary school GPA' },
+                { key: 'secondarySchoolRank', labelKo: '고등학교 석차', labelEn: 'Secondary school rank' },
+                { key: 'secondarySchoolRecord', labelKo: '고등학교 성적표', labelEn: 'Secondary school transcript' },
+                { key: 'collegePrepProgram', labelKo: '대학 준비 프로그램', labelEn: 'College-preparatory program' },
+                { key: 'recommendations', labelKo: '추천서', labelEn: 'Recommendations' },
+                { key: 'extracurricularActivities', labelKo: '대외활동', labelEn: 'Extracurricular activities' },
+                { key: 'essay', labelKo: '자기소개서/에세이', labelEn: 'Personal statement or essay' },
+                { key: 'testScores', labelKo: '시험 점수', labelEn: 'Test scores' },
               ].map((component) => (
                 <div
                   key={component.key}
@@ -231,11 +256,8 @@ const StudentProfilePage: React.FC = () => {
                     </div>
                     <div className="application-component-info">
                       <h3 className="application-component-label">
-                        {component.label}
+                        {language === 'ko' ? component.labelKo : component.labelEn}
                       </h3>
-                      <p className="application-component-description">
-                        {component.description}
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -250,26 +272,28 @@ const StudentProfilePage: React.FC = () => {
               className={`profile-tab-button ${activeTab === 'academic' ? 'active' : ''}`}
             >
               <BookOpen className="h-5 w-5" />
-              교과
+              {language === 'ko' ? '교과' : 'Academic'}
             </button>
             <button
               onClick={() => setActiveTab('non-academic')}
               className={`profile-tab-button ${activeTab === 'non-academic' ? 'active' : ''}`}
             >
               <Award className="h-5 w-5" />
-              비교과
+              {language === 'ko' ? '비교과' : 'Extracurricular'}
             </button>
           </div>
 
           <div className="profile-tab-content">
             {activeTab === 'academic' && (
               <div>
-                <h2 className="profile-section-title">교과 정보</h2>
+                <h2 className="profile-section-title">
+                  {language === 'ko' ? '교과 정보' : 'Academic Information'}
+                </h2>
 
                 <div className="profile-form-grid">
                   <div className="profile-form-group">
                     <label className="profile-form-label">
-                      GPA (4.0 만점) *
+                      {language === 'ko' ? 'GPA (4.0 만점) *' : 'GPA (out of 4.0) *'}
                     </label>
                     <input
                       type="number"
@@ -286,35 +310,34 @@ const StudentProfilePage: React.FC = () => {
 
                   <div className="profile-form-group">
                     <label className="profile-form-label">
-                      희망 전공
+                      {language === 'ko' ? '희망 전공' : 'Intended Major'}
                     </label>
                     <select
                       value={academicData.intendedMajor}
                       onChange={(e) => handleAcademicChange('intendedMajor', e.target.value)}
                       className="profile-form-select"
                     >
-                      <option value="">전공을 선택하세요</option>
-                      <option value="Computer Science">컴퓨터과학</option>
-                      <option value="Engineering">공학</option>
-                      <option value="Business">경영학</option>
-                      <option value="Medicine">의학</option>
-                      <option value="Liberal Arts">인문학</option>
-                      <option value="Sciences">자연과학</option>
-                      <option value="Mathematics">수학</option>
-                      <option value="Other">기타</option>
+                      <option value="">{language === 'ko' ? '전공을 선택하세요' : 'Select a major'}</option>
+                      <option value="Computer Science">{language === 'ko' ? '컴퓨터과학' : 'Computer Science'}</option>
+                      <option value="Engineering">{language === 'ko' ? '공학' : 'Engineering'}</option>
+                      <option value="Business">{language === 'ko' ? '경영학' : 'Business'}</option>
+                      <option value="Medicine">{language === 'ko' ? '의학' : 'Medicine'}</option>
+                      <option value="Liberal Arts">{language === 'ko' ? '인문학' : 'Liberal Arts'}</option>
+                      <option value="Sciences">{language === 'ko' ? '자연과학' : 'Sciences'}</option>
+                      <option value="Mathematics">{language === 'ko' ? '수학' : 'Mathematics'}</option>
+                      <option value="Other">{language === 'ko' ? '기타' : 'Other'}</option>
                     </select>
                   </div>
 
                   <div className="profile-form-group full-width">
                     <label className="profile-form-label">
-                      입학 시험
+                      {language === 'ko' ? '입학 시험' : 'Standardized Test'}
                     </label>
                     <select
                       value={academicData.standardizedTest}
                       onChange={(e) => handleAcademicChange('standardizedTest', e.target.value)}
-                      className="profile-form-select"
-                    >
-                      <option value="">시험을 선택하세요 (선택사항)</option>
+                      className="profile-form-select">
+                      <option value="">{language === 'ko' ? '시험을 선택하세요 (선택사항)' : 'Select a test (optional)'}</option>
                       <option value="SAT">SAT</option>
                       <option value="ACT">ACT</option>
                     </select>
@@ -324,7 +347,7 @@ const StudentProfilePage: React.FC = () => {
                     <>
                       <div className="profile-form-group">
                         <label className="profile-form-label">
-                          SAT EBRW (800점 만점)
+                          {language === 'ko' ? 'SAT EBRW (800점 만점)' : 'SAT EBRW (out of 800)'}
                         </label>
                         <input
                           type="number"
@@ -339,7 +362,7 @@ const StudentProfilePage: React.FC = () => {
 
                       <div className="profile-form-group">
                         <label className="profile-form-label">
-                          SAT Math (800점 만점)
+                          {language === 'ko' ? 'SAT Math (800점 만점)' : 'SAT Math (out of 800)'}
                         </label>
                         <input
                           type="number"
@@ -357,7 +380,7 @@ const StudentProfilePage: React.FC = () => {
                   {academicData.standardizedTest === 'ACT' && (
                     <div className="profile-form-group">
                       <label className="profile-form-label">
-                        ACT 점수 (36점 만점)
+                        {language === 'ko' ? 'ACT 점수 (36점 만점)' : 'ACT Score (out of 36)'}
                       </label>
                       <input
                         type="number"
@@ -373,14 +396,14 @@ const StudentProfilePage: React.FC = () => {
 
                   <div className="profile-form-group full-width">
                     <label className="profile-form-label">
-                      영어 능력 시험 (국제학생용)
+                      {language === 'ko' ? '영어 능력 시험 (국제학생용)' : 'English Proficiency Test (for international students)'}
                     </label>
                     <select
                       value={academicData.englishProficiencyTest}
                       onChange={(e) => handleAcademicChange('englishProficiencyTest', e.target.value)}
                       className="profile-form-select"
                     >
-                      <option value="">시험을 선택하세요 (선택사항)</option>
+                      <option value="">{language === 'ko' ? '시험을 선택하세요 (선택사항)' : 'Select a test (optional)'}</option>
                       <option value="TOEFL iBT">TOEFL iBT</option>
                       <option value="IELTS">IELTS</option>
                       <option value="Cambridge">Cambridge</option>
@@ -392,12 +415,12 @@ const StudentProfilePage: React.FC = () => {
                   {academicData.englishProficiencyTest && (
                     <div className="profile-form-group full-width">
                       <label className="profile-form-label">
-                        {academicData.englishProficiencyTest} 점수
-                        {academicData.englishProficiencyTest === 'TOEFL iBT' && ' (120점 만점)'}
-                        {academicData.englishProficiencyTest === 'IELTS' && ' (9.0점 만점)'}
-                        {academicData.englishProficiencyTest === 'Cambridge' && ' (A1-C2 레벨)'}
-                        {academicData.englishProficiencyTest === 'PTE Academic Test' && ' (90점 만점)'}
-                        {academicData.englishProficiencyTest === 'Duolingo English Test' && ' (160점 만점)'}
+                        {academicData.englishProficiencyTest} {language === 'ko' ? '점수' : 'Score'}
+                        {academicData.englishProficiencyTest === 'TOEFL iBT' && (language === 'ko' ? ' (120점 만점)' : ' (out of 120)')}
+                        {academicData.englishProficiencyTest === 'IELTS' && (language === 'ko' ? ' (9.0점 만점)' : ' (out of 9.0)')}
+                        {academicData.englishProficiencyTest === 'Cambridge' && (language === 'ko' ? ' (A1-C2 레벨)' : ' (A1-C2 level)')}
+                        {academicData.englishProficiencyTest === 'PTE Academic Test' && (language === 'ko' ? ' (90점 만점)' : ' (out of 90)')}
+                        {academicData.englishProficiencyTest === 'Duolingo English Test' && (language === 'ko' ? ' (160점 만점)' : ' (out of 160)')}
                       </label>
                       <input
                         type={academicData.englishProficiencyTest === 'Cambridge' ? 'text' : 'number'}
@@ -428,33 +451,37 @@ const StudentProfilePage: React.FC = () => {
 
             {activeTab === 'non-academic' && (
               <div>
-                <h2 className="profile-section-title">비교과 정보</h2>
+                <h2 className="profile-section-title">
+                  {language === 'ko' ? '비교과 정보' : 'Extracurricular Information'}
+                </h2>
 
                 <div className="profile-form-group full-width" style={{marginBottom: '32px'}}>
                   <label className="profile-form-label">
-                    자기소개서 (Common App 에세이)
+                    {language === 'ko' ? '자기소개서 (Common App 에세이)' : 'Personal Statement (Common App Essay)'}
                   </label>
                   <textarea
                     value={nonAcademicData.personalStatement}
                     onChange={(e) => handleNonAcademicChange('personalStatement', e.target.value)}
                     className="profile-form-textarea"
                     rows={8}
-                    placeholder="자기소개서를 작성하세요..."
+                    placeholder={language === 'ko' ? '자기소개서를 작성하세요...' : 'Write your personal statement...'}
                   />
                   <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '8px'}}>
-                    {nonAcademicData.personalStatement.length} 글자
+                    {nonAcademicData.personalStatement.length} {language === 'ko' ? '글자' : 'characters'}
                   </p>
                 </div>
 
                 <div className="extracurriculars-section">
                   <div className="extracurriculars-header">
-                    <h3 className="profile-section-title" style={{marginBottom: 0}}>대외활동</h3>
+                    <h3 className="profile-section-title" style={{marginBottom: 0}}>
+                      {language === 'ko' ? '대외활동' : 'Extracurricular Activities'}
+                    </h3>
                     <button
                       onClick={addExtracurricular}
                       className="profile-btn-add"
                     >
                       <Plus className="h-4 w-4" />
-                      활동 추가
+                      {language === 'ko' ? '활동 추가' : 'Add Activity'}
                     </button>
                   </div>
 
@@ -467,45 +494,47 @@ const StudentProfilePage: React.FC = () => {
                         >
                           <X className="h-5 w-5" />
                         </button>
-                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>활동 {index + 1}</h4>
+                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>
+                          {language === 'ko' ? `활동 ${index + 1}` : `Activity ${index + 1}`}
+                        </h4>
 
                         <div className="profile-form-grid">
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              활동 유형
+                              {language === 'ko' ? '활동 유형' : 'Activity Type'}
                             </label>
                             <select
                               value={activity.type}
                               onChange={(e) => updateExtracurricular(activity.id, 'type', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="Sports">스포츠</option>
-                              <option value="Arts">예술</option>
-                              <option value="Community Service">봉사활동</option>
-                              <option value="Research">연구</option>
-                              <option value="Academic Clubs">학술 동아리</option>
-                              <option value="Leadership">리더십</option>
-                              <option value="Work Experience">근무 경험</option>
-                              <option value="Other">기타</option>
+                              <option value="Sports">{language === 'ko' ? '스포츠' : 'Sports'}</option>
+                              <option value="Arts">{language === 'ko' ? '예술' : 'Arts'}</option>
+                              <option value="Community Service">{language === 'ko' ? '봉사활동' : 'Community Service'}</option>
+                              <option value="Research">{language === 'ko' ? '연구' : 'Research'}</option>
+                              <option value="Academic Clubs">{language === 'ko' ? '학술 동아리' : 'Academic Clubs'}</option>
+                              <option value="Leadership">{language === 'ko' ? '리더십' : 'Leadership'}</option>
+                              <option value="Work Experience">{language === 'ko' ? '근무 경험' : 'Work Experience'}</option>
+                              <option value="Other">{language === 'ko' ? '기타' : 'Other'}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              활동명
+                              {language === 'ko' ? '활동명' : 'Activity Name'}
                             </label>
                             <input
                               type="text"
                               value={activity.name}
                               onChange={(e) => updateExtracurricular(activity.id, 'name', e.target.value)}
                               className="profile-form-input"
-                              placeholder="예: 축구부"
+                              placeholder={language === 'ko' ? '예: 축구부' : 'e.g., Soccer Club'}
                             />
                           </div>
 
                           <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                              참여 학년 (해당하는 모든 학년 선택)
+                              {language === 'ko' ? '참여 학년 (해당하는 모든 학년 선택)' : 'Participation Grades (select all applicable)'}
                             </label>
                             <div className="grid grid-cols-4 gap-2">
                               {['9', '10', '11', '12'].map(grade => (
@@ -522,7 +551,7 @@ const StudentProfilePage: React.FC = () => {
                                     }}
                                     className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-2"
                                   />
-                                  <span className="text-sm">{grade}학년</span>
+                                  <span className="text-sm">{grade}{language === 'ko' ? '학년' : 'th'}</span>
                                 </label>
                               ))}
                             </div>
@@ -530,23 +559,23 @@ const StudentProfilePage: React.FC = () => {
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              인정 수준
+                              {language === 'ko' ? '인정 수준' : 'Recognition Level'}
                             </label>
                             <select
                               value={activity.recognitionLevel}
                               onChange={(e) => updateExtracurricular(activity.id, 'recognitionLevel', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="Local">지역</option>
-                              <option value="Regional">광역</option>
-                              <option value="National">전국</option>
-                              <option value="International">국제</option>
+                              <option value="Local">{language === 'ko' ? '지역' : 'Local'}</option>
+                              <option value="Regional">{language === 'ko' ? '광역' : 'Regional'}</option>
+                              <option value="National">{language === 'ko' ? '전국' : 'National'}</option>
+                              <option value="International">{language === 'ko' ? '국제' : 'International'}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              주당 시간
+                              {language === 'ko' ? '주당 시간' : 'Hours per Week'}
                             </label>
                             <input
                               type="number"
@@ -562,14 +591,14 @@ const StudentProfilePage: React.FC = () => {
 
                         <div className="profile-form-group full-width" style={{marginTop: '16px'}}>
                           <label className="profile-form-label">
-                            설명
+                            {language === 'ko' ? '설명' : 'Description'}
                           </label>
                           <textarea
                             value={activity.description}
                             onChange={(e) => updateExtracurricular(activity.id, 'description', e.target.value)}
                             className="profile-form-textarea"
                             rows={2}
-                            placeholder="역할과 성과를 설명하세요..."
+                            placeholder={language === 'ko' ? '역할과 성과를 설명하세요...' : 'Describe your role and achievements...'}
                           />
                         </div>
                       </div>
@@ -578,8 +607,8 @@ const StudentProfilePage: React.FC = () => {
                     {extracurriculars.length === 0 && (
                       <div className="text-center py-8 text-gray-500">
                         <Award className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                        <p>아직 추가된 대외활동이 없습니다.</p>
-                        <p className="text-sm">"활동 추가"를 클릭하여 시작하세요.</p>
+                        <p>{language === 'ko' ? '아직 추가된 대외활동이 없습니다.' : 'No extracurricular activities added yet.'}</p>
+                        <p className="text-sm">{language === 'ko' ? '"활동 추가"를 클릭하여 시작하세요.' : 'Click "Add Activity" to get started.'}</p>
                       </div>
                     )}
                   </div>
@@ -587,13 +616,15 @@ const StudentProfilePage: React.FC = () => {
 
                 <div className="extracurriculars-section">
                   <div className="extracurriculars-header">
-                    <h3 className="profile-section-title" style={{marginBottom: 0}}>추천서</h3>
+                    <h3 className="profile-section-title" style={{marginBottom: 0}}>
+                      {language === 'ko' ? '추천서' : 'Recommendation Letters'}
+                    </h3>
                     <button
                       onClick={addRecommendationLetter}
                       className="profile-btn-add"
                     >
                       <Plus className="h-4 w-4" />
-                      추천서 추가
+                      {language === 'ko' ? '추천서 추가' : 'Add Recommendation'}
                     </button>
                   </div>
 
@@ -606,54 +637,56 @@ const StudentProfilePage: React.FC = () => {
                         >
                           <X className="h-5 w-5" />
                         </button>
-                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>추천서 {index + 1}</h4>
+                        <h4 className="profile-form-label" style={{marginBottom: '16px'}}>
+                          {language === 'ko' ? `추천서 ${index + 1}` : `Recommendation ${index + 1}`}
+                        </h4>
 
                         <div className="profile-form-grid">
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              추천인
+                              {language === 'ko' ? '추천인' : 'Recommender'}
                             </label>
                             <select
                               value={letter.source}
                               onChange={(e) => updateRecommendationLetter(letter.id, 'source', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="Teacher">교사</option>
-                              <option value="Counselor">상담교사</option>
-                              <option value="Principal">교장</option>
-                              <option value="Coach">코치</option>
-                              <option value="Employer">고용주</option>
-                              <option value="Other">기타</option>
+                              <option value="Teacher">{language === 'ko' ? '교사' : 'Teacher'}</option>
+                              <option value="Counselor">{language === 'ko' ? '상담교사' : 'Counselor'}</option>
+                              <option value="Principal">{language === 'ko' ? '교장' : 'Principal'}</option>
+                              <option value="Coach">{language === 'ko' ? '코치' : 'Coach'}</option>
+                              <option value="Employer">{language === 'ko' ? '고용주' : 'Employer'}</option>
+                              <option value="Other">{language === 'ko' ? '기타' : 'Other'}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              관계의 깊이
+                              {language === 'ko' ? '관계의 깊이' : 'Depth of Relationship'}
                             </label>
                             <select
                               value={letter.depth || 'knows somewhat'}
                               onChange={(e) => updateRecommendationLetter(letter.id, 'depth', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="knows deeply">깊이 알고 있음</option>
-                              <option value="knows somewhat">어느 정도 알고 있음</option>
-                              <option value="barely knows">거의 모름</option>
+                              <option value="knows deeply">{language === 'ko' ? '깊이 알고 있음' : 'Knows deeply'}</option>
+                              <option value="knows somewhat">{language === 'ko' ? '어느 정도 알고 있음' : 'Knows somewhat'}</option>
+                              <option value="barely knows">{language === 'ko' ? '거의 모름' : 'Barely knows'}</option>
                             </select>
                           </div>
 
                           <div className="profile-form-group">
                             <label className="profile-form-label">
-                              과목/분야 관련성
+                              {language === 'ko' ? '과목/분야 관련성' : 'Subject/Field Relevance'}
                             </label>
                             <select
                               value={letter.relevance || 'not relevant or not available'}
                               onChange={(e) => updateRecommendationLetter(letter.id, 'relevance', e.target.value)}
                               className="profile-form-select"
                             >
-                              <option value="highly relevant to intended major">희망 전공과 매우 관련 있음</option>
-                              <option value="somewhat relevant to intended major">희망 전공과 어느 정도 관련 있음</option>
-                              <option value="not relevant or not available">관련 없음 또는 해당 없음</option>
+                              <option value="highly relevant to intended major">{language === 'ko' ? '희망 전공과 매우 관련 있음' : 'Highly relevant to intended major'}</option>
+                              <option value="somewhat relevant to intended major">{language === 'ko' ? '희망 전공과 어느 정도 관련 있음' : 'Somewhat relevant to intended major'}</option>
+                              <option value="not relevant or not available">{language === 'ko' ? '관련 없음 또는 해당 없음' : 'Not relevant or not available'}</option>
                             </select>
                           </div>
                         </div>
@@ -663,8 +696,8 @@ const StudentProfilePage: React.FC = () => {
                     {recommendationLetters.length === 0 && (
                       <div className="text-center py-8 text-gray-500">
                         <User className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                        <p>아직 추가된 추천서가 없습니다.</p>
-                        <p className="text-sm">"추천서 추가"를 클릭하여 시작하세요.</p>
+                        <p>{language === 'ko' ? '아직 추가된 추천서가 없습니다.' : 'No recommendation letters added yet.'}</p>
+                        <p className="text-sm">{language === 'ko' ? '"추천서 추가"를 클릭하여 시작하세요.' : 'Click "Add Recommendation" to get started.'}</p>
                       </div>
                     )}
                   </div>
@@ -673,7 +706,7 @@ const StudentProfilePage: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      가족 내 동문 여부
+                      {language === 'ko' ? '가족 내 동문 여부' : 'Legacy Status'}
                     </label>
                     <div className="flex items-center space-x-4">
                       <label className="flex items-center">
@@ -684,7 +717,7 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('legacyStatus', true)}
                           className="mr-2"
                         />
-                        예
+                        {language === 'ko' ? '예' : 'Yes'}
                       </label>
                       <label className="flex items-center">
                         <input
@@ -694,14 +727,14 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('legacyStatus', false)}
                           className="mr-2"
                         />
-                        아니오
+                        {language === 'ko' ? '아니오' : 'No'}
                       </label>
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      시민권
+                      {language === 'ko' ? '시민권' : 'Citizenship'}
                     </label>
                     <div className="flex items-center space-x-4">
                       <label className="flex items-center">
@@ -712,7 +745,7 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('citizenship', 'domestic')}
                           className="mr-2"
                         />
-                        국내
+                        {language === 'ko' ? '국내' : 'Domestic'}
                       </label>
                       <label className="flex items-center">
                         <input
@@ -722,7 +755,7 @@ const StudentProfilePage: React.FC = () => {
                           onChange={() => handleNonAcademicChange('citizenship', 'international')}
                           className="mr-2"
                         />
-                        국제
+                        {language === 'ko' ? '국제' : 'International'}
                       </label>
                     </div>
                   </div>
@@ -737,21 +770,23 @@ const StudentProfilePage: React.FC = () => {
               className="profile-btn-primary" style={{width: '100%'}}
             >
               <Calculator className="h-5 w-5" />
-              프로필 점수 계산하기
+              {language === 'ko' ? '프로필 점수 계산하기' : 'Calculate Profile Score'}
             </button>
           </div>
         </div>
 
         <div className="profile-tabs-container">
           <div className="profile-tab-content">
-            <h2 className="profile-section-title">학교 비교</h2>
+            <h2 className="profile-section-title">
+              {language === 'ko' ? '학교 비교' : 'School Comparison'}
+            </h2>
           
             <div style={{display: 'flex', gap: '12px', marginBottom: '24px'}}>
               <div style={{flex: 1, position: 'relative'}}>
                 <Search className="h-5 w-5" style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(8, 47, 73, 0.4)'}} />
                 <input
                   type="text"
-                  placeholder="학교명으로 검색..."
+                  placeholder={language === 'ko' ? '학교명으로 검색...' : 'Search by school name...'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="profile-form-input"
@@ -762,13 +797,15 @@ const StudentProfilePage: React.FC = () => {
                 onClick={handleSearch}
                 className="profile-btn-primary"
               >
-                검색
+                {language === 'ko' ? '검색' : 'Search'}
               </button>
             </div>
 
             {showResults && searchResults.length > 0 && (
               <div>
-                <h3 className="profile-form-label" style={{marginBottom: '16px'}}>검색 결과</h3>
+                <h3 className="profile-form-label" style={{marginBottom: '16px'}}>
+                  {language === 'ko' ? '검색 결과' : 'Search Results'}
+                </h3>
                 {searchResults.map(school => (
                   <div
                     key={school.id}
@@ -782,7 +819,9 @@ const StudentProfilePage: React.FC = () => {
                   <div className="flex justify-between items-start">
                     <div>
                       <h4 className="font-semibold text-gray-900">{school.name}</h4>
-                      <p className="text-sm text-gray-600">#{school.ranking} • 합격률 {school.acceptanceRate}%</p>
+                      <p className="text-sm text-gray-600">
+                        #{school.ranking} • {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptanceRate}%
+                      </p>
                     </div>
                     <div className="text-right">
                       <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
@@ -790,23 +829,28 @@ const StudentProfilePage: React.FC = () => {
                         school.category === 'target' ? 'bg-orange-100 text-orange-800' :
                         'bg-red-100 text-red-800'
                       }`}>
-                        {school.category === 'safety' ? '안전권' : 
-                         school.category === 'target' ? '적정권' : '도전권'}
+                        {language === 'ko' ? (
+                          school.category === 'safety' ? '안전권' : 
+                          school.category === 'target' ? '적정권' : '도전권'
+                        ) : (
+                          school.category === 'safety' ? 'Safety' : 
+                          school.category === 'target' ? 'Target' : 'Reach'
+                        )}
                       </div>
                     </div>
                   </div>
                   
                   <div className="grid md:grid-cols-3 gap-4 mt-4 text-sm">
                     <div>
-                      <span className="font-medium text-gray-600">필요 점수:</span>
+                      <span className="font-medium text-gray-600">{language === 'ko' ? '필요 점수:' : 'Required Score:'}</span>
                       <span className="ml-2 font-bold">{school.requiredScore}/100</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">내 점수:</span>
+                      <span className="font-medium text-gray-600">{language === 'ko' ? '내 점수:' : 'My Score:'}</span>
                       <span className="ml-2 font-bold">{currentScore}/100</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">비율:</span>
+                      <span className="font-medium text-gray-600">{language === 'ko' ? '비율:' : 'Ratio:'}</span>
                       <span className="ml-2 font-bold">{school.comparisonRatio}</span>
                     </div>
                   </div>
@@ -818,8 +862,14 @@ const StudentProfilePage: React.FC = () => {
           {showResults && searchResults.length === 0 && searchQuery.trim() && (
             <div className="text-center py-8 text-gray-500">
               <Search className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p>"{searchQuery}"와 일치하는 학교를 찾을 수 없습니다</p>
-              <p className="text-sm">다른 이름으로 검색해보세요.</p>
+              <p>
+                {language === 'ko' 
+                  ? `"${searchQuery}"와 일치하는 학교를 찾을 수 없습니다` 
+                  : `No schools found matching "${searchQuery}"`}
+              </p>
+              <p className="text-sm">
+                {language === 'ko' ? '다른 이름으로 검색해보세요.' : 'Try searching with a different name.'}
+              </p>
             </div>
           )}
 
