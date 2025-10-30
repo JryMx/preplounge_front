@@ -1,0 +1,526 @@
+/* Profile Calculator Section */
+.profile-calculator-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 32px;
+  gap: 24px;
+  background: #082F49;
+}
+
+.profile-calculator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.profile-calculator-header {
+  margin-bottom: 0;
+}
+
+.profile-calculator-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  width: 100%;
+}
+
+.profile-calculator-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 57px;
+  letter-spacing: -0.02em;
+  color: #FACC15;
+  margin-bottom: 12px;
+}
+
+.profile-calculator-subtitle {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  opacity: 0.9;
+}
+
+/* Main Content Grid */
+.profile-calculator-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Input Form */
+.profile-calculator-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 24px;
+  gap: 12px;
+  width: 320px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.profile-calculator-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 4px;
+  width: 100%;
+}
+
+.profile-calculator-label {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.profile-calculator-input {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  width: 100%;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.005em;
+  color: #FFFFFF;
+}
+
+.profile-calculator-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.profile-calculator-input:focus {
+  outline: none;
+  border: 1px solid rgba(250, 204, 21, 0.5);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Result Card */
+.profile-calculator-result {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px;
+  gap: 24px;
+  width: 100%;
+  border: 3px solid #FFFFFF;
+  border-radius: 16px;
+}
+
+.profile-calculator-result-no-border {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 24px;
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+}
+
+.profile-calculator-result-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 32px;
+  width: 100%;
+  flex: none;
+  align-self: stretch;
+}
+
+.profile-calculator-score-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 4px;
+  width: 100%;
+  height: auto;
+}
+
+.profile-calculator-score-label {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+.profile-calculator-score-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0px;
+  gap: 8px;
+}
+
+.profile-calculator-score-value {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 84px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: #FACC15;
+}
+
+.profile-calculator-score-total {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+}
+
+.profile-calculator-description {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  width: 100%;
+}
+
+.profile-calculator-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 10px;
+  width: 100%;
+  height: 48px;
+  background: #FACC15;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  flex: none;
+  align-self: stretch;
+}
+
+.profile-calculator-button:hover {
+  background: #F59E0B;
+}
+
+.profile-calculator-button:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
+}
+
+.profile-calculator-button-text {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #082F49;
+}
+
+.profile-calculator-button:disabled .profile-calculator-button-text {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .profile-calculator-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-calculator-form {
+    width: 100%;
+  }
+
+  .profile-calculator-result {
+    width: 100%;
+  }
+}
+
+/* Test Type Toggle */
+.profile-calculator-test-toggle {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-calculator-test-toggle.active {
+  background: #FACC15;
+  border-color: #FACC15;
+  color: #082F49;
+}
+
+.profile-calculator-test-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.profile-calculator-test-toggle.active:hover {
+  background: #F59E0B;
+}
+
+/* Error Message */
+.profile-calculator-error {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 8px;
+  color: #FEE2E2;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Results Display */
+.profile-calculator-results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.results-summary {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+}
+
+.results-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #FACC15;
+  margin-bottom: 20px;
+}
+
+.results-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat-card.safety {
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.stat-card.target {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.stat-card.reach {
+  border-color: rgba(249, 115, 22, 0.5);
+}
+
+.stat-card.prestige {
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+.stat-value {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 1;
+  color: #FACC15;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.school-category {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.category-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.3;
+  color: #FFFFFF;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-title.safety {
+  color: #22C55E;
+}
+
+.category-title.target {
+  color: #3B82F6;
+}
+
+.category-title.reach {
+  color: #F97316;
+}
+
+.category-title.prestige {
+  color: #A855F7;
+}
+
+.category-count {
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+.schools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.school-card {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.school-card.clickable {
+  cursor: pointer;
+}
+
+.school-card.clickable:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+  border-color: rgba(250, 204, 21, 0.5);
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.2);
+}
+
+.school-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.school-name {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.school-state {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.school-probability {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.school-probability strong {
+  color: #FACC15;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .profile-calculator-title {
+    font-size: 36px;
+    line-height: 43px;
+  }
+
+  .profile-calculator-subtitle {
+    font-size: 16px;
+  }
+
+  .profile-calculator-section {
+    padding: 60px 20px;
+  }
+
+  .results-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .schools-grid {
+    grid-template-columns: 1fr;
+  }
+}
