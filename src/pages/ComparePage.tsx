@@ -89,24 +89,41 @@ const ComparePage: React.FC = () => {
     setSelectedUniversities(prev => prev.filter(uni => uni.id !== universityId));
   };
 
+  // Translation helper for school type
+  const translateType = (type: string) => {
+    if (language === 'ko') return type;
+    const translations: { [key: string]: string } = {
+      '공립': 'Public',
+      '사립': 'Private',
+    };
+    return translations[type] || type;
+  };
+
+  // Translation helper for school size
+  const translateSize = (size: string) => {
+    if (language === 'ko') return size;
+    const translations: { [key: string]: string } = {
+      '작음 (1,000 미만)': 'Small (< 1,000)',
+      '작음 (1,000-5,000)': 'Small (1,000-5,000)',
+      '중간 (5,000-15,000)': 'Medium (5,000-15,000)',
+      '큼 (15,000+)': 'Large (15,000+)',
+    };
+    return translations[size] || size;
+  };
+
   const comparisonCategories = [
     {
       title: language === 'ko' ? '기본 정보' : 'Basic Information',
       fields: [
         { 
-          key: 'location', 
-          label: language === 'ko' ? '위치' : 'Location', 
-          format: (val: any) => val 
-        },
-        { 
           key: 'type', 
           label: language === 'ko' ? '학교 유형' : 'School Type', 
-          format: (val: any) => val 
+          format: (val: any) => translateType(val)
         },
         { 
           key: 'size', 
           label: language === 'ko' ? '학교 규모' : 'School Size', 
-          format: (val: any) => val 
+          format: (val: any) => translateSize(val)
         },
         { 
           key: 'tuition', 
@@ -188,7 +205,6 @@ const ComparePage: React.FC = () => {
                 <h3 className="compare-selected-name">
                   {language === 'ko' ? university.name : university.englishName}
                 </h3>
-                <p className="compare-selected-location">{university.location}</p>
               </div>
             ))}
 
@@ -331,7 +347,6 @@ const ComparePage: React.FC = () => {
                       <div className="compare-search-item-name">
                         {language === 'ko' ? university.name : university.englishName}
                       </div>
-                      <div className="compare-search-item-location">{university.location}</div>
                     </div>
                   </button>
                 ))}
