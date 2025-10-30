@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { X, Plus, BookOpen, Users, DollarSign, Award, MapPin, Calendar, CheckCircle, AlertCircle, Search } from 'lucide-react';
+import { X, Plus, BookOpen, Search } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import universitiesData from '../data/universities.json';
 import './compare-page.css';
 
 interface University {
@@ -13,102 +15,47 @@ interface University {
   actRange: string;
   image: string;
   type: string;
-  institutionType: string;
-  carnegieClassification: string;
-  size: number;
-  endowment: number;
-  graduationRate: number;
-  averageEarnings: number;
+  size: string;
+  estimatedGPA: number;
+  academicInfo?: {
+    graduationRate: number;
+  };
 }
 
-// Mock university data
-const allUniversities: University[] = [
-  {
-    id: '1',
-    name: '하버드 대학교',
-    englishName: 'Harvard University',
-    location: 'Cambridge, MA',
-    tuition: 54269,
-    acceptanceRate: 5.4,
-    satRange: '1460-1570',
-    actRange: '33-35',
-    image: 'https://images.pexels.com/photos/207684/pexels-photo-207684.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '사립',
-    institutionType: '4년제',
-    carnegieClassification: '박사 학위 수여 대학 (매우 높은 연구 활동)',
-    size: 6700,
-    endowment: 53200000000,
-    graduationRate: 97,
-    averageEarnings: 95000,
-  },
-  {
-    id: '2',
-    name: '스탠퍼드 대학교',
-    englishName: 'Stanford University',
-    location: 'Stanford, CA',
-    tuition: 56169,
-    acceptanceRate: 4.8,
-    satRange: '1440-1570',
-    actRange: '32-35',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '사립',
-    institutionType: '4년제',
-    carnegieClassification: '박사 학위 수여 대학 (매우 높은 연구 활동)',
-    size: 7087,
-    endowment: 37800000000,
-    graduationRate: 94,
-    averageEarnings: 94000,
-  },
-  {
-    id: '3',
-    name: '메사추세츠 공과대학교',
-    englishName: 'Massachusetts Institute of Technology (MIT)',
-    location: 'Cambridge, MA',
-    tuition: 53790,
-    acceptanceRate: 7.3,
-    satRange: '1470-1570',
-    actRange: '33-35',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '사립',
-    institutionType: '4년제',
-    carnegieClassification: '박사 학위 수여 대학 (매우 높은 연구 활동)',
-    size: 4602,
-    endowment: 27400000000,
-    graduationRate: 96,
-    averageEarnings: 104000,
-  },
-  {
-    id: '4',
-    name: '캘리포니아 대학교 버클리',
-    englishName: 'University of California, Berkeley',
-    location: 'Berkeley, CA',
-    tuition: 44007,
-    acceptanceRate: 17.5,
-    satRange: '1330-1530',
-    actRange: '30-35',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400',
-    type: '공립',
-    institutionType: '4년제',
-    carnegieClassification: '박사 학위 수여 대학 (매우 높은 연구 활동)',
-    size: 31780,
-    endowment: 6200000000,
-    graduationRate: 92,
-    averageEarnings: 78000,
-  },
-];
-
 const ComparePage: React.FC = () => {
+  const { language } = useLanguage();
   const [selectedUniversities, setSelectedUniversities] = useState<University[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
+
+  // Load all universities from the JSON data
+  const allUniversities: University[] = universitiesData.map((uni: any) => ({
+    id: uni.id,
+    name: uni.name,
+    englishName: uni.englishName,
+    location: uni.location,
+    tuition: uni.tuition,
+    acceptanceRate: uni.acceptanceRate,
+    satRange: uni.satRange,
+    actRange: uni.actRange,
+    image: uni.image,
+    type: uni.type,
+    size: uni.size,
+    estimatedGPA: uni.estimatedGPA,
+    academicInfo: uni.academicInfo,
+  }));
 
   const availableUniversities = allUniversities.filter(
     uni => !selectedUniversities.find(selected => selected.id === uni.id)
   );
 
-  const filteredUniversities = availableUniversities.filter(uni =>
-    uni.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredUniversities = availableUniversities.filter(uni => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      uni.name.toLowerCase().includes(searchLower) ||
+      uni.englishName.toLowerCase().includes(searchLower)
+    );
+  });
 
   const addUniversity = (university: University) => {
     if (selectedUniversities.length < 4) {
@@ -124,29 +71,63 @@ const ComparePage: React.FC = () => {
 
   const comparisonCategories = [
     {
-      title: '기본',
+      title: language === 'ko' ? '기본 정보' : 'Basic Information',
       fields: [
-        { key: 'location', label: '위치', format: (val: any) => val },
-        { key: 'type', label: '공립/사립 + 2년제/4년제', format: (val: any, uni: University) => `${val} ${uni.institutionType}` },
-        { key: 'carnegieClassification', label: '카네기 분류', format: (val: any) => val },
-        { key: 'size', label: '학부 재학생 수', format: (val: any) => val.toLocaleString() + '명' },
-        { key: 'endowment', label: '학교 자금', format: (val: any) => '$' + (val / 1000000000).toFixed(1) + 'B' },
-        { key: 'tuition', label: '학비', format: (val: any) => `$${val.toLocaleString()}` },
+        { 
+          key: 'location', 
+          label: language === 'ko' ? '위치' : 'Location', 
+          format: (val: any) => val 
+        },
+        { 
+          key: 'type', 
+          label: language === 'ko' ? '학교 유형' : 'School Type', 
+          format: (val: any) => val 
+        },
+        { 
+          key: 'size', 
+          label: language === 'ko' ? '학교 규모' : 'School Size', 
+          format: (val: any) => val 
+        },
+        { 
+          key: 'tuition', 
+          label: language === 'ko' ? '학비' : 'Tuition', 
+          format: (val: any) => `$${val.toLocaleString()}` 
+        },
       ],
     },
     {
-      title: '입학 통계',
+      title: language === 'ko' ? '입학 통계' : 'Admission Statistics',
       fields: [
-        { key: 'acceptanceRate', label: '합격률', format: (val: any) => `${val}%` },
-        { key: 'satRange', label: 'SAT 범위', format: (val: any) => val },
-        { key: 'actRange', label: 'ACT 범위', format: (val: any) => val },
+        { 
+          key: 'acceptanceRate', 
+          label: language === 'ko' ? '합격률' : 'Acceptance Rate', 
+          format: (val: any) => `${val}%` 
+        },
+        { 
+          key: 'satRange', 
+          label: language === 'ko' ? 'SAT 범위' : 'SAT Range', 
+          format: (val: any) => val 
+        },
+        { 
+          key: 'actRange', 
+          label: language === 'ko' ? 'ACT 범위' : 'ACT Range', 
+          format: (val: any) => val 
+        },
+        { 
+          key: 'estimatedGPA', 
+          label: language === 'ko' ? '평균 GPA' : 'Average GPA', 
+          format: (val: any) => val.toFixed(2) 
+        },
       ],
     },
     {
-      title: '졸업 통계',
+      title: language === 'ko' ? '졸업 통계' : 'Graduation Statistics',
       fields: [
-        { key: 'graduationRate', label: '졸업률', format: (val: any) => `${val}%` },
-        { key: 'averageEarnings', label: '졸업 후 평균 연봉', format: (val: any) => `$${val.toLocaleString()}` },
+        { 
+          key: 'graduationRate', 
+          label: language === 'ko' ? '졸업률' : 'Graduation Rate', 
+          format: (_val: any, uni: University) => uni.academicInfo?.graduationRate ? `${uni.academicInfo.graduationRate}%` : 'N/A'
+        },
       ],
     },
   ];
@@ -156,16 +137,20 @@ const ComparePage: React.FC = () => {
       <div className="compare-container">
         <div className="compare-header">
           <h1 className="compare-title">
-            학교 비교하기
+            {language === 'ko' ? '학교 비교하기' : 'Compare Schools'}
           </h1>
           <p className="compare-description">
-            최대 4개 대학을 나란히 비교하여 합격 전략을 세워보세요.
+            {language === 'ko' 
+              ? '최대 4개 대학을 나란히 비교하여 합격 전략을 세워보세요.' 
+              : 'Compare up to 4 universities side by side to plan your admission strategy.'}
           </p>
         </div>
 
         <div className="compare-selection">
           <h2 className="compare-selection-title">
-            선택한 대학 ({selectedUniversities.length}/4)
+            {language === 'ko' 
+              ? `선택한 대학 (${selectedUniversities.length}/4)` 
+              : `Selected Universities (${selectedUniversities.length}/4)`}
           </h2>
 
           <div className="compare-selected-grid">
@@ -177,7 +162,12 @@ const ComparePage: React.FC = () => {
                 >
                   <X className="h-4 w-4" />
                 </button>
-                <h3 className="compare-selected-name">{university.name}</h3>
+                <div className="compare-selected-image">
+                  <img src={university.image} alt={university.name} />
+                </div>
+                <h3 className="compare-selected-name">
+                  {language === 'ko' ? university.name : university.englishName}
+                </h3>
                 <p className="compare-selected-location">{university.location}</p>
               </div>
             ))}
@@ -189,7 +179,9 @@ const ComparePage: React.FC = () => {
                 onClick={() => setShowAddModal(true)}
               >
                 <Plus className="compare-add-icon h-8 w-8" />
-                <span className="compare-add-text">대학 추가</span>
+                <span className="compare-add-text">
+                  {language === 'ko' ? '대학 추가' : 'Add University'}
+                </span>
               </button>
             ))}
           </div>
@@ -203,16 +195,19 @@ const ComparePage: React.FC = () => {
                 <thead>
                   <tr>
                     <th style={{minWidth: '200px'}}>
-                      카테고리
+                      {language === 'ko' ? '카테고리' : 'Category'}
                     </th>
                     {selectedUniversities.map(university => (
-                      <th key={university.id} style={{textAlign: 'center', minWidth: '200px'}}>
-                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px'}}>
-                          <div style={{fontSize: '14px'}}>
-                            {university.name}
+                      <th key={university.id} style={{textAlign: 'center', minWidth: '250px'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px'}}>
+                          <div className="compare-table-uni-image">
+                            <img src={university.image} alt={university.name} />
                           </div>
-                          <div style={{fontSize: '12px', opacity: 0.8}}>
-                            {university.englishName}
+                          <div style={{fontSize: '14px', fontWeight: 700}}>
+                            {language === 'ko' ? university.name : university.englishName}
+                          </div>
+                          <div style={{fontSize: '12px', opacity: 0.7}}>
+                            {language === 'ko' ? university.englishName : university.name}
                           </div>
                         </div>
                       </th>
@@ -234,7 +229,7 @@ const ComparePage: React.FC = () => {
 
                       {category.fields.map(field => (
                         <tr key={field.key}>
-                          <td>
+                          <td className="compare-table-label">
                             {field.label}
                           </td>
                           {selectedUniversities.map(university => (
@@ -256,17 +251,21 @@ const ComparePage: React.FC = () => {
           <div className="compare-empty">
             <BookOpen className="compare-empty-icon" />
             <h3 className="compare-empty-title">
-              대학을 추가하여 비교를 시작하세요
+              {language === 'ko' 
+                ? '대학을 추가하여 비교를 시작하세요' 
+                : 'Add universities to start comparing'}
             </h3>
             <p className="compare-empty-text">
-              최소 2개 이상의 대학을 선택하면 상세 비교를 볼 수 있습니다.
+              {language === 'ko' 
+                ? '최소 2개 이상의 대학을 선택하면 상세 비교를 볼 수 있습니다.' 
+                : 'Select at least 2 universities to see detailed comparison.'}
             </p>
             <button
               onClick={() => setShowAddModal(true)}
               className="compare-empty-button"
             >
               <Plus className="h-5 w-5" />
-              대학 추가하기
+              {language === 'ko' ? '대학 추가하기' : 'Add University'}
             </button>
           </div>
         )}
@@ -275,7 +274,9 @@ const ComparePage: React.FC = () => {
           <div className="compare-search-modal" onClick={() => setShowAddModal(false)}>
             <div className="compare-search-content" onClick={(e) => e.stopPropagation()}>
               <div className="compare-search-header">
-                <h3 className="compare-search-title">대학 추가</h3>
+                <h3 className="compare-search-title">
+                  {language === 'ko' ? '대학 추가' : 'Add University'}
+                </h3>
                 <button
                   onClick={() => setShowAddModal(false)}
                   className="compare-search-close"
@@ -288,28 +289,36 @@ const ComparePage: React.FC = () => {
                 <Search className="compare-search-icon h-5 w-5" />
                 <input
                   type="text"
-                  placeholder="대학명으로 검색..."
+                  placeholder={language === 'ko' ? '대학명으로 검색...' : 'Search by university name...'}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="compare-search-input"
+                  autoFocus
                 />
               </div>
 
               <div className="compare-search-results">
-                {filteredUniversities.map(university => (
+                {filteredUniversities.slice(0, 50).map(university => (
                   <button
                     key={university.id}
                     onClick={() => addUniversity(university)}
                     className="compare-search-item"
                   >
-                    <div className="compare-search-item-name">{university.name}</div>
-                    <div className="compare-search-item-location">{university.location}</div>
+                    <div className="compare-search-item-image">
+                      <img src={university.image} alt={university.name} />
+                    </div>
+                    <div>
+                      <div className="compare-search-item-name">
+                        {language === 'ko' ? university.name : university.englishName}
+                      </div>
+                      <div className="compare-search-item-location">{university.location}</div>
+                    </div>
                   </button>
                 ))}
 
                 {filteredUniversities.length === 0 && (
                   <p className="compare-empty-text" style={{textAlign: 'center', padding: '40px 0'}}>
-                    검색 결과가 없습니다.
+                    {language === 'ko' ? '검색 결과가 없습니다.' : 'No results found.'}
                   </p>
                 )}
               </div>
