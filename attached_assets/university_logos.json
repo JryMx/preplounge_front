@@ -1,0 +1,402 @@
+[
+  {
+    "instnm": "Johns Hopkins University",
+    "logo": "https://logos-world.net/wp-content/uploads/2023/02/Johns-Hopkins-University-Symbol.png"
+  },
+  {
+    "instnm": "Massachusetts Institute of Technology",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/4/44/MIT_Seal.svg/1024px-MIT_Seal.svg.png"
+  },
+  {
+    "instnm": "Stanford University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Seal_of_Leland_Stanford_Junior_University.svg/1024px-Seal_of_Leland_Stanford_Junior_University.svg.png"
+  },
+  {
+    "instnm": "Harvard University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Harvard_University_coat_of_arms.svg/1200px-Harvard_University_coat_of_arms.svg.png"
+  },
+  {
+    "instnm": "Yale University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Yale_University_Shield_1.svg/800px-Yale_University_Shield_1.svg.png"
+  },
+  {
+    "instnm": "Princeton University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Princeton_seal.svg/260px-Princeton_seal.svg.png"
+  },
+  {
+    "instnm": "University of Chicago",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/University_of_Chicago_shield.svg/800px-University_of_Chicago_shield.svg.png"
+  },
+  {
+    "instnm": "Duke University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Duke_University_seal.svg/1024px-Duke_University_seal.svg.png"
+  },
+  {
+    "instnm": "Rice University",
+    "logo": "https://logos-world.net/wp-content/uploads/2023/08/Rice-University-Symbol.png"
+  },
+  {
+    "instnm": "Washington University in St Louis",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/WashU_St._Louis_seal.svg/1024px-WashU_St._Louis_seal.svg.png"
+  },
+  {
+    "instnm": "Dartmouth College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Dartmouth_College_shield.svg/800px-Dartmouth_College_shield.svg.png"
+  },
+  {
+    "instnm": "Carnegie Mellon University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/1024px-Carnegie_Mellon_University_seal.svg.png"
+  },
+  {
+    "instnm": "University of Pennsylvania",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UPenn_shield_with_banner.svg/1024px-UPenn_shield_with_banner.svg.png"
+  },
+  {
+    "instnm": "Brown University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/5/50/Shield_of_Brown_University.svg/800px-Shield_of_Brown_University.svg.png"
+  },
+  {
+    "instnm": "Columbia University in the City of New York",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Columbia_coat_of_arms_no_crest.svg/1024px-Columbia_coat_of_arms_no_crest.svg.png"
+  },
+  {
+    "instnm": "New York University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/New_York_University_Seal.svg/1024px-New_York_University_Seal.svg.png"
+  },
+  {
+    "instnm": "Vanderbilt University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Vanderbilt_University_seal.svg/1024px-Vanderbilt_University_seal.svg.png"
+  },
+  {
+    "instnm": "Northwestern University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Northwestern_University_seal.svg/1024px-Northwestern_University_seal.svg.png"
+  },
+  {
+    "instnm": "Williams College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/1/19/Williams_College_Seal.svg/1024px-Williams_College_Seal.svg.png"
+  },
+  {
+    "instnm": "Swarthmore College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cb/Formal_Logo_of_Swarthmore_College%2C_Swarthmore%2C_PA%2C_USA.svg/1024px-Formal_Logo_of_Swarthmore_College%2C_Swarthmore%2C_PA%2C_USA.svg.png"
+  },
+  {
+    "instnm": "Pomona College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Pomona_College_seal.svg/800px-Pomona_College_seal.svg.png"
+  },
+  {
+    "instnm": "Cornell University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1024px-Cornell_University_seal.svg.png"
+  },
+  {
+    "instnm": "Claremont McKenna College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Claremont_McKenna_College_Seal.svg/1024px-Claremont_McKenna_College_Seal.svg.png"
+  },
+  {
+    "instnm": "Emory University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/6/63/Emory_University_Seal.svg/1024px-Emory_University_Seal.svg.png"
+  },
+  {
+    "instnm": "Bowdoin College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e8/Formal_Seal_of_Bowdoin_College%2C_Brunswick%2C_ME%2C_USA.svg/1024px-Formal_Seal_of_Bowdoin_College%2C_Brunswick%2C_ME%2C_USA.svg.png"
+  },
+  {
+    "instnm": "Tufts University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b1/Tufts_official_seal.svg/1024px-Tufts_official_seal.svg.png"
+  },
+  {
+    "instnm": "Barnard College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Formal_Seal_of_Barnard_College%2C_New_York_City%2C_USA.svg/1024px-Formal_Seal_of_Barnard_College%2C_New_York_City%2C_USA.svg.png"
+  },
+  {
+    "instnm": "University of Southern California",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/University_of_Southern_California_%28USC%29_seal.svg/800px-University_of_Southern_California_%28USC%29_seal.svg.png"
+  },
+  {
+    "instnm": "Colby College",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Colby_college_maine_seal.svg/1024px-Colby_college_maine_seal.svg.png"
+  },
+  {
+    "instnm": "Wellesley College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Formal_Seal_of_Wellesley_College%2C_Wellesley%2C_MA%2C_USA.svg/1024px-Formal_Seal_of_Wellesley_College%2C_Wellesley%2C_MA%2C_USA.svg.png"
+  },
+  {
+    "instnm": "Vassar College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/c/c7/Vassar_College_Seal.svg"
+  },
+  {
+    "instnm": "Northeastern University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/b/bb/NU_RGB_seal_R.png"
+  },
+  {
+    "instnm": "Carleton College",
+    "logo": "https://cdn.carleton.edu/uploads/sites/158/2020/06/full-carleton-c-ray-symbol.png"
+  },
+  {
+    "instnm": "Georgetown University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Georgetown_University_seal.svg/800px-Georgetown_University_seal.svg.png"
+  },
+  {
+    "instnm": "Amherst College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Amherst_College_Seal.svg/1200px-Amherst_College_Seal.svg.png"
+  },
+  {
+    "instnm": "Middlebury College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Middlebury_College_seal.svg/1024px-Middlebury_College_seal.svg.png"
+  },
+  {
+    "instnm": "Grinnell College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/b/bc/Grinnell_College_seal.svg/1024px-Grinnell_College_seal.svg.png"
+  },
+  {
+    "instnm": "Hamilton College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Hamilton_College_seal.svg/1024px-Hamilton_College_seal.svg.png"
+  },
+  {
+    "instnm": "Wesleyan University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/5/5e/Wesleyan_University_Academic_Seal.png"
+  },
+  {
+    "instnm": "University of Notre Dame",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/University_of_Notre_Dame_seal_%282%29.svg/1024px-University_of_Notre_Dame_seal_%282%29.svg.png"
+  },
+  {
+    "instnm": "Boston College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/00/Boston_College_seal.svg/1024px-Boston_College_seal.svg.png"
+  },
+  {
+    "instnm": "Case Western Reserve University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/08/Case_Western_Reserve_University_seal.svg/1024px-Case_Western_Reserve_University_seal.svg.png"
+  },
+  {
+    "instnm": "Haverford College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Formal_Seal_of_Haverford_College%2C_Haverford_Township%2C_PA%2C_USA.svg/1024px-Formal_Seal_of_Haverford_College%2C_Haverford_Township%2C_PA%2C_USA.svg.png"
+  },
+  {
+    "instnm": "Rhode Island School of Design",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/RISD_Seal.svg/1024px-RISD_Seal.svg.png"
+  },
+  {
+    "instnm": "Smith College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/Smith_College_seal.svg/1024px-Smith_College_seal.svg.png"
+  },
+  {
+    "instnm": "University of Rochester",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c8/University_of_Rochester_seal.svg/1024px-University_of_Rochester_seal.svg.png"
+  },
+  {
+    "instnm": "University of Missouri-Kansas City",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/University_of_Missouri-Kansas_City_logo.svg/1024px-University_of_Missouri-Kansas_City_logo.svg.png"
+  },
+  {
+    "instnm": "University of Virginia-Main Campus",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/University_of_Virginia_seal.svg/1024px-University_of_Virginia_seal.svg.png"
+  },
+  {
+    "instnm": "Washington and Lee University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Washington_and_lee_univ_seal.png"
+  },
+  {
+    "instnm": "Colgate University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Colgate_University_Seal_2018.svg/1200px-Colgate_University_Seal_2018.svg.png"
+  },
+  {
+    "instnm": "Scripps College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2c/Scripps_College_seal.svg/800px-Scripps_College_seal.svg.png"
+  },
+  {
+    "instnm": "University of Richmond",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/UR_Shield.svg/800px-UR_Shield.svg.png"
+  },
+  {
+    "instnm": "Brandeis University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/3/32/Brandeis_University_seal.svg/1024px-Brandeis_University_seal.svg.png"
+  },
+  {
+    "instnm": "University of North Carolina at Chapel Hill",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/University_of_North_Carolina_at_Chapel_Hill_seal.svg/1024px-University_of_North_Carolina_at_Chapel_Hill_seal.svg.png"
+  },
+  {
+    "instnm": "University of Michigan-Ann Arbor",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Seal_of_the_University_of_Michigan.svg/1024px-Seal_of_the_University_of_Michigan.svg.png"
+  },
+  {
+    "instnm": "Georgia Institute of Technology-Main Campus",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Georgia_Tech_seal.svg/1024px-Georgia_Tech_seal.svg.png"
+  },
+  {
+    "instnm": "Boston University",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Boston_University_seal.svg/1024px-Boston_University_seal.svg.png"
+  },
+  {
+    "instnm": "University of Maryland-College Park",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/University_of_Maryland_seal.svg/1024px-University_of_Maryland_seal.svg.png"
+  },
+  {
+    "instnm": "Colorado College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Colorado_College_seal.svg/1024px-Colorado_College_seal.svg.png"
+  },
+  {
+    "instnm": "Villanova University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/da/Villanova_University_seal.svg/1024px-Villanova_University_seal.svg.png"
+  },
+  {
+    "instnm": "Wake Forest University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0a/Wake_Forest_University_seal.svg/1024px-Wake_Forest_University_seal.svg.png"
+  },
+  {
+    "instnm": "Davidson College",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Davidson_College_Seal.png/1024px-Davidson_College_Seal.png"
+  },
+  {
+    "instnm": "Bates College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Seal_Bates_College.svg/1024px-Seal_Bates_College.svg.png"
+  },
+  {
+    "instnm": "Tulane University of Louisiana",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Tulane_University_Logo.svg/800px-Tulane_University_Logo.svg.png"
+  },
+  {
+    "instnm": "William & Mary",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/d/d7/College_of_William_%26_Mary_Coat_of_Arms.png"
+  },
+  {
+    "instnm": "University of Wisconsin-Madison",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Seal_of_the_University_of_Wisconsin.svg/1024px-Seal_of_the_University_of_Wisconsin.svg.png"
+  },
+  {
+    "instnm": "Oberlin College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/7/75/Formal_Seal_of_Oberlin_College%2C_Oberlin%2C_OH%2C_USA.svg/1024px-Formal_Seal_of_Oberlin_College%2C_Oberlin%2C_OH%2C_USA.svg.png"
+  },
+  {
+    "instnm": "Hillsdale College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Hillsdale_College_seal.svg/1024px-Hillsdale_College_seal.svg.png"
+  },
+  {
+    "instnm": "Macalester College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/6/6e/Macalester_seal_hires.png"
+  },
+  {
+    "instnm": "Reed College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Formal_Seal_of_Reed_College%2C_Portland%2C_OR%2C_USA.svg/1024px-Formal_Seal_of_Reed_College%2C_Portland%2C_OR%2C_USA.svg.png"
+  },
+  {
+    "instnm": "University of Illinois Urbana-Champaign",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/University_of_Illinois_seal.svg/1024px-University_of_Illinois_seal.svg.png"
+  },
+  {
+    "instnm": "Occidental College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f1/Occidental_College_Seal.svg/1024px-Occidental_College_Seal.svg.png"
+  },
+  {
+    "instnm": "Babson College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b5/Babson_College_seal.svg/1024px-Babson_College_seal.svg.png"
+  },
+  {
+    "instnm": "Stevens Institute of Technology",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8e/Seal_of_Stevens_Institute_of_Technology.svg/1024px-Seal_of_Stevens_Institute_of_Technology.svg.png"
+  },
+  {
+    "instnm": "Kenyon College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/Kenyon_College_seal.svg/1024px-Kenyon_College_seal.svg.png"
+  },
+  {
+    "instnm": "George Washington University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d8/George_Washington_University_seal.svg/1024px-George_Washington_University_seal.svg.png"
+  },
+  {
+    "instnm": "Mount Holyoke College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Mount_Holyoke_College_seal.svg/1024px-Mount_Holyoke_College_seal.svg.png"
+  },
+  {
+    "instnm": "Santa Clara University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ad/Santa_Clara_U_Seal.svg/1024px-Santa_Clara_U_Seal.svg.png"
+  },
+  {
+    "instnm": "Rensselaer Polytechnic Institute",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Rensselear_poly_inst_seal.png"
+  },
+  {
+    "instnm": "Yeshiva University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c2/Yeshiva_University.svg/1200px-Yeshiva_University.svg.png"
+  },
+  {
+    "instnm": "Lehigh University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/LUwithShield-CMYK.svg/1024px-LUwithShield-CMYK.svg.png"
+  },
+  {
+    "instnm": "Lafayette College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/3/31/Seal_of_Lafayette_College.png"
+  },
+  {
+    "instnm": "Binghamton University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/6/67/State_University_of_New_York_at_Binghamton_Seal.png"
+  },
+  {
+    "instnm": "Stony Brook University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/Stony_Brook_University_seal.svg/1024px-Stony_Brook_University_seal.svg.png"
+  },
+  {
+    "instnm": "Fordham University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/Fordham_University_seal.svg/800px-Fordham_University_seal.svg.png"
+  },
+  {
+    "instnm": "Rhodes College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/1/16/Rhodes_College_seal.svg/1024px-Rhodes_College_seal.svg.png"
+  },
+  {
+    "instnm": "The University of Texas at Austin",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/University_of_Texas_at_Austin_seal.svg/1024px-University_of_Texas_at_Austin_seal.svg.png"
+  },
+  {
+    "instnm": "University of Tulsa",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/2/2e/University_of_Tulsa_seal.png"
+  },
+  {
+    "instnm": "Southern Methodist University",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f8/Southern_Methodist_University_seal.svg/1024px-Southern_Methodist_University_seal.svg.png"
+  },
+  {
+    "instnm": "Ohio State University-Main Campus",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Ohio_State_University_seal.svg/1024px-Ohio_State_University_seal.svg.png"
+  },
+  {
+    "instnm": "University of Minnesota-Twin Cities",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Seal_of_the_University_of_Minnesota.svg/1024px-Seal_of_the_University_of_Minnesota.svg.png"
+  },
+  {
+    "instnm": "Union College",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UnionCollegeSeal.svg/800px-UnionCollegeSeal.svg.png"
+  },
+  {
+    "instnm": "University of Florida",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/6/6d/University_of_Florida_seal.svg/1024px-University_of_Florida_seal.svg.png"
+  },
+  {
+    "instnm": "University of Massachusetts-Amherst",
+    "logo": "https://www.umass.edu/university-relations/sites/default/files/2023-12/UMASS_Medium-TM.png"
+  },
+  {
+    "instnm": "Rutgers University-New Brunswick",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Rutgers_University_seal.svg/1024px-Rutgers_University_seal.svg.png"
+  },
+  {
+    "instnm": "Whitman College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/e/e6/Whitman_College_Seal.png"
+  },
+  {
+    "instnm": "Fisk University",
+    "logo": "https://mma.prnewswire.com/media/1512189/FISK_COLLEGIATE_SPIRE_V2_Logo.jpg?p=facebook"
+  },
+  {
+    "instnm": "Connecticut College",
+    "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8b/Formal_Seal_of_Connecticut_College%2C_New_London%2C_CT%2C_USA.svg/1024px-Formal_Seal_of_Connecticut_College%2C_New_London%2C_CT%2C_USA.svg.png"
+  },
+  {
+    "instnm": "University of Miami",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/University_of_Miami_logo.svg/1024px-University_of_Miami_logo.svg.png"
+  },
+  {
+    "instnm": "Colorado School of Mines",
+    "logo": "https://weare.mines.edu/s/840/images/editor/logos/mines-logo-stacked-co-school-of-blue.jpg"
+  }
+]
