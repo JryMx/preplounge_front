@@ -167,6 +167,28 @@ const StudentProfilePage: React.FC = () => {
               ? '교과 및 비교과 프로필을 완성하여 종합적인 프로필 점수와 개인 맞춤 대학 추천을 받아보세요.'
               : 'Complete your academic and extracurricular profile to receive a comprehensive profile score and personalized university recommendations.'}
           </p>
+          <div style={{
+            marginTop: '24px',
+            padding: '16px 20px',
+            backgroundColor: 'rgba(250, 204, 21, 0.1)',
+            border: '1px solid rgba(250, 204, 21, 0.3)',
+            borderRadius: '12px',
+            fontSize: '14px',
+            lineHeight: '1.6',
+            color: '#082F49'
+          }}>
+            {language === 'ko' ? (
+              <>
+                예측 결과는 입력된 정보와 공개 데이터를 기반으로 제공되는 참고용 자료입니다.
+                본 결과는 전문적인 판단이나 확정적인 근거로 사용할 수 없으며, 실제 합격 여부는 지원 경쟁률 등 다양한 요인에 따라 달라질 수 있습니다.
+              </>
+            ) : (
+              <>
+                The prediction results are provided based on the entered data and public information for reference purposes only.
+                They should not be used as professional advice or definitive guidance, as actual admission outcomes may vary depending on multiple factors such as competition levels.
+              </>
+            )}
+          </div>
         </div>
       </div>
 
