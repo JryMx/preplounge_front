@@ -282,28 +282,40 @@
   align-items: center;
   gap: 16px;
   border: 2px solid transparent;
+  background: transparent;
+  width: 100%;
+  text-align: left;
 }
 
 .compare-search-item-image {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   overflow: hidden;
   background: #FFFFFF;
-  padding: 4px;
+  padding: 6px;
   box-shadow: 0px 2px 4px rgba(8, 47, 73, 0.08);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .compare-search-item-image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
 }
 
 .compare-search-item:hover {
   background: #FFFBEB;
   border-color: #FACC15;
+}
+
+.compare-search-item-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .compare-search-item-name {
@@ -315,6 +327,7 @@
   letter-spacing: -0.01em;
   color: #082F49;
   margin-bottom: 4px;
+  text-align: left;
 }
 
 .compare-search-item-location {
@@ -326,6 +339,7 @@
   letter-spacing: -0.01em;
   color: #082F49;
   opacity: 0.6;
+  text-align: left;
 }
 
 /* Comparison Table */

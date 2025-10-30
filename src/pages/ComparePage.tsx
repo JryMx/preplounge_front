@@ -307,7 +307,7 @@ const ComparePage: React.FC = () => {
                     <div className="compare-search-item-image">
                       <img src={university.image} alt={university.name} />
                     </div>
-                    <div>
+                    <div className="compare-search-item-info">
                       <div className="compare-search-item-name">
                         {language === 'ko' ? university.name : university.englishName}
                       </div>
