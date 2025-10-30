@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
                 </div>
               )}
             </div>
-            <Link to="/profile-calculator" className="navbar-menu-link" data-testid="link-profile">
+            <Link to="/student-profile" className="navbar-menu-link" data-testid="link-profile">
               {t('nav.profile')}
             </Link>
             <Link to="/consulting" className="navbar-menu-link">
@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
                 )}
               </div>
               <Link
-                to="/profile-calculator"
+                to="/student-profile"
                 className="navbar-mobile-link"
                 onClick={() => setIsMenuOpen(false)}
                 data-testid="link-profile-mobile"
