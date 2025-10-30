@@ -482,7 +482,7 @@ const HomePage: React.FC = () => {
                 )}
 
                 <Link
-                  to="/profile-calculator"
+                  to="/student-profile"
                   className="detailed-analysis-button"
                   data-testid="button-detailed-analysis-home"
                 >
