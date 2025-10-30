@@ -711,19 +711,27 @@ const HomePage: React.FC = () => {
                 <Users className="major-icon" />
               </div>
               <div className="major-content">
-                <h3 className="major-card-title">예술 (Arts)</h3>
+                <h3 className="major-card-title">{language === 'ko' ? '예술 (Arts)' : 'Arts'}</h3>
                 <div className="major-details">
-                  <p className="major-specializations">순수예술, 음악, 연극, 영화학, 디자인</p>
+                  <p className="major-specializations">
+                    {language === 'ko' ? '순수예술, 음악, 연극, 영화학, 디자인' : 'Fine Arts, Music, Theater, Film, Design'}
+                  </p>
                 </div>
                 <div className="major-stats">
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">평균 연봉 $58,000</span>
+                    <span className="major-stat-text">
+                      {language === 'ko' ? '평균 연봉 $58,000' : 'Avg Salary $58,000'}
+                    </span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">취업률 75%</span>
+                    <span className="major-stat-text">
+                      {language === 'ko' ? '취업률 75%' : 'Employment 75%'}
+                    </span>
                   </div>
                   <div className="major-stat-badge">
-                    <span className="major-stat-text">포트폴리오 중심 전형</span>
+                    <span className="major-stat-text">
+                      {language === 'ko' ? '포트폴리오 중심 전형' : 'Portfolio-Based'}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -731,9 +739,13 @@ const HomePage: React.FC = () => {
           </div>
 
           <div className="majors-cta">
-            <p className="majors-cta-text">단 3분! 나에게 딱 맞는 전공을 찾아보세요</p>
+            <p className="majors-cta-text">
+              {language === 'ko' ? '단 3분! 나에게 딱 맞는 전공을 찾아보세요' : 'Just 3 minutes! Find the perfect major for you'}
+            </p>
             <button className="majors-cta-button">
-              <span className="majors-cta-button-text">전공 찾고 대학 로드맵 준비하기</span>
+              <span className="majors-cta-button-text">
+                {language === 'ko' ? '전공 찾고 대학 로드맵 준비하기' : 'Find Your Major & Plan Your College Roadmap'}
+              </span>
             </button>
           </div>
         </div>
@@ -744,10 +756,16 @@ const HomePage: React.FC = () => {
         <div className="housing-container">
           <div className="housing-header-column">
             <h2 className="housing-title">
-              미국 대학 주변<br></br>집 구경하기
+              {language === 'ko' ? (
+                <>미국 대학 주변<br />집 구경하기</>
+              ) : (
+                <>Explore Housing<br />Near US Universities</>
+              )}
             </h2>
             <p className="housing-subtitle">
-              학교 주변, 어떤 동네가 살기 좋을까?
+              {language === 'ko' 
+                ? '학교 주변, 어떤 동네가 살기 좋을까?' 
+                : 'Which neighborhoods are best to live in near campus?'}
             </p>
           </div>
 
@@ -757,11 +775,13 @@ const HomePage: React.FC = () => {
                 <Search className="housing-search-icon" />
                 <input
                   type="text"
-                  placeholder="대학 이름으로 검색"
+                  placeholder={language === 'ko' ? '대학 이름으로 검색' : 'Search by university name'}
                   className="housing-search-input"
                 />
                 <button className="housing-search-button">
-                  <span className="housing-search-button-text">검색</span>
+                  <span className="housing-search-button-text">
+                    {language === 'ko' ? '검색' : 'Search'}
+                  </span>
                 </button>
               </div>
             </div>
@@ -797,7 +817,9 @@ const HomePage: React.FC = () => {
             </div>
 
             <Link to="/housing" className="housing-cta-button">
-              <span className="housing-cta-button-text">매물 자세히 알아보기</span>
+              <span className="housing-cta-button-text">
+                {language === 'ko' ? '매물 자세히 알아보기' : 'Explore Listings in Detail'}
+              </span>
             </Link>
           </div>
         </div>
