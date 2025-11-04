@@ -241,7 +241,7 @@ const StudentProfilePage: React.FC = () => {
 
       <div className="profile-container">
 
-        {(profile || Object.values(academicData).some(v => v) || Object.values(nonAcademicData).some(v => v)) && (
+        {showResults && (
           <div ref={profileScoreRef} className="profile-calculator-section" style={{marginBottom: '24px', padding: '40px 32px', borderRadius: '16px'}}>
             <div className="profile-calculator-result-no-border" style={{width: '100%', height: '100%', maxWidth: '600px', margin: '0 auto'}}>
               <div className="profile-calculator-result-content">
@@ -250,7 +250,7 @@ const StudentProfilePage: React.FC = () => {
                     {language === 'ko' ? '프로필 점수' : 'Profile Score'}
                   </span>
                   <div className="profile-calculator-score-display">
-                    <span className="profile-calculator-score-value">{currentScore === 0 ? '--' : currentScore}</span>
+                    <span className="profile-calculator-score-value">{currentScore}</span>
                     <span className="profile-calculator-score-total">/100</span>
                   </div>
                 </div>
