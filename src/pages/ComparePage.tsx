@@ -19,6 +19,7 @@ interface University {
   estimatedGPA: number;
   academicInfo?: {
     graduationRate: number;
+    averageEarnings?: number;
   };
 }
 
@@ -152,6 +153,11 @@ const ComparePage: React.FC = () => {
           label: language === 'ko' ? '졸업률' : 'Graduation Rate', 
           format: (_val: any, uni: University) => uni.academicInfo?.graduationRate ? `${uni.academicInfo.graduationRate}%` : 'N/A'
         },
+        { 
+          key: 'averageEarnings', 
+          label: language === 'ko' ? '졸업 후 평균 소득' : 'Average Earnings After Graduation', 
+          format: (_val: any, uni: University) => uni.academicInfo?.averageEarnings ? `$${uni.academicInfo.averageEarnings.toLocaleString()}` : 'N/A'
+        },
       ],
     },
   ];
@@ -186,10 +192,7 @@ const ComparePage: React.FC = () => {
                 >
                   <X className="h-4 w-4" />
                 </button>
-                <div className="compare-selected-image">
-                  <img src={university.image} alt={university.name} />
-                </div>
-                <h3 className="compare-selected-name">
+                <h3 className="compare-selected-name" style={{marginTop: '16px'}}>
                   {language === 'ko' ? university.name : university.englishName}
                 </h3>
               </div>
@@ -221,17 +224,9 @@ const ComparePage: React.FC = () => {
                       {language === 'ko' ? '카테고리' : 'Category'}
                     </th>
                     {selectedUniversities.map(university => (
-                      <th key={university.id} style={{textAlign: 'center', minWidth: '250px'}}>
-                        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px'}}>
-                          <div className="compare-table-uni-image">
-                            <img src={university.image} alt={university.name} />
-                          </div>
-                          <div style={{fontSize: '14px', fontWeight: 700}}>
-                            {language === 'ko' ? university.name : university.englishName}
-                          </div>
-                          <div style={{fontSize: '12px', opacity: 0.7}}>
-                            {language === 'ko' ? university.englishName : university.name}
-                          </div>
+                      <th key={university.id} style={{textAlign: 'center', minWidth: '250px', padding: '16px'}}>
+                        <div style={{fontSize: '14px', fontWeight: 700}}>
+                          {language === 'ko' ? university.name : university.englishName}
                         </div>
                       </th>
                     ))}
