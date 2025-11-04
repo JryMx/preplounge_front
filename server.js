@@ -13,7 +13,9 @@ app.post('/api/analyze-profile', async (req, res) => {
     const { academicData, nonAcademicData, extracurriculars, recommendationLetters } = req.body;
 
     // Build a concise prompt for the LLM
-    const prompt = `You are a friendly college admissions counselor talking directly to a student. Give them a brief, honest assessment of their profile in 2-3 sentences. Write like you're having a conversation, not writing a formal report.
+    const prompt = `You are a friendly college admissions counselor. Give a brief, honest assessment of this student's profile in 2-3 sentences MAX. Be direct and conversational.
+
+CRITICAL: Keep your response under 150 words. Do NOT overthink - just give a quick, practical assessment.
 
 Student Profile:
 - GPA: ${academicData.gpa}/4.0
@@ -28,14 +30,13 @@ Student Profile:
 - Citizenship: ${nonAcademicData.citizenship}
 - Legacy Status: ${nonAcademicData.legacyStatus ? 'Yes' : 'No'}
 
-Writing Style Rules:
-1. Write like a human advisor having a casual conversation. Use "you" and "your".
-2. NEVER use em dashes (—). Use regular dashes (-) or commas if needed.
-3. Keep it simple and natural. Avoid robotic or overly formal language.
-4. Be honest and realistic. Don't sugarcoat weak profiles, but be encouraging.
-5. Keep it to 2-3 sentences total.
-6. Use everyday words, not academic jargon.
-7. IMPORTANT: Talk about the FULL RANGE of schools they're competitive for, not just elite schools. Most students aren't applying to Ivies - mention community colleges, state schools, regional universities as appropriate.
+Rules:
+1. Use "you" and "your" - talk directly to the student
+2. NO em dashes (—), use regular dashes (-) or commas
+3. Be honest and realistic - don't sugarcoat
+4. 2-3 sentences MAX, under 150 words total
+5. Use simple, everyday language
+6. Cover the FULL RANGE of schools: community colleges, state schools, regional universities, selective schools as appropriate
 
 Good Examples:
 - Strong profile (3.9+ GPA, 1500+ SAT): "You've got a really solid profile here. Your GPA and test scores put you in a competitive position for top 50 schools, and you'd be a strong candidate at many flagship state universities too. I'd say you have a good shot at selective universities and would likely be a standout applicant at most state schools."
@@ -72,7 +73,7 @@ Now provide your honest, conversational analysis:`;
           }
         ],
         temperature: 1,
-        max_tokens: 1000,
+        max_tokens: 2000,
       }),
       signal: controller.signal,
     });
@@ -88,10 +89,26 @@ Now provide your honest, conversational analysis:`;
     const data = await apiResponse.json();
     console.log('AI API Response:', JSON.stringify(data, null, 2));
     
-    const analysis = data.choices?.[0]?.message?.content || '';
+    const choice = data.choices?.[0];
+    const analysis = choice?.message?.content || '';
+    const finishReason = choice?.finish_reason;
+    
+    // Hard safeguard: Treat token limit exhaustion as an error
+    if (finishReason === 'length') {
+      console.error('CRITICAL: AI response truncated due to token limit');
+      console.error('Reasoning tokens used:', data.usage?.completion_tokens_details?.reasoning_tokens);
+      console.error('Total completion tokens:', data.usage?.completion_tokens);
+      console.error('Max tokens configured:', 2000);
+      
+      return res.status(500).json({ 
+        error: 'AI token limit exceeded',
+        message: 'The AI analysis used too many tokens for reasoning. Please try again or contact support if this persists.'
+      });
+    }
     
     if (!analysis) {
       console.error('Empty analysis received from API. Full response:', data);
+      throw new Error('AI failed to generate analysis content');
     }
     
     res.json({ analysis });
