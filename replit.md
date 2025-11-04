@@ -145,13 +145,12 @@ The profile score (out of 100) is a deterministic, transparent metric that evalu
      - 5-9 hours/week: 0.5 points
    - Total capped at 15 points (3-4 strong activities max out score)
 
-5. **Personal Statement Quality (10 points)**
-   - Exceptional: 10 points (Outstanding story, unique voice, compelling)
-   - Strong: 8 points (Well-written, engaging, clear narrative)
-   - Good: 6 points (Solid writing, decent storytelling)
-   - Average: 4 points (Basic competency, lacks depth)
-   - Weak: 2 points (Poor quality or minimal effort)
-   - Fallback: 2 points if essay exists but quality not rated
+5. **Personal Statement (10 points)**
+   - 500+ characters: 10 points (Full, substantial essay)
+   - 300-499 characters: 7 points (Decent length essay)
+   - 150-299 characters: 4 points (Short but present)
+   - 1-149 characters: 2 points (Minimal effort)
+   - 0 characters: 0 points (No essay)
 
 6. **Recommendation Letters (5 points)**
    - Base points for quantity:

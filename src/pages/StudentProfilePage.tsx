@@ -43,7 +43,6 @@ const StudentProfilePage: React.FC = () => {
 
   const [nonAcademicData, setNonAcademicData] = useState({
     personalStatement: profile?.personalStatement || '',
-    personalStatementQuality: profile?.personalStatementQuality || '',
     legacyStatus: profile?.legacyStatus || false,
     citizenship: profile?.citizenship || 'domestic',
   });
@@ -126,7 +125,6 @@ const StudentProfilePage: React.FC = () => {
       toeflScore: academicData.englishProficiencyTest === 'TOEFL iBT' ? parseInt(academicData.englishTestScore) || 0 : 0,
       intendedMajor: academicData.intendedMajor,
       personalStatement: nonAcademicData.personalStatement,
-      personalStatementQuality: nonAcademicData.personalStatementQuality,
       legacyStatus: nonAcademicData.legacyStatus,
       citizenship: nonAcademicData.citizenship as 'domestic' | 'international',
       extracurriculars,
@@ -587,30 +585,6 @@ const StudentProfilePage: React.FC = () => {
                   />
                   <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '8px'}}>
                     {nonAcademicData.personalStatement.length} {language === 'ko' ? '글자' : 'characters'}
-                  </p>
-                </div>
-
-                <div className="profile-form-group full-width" style={{marginBottom: '32px'}}>
-                  <label className="profile-form-label">
-                    {language === 'ko' ? '자기소개서 품질 평가' : 'Personal Statement Quality'}
-                    <span style={{color: '#DC2626', marginLeft: '4px'}}>*</span>
-                  </label>
-                  <select
-                    value={nonAcademicData.personalStatementQuality}
-                    onChange={(e) => handleNonAcademicChange('personalStatementQuality', e.target.value)}
-                    className="profile-form-select"
-                  >
-                    <option value="">{language === 'ko' ? '선택하세요' : 'Select quality'}</option>
-                    <option value="Exceptional">{language === 'ko' ? '뛰어남 (Exceptional)' : 'Exceptional'}</option>
-                    <option value="Strong">{language === 'ko' ? '우수함 (Strong)' : 'Strong'}</option>
-                    <option value="Good">{language === 'ko' ? '좋음 (Good)' : 'Good'}</option>
-                    <option value="Average">{language === 'ko' ? '평균 (Average)' : 'Average'}</option>
-                    <option value="Weak">{language === 'ko' ? '미흡 (Weak)' : 'Weak'}</option>
-                  </select>
-                  <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '8px'}}>
-                    {language === 'ko' 
-                      ? '자기소개서의 스토리, 독창성, 표현력을 기준으로 평가하세요.' 
-                      : 'Rate based on story, originality, and writing quality.'}
                   </p>
                 </div>
 

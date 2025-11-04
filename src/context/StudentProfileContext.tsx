@@ -9,7 +9,6 @@ export interface StudentProfile {
   
   // Non-Academic Inputs
   personalStatement: string;
-  personalStatementQuality?: string;
   extracurriculars: ExtracurricularActivity[];
   recommendationLetters: RecommendationLetter[];
   legacyStatus: boolean;
@@ -197,18 +196,22 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       score += Math.min(ecScore, 15);
     }
     
-    // 5. Personal Statement Quality (10 points) - Now uses quality rating
-    if (profileData.personalStatementQuality) {
-      switch (profileData.personalStatementQuality) {
-        case 'Exceptional': score += 10; break;
-        case 'Strong': score += 8; break;
-        case 'Good': score += 6; break;
-        case 'Average': score += 4; break;
-        case 'Weak': score += 2; break;
+    // 5. Personal Statement (10 points) - Based on completion and length
+    if (profileData.personalStatement) {
+      const length = profileData.personalStatement.length;
+      if (length >= 500) {
+        // Full, substantial essay (typical Common App length is 250-650 words)
+        score += 10;
+      } else if (length >= 300) {
+        // Decent length essay
+        score += 7;
+      } else if (length >= 150) {
+        // Short but present
+        score += 4;
+      } else if (length > 0) {
+        // Minimal effort
+        score += 2;
       }
-    } else if (profileData.personalStatement && profileData.personalStatement.length > 0) {
-      // Fallback if quality not selected - minimal points for having something
-      score += 2;
     }
     
     // 6. Recommendation Letters (5 points)
