@@ -271,6 +271,25 @@ const translations = {
     'university.info.graduation': '졸업률',
     'university.notfound.title': '학교를 찾을 수 없습니다',
     'university.notfound.back': '학교 목록으로 돌아가기',
+    
+    // Login Page
+    'login.title': '로그인',
+    'login.subtitle': '프렙라운지에 다시 오신 것을 환영합니다',
+    'login.email': '이메일',
+    'login.email.placeholder': '이메일 주소를 입력하세요',
+    'login.password': '비밀번호',
+    'login.password.placeholder': '비밀번호를 입력하세요',
+    'login.remember': '로그인 상태 유지',
+    'login.forgot': '비밀번호를 잊으셨나요?',
+    'login.button': '로그인',
+    'login.loading': '로그인 중...',
+    'login.signup.prompt': '아직 계정이 없으신가요?',
+    'login.signup.link': '회원가입',
+    'login.demo.title': '데모 계정 정보:',
+    'login.demo.email': '이메일: 유효한 이메일 형식',
+    'login.demo.password': '비밀번호: 임의의 비밀번호',
+    'login.error.invalid': '이메일 또는 비밀번호가 올바르지 않습니다.',
+    'login.error.general': '오류가 발생했습니다. 다시 시도해 주세요.',
   },
   en: {
     // Navbar
@@ -532,6 +551,25 @@ const translations = {
     'university.info.graduation': 'Graduation Rate',
     'university.notfound.title': 'School Not Found',
     'university.notfound.back': 'Back to Schools List',
+    
+    // Login Page
+    'login.title': 'Login',
+    'login.subtitle': 'Welcome back to PrepLounge',
+    'login.email': 'Email',
+    'login.email.placeholder': 'Enter your email address',
+    'login.password': 'Password',
+    'login.password.placeholder': 'Enter your password',
+    'login.remember': 'Remember me',
+    'login.forgot': 'Forgot password?',
+    'login.button': 'Login',
+    'login.loading': 'Logging in...',
+    'login.signup.prompt': "Don't have an account yet?",
+    'login.signup.link': 'Sign up',
+    'login.demo.title': 'Demo Account Info:',
+    'login.demo.email': 'Email: Any valid email format',
+    'login.demo.password': 'Password: Any password',
+    'login.error.invalid': 'Email or password is incorrect.',
+    'login.error.general': 'An error occurred. Please try again.',
   },
 };
 

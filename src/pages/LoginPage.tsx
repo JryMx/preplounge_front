@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import './login-page.css';
 
 const LoginPage: React.FC = () => {
@@ -13,6 +14,7 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const { login } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,10 +27,10 @@ const LoginPage: React.FC = () => {
       if (success) {
         navigate('/dashboard');
       } else {
-        setError('이메일 또는 비밀번호가 올바르지 않습니다.');
+        setError(t('login.error.invalid'));
       }
     } catch (err) {
-      setError('오류가 발생했습니다. 다시 시도해 주세요.');
+      setError(t('login.error.general'));
     } finally {
       setIsLoading(false);
     }
@@ -41,9 +43,9 @@ const LoginPage: React.FC = () => {
           <div className="login-icon-wrapper">
             <LogIn className="login-icon" />
           </div>
-          <h1 className="login-title">로그인</h1>
+          <h1 className="login-title">{t('login.title')}</h1>
           <p className="login-subtitle">
-            프렙라운지에 다시 오신 것을 환영합니다
+            {t('login.subtitle')}
           </p>
         </div>
 
@@ -56,7 +58,7 @@ const LoginPage: React.FC = () => {
 
           <div className="login-form-group">
             <label htmlFor="email" className="login-label">
-              이메일
+              {t('login.email')}
             </label>
             <div className="login-input-wrapper">
               <Mail className="login-input-icon" />
@@ -69,14 +71,14 @@ const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="login-input"
-                placeholder="이메일 주소를 입력하세요"
+                placeholder={t('login.email.placeholder')}
               />
             </div>
           </div>
 
           <div className="login-form-group">
             <label htmlFor="password" className="login-label">
-              비밀번호
+              {t('login.password')}
             </label>
             <div className="login-input-wrapper">
               <Lock className="login-input-icon" />
@@ -89,7 +91,7 @@ const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="login-input"
-                placeholder="비밀번호를 입력하세요"
+                placeholder={t('login.password.placeholder')}
               />
               <button
                 type="button"
@@ -116,12 +118,12 @@ const LoginPage: React.FC = () => {
                 className="login-checkbox"
               />
               <label htmlFor="remember-me" className="login-checkbox-label">
-                로그인 상태 유지
+                {t('login.remember')}
               </label>
             </div>
 
             <a href="#" className="login-forgot-link">
-              비밀번호를 잊으셨나요?
+              {t('login.forgot')}
             </a>
           </div>
 
@@ -131,22 +133,22 @@ const LoginPage: React.FC = () => {
             className="login-submit-button"
           >
             <span className="login-submit-button-text">
-              {isLoading ? '로그인 중...' : '로그인'}
+              {isLoading ? t('login.loading') : t('login.button')}
             </span>
           </button>
 
           <div className="login-signup-prompt">
-            아직 계정이 없으신가요?{' '}
+            {t('login.signup.prompt')}{' '}
             <Link to="/signup" className="login-signup-link">
-              회원가입
+              {t('login.signup.link')}
             </Link>
           </div>
         </form>
 
         <div className="login-demo-box">
-          <p className="login-demo-title">데모 계정 정보:</p>
-          <p className="login-demo-text">이메일: 유효한 이메일 형식</p>
-          <p className="login-demo-text">비밀번호: 임의의 비밀번호</p>
+          <p className="login-demo-title">{t('login.demo.title')}</p>
+          <p className="login-demo-text">{t('login.demo.email')}</p>
+          <p className="login-demo-text">{t('login.demo.password')}</p>
         </div>
       </div>
     </div>
