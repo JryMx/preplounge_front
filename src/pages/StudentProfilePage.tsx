@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList } from 'lucide-react';
+import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList, Sparkles, Loader2 } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
 import { useLanguage } from '../context/LanguageContext';
 import './student-profile-page.css';
@@ -11,6 +11,9 @@ const StudentProfilePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'academic' | 'non-academic'>('academic');
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [aiAnalysis, setAiAnalysis] = useState<string>('');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisError, setAnalysisError] = useState<string>('');
 
   const [applicationComponents, setApplicationComponents] = useState<ApplicationComponents>(
     profile?.applicationComponents || {
@@ -134,6 +137,42 @@ const StudentProfilePage: React.FC = () => {
     setShowResults(true);
   };
 
+  const handleGenerateAnalysis = async () => {
+    setIsAnalyzing(true);
+    setAnalysisError('');
+    
+    try {
+      const response = await fetch('http://localhost:3001/api/analyze-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          academicData,
+          nonAcademicData,
+          extracurriculars,
+          recommendationLetters,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate analysis');
+      }
+
+      const data = await response.json();
+      setAiAnalysis(data.analysis);
+    } catch (error) {
+      console.error('Error generating analysis:', error);
+      setAnalysisError(
+        language === 'ko'
+          ? '분석 생성 중 오류가 발생했습니다. 다시 시도해주세요.'
+          : 'An error occurred while generating the analysis. Please try again.'
+      );
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   const handleSearch = () => {
     if (searchQuery.trim() && profile) {
       setShowResults(true);
@@ -226,6 +265,87 @@ const StudentProfilePage: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* AI Analysis Section */}
+        <div className="profile-calculator-section" style={{marginBottom: '24px', padding: '32px', borderRadius: '16px'}}>
+          <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px'}}>
+            <Sparkles className="h-6 w-6" style={{color: '#FACC15'}} />
+            <h2 style={{fontSize: '24px', fontWeight: '600', color: '#082F49', margin: 0}}>
+              {language === 'ko' ? 'AI 프로필 분석' : 'AI Profile Analysis'}
+            </h2>
+          </div>
+          
+          <p style={{fontSize: '14px', color: 'rgba(8, 47, 73, 0.7)', marginBottom: '20px'}}>
+            {language === 'ko'
+              ? '프로필을 입력한 후, AI 기반 심층 분석을 받아 강점과 개선 사항을 확인하세요.'
+              : 'After filling in your profile, get an AI-powered in-depth analysis to identify your strengths and areas for improvement.'}
+          </p>
+
+          <button
+            onClick={handleGenerateAnalysis}
+            disabled={isAnalyzing || currentScore === 0}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 24px',
+              backgroundColor: currentScore === 0 ? '#E7E5E4' : '#FACC15',
+              color: '#082F49',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: currentScore === 0 ? 'not-allowed' : 'pointer',
+              opacity: isAnalyzing ? 0.7 : 1,
+              transition: 'all 0.2s'
+            }}
+          >
+            {isAnalyzing ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                {language === 'ko' ? '분석 중...' : 'Analyzing...'}
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-5 w-5" />
+                {language === 'ko' ? 'AI 분석 생성' : 'Generate AI Analysis'}
+              </>
+            )}
+          </button>
+
+          {analysisError && (
+            <div style={{
+              marginTop: '16px',
+              padding: '12px 16px',
+              backgroundColor: '#FEE2E2',
+              border: '1px solid #FECACA',
+              borderRadius: '8px',
+              color: '#991B1B',
+              fontSize: '14px'
+            }}>
+              {analysisError}
+            </div>
+          )}
+
+          {aiAnalysis && (
+            <div style={{
+              marginTop: '24px',
+              padding: '24px',
+              backgroundColor: '#FFFBEB',
+              border: '1px solid #FDE68A',
+              borderRadius: '12px',
+            }}>
+              <div style={{
+                fontSize: '14px',
+                lineHeight: '1.8',
+                color: '#082F49',
+                whiteSpace: 'pre-wrap'
+              }}>
+                {aiAnalysis}
+              </div>
+            </div>
+          )}
+        </div>
 
         <div className="application-checker-section">
           <div className="application-checker-header">
