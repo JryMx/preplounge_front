@@ -1099,17 +1099,13 @@ const StudentProfilePage: React.FC = () => {
                               </div>
                               
                               <div className="mt-4 text-sm">
-                                <div className="mb-2">
+                                <div>
                                   <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성' : 'Admission Probability'}:</span>
                                   <span className="ml-2 font-bold text-lg" style={{ color: '#082F49' }}>
                                     {typeof school.probability === 'number' 
                                       ? `${(school.probability * 100).toFixed(1)}%` 
                                       : 'N/A'}
                                   </span>
-                                </div>
-                                <div>
-                                  <span className="font-medium text-gray-600">{language === 'ko' ? '내 프로필 점수' : 'My Profile Score'}:</span>
-                                  <span className="ml-2 font-bold">{profile?.profileScore || currentScore}/100</span>
                                 </div>
                               </div>
                             </div>
@@ -1170,17 +1166,13 @@ const StudentProfilePage: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="grid md:grid-cols-3 gap-4 mt-4 text-sm">
+                  <div className="grid md:grid-cols-2 gap-4 mt-4 text-sm">
                     <div>
-                      <span className="font-medium text-gray-600">{language === 'ko' ? '필요 점수:' : 'Required Score:'}</span>
+                      <span className="font-medium text-gray-600">{language === 'ko' ? '필요 점수' : 'Required Score'}:</span>
                       <span className="ml-2 font-bold">{school.requiredScore}/100</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">{language === 'ko' ? '내 점수:' : 'My Score:'}</span>
-                      <span className="ml-2 font-bold">{currentScore}/100</span>
-                    </div>
-                    <div>
-                      <span className="font-medium text-gray-600">{language === 'ko' ? '비율:' : 'Ratio:'}</span>
+                      <span className="font-medium text-gray-600">{language === 'ko' ? '매치 비율' : 'Match Ratio'}:</span>
                       <span className="ml-2 font-bold">{school.comparisonRatio}</span>
                     </div>
                   </div>
