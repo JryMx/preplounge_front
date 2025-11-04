@@ -278,12 +278,13 @@ const StudentProfilePage: React.FC = () => {
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: '12px',
                     color: '#082F49'
                   }}>
                     <Loader2 className="h-5 w-5 animate-spin" style={{color: '#FACC15'}} />
                     <span style={{fontSize: '14px'}}>
-                      {language === 'ko' ? '프로필 분석 중...' : 'Analyzing your profile...'}
+                      {language === 'ko' ? '잠시만 기다려 주세요, 정보를 분석하고 있습니다' : 'Give us a moment, we\'re analyzing your information'}
                     </span>
                   </div>
                 )}
