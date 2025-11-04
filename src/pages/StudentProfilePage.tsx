@@ -1056,7 +1056,7 @@ const StudentProfilePage: React.FC = () => {
                               <p className="text-sm text-gray-600">
                                 {school.location && `${school.location} • `}
                                 {school.ranking && `#${school.ranking} • `}
-                                {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptance_rate.toFixed(1)}%
+                                {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptance_rate?.toFixed(1) || 'N/A'}%
                               </p>
                             </div>
                             <div className="text-right">
@@ -1082,7 +1082,7 @@ const StudentProfilePage: React.FC = () => {
                           <div className="grid md:grid-cols-2 gap-4 mt-4 text-sm">
                             <div>
                               <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성:' : 'Admission Probability:'}</span>
-                              <span className="ml-2 font-bold">{school.admission_probability.toFixed(1)}%</span>
+                              <span className="ml-2 font-bold">{school.admission_probability?.toFixed(1) || 'N/A'}%</span>
                             </div>
                             <div>
                               <span className="font-medium text-gray-600">{language === 'ko' ? '내 점수:' : 'My Score:'}</span>
