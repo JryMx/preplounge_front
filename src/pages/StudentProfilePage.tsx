@@ -49,6 +49,12 @@ const StudentProfilePage: React.FC = () => {
   const [apiResults, setApiResults] = useState<APIResponse | null>(null);
   const [apiLoading, setApiLoading] = useState(false);
   const [apiError, setApiError] = useState<string>('');
+  const [visibleSchools, setVisibleSchools] = useState<{[key: string]: number}>({
+    safety: 3,
+    target: 3,
+    reach: 3,
+    prestige: 3
+  });
 
   const [applicationComponents, setApplicationComponents] = useState<ApplicationComponents>(
     profile?.applicationComponents || {
@@ -208,6 +214,14 @@ const StudentProfilePage: React.FC = () => {
       const apiData: APIResponse = await apiResponse.json();
       console.log('API Response:', apiData);
       setApiResults(apiData);
+      
+      // Reset visible schools to initial state (3 per category)
+      setVisibleSchools({
+        safety: 3,
+        target: 3,
+        reach: 3,
+        prestige: 3
+      });
     } catch (error) {
       console.error('Error fetching school recommendations:', error);
       setApiError(
@@ -257,6 +271,24 @@ const StudentProfilePage: React.FC = () => {
     if (searchQuery.trim() && profile) {
       setShowResults(true);
     }
+  };
+
+  const parseSchoolName = (name: string): string => {
+    if (!name) return 'Unknown School';
+    
+    // Remove Korean text (in parentheses) when in English mode
+    if (language === 'en') {
+      return name.replace(/\s*\([^)]*[\uAC00-\uD7A3][^)]*\)/g, '').trim();
+    }
+    
+    return name;
+  };
+
+  const loadMoreSchools = (category: string) => {
+    setVisibleSchools(prev => ({
+      ...prev,
+      [category]: prev[category] + 5
+    }));
   };
 
   const searchResults = searchQuery.trim() ? searchSchools(searchQuery) : [];
@@ -1041,8 +1073,10 @@ const StudentProfilePage: React.FC = () => {
                       const schools = apiResults.recommendations[category as keyof typeof apiResults.recommendations];
                       if (!schools || schools.length === 0) return null;
                       
-                      const limitedSchools = schools.slice(0, 5);
-                      const hasMore = schools.length > 5;
+                      const visibleCount = visibleSchools[category];
+                      const displayedSchools = schools.slice(0, visibleCount);
+                      const hasMore = schools.length > visibleCount;
+                      const remainingCount = schools.length - visibleCount;
                       
                       return (
                         <div key={category} style={{ marginBottom: '32px' }}>
@@ -1057,11 +1091,11 @@ const StudentProfilePage: React.FC = () => {
                               category === 'reach' ? 'Reach Schools' : 'Prestige Schools'
                             )}
                             <span className="ml-2 text-sm font-normal text-gray-500">
-                              ({limitedSchools.length}{hasMore && `/${schools.length}`})
+                              ({displayedSchools.length}/{schools.length})
                             </span>
                           </h4>
                           
-                          {limitedSchools.map((school, index) => (
+                          {displayedSchools.map((school, index) => (
                             <div
                               key={`${category}-${index}`}
                               className="extracurricular-card"
@@ -1073,7 +1107,7 @@ const StudentProfilePage: React.FC = () => {
                             >
                               <div className="flex justify-between items-start">
                                 <div style={{ flex: 1 }}>
-                                  <h4 className="font-semibold text-gray-900">{school.name || 'Unknown School'}</h4>
+                                  <h4 className="font-semibold text-gray-900">{parseSchoolName(school.name)}</h4>
                                   <p className="text-sm text-gray-600">
                                     {school.state && `${school.state}`}
                                   </p>
@@ -1112,11 +1146,27 @@ const StudentProfilePage: React.FC = () => {
                           ))}
                           
                           {hasMore && (
-                            <p className="text-sm text-gray-500 mt-2 text-center">
-                              {language === 'ko' 
-                                ? `${schools.length - 5}개 더 많은 학교가 있습니다` 
-                                : `${schools.length - 5} more school${schools.length - 5 > 1 ? 's' : ''} available`}
-                            </p>
+                            <div className="text-center mt-3">
+                              <button
+                                onClick={() => loadMoreSchools(category)}
+                                className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+                                style={{
+                                  backgroundColor: '#FCF8F0',
+                                  color: '#082F49',
+                                  border: '1px solid #FACC15',
+                                }}
+                                onMouseOver={(e) => {
+                                  e.currentTarget.style.backgroundColor = '#FACC15';
+                                }}
+                                onMouseOut={(e) => {
+                                  e.currentTarget.style.backgroundColor = '#FCF8F0';
+                                }}
+                              >
+                                {language === 'ko' 
+                                  ? `더 보기 (${remainingCount}개 남음)` 
+                                  : `Load More (${remainingCount} remaining)`}
+                              </button>
+                            </div>
                           )}
                         </div>
                       );
