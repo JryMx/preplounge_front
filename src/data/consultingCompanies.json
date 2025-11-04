@@ -1,0 +1,752 @@
+[
+  {
+    "id": "1",
+    "name": "오렌지큐브서울",
+    "location": "서울시 강남구 도산대로 89길 41, 1-5층",
+    "specialties": [
+      "미대 컨설팅"
+    ],
+    "tags": [
+      "아트 컨설팅",
+      "대외활동"
+    ],
+    "contact": {
+      "phone": "02-547-8622",
+      "email": "info@orangecubeseoul.com",
+      "website": "https://www.orangecubeseoul.com/",
+      "instagram": "https://www.instagram.com/orangecubeart_edu/",
+      "blog": "https://blog.naver.com/PostList.naver?blogId=orangecubist&tab=1",
+      "youtube": ""
+    },
+    "notes": "3억을 내면 아이비리그 입학을 보장해준다는 소문이 있었음"
+  },
+  {
+    "id": "2",
+    "name": "이에이컨설팅그룹 (엘리트어학원압구정)",
+    "location": "서울특별시 강남구 압구정로30길 64, 1층",
+    "specialties": [
+      "어학원",
+      "온라인스쿨",
+      "대입 컨설팅",
+      "시험대비"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "GPA 관리",
+      "추천서 관리",
+      "SAT",
+      "AP",
+      "IB",
+      "영어시험"
+    ],
+    "contact": {
+      "phone": "02-3444-6886",
+      "email": "apgujung@eliteprep.com",
+      "website": "https://eaconsulting.group/",
+      "instagram": "https://www.instagram.com/apgujungelite/",
+      "blog": "",
+      "youtube": "https://www.instagram.com/apgujungelite/"
+    },
+    "notes": ""
+  },
+  {
+    "id": "3",
+    "name": "에이세프컨설팅",
+    "location": "서울특별시 강남구 도산대로 149 3층",
+    "specialties": [
+      "온라인스쿨",
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "GPA 관리",
+      "인턴십",
+      "봉사활동"
+    ],
+    "contact": {
+      "phone": "02-511-0865",
+      "email": "",
+      "website": "https://aesfcampus.or.kr/bbs/content.php?co_id=sub0508",
+      "instagram": "",
+      "blog": "https://blog.naver.com/theuniprepkorea",
+      "youtube": "https://www.youtube.com/@aesfcampus"
+    },
+    "notes": ""
+  },
+  {
+    "id": "4",
+    "name": "브롬튼그룹",
+    "location": "서울특별시 강남구 논현로 175길 25 다보빌딩 3층",
+    "specialties": [
+      "시험대비",
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "GPA 관리",
+      "SAT",
+      "AP",
+      "IB",
+      "아트 컨설팅",
+      "대회"
+    ],
+    "contact": {
+      "phone": "1551-7576",
+      "email": "support@brmtn.com",
+      "website": "https://www.brmptn.com/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": "미대입시용 프로그램 보유"
+  },
+  {
+    "id": "5",
+    "name": "프리미어에듀",
+    "location": "서울특별시 서초구 강남대로 309 코리아비지니스센타, 11층 8호",
+    "specialties": [
+      "메디컬/로스쿨 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "인터뷰 준비",
+      "GPA 관리",
+      "SAT",
+      "ACT",
+      "TOEFL",
+      "IELTS",
+      "Duolingo",
+      "AP",
+      "IB",
+      "봉사활동",
+      "대회",
+      "메디컬",
+      "로스쿨"
+    ],
+    "contact": {
+      "phone": "0507-1309-2493",
+      "email": "admin@premier-edu.co.kr",
+      "website": "https://www.premier-edu.co.kr/",
+      "instagram": "https://www.instagram.com/premier_edu_/",
+      "blog": "https://blog.naver.com/bdni5673\nhttps://blog.naver.com/c0mkq602",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "6",
+    "name": "루나아트앤테크놀로지컨설팅",
+    "location": "서울특별시 강남구 논현로158길 24(신사동)",
+    "specialties": [
+      "미대 컨설팅"
+    ],
+    "tags": [
+      "아트 컨설팅",
+      "대외활동",
+      "에세이 작성"
+    ],
+    "contact": {
+      "phone": "02-546-5467",
+      "email": "info@lunatna.com",
+      "website": "https://lunatna.com/",
+      "instagram": "",
+      "blog": "https://blog.naver.com/luna_art_tech",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "7",
+    "name": "프라임스톤컨설팅",
+    "location": "서울 강남구 도산대로37길 19 (신사동) 티엔티빌딩 3층",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "GPA 관리",
+      "추천서 관리",
+      "인터뷰 준비"
+    ],
+    "contact": {
+      "phone": "02-6209-2585",
+      "email": "info.primestone@gmail.com",
+      "website": "https://primestone.co.kr/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "8",
+    "name": "탑클유학원",
+    "location": "서울특별시 강남구 논현로 167길 16, 삼구빌딩 303호",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "GPA 관리",
+      "SAT",
+      "ACT",
+      "AP",
+      "IB",
+      "연구활동",
+      "인턴십",
+      "대회",
+      "아트 컨설팅",
+      "메디컬",
+      "STEM"
+    ],
+    "contact": {
+      "phone": "02-511-9795",
+      "email": "topcleaca@gmail.com",
+      "website": "https://topcle.us/",
+      "instagram": "",
+      "blog": "https://blog.naver.com/topivyart",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "9",
+    "name": "크림슨에듀케이션",
+    "location": "서울 강남구 압구정로42번길 13, 5-6층 | 등록번호: 651-81-00957",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "AP",
+      "IGCSE",
+      "A-Level",
+      "연구활동",
+      "인턴십"
+    ],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.crimsoneducation.org/kr/campaign/book-a-consult-kr-v2/?utm_source=p_search&utm_medium=naver_ppc&utm_campaign={KR_core_study-consult_contact}&utm_term=%EB%AF%B8%EA%B5%AD%EC%9C%A0%ED%95%99%EC%BB%A8%EC%84%A4%ED%8C%85&n_media=122875&n_query=%EB%AF%B8%EA%B5%AD%EC%9C%A0%ED%95%99%EC%BB%A8%EC%84%A4%ED%8C%85&n_rank=1&n_ad_group=grp-a001-01-000000052323642&n_ad=nad-a001-01-000000403727861&n_keyword_id=nkw-a001-01-000007327679236&n_keyword=%EB%AF%B8%EA%B5%AD%EC%9C%A0%ED%95%99%EC%BB%A8%EC%84%A4%ED%8C%85&n_campaign_type=1&n_ad_group_type=1&n_match=1&NaPm=ct%3Dme83cldv%7Cci%3DERcdb719e7%2D773b%2D11f0%2Db63e%2D863fecb95967%7Ctr%3Dsa%7Chk%3D87732f298b77645f4eac8d5767b26e19f536370c%7Cnacn%3DefLiFwCanlu6D",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "10",
+    "name": "원아카데미",
+    "location": "서울특별시 강남구 압구정로42길 13",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동"
+    ],
+    "contact": {
+      "phone": "02-501-5590",
+      "email": "oneacademy.korea@gmail.com",
+      "website": "https://www.oneacademykorea.com/",
+      "instagram": "",
+      "blog": "https://blog.naver.com/oneacademy_korea",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "11",
+    "name": "앤디이즈컨설팅",
+    "location": "서울시 강남구 도산대로145 인우빌딩 1202호",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "GPA 관리",
+      "대회",
+      "봉사활동"
+    ],
+    "contact": {
+      "phone": "02 541 2464",
+      "email": "",
+      "website": "https://www.andyprep.com/consulting?utm_source=chatgpt.com",
+      "instagram": "",
+      "blog": "",
+      "youtube": "https://www.youtube.com/user/andyprep1"
+    },
+    "notes": ""
+  },
+  {
+    "id": "12",
+    "name": "팀랩컨설팅",
+    "location": "서울 송파구 올림픽로 35길 137, 한국광고문화회관 13층 3호",
+    "specialties": [
+      "대입 컨설팅",
+      "시험대비",
+      "EC"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "연구활동",
+      "인턴십",
+      "봉사활동",
+      "대회",
+      "GPA 관리",
+      "SAT",
+      "AP",
+      "STEM"
+    ],
+    "contact": {
+      "phone": "02-739-2891",
+      "email": "",
+      "website": "https://timlab-consulting.com/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": "프로그램 설명 웹사이트/국대모 카페에 잘 되어 있음\nhttps://cafe.naver.com/tatoobbc/93529"
+  },
+  {
+    "id": "13",
+    "name": "더반포유학그룹",
+    "location": "서울 서초구 반포대로 291 5층 525호",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동"
+    ],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://thebanpogroup.com/undergraduate-consulting",
+      "instagram": "",
+      "blog": "",
+      "youtube": "https://www.youtube.com/channel/UC5fXwOD5r_PRFPszFjGjyhA/about"
+    },
+    "notes": ""
+  },
+  {
+    "id": "14",
+    "name": "청담엘유학원",
+    "location": "강남구 논현로 320",
+    "specialties": [
+      "조기유학",
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "대외활동",
+      "GPA 관리",
+      "SAT",
+      "AP",
+      "TOEFL",
+      "메디컬",
+      "인턴십"
+    ],
+    "contact": {
+      "phone": "02-557-6741",
+      "email": "kp71@naver.com​",
+      "website": "https://luhak.com/",
+      "instagram": "",
+      "blog": "",
+      "youtube": "https://www.youtube.com/@luhak1429/featured"
+    },
+    "notes": ""
+  },
+  {
+    "id": "15",
+    "name": "위더엘리트",
+    "location": "서울특별시 강남구 테헤란로 507 5층 109호",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "SAT",
+      "ACT",
+      "AP",
+      "A-Level",
+      "TOEFL",
+      "IELTS",
+      "대외활동",
+      "봉사활동",
+      "연구활동",
+      "GPA 관리",
+      "대회",
+      "STEM"
+    ],
+    "contact": {
+      "phone": "02-565-3430",
+      "email": "support@wteconsulting.com",
+      "website": "https://wteprep.co.kr/default/",
+      "instagram": "",
+      "blog": "https://blog.naver.com/wteprep",
+      "youtube": ""
+    },
+    "notes": "프로그램 설명 블로그에 잘 되어 있음"
+  },
+  {
+    "id": "16",
+    "name": "나무컨설팅",
+    "location": "서울특별시 강남구 도산대로 171 8층",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "GPA 관리",
+      "SAT",
+      "TOEFL",
+      "대외활동",
+      "대회",
+      "봉사활동"
+    ],
+    "contact": {
+      "phone": "1544-7746",
+      "email": "consulting@namugrp.com",
+      "website": "https://namuprep.com/theme/theme02/landing/landing02.php?n_media=27758&n_query=%EC%95%84%EC%9D%B4%EB%B9%84%EB%A6%AC%EA%B7%B8%EC%BB%A8%EC%84%A4%ED%8C%85&n_rank=1&n_ad_group=grp-a001-01-000000047259617&n_ad=nad-a001-01-000000345787375&n_keyword_id=nkw-a001-01-000006838389497&n_keyword=%EC%95%84%EC%9D%B4%EB%B9%84%EB%A6%AC%EA%B7%B8%EC%BB%A8%EC%84%A4%ED%8C%85&n_campaign_type=1&n_ad_group_type=1&n_match=1&NaPm=ct%3Dme83xtsk%7Cci%3DER1c33cdf9%2D773e%2D11f0%2D8ee1%2Dbe05b26f67f2%7Ctr%3Dsa%7Chk%3D7861a6c1e104dc4bc8fe12451ed0183f6607bcea%7Cnacn%3DEfsQCYBtVLuCB",
+      "instagram": "",
+      "blog": "https://blog.naver.com/namuconsulting",
+      "youtube": "https://www.youtube.com/channel/UCQatVRPOLiUAp_YM_ifGNHg"
+    },
+    "notes": ""
+  },
+  {
+    "id": "17",
+    "name": "프레스티지컨설팅",
+    "location": "서울시 강남대로 96길 20, 혜진빌딩 4층",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "SAT",
+      "TOEFL",
+      "AP",
+      "ACT",
+      "IELTS",
+      "대외활동",
+      "인턴십",
+      "에세이 작성",
+      "추천서 관리",
+      "인터뷰 준비"
+    ],
+    "contact": {
+      "phone": "02.558.7445    ",
+      "email": "info@prestigeacademic.com",
+      "website": "http://prestigeacademic.com/index.php",
+      "instagram": "https://www.instagram.com/prestige_ins/",
+      "blog": "https://www.youtube.com/redirect?event=channel_description&redir_token=QUFFLUhqbUlmTUNRZjgwS003VU9rYmZTaDU2M3g3MUxfQXxBQ3Jtc0trbkFLUUczbl9XdXlKZGI0ak8ydkhpMGxGcTVqMGJjQ1NodnE3NEcxbHF3SU41WDI4WFd1cmhHUFlrVk1UanpGc09wdEFuSFQ1ZXhpaU52WTR5Q1hiUHlEaGROeXBVQ09RZlhrX3ZEcU84UWNObFFhSQ&q=https%3A%2F%2Fblog.naver.com%2Fprestigei",
+      "youtube": "https://www.youtube.com/@%ED%94%84%EB%A0%88%EC%8A%A4%ED%8B%B0%EC%A7%80consulting"
+    },
+    "notes": ""
+  },
+  {
+    "id": "18",
+    "name": "리나에듀",
+    "location": "서울 강남구 강남대로 364, 미왕빌딩 (강남역 신분당선 4번출구)",
+    "specialties": [
+      "대입 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "GPA 관리",
+      "에세이 작성",
+      "추천서 관리",
+      "대외활동",
+      "SAT",
+      "ACT",
+      "AP",
+      "IB",
+      "TOEFL",
+      "IELTS",
+      "Duolingo",
+      "대회",
+      "인터뷰 준비"
+    ],
+    "contact": {
+      "phone": "050-6735-5809",
+      "email": "linaedu@linaeducation.com",
+      "website": "https://www.linaeducation.com/university.php",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "19",
+    "name": "헤스티아컨설팅 (에듀아고라학원)",
+    "location": "서울시 강남구 강남대로 8 우연빌딩 3층, 4층, 6층",
+    "specialties": [
+      "EC 컨설팅"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "SAT",
+      "TOEFL",
+      "AP",
+      "대외활동",
+      "STEM",
+      "인턴십",
+      "연구활동",
+      "아트 컨설팅",
+      "로스쿨",
+      "대회",
+      "에세이 작성"
+    ],
+    "contact": {
+      "phone": "02-2039-9242",
+      "email": "",
+      "website": "https://hestia-ec.com/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": "에듀아고라학원의 한 branch로 보임\nAP/IB 시험대비 학원 보유"
+  },
+  {
+    "id": "20",
+    "name": "아카데미프렙",
+    "location": "서울특별시 강남구 강남대로 84길 23, 한라 클래식 502호 & 503호",
+    "specialties": [],
+    "tags": [
+      "집중 컨설팅",
+      "SAT",
+      "ACT",
+      "AP",
+      "TOEFL",
+      "대외활동",
+      "에세이 작성",
+      "STEM",
+      "대회",
+      "메디컬"
+    ],
+    "contact": {
+      "phone": "02-3482-6262",
+      "email": "help@uhakne.com",
+      "website": "https://academyprep.kr/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "21",
+    "name": "하베스트아카데미",
+    "location": "서울특별시 양천구 목동로 19길 11, 4층 252호",
+    "specialties": [],
+    "tags": [
+      "집중 컨설팅",
+      "대외활동",
+      "에세이 작성",
+      "인턴십",
+      "연구활동"
+    ],
+    "contact": {
+      "phone": "02-6954-2055",
+      "email": "contact@harvestacademy.kr",
+      "website": "https://harvestacademy.kr/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "22",
+    "name": "감자유학",
+    "location": "서울특별시 서초구 강남대로65길 1 10층(지오다노 10층 효봉빌딩",
+    "specialties": [
+      "유학"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://gamjauhak.com/new_guniversity/",
+      "instagram": "",
+      "blog": "",
+      "youtube": "https://www.youtube.com/channel/UCx7SV4ZjqJcC24nxmzHldbw?view_as=subscriber"
+    },
+    "notes": "국제학교 학생들 대상 X, 해외 전문대나 커뮤니티 컬리지 통해 주립대 편입학하는 루트가 많은 듯"
+  },
+  {
+    "id": "23",
+    "name": "해커스유학컨설팅",
+    "location": "서울시 서초구 강남대로 61길 23, 1층 (현대성우주상복합아파트) 본관 유학상담실",
+    "specialties": [
+      "어학",
+      "유학",
+      "자격증"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.hackersuhak.com/",
+      "instagram": "https://www.instagram.com/hackersenglish/",
+      "blog": "https://blog.naver.com/hactoefl",
+      "youtube": "https://www.youtube.com/channel/UCYybN6xbo2rtdb7XGqYK_-A"
+    },
+    "notes": ""
+  },
+  {
+    "id": "24",
+    "name": "해외유학공사",
+    "location": "서울시 강남구 논현로 829 3층",
+    "specialties": [
+      "어학",
+      "유학",
+      "비자"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.uhakkorea.com/index.html",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "25",
+    "name": "예스유학",
+    "location": "서울특별시 강남구 논현로 507 예스유학 10층",
+    "specialties": [
+      "유학"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.yesuhak.com/main/",
+      "instagram": "",
+      "blog": "https://blog.naver.com/jimin092",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "26",
+    "name": "해연유학",
+    "location": "서울특별시 서초구 서초대로 서초대로74길 23 908호",
+    "specialties": [
+      "유학"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.youhak.com/",
+      "instagram": "",
+      "blog": "https://www.youhak.com/blogs",
+      "youtube": "https://www.youtube.com/@hy-edu"
+    },
+    "notes": ""
+  },
+  {
+    "id": "27",
+    "name": "AAA유학원",
+    "location": "서울시 강남구 역삼동 814-6 스타플랙스 빌딩 5층",
+    "specialties": [
+      "편입유학",
+      "비자"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.aaauhak.co.kr/",
+      "instagram": "",
+      "blog": "https://blog.naver.com/aaakorea1234",
+      "youtube": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "28",
+    "name": "edm유학센터",
+    "location": "서울 서초구 서초대로78길 22 홍우제2빌딩 6층",
+    "specialties": [
+      "유학"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "",
+      "email": "",
+      "website": "https://www.edmuhak.com/",
+      "instagram": "https://www.instagram.com/edm_uhak",
+      "blog": "https://blog.naver.com/edm_uhakcenter",
+      "youtube": "https://www.youtube.com/channel/UC_dhoTiObOmIgqZ7wDsa4og"
+    },
+    "notes": ""
+  },
+  {
+    "id": "29",
+    "name": "EF코리아",
+    "location": "서울시 강남구 논현로 151길 58 (가로수길)",
+    "specialties": [
+      "어학연수",
+      "유학"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "02-6979-9600",
+      "email": "",
+      "website": "https://www.ef.co.kr/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": "한투증권과 제휴"
+  },
+  {
+    "id": "30",
+    "name": "이민법인 대양",
+    "location": "서울특별시 강남구 애플트리타워 15층",
+    "specialties": [
+      "미국 투자이민",
+      "NIW",
+      "비숙련 취업이민",
+      "미국 법인 설립",
+      "비자/영주권 수속 등"
+    ],
+    "tags": [],
+    "contact": {
+      "phone": "02-556-7779",
+      "email": "",
+      "website": "http://www.dyimin.com/",
+      "instagram": "",
+      "blog": "",
+      "youtube": ""
+    },
+    "notes": "NH투자증권과 제휴"
+  }
+]
