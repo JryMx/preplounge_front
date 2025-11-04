@@ -146,11 +146,8 @@ The profile score (out of 100) is a deterministic, transparent metric that evalu
    - Total capped at 15 points (3-4 strong activities max out score)
 
 5. **Personal Statement (10 points)**
-   - 500+ characters: 10 points (Full, substantial essay)
-   - 300-499 characters: 7 points (Decent length essay)
-   - 150-299 characters: 4 points (Short but present)
-   - 1-149 characters: 2 points (Minimal effort)
-   - 0 characters: 0 points (No essay)
+   - Has essay: 10 points
+   - No essay: 0 points
 
 6. **Recommendation Letters (5 points)**
    - Base points for quantity:

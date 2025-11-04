@@ -196,22 +196,9 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       score += Math.min(ecScore, 15);
     }
     
-    // 5. Personal Statement (10 points) - Based on completion and length
-    if (profileData.personalStatement) {
-      const length = profileData.personalStatement.length;
-      if (length >= 500) {
-        // Full, substantial essay (typical Common App length is 250-650 words)
-        score += 10;
-      } else if (length >= 300) {
-        // Decent length essay
-        score += 7;
-      } else if (length >= 150) {
-        // Short but present
-        score += 4;
-      } else if (length > 0) {
-        // Minimal effort
-        score += 2;
-      }
+    // 5. Personal Statement (10 points) - Simple check if they have it
+    if (profileData.personalStatement && profileData.personalStatement.trim().length > 0) {
+      score += 10;
     }
     
     // 6. Recommendation Letters (5 points)
