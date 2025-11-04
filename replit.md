@@ -73,6 +73,13 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - "Recommended" sort (default) prioritizes schools with official logos and verified data
   - Additional sorting: Alphabetical (A-Z, Z-A), SAT Range (ascending/descending)
   - Full bilingual support with complete language separation
+- **University Comparison**: 
+  - Side-by-side comparison of up to 4 universities
+  - Clean, text-only university search interface sorted alphabetically (no seal images)
+  - Displays up to 100 search results for easy browsing
+  - Compare key metrics: Acceptance rate, tuition, SAT/ACT ranges, GPA, type, size, location
+  - Comprehensive table view with all comparison data
+  - Full bilingual support for all metrics and labels
 - **Housing Support**: Provides real estate listings, currently restricted to California and Georgia, with clear messaging and validation for state-specific searches.
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 

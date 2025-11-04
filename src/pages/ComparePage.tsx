@@ -321,19 +321,19 @@ const ComparePage: React.FC = () => {
               </div>
 
               <div className="compare-search-results">
-                {filteredUniversities.slice(0, 50).map(university => (
+                {filteredUniversities.slice(0, 100).map(university => (
                   <button
                     key={university.id}
                     onClick={() => addUniversity(university)}
                     className="compare-search-item"
+                    style={{
+                      padding: '12px 16px',
+                      textAlign: 'left',
+                      justifyContent: 'flex-start'
+                    }}
                   >
-                    <div className="compare-search-item-image">
-                      <img src={university.image} alt={university.name} />
-                    </div>
-                    <div className="compare-search-item-info">
-                      <div className="compare-search-item-name">
-                        {language === 'ko' ? university.name : university.englishName}
-                      </div>
+                    <div className="compare-search-item-name">
+                      {language === 'ko' ? university.name : university.englishName}
                     </div>
                   </button>
                 ))}
