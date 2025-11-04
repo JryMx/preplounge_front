@@ -698,8 +698,11 @@ const StudentProfilePage: React.FC = () => {
                               type="number"
                               min="0"
                               max="40"
-                              value={activity.hoursPerWeek}
-                              onChange={(e) => updateExtracurricular(activity.id, 'hoursPerWeek', parseInt(e.target.value) || 0)}
+                              value={activity.hoursPerWeek || ''}
+                              onChange={(e) => {
+                                const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                updateExtracurricular(activity.id, 'hoursPerWeek', isNaN(val) ? 0 : val);
+                              }}
                               className="profile-form-input"
                               placeholder="10"
                             />
