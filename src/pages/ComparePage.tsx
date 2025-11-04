@@ -52,11 +52,18 @@ const ComparePage: React.FC = () => {
 
   const filteredUniversities = availableUniversities
     .filter(uni => {
-      const searchLower = searchTerm.toLowerCase();
-      return (
-        uni.name.toLowerCase().includes(searchLower) ||
-        uni.englishName.toLowerCase().includes(searchLower)
-      );
+      if (!searchTerm.trim()) return true;
+      
+      const search = searchTerm.trim();
+      const searchLower = search.toLowerCase();
+      
+      // Check Korean name (case-sensitive for Korean)
+      const koreanMatch = uni.name.includes(search);
+      
+      // Check English name (case-insensitive)
+      const englishMatch = uni.englishName.toLowerCase().includes(searchLower);
+      
+      return koreanMatch || englishMatch;
     })
     .sort((a, b) => {
       // Sort alphabetically by name (respecting current language)
