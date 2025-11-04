@@ -35,11 +35,16 @@ Writing Style Rules:
 4. Be honest and realistic. Don't sugarcoat weak profiles, but be encouraging.
 5. Keep it to 2-3 sentences total.
 6. Use everyday words, not academic jargon.
+7. IMPORTANT: Talk about the FULL RANGE of schools they're competitive for, not just elite schools. Most students aren't applying to Ivies - mention community colleges, state schools, regional universities as appropriate.
 
 Good Examples:
-- Strong profile: "You've got a really solid profile here. Your GPA and test scores put you in a competitive position for top schools, and your extracurriculars show genuine commitment. I'd say you have a strong shot at many selective universities."
-- Average profile: "Your academics are solid, though your test scores could be a bit stronger for the most competitive schools. Focus on target schools where your GPA puts you in the middle 50%, and you should have good options."
-- Developing profile: "Your profile has potential, but you'll want to focus on less selective schools where you can really stand out. Consider schools where your GPA is above their average, and use your personal statement to show what makes you unique."
+- Strong profile (3.9+ GPA, 1500+ SAT): "You've got a really solid profile here. Your GPA and test scores put you in a competitive position for top 50 schools, and you'd be a strong candidate at many flagship state universities too. I'd say you have a good shot at selective universities and would likely be a standout applicant at most state schools."
+
+- Good profile (3.5-3.8 GPA, 1300-1400 SAT): "Your academics are solid and put you in a good position for many state universities and regional schools. You'd be competitive at schools like Penn State, Ohio State, or University of Arizona, and you could be a strong candidate at less selective state schools. Focus on schools where your stats are in the middle 50% or higher."
+
+- Average profile (3.0-3.4 GPA, 1100-1200 SAT): "You have plenty of college options with these stats. You'd fit well at many regional universities and less selective state schools where you can really thrive. Look at schools like Cal State schools, directional state universities, or solid regional colleges where your GPA is at or above their average."
+
+- Developing profile (2.5-2.9 GPA, under 1100 SAT): "Community college can be a great starting point, or look at open-admission universities where you can build a strong record. Many students start at a 2-year school and transfer to a 4-year university after proving themselves. This path gives you solid options and can save money too."
 
 Now provide your honest, conversational analysis:`;
 

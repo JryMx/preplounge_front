@@ -900,7 +900,7 @@ const StudentProfilePage: React.FC = () => {
         <div className="profile-tabs-container">
           <div className="profile-tab-content">
             <h2 className="profile-section-title">
-              {language === 'ko' ? '학교 비교' : 'School Comparison'}
+              {language === 'ko' ? '학교 추천 및 비교' : 'School Recommendations & Comparison'}
             </h2>
           
             <div style={{display: 'flex', gap: '12px', marginBottom: '24px'}}>
@@ -908,7 +908,7 @@ const StudentProfilePage: React.FC = () => {
                 <Search className="h-5 w-5" style={{position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(8, 47, 73, 0.4)'}} />
                 <input
                   type="text"
-                  placeholder={language === 'ko' ? '학교명으로 검색...' : 'Search by school name...'}
+                  placeholder={language === 'ko' ? '특정 학교명으로 검색하기 (선택사항)' : 'Search for a specific school (optional)'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="profile-form-input"
@@ -923,7 +923,94 @@ const StudentProfilePage: React.FC = () => {
               </button>
             </div>
 
-            {showResults && searchResults.length > 0 && (
+            {/* Automatic recommendations when profile exists and no search */}
+            {!searchQuery.trim() && profile && showResults && (
+              <div>
+                <h3 className="profile-form-label" style={{marginBottom: '16px'}}>
+                  {language === 'ko' ? '내 프로필 점수에 맞는 추천 학교' : 'Recommended Schools for Your Profile'}
+                </h3>
+                <p style={{fontSize: '14px', color: '#64748B', marginBottom: '24px'}}>
+                  {language === 'ko' 
+                    ? '안전권: 합격 가능성이 높은 학교 | 적정권: 합격 가능성이 적당한 학교 | 도전권: 합격이 도전적인 학교'
+                    : 'Safety: High chance of admission | Target: Moderate chance | Reach: Competitive admission'}
+                </p>
+                {profile.recommendations
+                  .sort((a, b) => {
+                    const categoryOrder = { safety: 0, target: 1, reach: 2 };
+                    return categoryOrder[a.category] - categoryOrder[b.category];
+                  })
+                  .map(rec => {
+                    const school = [
+                      { id: '1', name: 'Harvard University', ranking: 2, acceptanceRate: 5.4 },
+                      { id: '2', name: 'Stanford University', ranking: 3, acceptanceRate: 4.8 },
+                      { id: '3', name: 'MIT', ranking: 4, acceptanceRate: 7.3 },
+                      { id: '4', name: 'Yale University', ranking: 5, acceptanceRate: 6.9 },
+                      { id: '5', name: 'Princeton University', ranking: 1, acceptanceRate: 5.8 },
+                      { id: '6', name: 'UC Berkeley', ranking: 22, acceptanceRate: 17.5 },
+                      { id: '7', name: 'NYU', ranking: 28, acceptanceRate: 21.1 },
+                      { id: '8', name: 'Penn State', ranking: 63, acceptanceRate: 76.0 },
+                      { id: '9', name: 'University of Michigan', ranking: 21, acceptanceRate: 26.0 },
+                      { id: '10', name: 'UCLA', ranking: 20, acceptanceRate: 14.3 },
+                    ].find(s => s.id === rec.universityId);
+                    
+                    if (!school) return null;
+                    
+                    return (
+                      <div
+                        key={rec.universityId}
+                        className="extracurricular-card"
+                        style={{
+                          borderColor: rec.category === 'safety' ? '#10B981' : rec.category === 'target' ? '#F59E0B' : '#EF4444',
+                          background: rec.category === 'safety' ? '#ECFDF5' : rec.category === 'target' ? '#FFF7ED' : '#FEE2E2',
+                          marginBottom: '16px'
+                        }}
+                      >
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="font-semibold text-gray-900">{school.name}</h4>
+                            <p className="text-sm text-gray-600">
+                              #{school.ranking} • {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptanceRate}%
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                              rec.category === 'safety' ? 'bg-green-100 text-green-800' :
+                              rec.category === 'target' ? 'bg-orange-100 text-orange-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {language === 'ko' ? (
+                                rec.category === 'safety' ? '안전권' : 
+                                rec.category === 'target' ? '적정권' : '도전권'
+                              ) : (
+                                rec.category === 'safety' ? 'Safety' : 
+                                rec.category === 'target' ? 'Target' : 'Reach'
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="grid md:grid-cols-3 gap-4 mt-4 text-sm">
+                          <div>
+                            <span className="font-medium text-gray-600">{language === 'ko' ? '필요 점수:' : 'Required Score:'}</span>
+                            <span className="ml-2 font-bold">{rec.requiredScore}/100</span>
+                          </div>
+                          <div>
+                            <span className="font-medium text-gray-600">{language === 'ko' ? '내 점수:' : 'My Score:'}</span>
+                            <span className="ml-2 font-bold">{currentScore}/100</span>
+                          </div>
+                          <div>
+                            <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성:' : 'Admission Chance:'}</span>
+                            <span className="ml-2 font-bold">{rec.admissionChance}%</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+
+            {/* Search results when user searches */}
+            {searchQuery.trim() && searchResults.length > 0 && (
               <div>
                 <h3 className="profile-form-label" style={{marginBottom: '16px'}}>
                   {language === 'ko' ? '검색 결과' : 'Search Results'}
@@ -998,7 +1085,11 @@ const StudentProfilePage: React.FC = () => {
             {!showResults && (
               <div className="text-center py-8 text-gray-500">
                 <Target className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                <p>프로필을 완성하고 비교 결과를 확인하세요.</p>
+                <p>
+                  {language === 'ko' 
+                    ? '프로필 점수를 먼저 계산하면 맞춤 학교 추천을 받을 수 있습니다.'
+                    : 'Calculate your profile score first to see personalized school recommendations.'}
+                </p>
               </div>
             )}
           </div>
