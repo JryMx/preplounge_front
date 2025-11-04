@@ -49,14 +49,6 @@ const ComparePage: React.FC = () => {
     uni => !selectedUniversities.find(selected => selected.id === uni.id)
   );
 
-  // Helper function to check if university has a seal (not placeholder)
-  const hasSeal = (uni: University) => {
-    return uni.image && (
-      uni.image.includes('wikimedia') || 
-      uni.image.includes('logos-world.net')
-    );
-  };
-
   const filteredUniversities = availableUniversities
     .filter(uni => {
       const searchLower = searchTerm.toLowerCase();
@@ -66,15 +58,10 @@ const ComparePage: React.FC = () => {
       );
     })
     .sort((a, b) => {
-      // Sort universities with seals first
-      const aHasSeal = hasSeal(a);
-      const bHasSeal = hasSeal(b);
-      
-      if (aHasSeal && !bHasSeal) return -1;
-      if (!aHasSeal && bHasSeal) return 1;
-      
-      // If both have seals or both don't, sort alphabetically by English name
-      return a.englishName.localeCompare(b.englishName);
+      // Sort alphabetically by name (respecting current language)
+      const nameA = language === 'ko' ? a.name : a.englishName;
+      const nameB = language === 'ko' ? b.name : b.englishName;
+      return nameA.localeCompare(nameB);
     });
 
   const addUniversity = (university: University) => {
