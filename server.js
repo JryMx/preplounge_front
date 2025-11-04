@@ -60,7 +60,7 @@ Provide your honest, brief analysis now:`;
             content: prompt
           }
         ],
-        temperature: 0.7,
+        temperature: 1,
         max_tokens: 1000,
       }),
     });
