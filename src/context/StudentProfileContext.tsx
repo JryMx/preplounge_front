@@ -120,6 +120,9 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   const calculateProfileScore = (profileData: Partial<StudentProfile>): number => {
     let score = 0;
     
+    // NOTE: This scoring function IGNORES checklist items (applicationComponents)
+    // and ONLY uses actual form inputs for objective, deterministic scoring.
+    
     // ACADEMIC COMPONENTS (65 points total)
     
     // 1. GPA (30 points) - Most important academic metric
@@ -309,18 +312,14 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     return schoolsDatabase.map(school => {
       const comparisonRatio = profile.profileRigorScore / school.requiredScore;
       
-      // Check if user has required application components for this school
-      const hasRequiredComponents = checkRequiredComponents(school.id, profile.applicationComponents);
+      // NOTE: Ignoring checklist items - only using actual form inputs for scoring
       
       let category: 'safety' | 'target' | 'reach';
       let admissionChance: number;
       const strengthenAreas: string[] = [];
 
-      if (!hasRequiredComponents) {
-        category = 'reach';
-        admissionChance = 5; // Very low chance if missing required components
-        strengthenAreas.push('Complete Required Application Components');
-      } else if (comparisonRatio >= 1.1) {
+      // Categorize based on profile score comparison
+      if (comparisonRatio >= 1.1) {
         category = 'safety';
         admissionChance = Math.min(85, 70 + (comparisonRatio - 1) * 50);
       } else if (comparisonRatio >= 0.9) {
@@ -331,18 +330,16 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         admissionChance = Math.max(5, comparisonRatio * 30);
       }
       
-      // Add general improvement suggestions if not already marked as unlikely
-      if (hasRequiredComponents) {
-        if (profile.gpa < 3.7) strengthenAreas.push('GPA');
-        if ((profile.satEBRW + profile.satMath) < 1400 && profile.actScore < 30) {
-          strengthenAreas.push('Standardized Test Scores');
-        }
-        if (profile.extracurriculars.length < 3) {
-          strengthenAreas.push('Extracurricular Activities');
-        }
-        if (!profile.personalStatement || profile.personalStatement.length < 300) {
-          strengthenAreas.push('Personal Statement');
-        }
+      // Add improvement suggestions based on actual data
+      if (profile.gpa < 3.7) strengthenAreas.push('GPA');
+      if ((profile.satEBRW + profile.satMath) < 1400 && profile.actScore < 30) {
+        strengthenAreas.push('Standardized Test Scores');
+      }
+      if (profile.extracurriculars.length < 3) {
+        strengthenAreas.push('Extracurricular Activities');
+      }
+      if (!profile.personalStatement || profile.personalStatement.length < 300) {
+        strengthenAreas.push('Personal Statement');
       }
 
       return {
@@ -354,26 +351,6 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         comparisonRatio: Math.round(comparisonRatio * 100) / 100,
       };
     });
-  };
-
-  // Function to check if user has required application components for a specific school
-  const checkRequiredComponents = (schoolId: string, components: ApplicationComponents): boolean => {
-    // Define requirements for each school (this would typically come from a database)
-    const schoolRequirements: { [key: string]: (keyof ApplicationComponents)[] } = {
-      '1': ['secondarySchoolGPA', 'secondarySchoolRecord', 'recommendations', 'essay', 'testScores'], // Harvard
-      '2': ['secondarySchoolGPA', 'secondarySchoolRecord', 'recommendations', 'essay', 'testScores'], // Stanford
-      '3': ['secondarySchoolGPA', 'secondarySchoolRecord', 'recommendations', 'essay', 'testScores'], // MIT
-      '4': ['secondarySchoolGPA', 'secondarySchoolRecord', 'testScores'], // UC Berkeley
-      '5': ['secondarySchoolGPA', 'secondarySchoolRecord', 'recommendations', 'essay', 'testScores'], // NYU
-      '6': ['secondarySchoolGPA', 'secondarySchoolRecord'], // Penn State
-      '7': ['secondarySchoolGPA', 'secondarySchoolRecord', 'recommendations', 'testScores'], // University of Michigan
-      '8': ['secondarySchoolGPA', 'secondarySchoolRecord', 'testScores'], // UCLA
-      '9': ['secondarySchoolGPA', 'secondarySchoolRecord', 'recommendations', 'essay', 'testScores'], // Yale
-      '10': ['secondarySchoolGPA', 'secondarySchoolRecord', 'recommendations', 'essay', 'testScores'], // Princeton
-    };
-    
-    const requirements = schoolRequirements[schoolId] || [];
-    return requirements.every(requirement => components[requirement]);
   };
 
   const searchSchools = (query: string): SchoolSearchResult[] => {

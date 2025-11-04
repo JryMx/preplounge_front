@@ -92,6 +92,8 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 
 ## Profile Score Calculation Methodology
 
+**Important: Checklist items are IGNORED for scoring. Only actual form inputs count.**
+
 The profile score (out of 100) is a deterministic, transparent metric that evaluates college application competitiveness. The same inputs always produce the same output.
 
 ### Scoring Breakdown
