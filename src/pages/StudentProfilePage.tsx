@@ -30,6 +30,7 @@ const StudentProfilePage: React.FC = () => {
 
   const [academicData, setAcademicData] = useState({
     gpa: profile?.gpa?.toString() || '',
+    highSchoolType: '',
     standardizedTest: profile?.satEBRW && profile?.satMath ? 'SAT' : profile?.actScore ? 'ACT' : '',
     satEBRW: profile?.satEBRW?.toString() || '',
     satMath: profile?.satMath?.toString() || '',
