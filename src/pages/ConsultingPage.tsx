@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { MapPin, Phone, Mail, Search, Globe, Instagram, FileText } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import consultingCompaniesData from '../data/consultingCompanies.json';
@@ -28,6 +28,7 @@ const ConsultingPage: React.FC = () => {
   const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const allTags = useMemo(() => {
     const tagSet = new Set<string>();
@@ -75,6 +76,32 @@ const ConsultingPage: React.FC = () => {
     setSearchTerm('');
     setSelectedTags([]);
   };
+
+  // Reset visible count when filters change
+  useEffect(() => {
+    setVisibleCount(10);
+  }, [searchTerm, selectedTags]);
+
+  // Infinite scroll handler
+  const handleScroll = useCallback(() => {
+    if (visibleCount >= filteredCompanies.length) return;
+
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const bottomPosition = document.documentElement.scrollHeight - 300;
+
+    if (scrollPosition >= bottomPosition) {
+      setVisibleCount(prev => Math.min(prev + 10, filteredCompanies.length));
+    }
+  }, [visibleCount, filteredCompanies.length]);
+
+  // Add scroll event listener
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const visibleCompanies = filteredCompanies.slice(0, visibleCount);
+  const allDisplayed = visibleCount >= filteredCompanies.length;
 
   return (
     <div className="consulting-page-container">
@@ -154,12 +181,12 @@ const ConsultingPage: React.FC = () => {
 
         <div className="consulting-results-info">
           {language === 'ko' 
-            ? `전체 ${consultingCompanies.length}개 중 ${filteredCompanies.length}개의 컨설팅 프로그램을 표시하고 있습니다`
-            : `Showing ${filteredCompanies.length} of ${consultingCompanies.length} consulting programs`}
+            ? `전체 ${consultingCompanies.length}개 중 ${Math.min(visibleCount, filteredCompanies.length)}개의 컨설팅 프로그램을 표시하고 있습니다`
+            : `Showing ${Math.min(visibleCount, filteredCompanies.length)} of ${consultingCompanies.length} consulting programs`}
         </div>
 
         <div className="consulting-programs-list">
-          {filteredCompanies.map(company => (
+          {visibleCompanies.map(company => (
             <div
               key={company.id}
               className="consulting-program-card"
@@ -268,6 +295,16 @@ const ConsultingPage: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {allDisplayed && filteredCompanies.length > 0 && (
+          <div className="consulting-all-displayed">
+            <p className="consulting-all-displayed-text">
+              {language === 'ko' 
+                ? '모든 컨설팅 프로그램을 표시했습니다'
+                : 'All consulting programs displayed'}
+            </p>
+          </div>
+        )}
 
         {filteredCompanies.length === 0 && (
           <div className="consulting-empty-state">
