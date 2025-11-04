@@ -280,7 +280,8 @@ const StudentProfilePage: React.FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '12px',
-                    color: '#082F49'
+                    color: '#082F49',
+                    width: '100%'
                   }}>
                     <Loader2 className="h-5 w-5 animate-spin" style={{color: '#FACC15'}} />
                     <span style={{fontSize: '14px'}}>
