@@ -262,17 +262,20 @@ const StudentProfilePage: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to generate analysis');
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.message || 'Failed to generate analysis';
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
       setAiAnalysis(data.analysis);
     } catch (error) {
       console.error('Error generating analysis:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       setAnalysisError(
         language === 'ko'
-          ? '분석 생성 중 오류가 발생했습니다.'
-          : 'An error occurred while generating the analysis.'
+          ? '분석 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+          : `An error occurred while generating the analysis. ${errorMessage.includes('timeout') ? 'The request timed out. Please try again.' : 'Please try again later.'}`
       );
     } finally {
       setIsAnalyzing(false);

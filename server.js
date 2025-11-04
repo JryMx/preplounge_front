@@ -53,7 +53,10 @@ Now provide your honest, conversational analysis:`;
       throw new Error('OPEN_AI_KEY environment variable is not set');
     }
 
-    // Call OpenAI-compatible API
+    // Call OpenAI-compatible API with timeout
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    
     const apiResponse = await fetch('https://llm.signalplanner.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -71,7 +74,10 @@ Now provide your honest, conversational analysis:`;
         temperature: 1,
         max_tokens: 1000,
       }),
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeout);
 
     if (!apiResponse.ok) {
       const errorData = await apiResponse.text();
@@ -80,12 +86,27 @@ Now provide your honest, conversational analysis:`;
     }
 
     const data = await apiResponse.json();
-    const analysis = data.choices[0].message.content;
+    console.log('AI API Response:', JSON.stringify(data, null, 2));
+    
+    const analysis = data.choices?.[0]?.message?.content || '';
+    
+    if (!analysis) {
+      console.error('Empty analysis received from API. Full response:', data);
+    }
     
     res.json({ analysis });
 
   } catch (error) {
     console.error('Error analyzing profile:', error);
+    
+    // Check if it was a timeout
+    if (error.name === 'AbortError') {
+      return res.status(504).json({ 
+        error: 'Request timeout',
+        message: 'The AI analysis request took too long. Please try again.' 
+      });
+    }
+    
     res.status(500).json({ 
       error: 'Failed to analyze profile',
       message: error.message 
