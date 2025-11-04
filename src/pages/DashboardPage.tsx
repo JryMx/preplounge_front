@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Target, TrendingUp, AlertCircle, BookOpen, Users, Award, ArrowRight, BarChart3 } from 'lucide-react';
 import { useStudentProfile } from '../context/StudentProfileContext';
@@ -6,20 +6,35 @@ import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import './dashboard-page.css';
 
-// Mock university data for recommendations
-const universityData = {
-  '1': { name: 'Harvard University', ranking: 2, acceptanceRate: 5.4, image: 'https://images.pexels.com/photos/207684/pexels-photo-207684.jpeg?auto=compress&cs=tinysrgb&w=400' },
-  '2': { name: 'Stanford University', ranking: 3, acceptanceRate: 4.8, image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400' },
-  '3': { name: 'MIT', ranking: 4, acceptanceRate: 7.3, image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400' },
-  '4': { name: 'UC Berkeley', ranking: 22, acceptanceRate: 17.5, image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400' },
-  '5': { name: 'NYU', ranking: 28, acceptanceRate: 21.1, image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400' },
-  '6': { name: 'Penn State', ranking: 63, acceptanceRate: 76.0, image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=400' },
-};
+interface University {
+  id: string;
+  name: string;
+  name_ko?: string;
+  state?: string;
+  acceptance_rate?: number;
+  logo_url?: string;
+}
 
 const DashboardPage: React.FC = () => {
   const { profile, getRecommendations } = useStudentProfile();
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [universities, setUniversities] = useState<Record<string, University>>({});
+
+  // Load university data
+  useEffect(() => {
+    import('../data/universities.json')
+      .then((data) => {
+        const uniMap: Record<string, University> = {};
+        data.default.forEach((uni: University) => {
+          uniMap[uni.id] = uni;
+        });
+        setUniversities(uniMap);
+      })
+      .catch((error) => {
+        console.error('Failed to load universities:', error);
+      });
+  }, []);
 
   // Calculate total SAT score
   const getSatScore = () => {
@@ -134,16 +149,25 @@ const DashboardPage: React.FC = () => {
                 <span className="dashboard-category-badge" style={{ background: '#DCFCE7', color: '#10B981' }}>{t('dashboard.badge.high')}</span>
               </div>
               <div className="dashboard-schools-list">
-                {safetySchools.map(rec => {
-                  const uni = universityData[rec.universityId as keyof typeof universityData];
+                {safetySchools.slice(0, 3).map(rec => {
+                  const uni = universities[rec.universityId];
+                  if (!uni) return null;
+                  
+                  const displayName = language === 'ko' && uni.name_ko ? uni.name_ko : uni.name;
+                  
                   return (
                     <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#F0FDF4', borderColor: '#BBF7D0' }}>
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
-                          <img src={uni.image} alt={uni.name} className="dashboard-school-image" />
+                          {uni.logo_url && (
+                            <img src={uni.logo_url} alt={displayName} className="dashboard-school-image" />
+                          )}
                           <div className="dashboard-school-info">
-                            <h4 className="dashboard-school-name">{uni.name}</h4>
-                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% {t('dashboard.school.acceptance')}</p>
+                            <h4 className="dashboard-school-name">{displayName}</h4>
+                            <p className="dashboard-school-meta">
+                              {uni.state || ''} 
+                              {uni.acceptance_rate && ` • ${uni.acceptance_rate}% ${t('dashboard.school.acceptance')}`}
+                            </p>
                           </div>
                         </div>
                         <div className="dashboard-school-right">
@@ -166,16 +190,25 @@ const DashboardPage: React.FC = () => {
                 <span className="dashboard-category-badge" style={{ background: '#FFFBEB', color: '#F59E0B' }}>{t('dashboard.badge.suitable')}</span>
               </div>
               <div className="dashboard-schools-list">
-                {targetSchools.map(rec => {
-                  const uni = universityData[rec.universityId as keyof typeof universityData];
+                {targetSchools.slice(0, 3).map(rec => {
+                  const uni = universities[rec.universityId];
+                  if (!uni) return null;
+                  
+                  const displayName = language === 'ko' && uni.name_ko ? uni.name_ko : uni.name;
+                  
                   return (
                     <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#FFFBEB', borderColor: '#FACC15' }}>
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
-                          <img src={uni.image} alt={uni.name} className="dashboard-school-image" />
+                          {uni.logo_url && (
+                            <img src={uni.logo_url} alt={displayName} className="dashboard-school-image" />
+                          )}
                           <div className="dashboard-school-info">
-                            <h4 className="dashboard-school-name">{uni.name}</h4>
-                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% {t('dashboard.school.acceptance')}</p>
+                            <h4 className="dashboard-school-name">{displayName}</h4>
+                            <p className="dashboard-school-meta">
+                              {uni.state || ''} 
+                              {uni.acceptance_rate && ` • ${uni.acceptance_rate}% ${t('dashboard.school.acceptance')}`}
+                            </p>
                           </div>
                         </div>
                         <div className="dashboard-school-right">
@@ -198,16 +231,25 @@ const DashboardPage: React.FC = () => {
                 <span className="dashboard-category-badge" style={{ background: '#DBEAFE', color: '#3B82F6' }}>{t('dashboard.badge.challenge')}</span>
               </div>
               <div className="dashboard-schools-list">
-                {reachSchools.map(rec => {
-                  const uni = universityData[rec.universityId as keyof typeof universityData];
+                {reachSchools.slice(0, 3).map(rec => {
+                  const uni = universities[rec.universityId];
+                  if (!uni) return null;
+                  
+                  const displayName = language === 'ko' && uni.name_ko ? uni.name_ko : uni.name;
+                  
                   return (
                     <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#EFF6FF', borderColor: '#93C5FD' }}>
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
-                          <img src={uni.image} alt={uni.name} className="dashboard-school-image" />
+                          {uni.logo_url && (
+                            <img src={uni.logo_url} alt={displayName} className="dashboard-school-image" />
+                          )}
                           <div className="dashboard-school-info">
-                            <h4 className="dashboard-school-name">{uni.name}</h4>
-                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% {t('dashboard.school.acceptance')}</p>
+                            <h4 className="dashboard-school-name">{displayName}</h4>
+                            <p className="dashboard-school-meta">
+                              {uni.state || ''} 
+                              {uni.acceptance_rate && ` • ${uni.acceptance_rate}% ${t('dashboard.school.acceptance')}`}
+                            </p>
                             {rec.strengthenAreas.length > 0 && (
                               <div className="dashboard-school-warning" style={{ color: '#F59E0B' }}>
                                 <AlertCircle className="h-4 w-4" />
