@@ -54,6 +54,46 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const handleGpaChange = (value: string) => {
+    if (value) {
+      const numValue = parseFloat(value);
+      if (numValue < 0 || numValue > 4.0) {
+        return;
+      }
+    }
+    setGpa(value);
+  };
+
+  const handleSatMathChange = (value: string) => {
+    if (value) {
+      const numValue = parseInt(value);
+      if (numValue < 200 || numValue > 800) {
+        return;
+      }
+    }
+    setSatMath(value);
+  };
+
+  const handleSatEBRWChange = (value: string) => {
+    if (value) {
+      const numValue = parseInt(value);
+      if (numValue < 200 || numValue > 800) {
+        return;
+      }
+    }
+    setSatEBRW(value);
+  };
+
+  const handleActChange = (value: string) => {
+    if (value) {
+      const numValue = parseInt(value);
+      if (numValue < 1 || numValue > 36) {
+        return;
+      }
+    }
+    setActScore(value);
+  };
+
   const fetchAnalysis = async () => {
     if (!gpa) return;
     
@@ -207,11 +247,14 @@ const HomePage: React.FC = () => {
                   min="0"
                   max="4.0"
                   value={gpa}
-                  onChange={(e) => setGpa(e.target.value)}
+                  onChange={(e) => handleGpaChange(e.target.value)}
                   className="profile-calculator-input"
                   placeholder="3.8"
                   data-testid="input-gpa-home"
                 />
+                <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                  {language === 'ko' ? '0.0 - 4.0 범위로 입력하세요' : 'Enter a value between 0.0 and 4.0'}
+                </p>
               </div>
 
               <div className="profile-calculator-field">
@@ -249,11 +292,14 @@ const HomePage: React.FC = () => {
                       min="200"
                       max="800"
                       value={satMath}
-                      onChange={(e) => setSatMath(e.target.value)}
+                      onChange={(e) => handleSatMathChange(e.target.value)}
                       className="profile-calculator-input"
                       placeholder="720"
                       data-testid="input-sat-math-home"
                     />
+                    <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                      {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
+                    </p>
                   </div>
 
                   <div className="profile-calculator-field">
@@ -265,11 +311,14 @@ const HomePage: React.FC = () => {
                       min="200"
                       max="800"
                       value={satEBRW}
-                      onChange={(e) => setSatEBRW(e.target.value)}
+                      onChange={(e) => handleSatEBRWChange(e.target.value)}
                       className="profile-calculator-input"
                       placeholder="730"
                       data-testid="input-sat-ebrw-home"
                     />
+                    <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                      {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
+                    </p>
                   </div>
                 </>
               ) : (
@@ -282,11 +331,14 @@ const HomePage: React.FC = () => {
                     min="1"
                     max="36"
                     value={actScore}
-                    onChange={(e) => setActScore(e.target.value)}
+                    onChange={(e) => handleActChange(e.target.value)}
                     className="profile-calculator-input"
                     placeholder="30"
                     data-testid="input-act-home"
                   />
+                  <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                    {language === 'ko' ? '1 - 36 범위로 입력하세요' : 'Enter a value between 1 and 36'}
+                  </p>
                 </div>
               )}
 
