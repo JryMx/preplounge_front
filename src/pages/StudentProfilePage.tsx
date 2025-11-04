@@ -1006,6 +1006,7 @@ const StudentProfilePage: React.FC = () => {
           <div className="profile-actions" style={{padding: '0 32px 32px'}}>
             <button
               onClick={handleSaveProfile}
+              disabled={!academicData.gpa || parseFloat(academicData.gpa) === 0}
               className="profile-btn-primary" style={{width: '100%'}}
             >
               <Calculator className="h-5 w-5" />
