@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList, Sparkles, Loader2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList, Loader2 } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
 import { useLanguage } from '../context/LanguageContext';
 import './student-profile-page.css';
@@ -8,6 +8,7 @@ const StudentProfilePage: React.FC = () => {
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
   const { language } = useLanguage();
 
+  const profileScoreRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<'academic' | 'non-academic'>('academic');
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
@@ -113,7 +114,7 @@ const StudentProfilePage: React.FC = () => {
     setRecommendationLetters(prev => prev.filter(letter => letter.id !== id));
   };
 
-  const handleSaveProfile = () => {
+  const handleSaveProfile = async () => {
     const profileData = {
       gpa: parseFloat(academicData.gpa) || 0,
       satEBRW: academicData.standardizedTest === 'SAT' ? parseInt(academicData.satEBRW) || 0 : 0,
@@ -136,9 +137,13 @@ const StudentProfilePage: React.FC = () => {
 
     updateProfile(profileData);
     setShowResults(true);
-  };
-
-  const handleGenerateAnalysis = async () => {
+    
+    // Scroll to profile score section
+    setTimeout(() => {
+      profileScoreRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+    
+    // Generate AI analysis
     setIsAnalyzing(true);
     setAnalysisError('');
     
@@ -166,8 +171,8 @@ const StudentProfilePage: React.FC = () => {
       console.error('Error generating analysis:', error);
       setAnalysisError(
         language === 'ko'
-          ? '분석 생성 중 오류가 발생했습니다. 다시 시도해주세요.'
-          : 'An error occurred while generating the analysis. Please try again.'
+          ? '분석 생성 중 오류가 발생했습니다.'
+          : 'An error occurred while generating the analysis.'
       );
     } finally {
       setIsAnalyzing(false);
@@ -235,7 +240,7 @@ const StudentProfilePage: React.FC = () => {
       <div className="profile-container">
 
         {(profile || Object.values(academicData).some(v => v) || Object.values(nonAcademicData).some(v => v)) && (
-          <div className="profile-calculator-section" style={{marginBottom: '24px', padding: '40px 32px', borderRadius: '16px'}}>
+          <div ref={profileScoreRef} className="profile-calculator-section" style={{marginBottom: '24px', padding: '40px 32px', borderRadius: '16px'}}>
             <div className="profile-calculator-result-no-border" style={{width: '100%', height: '100%', maxWidth: '600px', margin: '0 auto'}}>
               <div className="profile-calculator-result-content">
                 <div className="profile-calculator-score-group">
@@ -262,91 +267,60 @@ const StudentProfilePage: React.FC = () => {
                     currentScore >= 60 ? 'Fair' : 'Needs Improvement'
                   )}
                 </p>
+                
+                {/* AI Analysis Display */}
+                {isAnalyzing && (
+                  <div style={{
+                    marginTop: '24px',
+                    padding: '16px 20px',
+                    backgroundColor: 'rgba(250, 204, 21, 0.1)',
+                    border: '1px solid rgba(250, 204, 21, 0.3)',
+                    borderRadius: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    color: '#082F49'
+                  }}>
+                    <Loader2 className="h-5 w-5 animate-spin" style={{color: '#FACC15'}} />
+                    <span style={{fontSize: '14px'}}>
+                      {language === 'ko' ? '프로필 분석 중...' : 'Analyzing your profile...'}
+                    </span>
+                  </div>
+                )}
+                
+                {aiAnalysis && !isAnalyzing && (
+                  <div style={{
+                    marginTop: '24px',
+                    padding: '20px',
+                    backgroundColor: 'rgba(250, 204, 21, 0.08)',
+                    border: '1px solid rgba(250, 204, 21, 0.2)',
+                    borderRadius: '12px',
+                    fontSize: '14px',
+                    lineHeight: '1.8',
+                    color: '#082F49',
+                    fontWeight: '500'
+                  }}>
+                    {aiAnalysis}
+                  </div>
+                )}
+                
+                {analysisError && !isAnalyzing && (
+                  <div style={{
+                    marginTop: '24px',
+                    padding: '16px 20px',
+                    backgroundColor: '#FEE2E2',
+                    border: '1px solid #FECACA',
+                    borderRadius: '12px',
+                    color: '#991B1B',
+                    fontSize: '14px'
+                  }}>
+                    {analysisError}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         )}
-
-        {/* AI Analysis Section */}
-        <div className="profile-calculator-section" style={{marginBottom: '24px', padding: '32px', borderRadius: '16px'}}>
-          <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px'}}>
-            <Sparkles className="h-6 w-6" style={{color: '#FACC15'}} />
-            <h2 style={{fontSize: '24px', fontWeight: '600', color: '#082F49', margin: 0}}>
-              {language === 'ko' ? 'AI 프로필 분석' : 'AI Profile Analysis'}
-            </h2>
-          </div>
-          
-          <p style={{fontSize: '14px', color: 'rgba(8, 47, 73, 0.7)', marginBottom: '20px'}}>
-            {language === 'ko'
-              ? '프로필을 입력한 후, AI 기반 심층 분석을 받아 강점과 개선 사항을 확인하세요.'
-              : 'After filling in your profile, get an AI-powered in-depth analysis to identify your strengths and areas for improvement.'}
-          </p>
-
-          <button
-            onClick={handleGenerateAnalysis}
-            disabled={isAnalyzing || currentScore === 0}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '12px 24px',
-              backgroundColor: currentScore === 0 ? '#E7E5E4' : '#FACC15',
-              color: '#082F49',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '16px',
-              fontWeight: '600',
-              cursor: currentScore === 0 ? 'not-allowed' : 'pointer',
-              opacity: isAnalyzing ? 0.7 : 1,
-              transition: 'all 0.2s'
-            }}
-          >
-            {isAnalyzing ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                {language === 'ko' ? '분석 중...' : 'Analyzing...'}
-              </>
-            ) : (
-              <>
-                <Sparkles className="h-5 w-5" />
-                {language === 'ko' ? 'AI 분석 생성' : 'Generate AI Analysis'}
-              </>
-            )}
-          </button>
-
-          {analysisError && (
-            <div style={{
-              marginTop: '16px',
-              padding: '12px 16px',
-              backgroundColor: '#FEE2E2',
-              border: '1px solid #FECACA',
-              borderRadius: '8px',
-              color: '#991B1B',
-              fontSize: '14px'
-            }}>
-              {analysisError}
-            </div>
-          )}
-
-          {aiAnalysis && (
-            <div style={{
-              marginTop: '24px',
-              padding: '24px',
-              backgroundColor: '#FFFBEB',
-              border: '1px solid #FDE68A',
-              borderRadius: '12px',
-            }}>
-              <div style={{
-                fontSize: '14px',
-                lineHeight: '1.8',
-                color: '#082F49',
-                whiteSpace: 'pre-wrap'
-              }}>
-                {aiAnalysis}
-              </div>
-            </div>
-          )}
-        </div>
 
         <div className="application-checker-section">
           <div className="application-checker-header">

@@ -40,14 +40,13 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Uses OpenAI-compatible API (gpt-5 model via https://llm.signalplanner.ai)
   - Backend API server (Node.js/Express on port 3001) handles AI requests
   - Requires OPEN_AI_KEY environment variable for authentication
-  - Generates detailed 3-4 paragraph analysis covering:
-    - Academic strengths and areas for improvement
-    - Extracurricular profile assessment
-    - Specific, actionable recommendations
-  - Integrated into Student Profile page (`/student-profile`)
+  - Automatically triggers when user clicks "Calculate Profile Score" button
+  - Generates brief, honest 2-3 sentence assessment of student's profile
+  - Analysis is realistic and personalized - acknowledges both strengths and areas for improvement
+  - Integrated directly into Profile Score section (not a separate section)
+  - Page automatically scrolls to Profile Score section when calculation completes
+  - Displays score, rating, and AI analysis together in one cohesive view
   - Loading states, error handling, and bilingual UI (Korean/English)
-  - Button disabled until profile data is entered
-  - Results displayed in yellow-tinted box matching brand colors
 - **University Profile Pages**: 
   - Detailed profiles for 1,234 unique U.S. universities
   - Quick stats: Acceptance rate, tuition, SAT/ACT ranges, GPA

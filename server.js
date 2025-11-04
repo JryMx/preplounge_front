@@ -12,8 +12,8 @@ app.post('/api/analyze-profile', async (req, res) => {
   try {
     const { academicData, nonAcademicData, extracurriculars, recommendationLetters } = req.body;
 
-    // Build a comprehensive prompt for the LLM
-    const prompt = `You are a college admissions counselor analyzing a student's profile. Provide a detailed, constructive analysis in 3-4 paragraphs.
+    // Build a concise prompt for the LLM
+    const prompt = `You are a college admissions counselor. Analyze this student's profile and provide a brief, honest assessment in 2-3 sentences.
 
 Student Profile:
 - GPA: ${academicData.gpa}/4.0
@@ -22,18 +22,23 @@ Student Profile:
 - ${academicData.standardizedTest === 'SAT' ? `SAT: ${parseInt(academicData.satEBRW) + parseInt(academicData.satMath)}/1600 (EBRW: ${academicData.satEBRW}, Math: ${academicData.satMath})` : ''}
 - ${academicData.standardizedTest === 'ACT' ? `ACT: ${academicData.actScore}/36` : ''}
 - ${academicData.englishProficiencyTest ? `${academicData.englishProficiencyTest}: ${academicData.englishTestScore}` : ''}
+- Personal Statement Quality: ${nonAcademicData.personalStatement || 'Not provided'}
 - Extracurricular Activities: ${extracurriculars.length} activities
 - Recommendation Letters: ${recommendationLetters.length} letters
 - Citizenship: ${nonAcademicData.citizenship}
 - Legacy Status: ${nonAcademicData.legacyStatus ? 'Yes' : 'No'}
 
-Analysis Instructions:
-1. First paragraph: Evaluate academic strengths and areas for improvement
-2. Second paragraph: Assess extracurricular profile and personal development
-3. Third paragraph: Provide specific, actionable recommendations for strengthening the application
-4. Keep it encouraging but realistic
+Instructions:
+1. Be HONEST and REALISTIC - don't inflate weak profiles
+2. For strong profiles (GPA 3.7+, high test scores, good ECs): Acknowledge their competitive standing
+3. For average profiles (GPA 3.0-3.7, moderate scores): Be encouraging but realistic about match schools
+4. For weaker profiles: Be constructive but honest about needing improvement
+5. Keep it to 2-3 sentences maximum
+6. Focus on: academic competitiveness, extracurriculars, and overall college prospects
 
-Provide the analysis now:`;
+Example for strong student: "You've got a strong profile - your GPA and test scores are competitive for the major you chose, and your personal statement is unique and tells a strong story. You're likely to be competitive for many top schools in the United States."
+
+Provide your honest, brief analysis now:`;
 
     // Check if API key is available
     if (!process.env.OPEN_AI_KEY) {
