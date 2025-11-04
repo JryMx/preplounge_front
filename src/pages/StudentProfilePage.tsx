@@ -398,7 +398,7 @@ const StudentProfilePage: React.FC = () => {
               className={`profile-tab-button ${activeTab === 'non-academic' ? 'active' : ''}`}
             >
               <Award className="h-5 w-5" />
-              {language === 'ko' ? '비교과' : 'Extracurricular'}
+              {language === 'ko' ? '비교과 및 에세이' : 'Essay & Extracurricular'}
             </button>
           </div>
 
@@ -571,7 +571,7 @@ const StudentProfilePage: React.FC = () => {
             {activeTab === 'non-academic' && (
               <div>
                 <h2 className="profile-section-title">
-                  {language === 'ko' ? '비교과 정보' : 'Extracurricular Information'}
+                  {language === 'ko' ? '비교과 정보 및 에세이' : 'Essay & Extracurricular Information'}
                 </h2>
 
                 <div className="profile-form-group full-width" style={{marginBottom: '32px'}}>
