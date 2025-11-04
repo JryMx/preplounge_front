@@ -368,12 +368,15 @@ const UniversitiesPage: React.FC = () => {
             <h3 className="universities-empty-title">{t('universities.empty.title')}</h3>
             <p className="universities-empty-text">{t('universities.empty.description')}</p>
             <button
-              onClick={() => setFilters({
-                types: [],
-                sortBy: '',
-                tuitionRange: [0, 70000],
-                satRange: [800, 1600]
-              })}
+              onClick={() => {
+                setSearchTerm('');
+                setFilters({
+                  types: [],
+                  sortBy: '',
+                  tuitionRange: [0, 70000],
+                  satRange: [800, 1600]
+                });
+              }}
               className="universities-filter-button active" style={{marginTop: '16px'}}
             >
               {t('universities.empty.reset')}
