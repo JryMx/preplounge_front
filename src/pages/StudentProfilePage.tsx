@@ -96,10 +96,22 @@ const StudentProfilePage: React.FC = () => {
   );
 
   const handleAcademicChange = (field: string, value: string) => {
+    if (field === 'gpa') {
+      const numValue = parseFloat(value);
+      if (value && (numValue < 0 || numValue > 4.0)) {
+        return;
+      }
+    }
     setAcademicData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleNonAcademicChange = (field: string, value: string | boolean) => {
+    if (field === 'personalStatement' && typeof value === 'string') {
+      const wordCount = value.trim() ? value.trim().split(/\s+/).length : 0;
+      if (wordCount > 650) {
+        return;
+      }
+    }
     setNonAcademicData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -542,6 +554,9 @@ const StudentProfilePage: React.FC = () => {
                       placeholder="3.8"
                       required
                     />
+                    <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                      {language === 'ko' ? '0.0 - 4.0 범위로 입력하세요' : 'Enter a value between 0.0 and 4.0'}
+                    </p>
                   </div>
 
                   <div className="profile-form-group">
@@ -702,9 +717,28 @@ const StudentProfilePage: React.FC = () => {
                     rows={8}
                     placeholder={language === 'ko' ? '자기소개서를 작성하세요...' : 'Write your personal statement...'}
                   />
-                  <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '8px'}}>
-                    {nonAcademicData.personalStatement.length} {language === 'ko' ? '글자' : 'characters'}
-                  </p>
+                  {(() => {
+                    const wordCount = nonAcademicData.personalStatement.trim() 
+                      ? nonAcademicData.personalStatement.trim().split(/\s+/).length 
+                      : 0;
+                    const isNearLimit = wordCount > 600;
+                    const isAtLimit = wordCount >= 650;
+                    return (
+                      <p style={{
+                        fontSize: '12px', 
+                        color: isAtLimit ? '#EF4444' : isNearLimit ? '#F59E0B' : 'rgba(8, 47, 73, 0.6)', 
+                        marginTop: '8px',
+                        fontWeight: isAtLimit ? '600' : '400'
+                      }}>
+                        {wordCount} / 650 {language === 'ko' ? '단어' : 'words'}
+                        {isAtLimit && (
+                          <span style={{marginLeft: '8px'}}>
+                            ({language === 'ko' ? '최대 단어 수 도달' : 'Maximum word limit reached'})
+                          </span>
+                        )}
+                      </p>
+                    );
+                  })()}
                 </div>
 
                 <div className="extracurriculars-section">
