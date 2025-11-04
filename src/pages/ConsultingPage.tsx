@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { MapPin, Phone, Mail, Search, Globe, Instagram, FileText } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import consultingCompaniesData from '../data/consultingCompanies.json';
+import { translateConsulting } from '../utils/consultingTranslations';
 import './consulting-page.css';
 
 interface ConsultingCompany {
@@ -124,7 +125,7 @@ const ConsultingPage: React.FC = () => {
                 onClick={() => toggleTag(tag)}
                 className={`consulting-tag ${selectedTags.includes(tag) ? 'active' : ''}`}
               >
-                <span className="consulting-tag-text">{tag}</span>
+                <span className="consulting-tag-text">{translateConsulting(tag, language)}</span>
               </button>
             ))}
           </div>
@@ -137,7 +138,7 @@ const ConsultingPage: React.FC = () => {
               <div className="consulting-selected-tags-list">
                 {selectedTags.map(tag => (
                   <div key={tag} className="consulting-selected-tag">
-                    <span className="consulting-selected-tag-text">{tag}</span>
+                    <span className="consulting-selected-tag-text">{translateConsulting(tag, language)}</span>
                     <button
                       onClick={() => toggleTag(tag)}
                       className="consulting-selected-tag-remove"
@@ -181,7 +182,7 @@ const ConsultingPage: React.FC = () => {
                     <div className="consulting-specialties-tags">
                       {company.specialties.map(specialty => (
                         <div key={specialty} className="consulting-specialty-tag">
-                          <span className="consulting-specialty-tag-text">{specialty}</span>
+                          <span className="consulting-specialty-tag-text">{translateConsulting(specialty, language)}</span>
                         </div>
                       ))}
                     </div>
@@ -196,7 +197,7 @@ const ConsultingPage: React.FC = () => {
                     <div className="consulting-tags-list">
                       {company.tags.map(tag => (
                         <div key={tag} className="consulting-tag-badge">
-                          <span className="consulting-tag-badge-text">{tag}</span>
+                          <span className="consulting-tag-badge-text">{translateConsulting(tag, language)}</span>
                         </div>
                       ))}
                     </div>
