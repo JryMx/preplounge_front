@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Target, TrendingUp, AlertCircle, BookOpen, Users, Award, ArrowRight, BarChart3 } from 'lucide-react';
 import { useStudentProfile } from '../context/StudentProfileContext';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import './dashboard-page.css';
 
 // Mock university data for recommendations
@@ -18,6 +19,13 @@ const universityData = {
 const DashboardPage: React.FC = () => {
   const { profile, getRecommendations } = useStudentProfile();
   const { user } = useAuth();
+  const { t } = useLanguage();
+
+  // Calculate total SAT score
+  const getSatScore = () => {
+    if (!profile) return 0;
+    return (profile.satEBRW || 0) + (profile.satMath || 0);
+  };
 
   if (!profile || !user) {
     return (
@@ -27,12 +35,12 @@ const DashboardPage: React.FC = () => {
             <div className="dashboard-empty-icon">
               <BarChart3 className="h-10 w-10" style={{ color: '#F59E0B' }} />
             </div>
-            <h2 className="dashboard-empty-title">프로필을 완성해주세요</h2>
+            <h2 className="dashboard-empty-title">{t('dashboard.empty.title')}</h2>
             <p className="dashboard-empty-desc">
-              맞춤형 대학 추천을 보려면 먼저 학업 프로필을 완성해주세요.
+              {t('dashboard.empty.desc')}
             </p>
             <Link to="/student-profile" className="dashboard-empty-button">
-              프로필 분석 시작하기
+              {t('dashboard.empty.button')}
               <ArrowRight className="h-5 w-5" />
             </Link>
           </div>
@@ -47,9 +55,10 @@ const DashboardPage: React.FC = () => {
   const reachSchools = recommendations.filter(r => r.category === 'reach');
 
   const profileStrength = () => {
+    const satScore = getSatScore();
     const factors = [
       profile.gpa >= 3.7,
-      profile.satScore >= 1400 || profile.actScore >= 30,
+      satScore >= 1400 || profile.actScore >= 30,
       profile.extracurriculars.length >= 3,
       profile.leadership.length >= 1,
       profile.awards.length >= 1,
@@ -63,17 +72,17 @@ const DashboardPage: React.FC = () => {
       <div className="dashboard-container">
         <div className="dashboard-header">
           <h1 className="dashboard-welcome">
-            다시 오신 것을 환영합니다, {user.name}님!
+            {t('dashboard.welcome')}, {user.name}!
           </h1>
           <p className="dashboard-subtitle">
-            맞춤형 대학 입학 분석 및 추천 결과입니다.
+            {t('dashboard.subtitle')}
           </p>
         </div>
 
         <div className="dashboard-stats-grid">
           <div className="dashboard-stat-card">
             <div className="dashboard-stat-info">
-              <span className="dashboard-stat-label">프로필 점수</span>
+              <span className="dashboard-stat-label">{t('dashboard.stat.profile')}</span>
               <span className="dashboard-stat-value" style={{ color: '#3B82F6' }}>{profileStrength()}%</span>
             </div>
             <div className="dashboard-stat-icon" style={{ background: '#DBEAFE' }}>
@@ -83,7 +92,7 @@ const DashboardPage: React.FC = () => {
 
           <div className="dashboard-stat-card">
             <div className="dashboard-stat-info">
-              <span className="dashboard-stat-label">GPA</span>
+              <span className="dashboard-stat-label">{t('dashboard.stat.gpa')}</span>
               <span className="dashboard-stat-value" style={{ color: '#10B981' }}>{profile.gpa}</span>
             </div>
             <div className="dashboard-stat-icon" style={{ background: '#DCFCE7' }}>
@@ -93,8 +102,8 @@ const DashboardPage: React.FC = () => {
 
           <div className="dashboard-stat-card">
             <div className="dashboard-stat-info">
-              <span className="dashboard-stat-label">SAT Score</span>
-              <span className="dashboard-stat-value" style={{ color: '#F59E0B' }}>{profile.satScore || 'N/A'}</span>
+              <span className="dashboard-stat-label">{t('dashboard.stat.sat')}</span>
+              <span className="dashboard-stat-value" style={{ color: '#F59E0B' }}>{getSatScore() || t('dashboard.notavailable')}</span>
             </div>
             <div className="dashboard-stat-icon" style={{ background: '#FFFBEB' }}>
               <Target className="h-7 w-7" style={{ color: '#F59E0B' }} />
@@ -103,7 +112,7 @@ const DashboardPage: React.FC = () => {
 
           <div className="dashboard-stat-card">
             <div className="dashboard-stat-info">
-              <span className="dashboard-stat-label">활동</span>
+              <span className="dashboard-stat-label">{t('dashboard.stat.activities')}</span>
               <span className="dashboard-stat-value" style={{ color: '#8B5CF6' }}>{profile.extracurriculars.length}</span>
             </div>
             <div className="dashboard-stat-icon" style={{ background: '#EDE9FE' }}>
@@ -114,15 +123,15 @@ const DashboardPage: React.FC = () => {
 
         <div className="dashboard-main-content">
           <div className="dashboard-recommendations">
-            <h2 className="dashboard-section-title">학교 추천</h2>
+            <h2 className="dashboard-section-title">{t('dashboard.recommendations.title')}</h2>
 
             <div className="dashboard-category">
               <div className="dashboard-category-header">
                 <div className="dashboard-category-icon" style={{ background: '#DCFCE7' }}>
                   <Target className="h-5 w-5" style={{ color: '#10B981' }} />
                 </div>
-                <h3 className="dashboard-category-title">안전권 학교</h3>
-                <span className="dashboard-category-badge" style={{ background: '#DCFCE7', color: '#10B981' }}>합격 가능성 높음</span>
+                <h3 className="dashboard-category-title">{t('dashboard.category.safety')}</h3>
+                <span className="dashboard-category-badge" style={{ background: '#DCFCE7', color: '#10B981' }}>{t('dashboard.badge.high')}</span>
               </div>
               <div className="dashboard-schools-list">
                 {safetySchools.map(rec => {
@@ -134,12 +143,12 @@ const DashboardPage: React.FC = () => {
                           <img src={uni.image} alt={uni.name} className="dashboard-school-image" />
                           <div className="dashboard-school-info">
                             <h4 className="dashboard-school-name">{uni.name}</h4>
-                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% acceptance</p>
+                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% {t('dashboard.school.acceptance')}</p>
                           </div>
                         </div>
                         <div className="dashboard-school-right">
                           <p className="dashboard-school-chance" style={{ color: '#10B981' }}>{rec.admissionChance}%</p>
-                          <p className="dashboard-school-chance-label">합격 가능성</p>
+                          <p className="dashboard-school-chance-label">{t('dashboard.chance')}</p>
                         </div>
                       </div>
                     </div>
@@ -153,8 +162,8 @@ const DashboardPage: React.FC = () => {
                 <div className="dashboard-category-icon" style={{ background: '#FFFBEB' }}>
                   <Target className="h-5 w-5" style={{ color: '#F59E0B' }} />
                 </div>
-                <h3 className="dashboard-category-title">적정권 학교</h3>
-                <span className="dashboard-category-badge" style={{ background: '#FFFBEB', color: '#F59E0B' }}>적합함</span>
+                <h3 className="dashboard-category-title">{t('dashboard.category.target')}</h3>
+                <span className="dashboard-category-badge" style={{ background: '#FFFBEB', color: '#F59E0B' }}>{t('dashboard.badge.suitable')}</span>
               </div>
               <div className="dashboard-schools-list">
                 {targetSchools.map(rec => {
@@ -166,12 +175,12 @@ const DashboardPage: React.FC = () => {
                           <img src={uni.image} alt={uni.name} className="dashboard-school-image" />
                           <div className="dashboard-school-info">
                             <h4 className="dashboard-school-name">{uni.name}</h4>
-                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% acceptance</p>
+                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% {t('dashboard.school.acceptance')}</p>
                           </div>
                         </div>
                         <div className="dashboard-school-right">
                           <p className="dashboard-school-chance" style={{ color: '#F59E0B' }}>{rec.admissionChance}%</p>
-                          <p className="dashboard-school-chance-label">합격 가능성</p>
+                          <p className="dashboard-school-chance-label">{t('dashboard.chance')}</p>
                         </div>
                       </div>
                     </div>
@@ -185,8 +194,8 @@ const DashboardPage: React.FC = () => {
                 <div className="dashboard-category-icon" style={{ background: '#DBEAFE' }}>
                   <TrendingUp className="h-5 w-5" style={{ color: '#3B82F6' }} />
                 </div>
-                <h3 className="dashboard-category-title">도전권 학교</h3>
-                <span className="dashboard-category-badge" style={{ background: '#DBEAFE', color: '#3B82F6' }}>도전 목표</span>
+                <h3 className="dashboard-category-title">{t('dashboard.category.reach')}</h3>
+                <span className="dashboard-category-badge" style={{ background: '#DBEAFE', color: '#3B82F6' }}>{t('dashboard.badge.challenge')}</span>
               </div>
               <div className="dashboard-schools-list">
                 {reachSchools.map(rec => {
@@ -198,18 +207,18 @@ const DashboardPage: React.FC = () => {
                           <img src={uni.image} alt={uni.name} className="dashboard-school-image" />
                           <div className="dashboard-school-info">
                             <h4 className="dashboard-school-name">{uni.name}</h4>
-                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% acceptance</p>
+                            <p className="dashboard-school-meta">#{uni.ranking} • {uni.acceptanceRate}% {t('dashboard.school.acceptance')}</p>
                             {rec.strengthenAreas.length > 0 && (
                               <div className="dashboard-school-warning" style={{ color: '#F59E0B' }}>
                                 <AlertCircle className="h-4 w-4" />
-                                <span>강화 필요: {rec.strengthenAreas.join(', ')}</span>
+                                <span>{t('dashboard.strengthen')}: {rec.strengthenAreas.join(', ')}</span>
                               </div>
                             )}
                           </div>
                         </div>
                         <div className="dashboard-school-right">
                           <p className="dashboard-school-chance" style={{ color: '#3B82F6' }}>{rec.admissionChance}%</p>
-                          <p className="dashboard-school-chance-label">합격 가능성</p>
+                          <p className="dashboard-school-chance-label">{t('dashboard.chance')}</p>
                         </div>
                       </div>
                     </div>
@@ -221,53 +230,53 @@ const DashboardPage: React.FC = () => {
 
           <div className="dashboard-sidebar">
             <div className="dashboard-sidebar-card">
-              <h2 className="dashboard-sidebar-title">프로필 요약</h2>
+              <h2 className="dashboard-sidebar-title">{t('dashboard.profile.title')}</h2>
 
               <div>
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">희망 전공:</span>
-                  <span className="dashboard-profile-value">{profile.intendedMajor || '미정'}</span>
+                  <span className="dashboard-profile-label">{t('dashboard.profile.major')}:</span>
+                  <span className="dashboard-profile-value">{profile.intendedMajor || t('dashboard.profile.undecided')}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">GPA:</span>
+                  <span className="dashboard-profile-label">{t('dashboard.stat.gpa')}:</span>
                   <span className="dashboard-profile-value">{profile.gpa}/4.0</span>
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">SAT:</span>
-                  <span className="dashboard-profile-value">{profile.satScore || '미응시'}</span>
+                  <span className="dashboard-profile-label">{t('dashboard.profile.sat')}:</span>
+                  <span className="dashboard-profile-value">{getSatScore() || t('dashboard.profile.nottaken')}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">ACT:</span>
-                  <span className="dashboard-profile-value">{profile.actScore || '미응시'}</span>
+                  <span className="dashboard-profile-label">{t('dashboard.profile.act')}:</span>
+                  <span className="dashboard-profile-value">{profile.actScore || t('dashboard.profile.nottaken')}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">TOEFL:</span>
-                  <span className="dashboard-profile-value">{profile.toeflScore || '미응시'}</span>
+                  <span className="dashboard-profile-label">{t('dashboard.profile.toefl')}:</span>
+                  <span className="dashboard-profile-value">{profile.toeflScore || t('dashboard.profile.nottaken')}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">AP 과목:</span>
+                  <span className="dashboard-profile-label">{t('dashboard.profile.ap')}:</span>
                   <span className="dashboard-profile-value">{profile.apCourses || 0}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">활동:</span>
+                  <span className="dashboard-profile-label">{t('dashboard.profile.activities')}:</span>
                   <span className="dashboard-profile-value">{profile.extracurriculars.length}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">리더십:</span>
+                  <span className="dashboard-profile-label">{t('dashboard.profile.leadership')}:</span>
                   <span className="dashboard-profile-value">{profile.leadership.length}</span>
                 </div>
               </div>
             </div>
 
             <div className="dashboard-sidebar-card">
-              <h2 className="dashboard-sidebar-title">강화가 필요한 영역</h2>
+              <h2 className="dashboard-sidebar-title">{t('dashboard.improve.title')}</h2>
 
               <div className="dashboard-improvement-list">
                 {reachSchools.length > 0 && reachSchools[0].strengthenAreas.map((area, index) => (
@@ -276,7 +285,7 @@ const DashboardPage: React.FC = () => {
                     <div className="dashboard-improvement-content">
                       <p className="dashboard-improvement-title" style={{ color: '#D97706' }}>{area}</p>
                       <p className="dashboard-improvement-desc" style={{ color: '#D97706' }}>
-                        합격 가능성을 높이기 위해 이 영역을 개선하는 데 집중하세요.
+                        {t('dashboard.improve.desc')}
                       </p>
                     </div>
                   </div>
@@ -287,30 +296,30 @@ const DashboardPage: React.FC = () => {
                     <div className="dashboard-success-icon">
                       <Award className="h-12 w-12" style={{ color: '#10B981' }} />
                     </div>
-                    <p className="dashboard-success-text">훌륭합니다! 모든 영역에서 프로필이 강력해 보입니다.</p>
+                    <p className="dashboard-success-text">{t('dashboard.improve.excellent')}</p>
                   </div>
                 )}
               </div>
 
               <Link to="/consulting" className="dashboard-action-button primary">
-                컨설팅 프로그램 찾기
+                {t('dashboard.improve.findconsulting')}
               </Link>
             </div>
 
             <div className="dashboard-sidebar-card">
-              <h2 className="dashboard-sidebar-title">빠른 실행</h2>
+              <h2 className="dashboard-sidebar-title">{t('dashboard.actions.title')}</h2>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <Link to="/universities" className="dashboard-action-button secondary">
-                  더 많은 대학교 둘러보기
+                  {t('dashboard.actions.browse')}
                 </Link>
 
                 <Link to="/universities/compare" className="dashboard-action-button secondary">
-                  학교 비교하기
+                  {t('dashboard.actions.compare')}
                 </Link>
 
                 <Link to="/student-profile" className="dashboard-action-button secondary">
-                  프로필 업데이트
+                  {t('dashboard.actions.update')}
                 </Link>
               </div>
             </div>
