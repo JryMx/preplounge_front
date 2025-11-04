@@ -284,6 +284,17 @@ const StudentProfilePage: React.FC = () => {
     return name;
   };
 
+  const parseLocation = (location: string): string => {
+    if (!location) return '';
+    
+    // Remove Korean text (in parentheses) when in English mode
+    if (language === 'en') {
+      return location.replace(/\s*\([^)]*[\uAC00-\uD7A3][^)]*\)/g, '').trim();
+    }
+    
+    return location;
+  };
+
   const loadMoreSchools = (category: string) => {
     setVisibleSchools(prev => ({
       ...prev,
@@ -1109,7 +1120,7 @@ const StudentProfilePage: React.FC = () => {
                                 <div style={{ flex: 1 }}>
                                   <h4 className="font-semibold text-gray-900">{parseSchoolName(school.name)}</h4>
                                   <p className="text-sm text-gray-600">
-                                    {school.state && `${school.state}`}
+                                    {school.state && parseLocation(school.state)}
                                   </p>
                                 </div>
                                 <div className="text-right">
