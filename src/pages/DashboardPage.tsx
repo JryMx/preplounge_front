@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Target, TrendingUp, AlertCircle, BookOpen, Users, Award, ArrowRight, BarChart3 } from 'lucide-react';
 import { useStudentProfile } from '../context/StudentProfileContext';
@@ -6,35 +6,10 @@ import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import './dashboard-page.css';
 
-interface University {
-  id: string;
-  name: string;
-  name_ko?: string;
-  state?: string;
-  acceptance_rate?: number;
-  logo_url?: string;
-}
-
 const DashboardPage: React.FC = () => {
   const { profile, getRecommendations } = useStudentProfile();
   const { user } = useAuth();
   const { t, language } = useLanguage();
-  const [universities, setUniversities] = useState<Record<string, University>>({});
-
-  // Load university data
-  useEffect(() => {
-    import('../data/universities.json')
-      .then((data) => {
-        const uniMap: Record<string, University> = {};
-        data.default.forEach((uni: University) => {
-          uniMap[uni.id] = uni;
-        });
-        setUniversities(uniMap);
-      })
-      .catch((error) => {
-        console.error('Failed to load universities:', error);
-      });
-  }, []);
 
   // Calculate total SAT score
   const getSatScore = () => {
@@ -63,6 +38,22 @@ const DashboardPage: React.FC = () => {
       </div>
     );
   }
+
+  // Helper function to parse bilingual text (names and states)
+  const parseBilingualText = (text: string | undefined, lang: string) => {
+    if (!text) return '';
+    
+    // Format: "English Text (Korean Text)"
+    const match = text.match(/^(.+?)\s*\(([^)]+)\)$/);
+    
+    if (match) {
+      const [, englishText, koreanText] = match;
+      return lang === 'ko' ? koreanText.trim() : englishText.trim();
+    }
+    
+    // No parentheses found, return as-is
+    return text;
+  };
 
   const recommendations = getRecommendations();
   const safetySchools = recommendations.filter(r => r.category === 'safety');
@@ -150,24 +141,18 @@ const DashboardPage: React.FC = () => {
               </div>
               <div className="dashboard-schools-list">
                 {safetySchools.slice(0, 3).map(rec => {
-                  const uni = universities[rec.universityId];
-                  if (!uni) return null;
-                  
-                  const displayName = language === 'ko' && uni.name_ko ? uni.name_ko : uni.name;
+                  const displayName = parseBilingualText(rec.universityName, language);
+                  const displayState = parseBilingualText(rec.universityState, language);
                   
                   return (
                     <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#F0FDF4', borderColor: '#BBF7D0' }}>
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
-                          {uni.logo_url && (
-                            <img src={uni.logo_url} alt={displayName} className="dashboard-school-image" />
-                          )}
                           <div className="dashboard-school-info">
                             <h4 className="dashboard-school-name">{displayName}</h4>
-                            <p className="dashboard-school-meta">
-                              {uni.state || ''} 
-                              {uni.acceptance_rate && ` • ${uni.acceptance_rate}% ${t('dashboard.school.acceptance')}`}
-                            </p>
+                            {displayState && (
+                              <p className="dashboard-school-meta">{displayState}</p>
+                            )}
                           </div>
                         </div>
                         <div className="dashboard-school-right">
@@ -191,24 +176,18 @@ const DashboardPage: React.FC = () => {
               </div>
               <div className="dashboard-schools-list">
                 {targetSchools.slice(0, 3).map(rec => {
-                  const uni = universities[rec.universityId];
-                  if (!uni) return null;
-                  
-                  const displayName = language === 'ko' && uni.name_ko ? uni.name_ko : uni.name;
+                  const displayName = parseBilingualText(rec.universityName, language);
+                  const displayState = parseBilingualText(rec.universityState, language);
                   
                   return (
                     <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#FFFBEB', borderColor: '#FACC15' }}>
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
-                          {uni.logo_url && (
-                            <img src={uni.logo_url} alt={displayName} className="dashboard-school-image" />
-                          )}
                           <div className="dashboard-school-info">
                             <h4 className="dashboard-school-name">{displayName}</h4>
-                            <p className="dashboard-school-meta">
-                              {uni.state || ''} 
-                              {uni.acceptance_rate && ` • ${uni.acceptance_rate}% ${t('dashboard.school.acceptance')}`}
-                            </p>
+                            {displayState && (
+                              <p className="dashboard-school-meta">{displayState}</p>
+                            )}
                           </div>
                         </div>
                         <div className="dashboard-school-right">
@@ -232,24 +211,18 @@ const DashboardPage: React.FC = () => {
               </div>
               <div className="dashboard-schools-list">
                 {reachSchools.slice(0, 3).map(rec => {
-                  const uni = universities[rec.universityId];
-                  if (!uni) return null;
-                  
-                  const displayName = language === 'ko' && uni.name_ko ? uni.name_ko : uni.name;
+                  const displayName = parseBilingualText(rec.universityName, language);
+                  const displayState = parseBilingualText(rec.universityState, language);
                   
                   return (
                     <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#EFF6FF', borderColor: '#93C5FD' }}>
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
-                          {uni.logo_url && (
-                            <img src={uni.logo_url} alt={displayName} className="dashboard-school-image" />
-                          )}
                           <div className="dashboard-school-info">
                             <h4 className="dashboard-school-name">{displayName}</h4>
-                            <p className="dashboard-school-meta">
-                              {uni.state || ''} 
-                              {uni.acceptance_rate && ` • ${uni.acceptance_rate}% ${t('dashboard.school.acceptance')}`}
-                            </p>
+                            {displayState && (
+                              <p className="dashboard-school-meta">{displayState}</p>
+                            )}
                             {rec.strengthenAreas.length > 0 && (
                               <div className="dashboard-school-warning" style={{ color: '#F59E0B' }}>
                                 <AlertCircle className="h-4 w-4" />

@@ -62,6 +62,8 @@ export interface RecommendationLetter {
 
 export interface SchoolRecommendation {
   universityId: string;
+  universityName?: string; // Bilingual name from API (e.g., "Harvard University (하버드 대학교)")
+  universityState?: string; // State from API
   category: 'safety' | 'target' | 'reach';
   admissionChance: number;
   strengthenAreas: string[];

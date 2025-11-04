@@ -227,6 +227,45 @@ const StudentProfilePage: React.FC = () => {
       console.log('API Response:', apiData);
       setApiResults(apiData);
       
+      // Save API recommendations to profile context for dashboard
+      const allRecommendations = [
+        ...(apiData.recommendations.safety || []).slice(0, 5).map((school, index) => ({
+          universityId: `safety-${index}`, // Use unique ID for each recommendation
+          universityName: school.name, // Full bilingual name
+          universityState: school.state || '', // State from API
+          category: 'safety' as const,
+          admissionChance: Math.round(school.probability * 100),
+          strengthenAreas: [],
+          requiredScore: 0,
+          comparisonRatio: 0,
+        })),
+        ...(apiData.recommendations.target || []).slice(0, 5).map((school, index) => ({
+          universityId: `target-${index}`,
+          universityName: school.name,
+          universityState: school.state || '',
+          category: 'target' as const,
+          admissionChance: Math.round(school.probability * 100),
+          strengthenAreas: [],
+          requiredScore: 0,
+          comparisonRatio: 0,
+        })),
+        ...(apiData.recommendations.reach || []).slice(0, 5).map((school, index) => ({
+          universityId: `reach-${index}`,
+          universityName: school.name,
+          universityState: school.state || '',
+          category: 'reach' as const,
+          admissionChance: Math.round(school.probability * 100),
+          strengthenAreas: [],
+          requiredScore: 0,
+          comparisonRatio: 0,
+        })),
+      ];
+      
+      updateProfile({
+        ...profileData,
+        recommendations: allRecommendations,
+      });
+      
       // Reset visible schools to initial state (3 per category)
       setVisibleSchools({
         safety: 3,
