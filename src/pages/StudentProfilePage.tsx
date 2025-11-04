@@ -150,6 +150,12 @@ const StudentProfilePage: React.FC = () => {
   };
 
   const handleSaveProfile = async () => {
+    // Set loading states immediately
+    setApiLoading(true);
+    setIsAnalyzing(true);
+    setApiError('');
+    setAnalysisError('');
+    
     const profileData = {
       gpa: parseFloat(academicData.gpa) || 0,
       satEBRW: academicData.standardizedTest === 'SAT' ? parseInt(academicData.satEBRW) || 0 : 0,
@@ -179,9 +185,6 @@ const StudentProfilePage: React.FC = () => {
     }, 100);
     
     // Fetch school recommendations from PrepLounge API
-    setApiLoading(true);
-    setApiError('');
-    
     try {
       let apiUrl = 'https://dev.preplounge.ai/?';
       apiUrl += `gpa=${profileData.gpa}`;
@@ -204,6 +207,7 @@ const StudentProfilePage: React.FC = () => {
       }
       
       const apiData: APIResponse = await apiResponse.json();
+      console.log('API Response:', apiData);
       setApiResults(apiData);
     } catch (error) {
       console.error('Error fetching school recommendations:', error);
@@ -212,14 +216,12 @@ const StudentProfilePage: React.FC = () => {
           ? '학교 추천을 가져오는 중 오류가 발생했습니다.'
           : 'An error occurred while fetching school recommendations.'
       );
+      setApiResults(null);
     } finally {
       setApiLoading(false);
     }
     
     // Generate AI analysis
-    setIsAnalyzing(true);
-    setAnalysisError('');
-    
     try {
       const response = await fetch('/api/analyze-profile', {
         method: 'POST',
@@ -1034,63 +1036,101 @@ const StudentProfilePage: React.FC = () => {
                 )}
                 
                 {/* Display recommendations from API */}
-                {!apiLoading && !apiError && (
+                {!apiLoading && !apiError && apiResults && (
                   <>
                     {['safety', 'target', 'reach', 'prestige'].map(category => {
                       const schools = apiResults.recommendations[category as keyof typeof apiResults.recommendations];
                       if (!schools || schools.length === 0) return null;
                       
-                      return schools.map((school, index) => (
-                        <div
-                          key={`${category}-${index}`}
-                          className="extracurricular-card"
-                          style={{
-                            borderColor: category === 'safety' ? '#10B981' : category === 'target' ? '#F59E0B' : category === 'reach' ? '#EF4444' : '#8B5CF6',
-                            background: category === 'safety' ? '#ECFDF5' : category === 'target' ? '#FFF7ED' : category === 'reach' ? '#FEE2E2' : '#F5F3FF',
-                            marginBottom: '16px'
-                          }}
-                        >
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h4 className="font-semibold text-gray-900">{school.name}</h4>
-                              <p className="text-sm text-gray-600">
-                                {school.location && `${school.location} • `}
-                                {school.ranking && `#${school.ranking} • `}
-                                {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptance_rate?.toFixed(1) || 'N/A'}%
-                              </p>
-                            </div>
-                            <div className="text-right">
-                              <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-                                category === 'safety' ? 'bg-green-100 text-green-800' :
-                                category === 'target' ? 'bg-orange-100 text-orange-800' :
-                                category === 'reach' ? 'bg-red-100 text-red-800' :
-                                'bg-purple-100 text-purple-800'
-                              }`}>
-                                {language === 'ko' ? (
-                                  category === 'safety' ? '안전권' : 
-                                  category === 'target' ? '적정권' : 
-                                  category === 'reach' ? '도전권' : '명문권'
-                                ) : (
-                                  category === 'safety' ? 'Safety' : 
-                                  category === 'target' ? 'Target' : 
-                                  category === 'reach' ? 'Reach' : 'Prestige'
-                                )}
+                      const limitedSchools = schools.slice(0, 5);
+                      const hasMore = schools.length > 5;
+                      
+                      return (
+                        <div key={category} style={{ marginBottom: '32px' }}>
+                          <h4 className="text-lg font-semibold mb-3" style={{ color: '#082F49' }}>
+                            {language === 'ko' ? (
+                              category === 'safety' ? '안전권 학교' : 
+                              category === 'target' ? '적정권 학교' : 
+                              category === 'reach' ? '도전권 학교' : '명문권 학교'
+                            ) : (
+                              category === 'safety' ? 'Safety Schools' : 
+                              category === 'target' ? 'Target Schools' : 
+                              category === 'reach' ? 'Reach Schools' : 'Prestige Schools'
+                            )}
+                            <span className="ml-2 text-sm font-normal text-gray-500">
+                              ({limitedSchools.length}{hasMore && `/${schools.length}`})
+                            </span>
+                          </h4>
+                          
+                          {limitedSchools.map((school, index) => (
+                            <div
+                              key={`${category}-${index}`}
+                              className="extracurricular-card"
+                              style={{
+                                borderColor: category === 'safety' ? '#10B981' : category === 'target' ? '#F59E0B' : category === 'reach' ? '#EF4444' : '#8B5CF6',
+                                background: category === 'safety' ? '#ECFDF5' : category === 'target' ? '#FFF7ED' : category === 'reach' ? '#FEE2E2' : '#F5F3FF',
+                                marginBottom: '12px'
+                              }}
+                            >
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h4 className="font-semibold text-gray-900">{school.name || 'Unknown School'}</h4>
+                                  <p className="text-sm text-gray-600">
+                                    {school.location && `${school.location} • `}
+                                    {school.ranking && `#${school.ranking} • `}
+                                    {language === 'ko' ? '합격률' : 'Acceptance Rate'}: {
+                                      typeof school.acceptance_rate === 'number' 
+                                        ? `${school.acceptance_rate.toFixed(1)}%` 
+                                        : 'N/A'
+                                    }
+                                  </p>
+                                </div>
+                                <div className="text-right">
+                                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                                    category === 'safety' ? 'bg-green-100 text-green-800' :
+                                    category === 'target' ? 'bg-orange-100 text-orange-800' :
+                                    category === 'reach' ? 'bg-red-100 text-red-800' :
+                                    'bg-purple-100 text-purple-800'
+                                  }`}>
+                                    {language === 'ko' ? (
+                                      category === 'safety' ? '안전권' : 
+                                      category === 'target' ? '적정권' : 
+                                      category === 'reach' ? '도전권' : '명문권'
+                                    ) : (
+                                      category === 'safety' ? 'Safety' : 
+                                      category === 'target' ? 'Target' : 
+                                      category === 'reach' ? 'Reach' : 'Prestige'
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="grid md:grid-cols-2 gap-4 mt-4 text-sm">
+                                <div>
+                                  <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성' : 'Admission Probability'}:</span>
+                                  <span className="ml-2 font-bold">
+                                    {typeof school.admission_probability === 'number' 
+                                      ? `${school.admission_probability.toFixed(1)}%` 
+                                      : 'N/A'}
+                                  </span>
+                                </div>
+                                <div>
+                                  <span className="font-medium text-gray-600">{language === 'ko' ? '내 점수' : 'My Score'}:</span>
+                                  <span className="ml-2 font-bold">{currentScore}/100</span>
+                                </div>
                               </div>
                             </div>
-                          </div>
+                          ))}
                           
-                          <div className="grid md:grid-cols-2 gap-4 mt-4 text-sm">
-                            <div>
-                              <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성:' : 'Admission Probability:'}</span>
-                              <span className="ml-2 font-bold">{school.admission_probability?.toFixed(1) || 'N/A'}%</span>
-                            </div>
-                            <div>
-                              <span className="font-medium text-gray-600">{language === 'ko' ? '내 점수:' : 'My Score:'}</span>
-                              <span className="ml-2 font-bold">{currentScore}/100</span>
-                            </div>
-                          </div>
+                          {hasMore && (
+                            <p className="text-sm text-gray-500 mt-2 text-center">
+                              {language === 'ko' 
+                                ? `${schools.length - 5}개 더 많은 학교가 있습니다` 
+                                : `${schools.length - 5} more school${schools.length - 5 > 1 ? 's' : ''} available`}
+                            </p>
+                          )}
                         </div>
-                      ));
+                      );
                     })}
                   </>
                 )}
