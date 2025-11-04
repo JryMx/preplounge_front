@@ -35,29 +35,41 @@ Analysis Instructions:
 
 Provide the analysis now:`;
 
-    // Call Ollama API
-    const ollamaResponse = await fetch('http://127.0.0.1:11434/api/generate', {
+    // Check if API key is available
+    if (!process.env.OPEN_AI_KEY) {
+      throw new Error('OPEN_AI_KEY environment variable is not set');
+    }
+
+    // Call OpenAI-compatible API
+    const apiResponse = await fetch('https://llm.signalplanner.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPEN_AI_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gemma2:2b',
-        prompt: prompt,
-        stream: false,
-        options: {
-          temperature: 0.7,
-          top_p: 0.9,
-        }
+        model: 'gpt-5',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 1000,
       }),
     });
 
-    if (!ollamaResponse.ok) {
-      throw new Error('Ollama API request failed');
+    if (!apiResponse.ok) {
+      const errorData = await apiResponse.text();
+      console.error('API Error:', errorData);
+      throw new Error(`API request failed: ${apiResponse.status} ${apiResponse.statusText}`);
     }
 
-    const data = await ollamaResponse.json();
-    res.json({ analysis: data.response });
+    const data = await apiResponse.json();
+    const analysis = data.choices[0].message.content;
+    
+    res.json({ analysis });
 
   } catch (error) {
     console.error('Error analyzing profile:', error);

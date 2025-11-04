@@ -25,10 +25,6 @@ args = "Start application"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Ollama Server"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "Backend Server"
 
 [[workflows.workflow]]
@@ -39,17 +35,6 @@ author = "agent"
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
-
-[[workflows.workflow]]
-name = "Ollama Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "ollama serve"
-
-[workflows.workflow.metadata]
-outputType = "console"
 
 [[workflows.workflow]]
 name = "Backend Server"
@@ -80,12 +65,12 @@ localPort = 33689
 externalPort = 3002
 
 [[ports]]
-localPort = 38225
-externalPort = 3001
+localPort = 36371
+externalPort = 5173
 
 [[ports]]
-localPort = 41057
-externalPort = 5000
+localPort = 38225
+externalPort = 3001
 
 [[ports]]
 localPort = 41079

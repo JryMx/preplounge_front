@@ -36,14 +36,15 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Full bilingual support for all results (Korean/English)
   - Real-time analysis with loading states and error handling
   - Clickable school cards navigate to detailed university profiles
-- **Local LLM Profile Analysis** (Student Profile Page):
-  - Uses Ollama with Gemma 2B model (lightweight ~1.6 GB) for privacy-focused local AI analysis
+- **AI-Powered Profile Analysis** (Student Profile Page):
+  - Uses OpenAI-compatible API (gpt-5 model via https://llm.signalplanner.ai)
   - Backend API server (Node.js/Express on port 3001) handles AI requests
+  - Requires OPEN_AI_KEY environment variable for authentication
   - Generates detailed 3-4 paragraph analysis covering:
     - Academic strengths and areas for improvement
     - Extracurricular profile assessment
     - Specific, actionable recommendations
-  - Integrated into Student Profile page (`/student-profile`) with prominent disclaimer
+  - Integrated into Student Profile page (`/student-profile`)
   - Loading states, error handling, and bilingual UI (Korean/English)
   - Button disabled until profile data is entered
   - Results displayed in yellow-tinted box matching brand colors
@@ -85,13 +86,12 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 
 ## External Dependencies
 - **PrepLounge AI API**: For real-time admission probability analysis and university recommendations (`https://dev.preplounge.ai/`). No authentication required.
-- **Ollama (Local)**: Self-hosted LLM server running Gemma 2B model on port 11434 for privacy-focused AI profile analysis. No external API calls or authentication required.
+- **SignalPlanner AI API**: OpenAI-compatible API for student profile analysis (`https://llm.signalplanner.ai`). Requires OPEN_AI_KEY environment variable.
 - **OpenStreetMap Nominatim API**: For geocoding locations in the housing search (rate limit: 1 request/second).
 - **Cozying Production API**: For real estate listings (`https://cozying.ai/cozying-api/v1/home/list`).
 - **HomeJunction CDN**: For displaying property images in housing listings (`https://listing-images.homejunction.com`).
 
 ## Running Workflows
-Three workflows must be running for full functionality:
+Two workflows must be running for full functionality:
 1. **Start application** - Frontend React app on port 5000
-2. **Backend Server** - Express API on port 3001 for AI profile analysis
-3. **Ollama Server** - Local LLM server on port 11434 running Gemma 2B model
+2. **Backend Server** - Express API on port 3001 for AI profile analysis (connects to SignalPlanner AI)
