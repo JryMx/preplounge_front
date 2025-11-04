@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, MapPin, Users, DollarSign, BookOpen, Filter, Grid2x2 as Grid, List } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -28,8 +28,9 @@ const UniversitiesPage: React.FC = () => {
   const { t, language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const [displayCount, setDisplayCount] = useState(12);
+  const itemsPerLoad = 12;
+  const loadMoreRef = useRef<HTMLDivElement>(null);
   const [filters, setFilters] = useState({
     types: [] as string[],
     sortBy: '',
@@ -93,12 +94,12 @@ const UniversitiesPage: React.FC = () => {
         ? prev.types.filter(t => t !== type)
         : [...prev.types, type]
     }));
-    setCurrentPage(1);
+    setDisplayCount(12);
   };
 
   const handleSortChange = (sortBy: string) => {
     setFilters(prev => ({ ...prev, sortBy }));
-    setCurrentPage(1);
+    setDisplayCount(12);
   };
 
   const handleTuitionRangeChange = (range: [number, number]) => {
@@ -109,12 +110,12 @@ const UniversitiesPage: React.FC = () => {
       Math.max(min, max)
     ];
     setFilters(prev => ({ ...prev, tuitionRange: validRange }));
-    setCurrentPage(1);
+    setDisplayCount(12);
   };
   
   const handleSearchChange = (term: string) => {
     setSearchTerm(term);
-    setCurrentPage(1);
+    setDisplayCount(12);
   };
 
   const handleSatRangeChange = (range: [number, number]) => {
@@ -125,19 +126,35 @@ const UniversitiesPage: React.FC = () => {
       Math.max(min, max)
     ];
     setFilters(prev => ({ ...prev, satRange: validRange }));
-    setCurrentPage(1); // Reset to first page when filters change
+    setDisplayCount(12);
   };
 
-  // Calculate pagination
-  const totalPages = Math.ceil(sortedUniversities.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedUniversities = sortedUniversities.slice(startIndex, endIndex);
+  // Infinite scroll: show universities up to displayCount
+  const displayedUniversities = sortedUniversities.slice(0, displayCount);
+  const hasMore = displayCount < sortedUniversities.length;
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // Infinite scroll effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setDisplayCount(prev => prev + itemsPerLoad);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasMore]);
 
   return (
     <div className="universities-page">
@@ -256,7 +273,7 @@ const UniversitiesPage: React.FC = () => {
           </div>
 
         <div className={viewMode === 'grid' ? 'universities-grid' : 'universities-list'}>
-          {paginatedUniversities.map(university => (
+          {displayedUniversities.map(university => (
             viewMode === 'grid' ? (
               <Link
                 key={university.id}
@@ -364,101 +381,39 @@ const UniversitiesPage: React.FC = () => {
           </div>
         )}
 
-        {/* Pagination Controls */}
-        {sortedUniversities.length > 0 && totalPages > 1 && (
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '12px',
-            marginTop: '40px',
-            marginBottom: '40px'
-          }}>
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              style={{
-                padding: '10px 20px',
-                backgroundColor: currentPage === 1 ? '#f3f4f6' : '#FACC15',
-                color: currentPage === 1 ? '#9ca3af' : '#082F49',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-                fontWeight: '600',
-                fontSize: '14px',
-                transition: 'all 0.2s ease'
-              }}
-              data-testid="button-prev-page"
-            >
-              {language === 'ko' ? '이전' : 'Previous'}
-            </button>
-
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                let pageNum;
-                if (totalPages <= 5) {
-                  pageNum = i + 1;
-                } else if (currentPage <= 3) {
-                  pageNum = i + 1;
-                } else if (currentPage >= totalPages - 2) {
-                  pageNum = totalPages - 4 + i;
-                } else {
-                  pageNum = currentPage - 2 + i;
-                }
-                
-                return (
-                  <button
-                    key={pageNum}
-                    onClick={() => handlePageChange(pageNum)}
-                    style={{
-                      padding: '10px 16px',
-                      backgroundColor: currentPage === pageNum ? '#FACC15' : 'white',
-                      color: currentPage === pageNum ? '#082F49' : '#64748b',
-                      border: currentPage === pageNum ? '2px solid #FACC15' : '2px solid #e2e8f0',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      fontWeight: currentPage === pageNum ? '600' : '500',
-                      fontSize: '14px',
-                      minWidth: '44px',
-                      transition: 'all 0.2s ease'
-                    }}
-                    data-testid={`button-page-${pageNum}`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              })}
-            </div>
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              style={{
-                padding: '10px 20px',
-                backgroundColor: currentPage === totalPages ? '#f3f4f6' : '#FACC15',
-                color: currentPage === totalPages ? '#9ca3af' : '#082F49',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-                fontWeight: '600',
-                fontSize: '14px',
-                transition: 'all 0.2s ease'
-              }}
-              data-testid="button-next-page"
-            >
-              {language === 'ko' ? '다음' : 'Next'}
-            </button>
-
-            <span style={{
-              marginLeft: '16px',
+        {/* Infinite Scroll Trigger */}
+        {hasMore && (
+          <div 
+            ref={loadMoreRef}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '40px',
+              marginTop: '20px'
+            }}
+          >
+            <div style={{
+              fontSize: '14px',
               color: '#6b7280',
-              fontSize: '14px'
+              textAlign: 'center'
             }}>
-              {language === 'ko' 
-                ? `${currentPage} / ${totalPages} 페이지` 
-                : `Page ${currentPage} of ${totalPages}`
-              }
-            </span>
+              {language === 'ko' ? '더 많은 대학 로딩 중...' : 'Loading more universities...'}
+            </div>
+          </div>
+        )}
+        
+        {!hasMore && sortedUniversities.length > 0 && (
+          <div style={{
+            textAlign: 'center',
+            padding: '40px',
+            color: '#6b7280',
+            fontSize: '14px'
+          }}>
+            {language === 'ko' 
+              ? `${sortedUniversities.length}개 대학을 모두 표시했습니다.` 
+              : `Showing all ${sortedUniversities.length} universities.`
+            }
           </div>
         )}
       </div>
