@@ -6,10 +6,9 @@ import './student-profile-page.css';
 
 interface School {
   name: string;
-  location: string;
-  ranking: number;
-  acceptance_rate: number;
-  admission_probability: number;
+  state: string;
+  probability: number;
+  quality_score: number;
   category?: 'safety' | 'target' | 'reach' | 'prestige';
 }
 
@@ -1073,16 +1072,10 @@ const StudentProfilePage: React.FC = () => {
                               }}
                             >
                               <div className="flex justify-between items-start">
-                                <div>
+                                <div style={{ flex: 1 }}>
                                   <h4 className="font-semibold text-gray-900">{school.name || 'Unknown School'}</h4>
                                   <p className="text-sm text-gray-600">
-                                    {school.location && `${school.location} • `}
-                                    {school.ranking && `#${school.ranking} • `}
-                                    {language === 'ko' ? '합격률' : 'Acceptance Rate'}: {
-                                      typeof school.acceptance_rate === 'number' 
-                                        ? `${school.acceptance_rate.toFixed(1)}%` 
-                                        : 'N/A'
-                                    }
+                                    {school.state && `${school.state}`}
                                   </p>
                                 </div>
                                 <div className="text-right">
@@ -1105,18 +1098,18 @@ const StudentProfilePage: React.FC = () => {
                                 </div>
                               </div>
                               
-                              <div className="grid md:grid-cols-2 gap-4 mt-4 text-sm">
-                                <div>
+                              <div className="mt-4 text-sm">
+                                <div className="mb-2">
                                   <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성' : 'Admission Probability'}:</span>
-                                  <span className="ml-2 font-bold">
-                                    {typeof school.admission_probability === 'number' 
-                                      ? `${school.admission_probability.toFixed(1)}%` 
+                                  <span className="ml-2 font-bold text-lg" style={{ color: '#082F49' }}>
+                                    {typeof school.probability === 'number' 
+                                      ? `${(school.probability * 100).toFixed(1)}%` 
                                       : 'N/A'}
                                   </span>
                                 </div>
                                 <div>
-                                  <span className="font-medium text-gray-600">{language === 'ko' ? '내 점수' : 'My Score'}:</span>
-                                  <span className="ml-2 font-bold">{currentScore}/100</span>
+                                  <span className="font-medium text-gray-600">{language === 'ko' ? '내 프로필 점수' : 'My Profile Score'}:</span>
+                                  <span className="ml-2 font-bold">{profile?.profileScore || currentScore}/100</span>
                                 </div>
                               </div>
                             </div>

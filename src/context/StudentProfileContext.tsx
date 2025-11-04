@@ -27,6 +27,7 @@ export interface StudentProfile {
   applicationComponents: ApplicationComponents;
   
   // Calculated fields
+  profileScore: number;
   profileRigorScore: number;
   recommendations: SchoolRecommendation[];
 }
@@ -280,6 +281,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         essay: false,
         testScores: false,
       },
+      profileScore: 0,
       profileRigorScore: 0,
       recommendations: [],
       ...newProfileData,
@@ -299,8 +301,10 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       ...newProfileData.applicationComponents,
     };
     
-    // Calculate profile rigor score
-    updatedProfile.profileRigorScore = calculateProfileScore(updatedProfile);
+    // Calculate profile score
+    const calculatedScore = calculateProfileScore(updatedProfile);
+    updatedProfile.profileScore = calculatedScore;
+    updatedProfile.profileRigorScore = calculatedScore;
     
     // Generate recommendations
     updatedProfile.recommendations = generateRecommendations(updatedProfile);
