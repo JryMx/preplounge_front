@@ -39,9 +39,18 @@ const UniversitiesPage: React.FC = () => {
   });
 
   const filteredUniversities = universities.filter(uni => {
-    const matchesSearch = uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         uni.englishName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         uni.location.toLowerCase().includes(searchTerm.toLowerCase());
+    // Korean-friendly search: case-sensitive for Korean, case-insensitive for English
+    let matchesSearch = true;
+    if (searchTerm.trim()) {
+      const search = searchTerm.trim();
+      const searchLower = search.toLowerCase();
+      
+      const koreanMatch = uni.name.includes(search);
+      const englishMatch = uni.englishName.toLowerCase().includes(searchLower);
+      const locationMatch = uni.location.toLowerCase().includes(searchLower);
+      
+      matchesSearch = koreanMatch || englishMatch || locationMatch;
+    }
     
     const matchesType = filters.types.length === 0 || filters.types.includes(uni.type);
     const matchesTuition = uni.tuition >= filters.tuitionRange[0] && uni.tuition <= filters.tuitionRange[1];
