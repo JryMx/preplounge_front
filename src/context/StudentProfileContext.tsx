@@ -123,37 +123,42 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     // ACADEMIC COMPONENTS (65 points total)
     
     // 1. GPA (30 points) - Most important academic metric
+    // Scaled to reflect competitiveness across ALL school types
     if (profileData.gpa) {
       const gpa = profileData.gpa;
-      if (gpa >= 3.9) score += 30;
-      else if (gpa >= 3.7) score += 27;
-      else if (gpa >= 3.5) score += 24;
-      else if (gpa >= 3.3) score += 20;
-      else if (gpa >= 3.0) score += 16;
-      else if (gpa >= 2.7) score += 12;
-      else if (gpa >= 2.5) score += 8;
-      else score += (gpa / 4.0) * 8;
+      if (gpa >= 3.9) score += 30;        // Top tier schools (Ivy League, Top 20)
+      else if (gpa >= 3.7) score += 28;   // Highly competitive (Top 50)
+      else if (gpa >= 3.5) score += 25;   // Competitive (Top 100)
+      else if (gpa >= 3.3) score += 22;   // Good schools (Top 200)
+      else if (gpa >= 3.0) score += 19;   // Solid state universities
+      else if (gpa >= 2.7) score += 15;   // Many colleges accept
+      else if (gpa >= 2.5) score += 12;   // Community colleges, less selective
+      else if (gpa >= 2.0) score += 8;    // Open admission schools
+      else score += (gpa / 4.0) * 8;      // Proportional for below 2.0
     }
     
     // 2. Standardized Test Scores (25 points)
+    // Reflects competitiveness across school spectrum
     if (profileData.satEBRW && profileData.satMath) {
       const totalSAT = profileData.satEBRW + profileData.satMath;
-      if (totalSAT >= 1500) score += 25;
-      else if (totalSAT >= 1400) score += 22;
-      else if (totalSAT >= 1300) score += 19;
-      else if (totalSAT >= 1200) score += 15;
-      else if (totalSAT >= 1100) score += 11;
-      else if (totalSAT >= 1000) score += 7;
-      else score += (totalSAT / 1600) * 7;
+      if (totalSAT >= 1500) score += 25;      // Top tier (Ivy League, MIT, Stanford)
+      else if (totalSAT >= 1400) score += 23; // Highly selective (Top 30)
+      else if (totalSAT >= 1300) score += 20; // Competitive (Top 100)
+      else if (totalSAT >= 1200) score += 17; // Good schools (Top 200)
+      else if (totalSAT >= 1100) score += 14; // Many state universities
+      else if (totalSAT >= 1000) score += 11; // Less selective colleges
+      else if (totalSAT >= 900) score += 8;   // Open admission schools
+      else score += (totalSAT / 1600) * 8;    // Proportional below 900
     } else if (profileData.actScore) {
       const act = profileData.actScore;
-      if (act >= 34) score += 25;
-      else if (act >= 31) score += 22;
-      else if (act >= 28) score += 19;
-      else if (act >= 25) score += 15;
-      else if (act >= 22) score += 11;
-      else if (act >= 19) score += 7;
-      else score += (act / 36) * 7;
+      if (act >= 34) score += 25;       // Top tier
+      else if (act >= 31) score += 23;  // Highly selective
+      else if (act >= 28) score += 20;  // Competitive
+      else if (act >= 25) score += 17;  // Good schools
+      else if (act >= 22) score += 14;  // Many state universities
+      else if (act >= 19) score += 11;  // Less selective
+      else if (act >= 16) score += 8;   // Open admission
+      else score += (act / 36) * 8;     // Proportional below 16
     }
     
     // 3. Course Rigor - AP/IB (10 points)

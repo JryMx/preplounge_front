@@ -172,13 +172,36 @@ The profile score (out of 100) is a deterministic, transparent metric that evalu
      - <80: Proportional (up to 1.5 points)
    - Domestic students: 3 points (no language barrier)
 
-### Score Ratings
-- 90-100: Exceptional (Ivy League competitive)
-- 80-89: Very Good (Top 20-50 schools competitive)
-- 70-79: Good (Top 100 schools competitive)
-- 60-69: Above Average (Solid state schools, many private universities)
-- 50-59: Average (Many colleges will accept)
-- Below 50: Needs Improvement
+### Score Ratings & School Competitiveness
+This score helps you understand where you stand across the full spectrum of U.S. universities:
+
+- **90-100: Exceptional**
+  - Competitive for: Ivy League, MIT, Stanford, Top 10 schools
+  - Examples: Harvard, Yale, Princeton, Stanford, MIT, Caltech
+  
+- **80-89: Very Strong**
+  - Competitive for: Top 20-50 highly selective universities
+  - Examples: Duke, Northwestern, Vanderbilt, Rice, USC, NYU
+  
+- **70-79: Strong**
+  - Competitive for: Top 50-100 competitive universities
+  - Examples: Boston University, Tulane, Pepperdine, SMU, University of Miami
+  
+- **60-69: Good**
+  - Competitive for: Top 100-200 solid universities, flagship state schools
+  - Examples: Penn State, Ohio State, Indiana University, University of Arizona
+  
+- **50-59: Fair**
+  - Competitive for: Many regional universities, less selective state schools
+  - Examples: San Jose State, University of Nevada, Cal State schools
+  
+- **40-49: Developing**
+  - Competitive for: Community colleges, open admission schools
+  - Options: 2-year colleges, transfer pathway programs
+  
+- **Below 40: Early Stage**
+  - Focus: Building foundational skills, community college pathway
+  - Strategy: Start at community college, transfer to 4-year university
 
 ### Deterministic Nature
 The calculation is purely mathematical and deterministic:
