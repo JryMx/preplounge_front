@@ -148,7 +148,7 @@ const StudentProfilePage: React.FC = () => {
     setAnalysisError('');
     
     try {
-      const response = await fetch('http://localhost:3001/api/analyze-profile', {
+      const response = await fetch('/api/analyze-profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
