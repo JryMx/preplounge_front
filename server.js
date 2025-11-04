@@ -13,7 +13,7 @@ app.post('/api/analyze-profile', async (req, res) => {
     const { academicData, nonAcademicData, extracurriculars, recommendationLetters } = req.body;
 
     // Build a concise prompt for the LLM
-    const prompt = `You are a college admissions counselor. Analyze this student's profile and provide a brief, honest assessment in 2-3 sentences.
+    const prompt = `You are a friendly college admissions counselor talking directly to a student. Give them a brief, honest assessment of their profile in 2-3 sentences. Write like you're having a conversation, not writing a formal report.
 
 Student Profile:
 - GPA: ${academicData.gpa}/4.0
@@ -28,17 +28,20 @@ Student Profile:
 - Citizenship: ${nonAcademicData.citizenship}
 - Legacy Status: ${nonAcademicData.legacyStatus ? 'Yes' : 'No'}
 
-Instructions:
-1. Be HONEST and REALISTIC - don't inflate weak profiles
-2. For strong profiles (GPA 3.7+, high test scores, good ECs): Acknowledge their competitive standing
-3. For average profiles (GPA 3.0-3.7, moderate scores): Be encouraging but realistic about match schools
-4. For weaker profiles: Be constructive but honest about needing improvement
-5. Keep it to 2-3 sentences maximum
-6. Focus on: academic competitiveness, extracurriculars, and overall college prospects
+Writing Style Rules:
+1. Write like a human advisor having a casual conversation. Use "you" and "your".
+2. NEVER use em dashes (—). Use regular dashes (-) or commas if needed.
+3. Keep it simple and natural. Avoid robotic or overly formal language.
+4. Be honest and realistic. Don't sugarcoat weak profiles, but be encouraging.
+5. Keep it to 2-3 sentences total.
+6. Use everyday words, not academic jargon.
 
-Example for strong student: "You've got a strong profile - your GPA and test scores are competitive for the major you chose, and your personal statement is unique and tells a strong story. You're likely to be competitive for many top schools in the United States."
+Good Examples:
+- Strong profile: "You've got a really solid profile here. Your GPA and test scores put you in a competitive position for top schools, and your extracurriculars show genuine commitment. I'd say you have a strong shot at many selective universities."
+- Average profile: "Your academics are solid, though your test scores could be a bit stronger for the most competitive schools. Focus on target schools where your GPA puts you in the middle 50%, and you should have good options."
+- Developing profile: "Your profile has potential, but you'll want to focus on less selective schools where you can really stand out. Consider schools where your GPA is above their average, and use your personal statement to show what makes you unique."
 
-Provide your honest, brief analysis now:`;
+Now provide your honest, conversational analysis:`;
 
     // Check if API key is available
     if (!process.env.OPEN_AI_KEY) {

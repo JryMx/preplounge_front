@@ -86,6 +86,9 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 ## External Dependencies
 - **PrepLounge AI API**: For real-time admission probability analysis and university recommendations (`https://dev.preplounge.ai/`). No authentication required.
 - **SignalPlanner AI API**: OpenAI-compatible API for student profile analysis (`https://llm.signalplanner.ai`). Requires OPEN_AI_KEY environment variable.
+  - Configured to provide conversational, human-like feedback
+  - Writing style: No em dashes, casual tone, everyday language
+  - Temperature: 1 (only supported value)
 - **OpenStreetMap Nominatim API**: For geocoding locations in the housing search (rate limit: 1 request/second).
 - **Cozying Production API**: For real estate listings (`https://cozying.ai/cozying-api/v1/home/list`).
 - **HomeJunction CDN**: For displaying property images in housing listings (`https://listing-images.homejunction.com`).
