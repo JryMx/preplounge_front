@@ -9,6 +9,7 @@ export interface StudentProfile {
   
   // Non-Academic Inputs
   personalStatement: string;
+  personalStatementQuality?: string;
   extracurriculars: ExtracurricularActivity[];
   recommendationLetters: RecommendationLetter[];
   legacyStatus: boolean;
@@ -120,78 +121,134 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   const calculateProfileScore = (profileData: Partial<StudentProfile>): number => {
     let score = 0;
     
-    // Academic Inputs (60% weight)
-    // GPA (25% of total)
+    // ACADEMIC COMPONENTS (65 points total)
+    
+    // 1. GPA (30 points) - Most important academic metric
     if (profileData.gpa) {
-      score += (profileData.gpa / 4.0) * 25;
+      const gpa = profileData.gpa;
+      if (gpa >= 3.9) score += 30;
+      else if (gpa >= 3.7) score += 27;
+      else if (gpa >= 3.5) score += 24;
+      else if (gpa >= 3.3) score += 20;
+      else if (gpa >= 3.0) score += 16;
+      else if (gpa >= 2.7) score += 12;
+      else if (gpa >= 2.5) score += 8;
+      else score += (gpa / 4.0) * 8;
     }
     
-    // SAT Scores (20% of total)
+    // 2. Standardized Test Scores (25 points)
     if (profileData.satEBRW && profileData.satMath) {
       const totalSAT = profileData.satEBRW + profileData.satMath;
-      score += (totalSAT / 1600) * 20;
+      if (totalSAT >= 1500) score += 25;
+      else if (totalSAT >= 1400) score += 22;
+      else if (totalSAT >= 1300) score += 19;
+      else if (totalSAT >= 1200) score += 15;
+      else if (totalSAT >= 1100) score += 11;
+      else if (totalSAT >= 1000) score += 7;
+      else score += (totalSAT / 1600) * 7;
     } else if (profileData.actScore) {
-      // Convert ACT to equivalent weight
-      score += (profileData.actScore / 36) * 20;
+      const act = profileData.actScore;
+      if (act >= 34) score += 25;
+      else if (act >= 31) score += 22;
+      else if (act >= 28) score += 19;
+      else if (act >= 25) score += 15;
+      else if (act >= 22) score += 11;
+      else if (act >= 19) score += 7;
+      else score += (act / 36) * 7;
     }
     
-    // AP/IB Courses (15% of total)
-    if (profileData.apCourses) {
-      score += Math.min(profileData.apCourses / 8, 1) * 15;
-    }
-    if (profileData.ibScore) {
-      score += (profileData.ibScore / 45) * 15;
+    // 3. Course Rigor - AP/IB (10 points)
+    // This is a placeholder as we don't collect this data yet
+    // For now, we'll award baseline points if student has good GPA
+    if (profileData.apCourses && profileData.apCourses > 0) {
+      score += Math.min(profileData.apCourses * 1.5, 10);
+    } else if (profileData.ibScore && profileData.ibScore > 0) {
+      score += (profileData.ibScore / 45) * 10;
+    } else if (profileData.gpa && profileData.gpa >= 3.5) {
+      score += 5; // Assume some rigor if GPA is strong
     }
     
-    // Non-Academic Inputs (40% weight)
-    // Extracurricular Activities (20% of total)
+    // NON-ACADEMIC COMPONENTS (35 points total)
+    
+    // 4. Extracurricular Activities (15 points)
     if (profileData.extracurriculars && profileData.extracurriculars.length > 0) {
-      let extracurricularScore = 0;
+      let ecScore = 0;
+      
       profileData.extracurriculars.forEach(activity => {
-        let activityScore = 2; // Base score
+        let points = 0;
         
-        // Recognition level bonus
+        // Recognition level (0-3 points per activity)
         switch (activity.recognitionLevel) {
-          case 'International': activityScore += 4; break;
-          case 'National': activityScore += 3; break;
-          case 'Regional': activityScore += 2; break;
-          case 'Local': activityScore += 1; break;
+          case 'International': points += 3; break;
+          case 'National': points += 2.5; break;
+          case 'Regional': points += 1.5; break;
+          case 'Local': points += 0.5; break;
         }
         
-        // Duration bonus (simplified)
-        if (activity.hoursPerWeek >= 10) activityScore += 2;
-        else if (activity.hoursPerWeek >= 5) activityScore += 1;
+        // Time commitment (0-1.5 points per activity)
+        if (activity.hoursPerWeek >= 15) points += 1.5;
+        else if (activity.hoursPerWeek >= 10) points += 1;
+        else if (activity.hoursPerWeek >= 5) points += 0.5;
         
-        extracurricularScore += activityScore;
+        ecScore += points;
       });
       
-      score += Math.min(extracurricularScore / 30, 1) * 20;
+      // Cap at 15 points (roughly 3-4 strong activities max out the score)
+      score += Math.min(ecScore, 15);
     }
     
-    // Personal Statement (10% of total)
-    if (profileData.personalStatement && profileData.personalStatement.length > 200) {
-      score += 10;
-    } else if (profileData.personalStatement && profileData.personalStatement.length > 100) {
-      score += 7;
-    } else if (profileData.personalStatement) {
-      score += 5;
+    // 5. Personal Statement Quality (10 points) - Now uses quality rating
+    if (profileData.personalStatementQuality) {
+      switch (profileData.personalStatementQuality) {
+        case 'Exceptional': score += 10; break;
+        case 'Strong': score += 8; break;
+        case 'Good': score += 6; break;
+        case 'Average': score += 4; break;
+        case 'Weak': score += 2; break;
+      }
+    } else if (profileData.personalStatement && profileData.personalStatement.length > 0) {
+      // Fallback if quality not selected - minimal points for having something
+      score += 2;
     }
     
-    // Recommendation Letters (5% of total)
-    if (profileData.recommendationLetters && profileData.recommendationLetters.length >= 2) {
-      score += 5;
-    } else if (profileData.recommendationLetters && profileData.recommendationLetters.length >= 1) {
-      score += 3;
+    // 6. Recommendation Letters (5 points)
+    if (profileData.recommendationLetters && profileData.recommendationLetters.length > 0) {
+      const letters = profileData.recommendationLetters;
+      let letterScore = 0;
+      
+      // Base points for having letters
+      if (letters.length >= 3) letterScore += 2;
+      else if (letters.length >= 2) letterScore += 1.5;
+      else letterScore += 0.5;
+      
+      // Quality bonus based on depth and relevance
+      letters.forEach(letter => {
+        if (letter.depth === 'knows very well') letterScore += 0.8;
+        else if (letter.depth === 'knows well') letterScore += 0.5;
+        else if (letter.depth === 'knows somewhat') letterScore += 0.2;
+        
+        if (letter.relevance === 'very relevant') letterScore += 0.5;
+        else if (letter.relevance === 'somewhat relevant') letterScore += 0.2;
+      });
+      
+      score += Math.min(letterScore, 5);
     }
     
-    // Legacy Status (3% of total)
+    // 7. Legacy Status (2 points) - Small boost
     if (profileData.legacyStatus) {
-      score += 3;
+      score += 2;
     }
     
-    // TOEFL for international students (2% of total)
+    // 8. English Proficiency for International Students (3 points)
     if (profileData.citizenship === 'international' && profileData.toeflScore) {
-      score += (profileData.toeflScore / 120) * 2;
+      if (profileData.toeflScore >= 110) score += 3;
+      else if (profileData.toeflScore >= 100) score += 2.5;
+      else if (profileData.toeflScore >= 90) score += 2;
+      else if (profileData.toeflScore >= 80) score += 1.5;
+      else score += (profileData.toeflScore / 120) * 1.5;
+    } else if (profileData.citizenship === 'domestic') {
+      // Domestic students get full 3 points (no language barrier)
+      score += 3;
     }
     
     return Math.round(Math.min(score, 100));
@@ -217,16 +274,13 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       intendedMajor: '',
       applicationComponents: {
         secondarySchoolGPA: false,
-        classRank: false,
-        academicRecord: false,
+        secondarySchoolRank: false,
+        secondarySchoolRecord: false,
         collegePrepProgram: false,
-        recommendationLetters: false,
-        formalDemonstrationCompetencies: false,
-        workExperience: false,
-        personalStatementEssay: false,
-        legacyStatus: false,
-        admissionTestScores: false,
-        englishProficiencyTest: false,
+        recommendations: false,
+        extracurricularActivities: false,
+        essay: false,
+        testScores: false,
       },
       profileRigorScore: 0,
       recommendations: [],

@@ -90,6 +90,107 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 - **Cozying Production API**: For real estate listings (`https://cozying.ai/cozying-api/v1/home/list`).
 - **HomeJunction CDN**: For displaying property images in housing listings (`https://listing-images.homejunction.com`).
 
+## Profile Score Calculation Methodology
+
+The profile score (out of 100) is a deterministic, transparent metric that evaluates college application competitiveness. The same inputs always produce the same output.
+
+### Scoring Breakdown
+
+**ACADEMIC COMPONENTS (65 points total)**
+
+1. **GPA (30 points)** - Most important academic metric
+   - 3.9-4.0: 30 points (Exceptional)
+   - 3.7-3.8: 27 points (Excellent)
+   - 3.5-3.6: 24 points (Very Good)
+   - 3.3-3.4: 20 points (Good)
+   - 3.0-3.2: 16 points (Above Average)
+   - 2.7-2.9: 12 points (Average)
+   - 2.5-2.6: 8 points (Below Average)
+   - <2.5: Proportional (up to 8 points)
+
+2. **Standardized Test Scores (25 points)**
+   - SAT:
+     - 1500-1600: 25 points
+     - 1400-1499: 22 points
+     - 1300-1399: 19 points
+     - 1200-1299: 15 points
+     - 1100-1199: 11 points
+     - 1000-1099: 7 points
+     - <1000: Proportional (up to 7 points)
+   - ACT:
+     - 34-36: 25 points
+     - 31-33: 22 points
+     - 28-30: 19 points
+     - 25-27: 15 points
+     - 22-24: 11 points
+     - 19-21: 7 points
+     - <19: Proportional (up to 7 points)
+
+3. **Course Rigor - AP/IB (10 points)**
+   - AP Courses: 1.5 points per course (max 10)
+   - IB Score: (Score/45) × 10
+   - Fallback: 5 points if GPA ≥ 3.5 (assumes some rigor)
+
+**NON-ACADEMIC COMPONENTS (35 points total)**
+
+4. **Extracurricular Activities (15 points)**
+   - Recognition Level per activity:
+     - International: 3 points
+     - National: 2.5 points
+     - Regional: 1.5 points
+     - Local: 0.5 points
+   - Time Commitment per activity:
+     - 15+ hours/week: 1.5 points
+     - 10-14 hours/week: 1 point
+     - 5-9 hours/week: 0.5 points
+   - Total capped at 15 points (3-4 strong activities max out score)
+
+5. **Personal Statement Quality (10 points)**
+   - Exceptional: 10 points (Outstanding story, unique voice, compelling)
+   - Strong: 8 points (Well-written, engaging, clear narrative)
+   - Good: 6 points (Solid writing, decent storytelling)
+   - Average: 4 points (Basic competency, lacks depth)
+   - Weak: 2 points (Poor quality or minimal effort)
+   - Fallback: 2 points if essay exists but quality not rated
+
+6. **Recommendation Letters (5 points)**
+   - Base points for quantity:
+     - 3+ letters: 2 points
+     - 2 letters: 1.5 points
+     - 1 letter: 0.5 points
+   - Quality bonus per letter:
+     - Depth: "knows very well" (+0.8), "knows well" (+0.5), "knows somewhat" (+0.2)
+     - Relevance: "very relevant" (+0.5), "somewhat relevant" (+0.2)
+   - Total capped at 5 points
+
+7. **Legacy Status (2 points)**
+   - Has legacy: 2 points
+   - No legacy: 0 points
+
+8. **English Proficiency (3 points)**
+   - International students (TOEFL):
+     - 110-120: 3 points
+     - 100-109: 2.5 points
+     - 90-99: 2 points
+     - 80-89: 1.5 points
+     - <80: Proportional (up to 1.5 points)
+   - Domestic students: 3 points (no language barrier)
+
+### Score Ratings
+- 90-100: Exceptional (Ivy League competitive)
+- 80-89: Very Good (Top 20-50 schools competitive)
+- 70-79: Good (Top 100 schools competitive)
+- 60-69: Above Average (Solid state schools, many private universities)
+- 50-59: Average (Many colleges will accept)
+- Below 50: Needs Improvement
+
+### Deterministic Nature
+The calculation is purely mathematical and deterministic:
+- Same inputs ALWAYS produce same output
+- No randomness or AI-based scoring in the calculation
+- All thresholds and weights are clearly defined
+- Score can be manually verified using the formulas above
+
 ## Running Workflows
 Two workflows must be running for full functionality:
 1. **Start application** - Frontend React app on port 5000
