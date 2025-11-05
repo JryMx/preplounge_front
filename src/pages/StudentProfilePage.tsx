@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList, Loader2 } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -73,6 +73,7 @@ const StudentProfilePage: React.FC = () => {
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
   const { language } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const profileScoreRef = useRef<HTMLDivElement>(null);
   const schoolRecommendationsRef = useRef<HTMLDivElement>(null);
@@ -194,12 +195,14 @@ const StudentProfilePage: React.FC = () => {
         recommendations: { safety, target, reach, prestige },
       });
 
-      // Scroll to school recommendations section when navigating back
-      setTimeout(() => {
-        schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      // Only scroll to recommendations when navigating back from university detail page
+      if (location.state?.from === '/student-profile') {
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
     }
-  }, [profile?.recommendations]);
+  }, [profile?.recommendations, location.state]);
 
   const handleAcademicChange = (field: string, value: string) => {
     // Update the value
