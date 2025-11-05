@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import universitiesData from '../data/universities.json';
 
 export interface StudentProfile {
   // Academic Inputs
@@ -103,19 +104,34 @@ interface StudentProfileProviderProps {
   children: ReactNode;
 }
 
-// Mock school data with required scores
-const schoolsDatabase = [
-  { id: '1', name: 'Harvard University', requiredScore: 95, ranking: 2, acceptanceRate: 5.4 },
-  { id: '2', name: 'Stanford University', requiredScore: 94, ranking: 3, acceptanceRate: 4.8 },
-  { id: '3', name: 'MIT', requiredScore: 93, ranking: 4, acceptanceRate: 7.3 },
-  { id: '4', name: 'Yale University', requiredScore: 92, ranking: 5, acceptanceRate: 6.9 },
-  { id: '5', name: 'Princeton University', requiredScore: 91, ranking: 1, acceptanceRate: 5.8 },
-  { id: '6', name: 'UC Berkeley', requiredScore: 78, ranking: 22, acceptanceRate: 17.5 },
-  { id: '7', name: 'NYU', requiredScore: 72, ranking: 28, acceptanceRate: 21.1 },
-  { id: '8', name: 'Penn State', requiredScore: 65, ranking: 63, acceptanceRate: 76.0 },
-  { id: '9', name: 'University of Michigan', requiredScore: 80, ranking: 21, acceptanceRate: 26.0 },
-  { id: '10', name: 'UCLA', requiredScore: 82, ranking: 20, acceptanceRate: 14.3 },
-];
+// Convert universities data to searchable format with estimated required scores
+const schoolsDatabase = universitiesData.map((university: any) => {
+  // Estimate required score based on acceptance rate
+  // Lower acceptance rate = higher required score
+  let requiredScore = 50;
+  if (university.acceptanceRate) {
+    const rate = parseFloat(university.acceptanceRate);
+    if (rate <= 5) requiredScore = 95;
+    else if (rate <= 10) requiredScore = 90;
+    else if (rate <= 15) requiredScore = 85;
+    else if (rate <= 20) requiredScore = 80;
+    else if (rate <= 30) requiredScore = 75;
+    else if (rate <= 40) requiredScore = 70;
+    else if (rate <= 50) requiredScore = 65;
+    else if (rate <= 60) requiredScore = 60;
+    else if (rate <= 70) requiredScore = 55;
+    else requiredScore = 50;
+  }
+  
+  return {
+    id: university.id,
+    name: university.name,
+    englishName: university.englishName,
+    requiredScore,
+    ranking: university.ranking || 999,
+    acceptanceRate: parseFloat(university.acceptanceRate) || 0,
+  };
+});
 
 export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ children }) => {
   const [profile, setProfile] = useState<StudentProfile | null>(null);
@@ -362,9 +378,14 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   const searchSchools = (query: string): SchoolSearchResult[] => {
     if (!profile || !query.trim()) return [];
     
-    const filteredSchools = schoolsDatabase.filter(school =>
-      school.name.toLowerCase().includes(query.toLowerCase())
-    );
+    const lowerQuery = query.toLowerCase().trim();
+    
+    // Filter schools by searching both Korean name and English name
+    const filteredSchools = schoolsDatabase.filter(school => {
+      const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
+      const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
+      return koreanMatch || englishMatch;
+    });
 
     return filteredSchools.map(school => {
       const comparisonRatio = profile.profileRigorScore / school.requiredScore;
