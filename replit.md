@@ -32,10 +32,12 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Returns comprehensive university recommendations categorized as Safety/Target/Reach/Prestige
   - **HomePage**: Displays top 3 highest-quality schools per category with "More Detailed Analysis" button linking to `/student-profile`
   - **Profile Calculator Page**: Displays top 12 highest-quality schools per category for comprehensive analysis
+  - **Dashboard Page**: Displays top 3 schools per category with accurate profile score and prestige category support
   - All schools sorted by quality score for optimal recommendations
   - Full bilingual support for all results (Korean/English)
   - Real-time analysis with loading states and error handling
   - Clickable school cards navigate to detailed university profiles
+  - Recommendations saved to profile context and displayed on Dashboard after calculation
 - **AI-Powered Profile Analysis** (Student Profile Page):
   - Uses OpenAI-compatible API (gpt-5 model via https://llm.signalplanner.ai)
   - Backend API server (Node.js/Express on port 3001) handles AI requests
