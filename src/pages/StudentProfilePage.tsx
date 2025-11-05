@@ -259,6 +259,16 @@ const StudentProfilePage: React.FC = () => {
           requiredScore: 0,
           comparisonRatio: 0,
         })),
+        ...(apiData.recommendations.prestige || []).slice(0, 5).map((school, index) => ({
+          universityId: `prestige-${index}`,
+          universityName: school.name,
+          universityState: school.state || '',
+          category: 'prestige' as const,
+          admissionChance: Math.round(school.probability * 100),
+          strengthenAreas: [],
+          requiredScore: 0,
+          comparisonRatio: 0,
+        })),
       ];
       
       updateProfile({
