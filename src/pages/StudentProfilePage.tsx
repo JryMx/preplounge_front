@@ -91,6 +91,9 @@ const StudentProfilePage: React.FC = () => {
     reach: 3,
     prestige: 3
   });
+  
+  // Validation error states
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
 
   const [applicationComponents, setApplicationComponents] = useState<ApplicationComponents>(
     profile?.applicationComponents || {
@@ -199,8 +202,80 @@ const StudentProfilePage: React.FC = () => {
   }, [profile?.recommendations]);
 
   const handleAcademicChange = (field: string, value: string) => {
-    // Allow all typing - validation happens on form submission
+    // Update the value
     setAcademicData(prev => ({ ...prev, [field]: value }));
+    
+    // Real-time validation for visual feedback
+    const errors = { ...validationErrors };
+    
+    // Only validate if there's a value
+    if (value && value.trim() !== '') {
+      if (field === 'gpa') {
+        const num = parseFloat(value);
+        if (isNaN(num) || num < 0 || num > 4.0) {
+          errors.gpa = language === 'ko' ? 'GPA는 0과 4.0 사이여야 합니다' : 'GPA must be between 0 and 4.0';
+        } else {
+          delete errors.gpa;
+        }
+      }
+      
+      if (field === 'satEBRW') {
+        const num = parseInt(value);
+        if (isNaN(num) || num < 200 || num > 800) {
+          errors.satEBRW = language === 'ko' ? 'SAT EBRW는 200-800 사이여야 합니다' : 'SAT EBRW must be between 200-800';
+        } else {
+          delete errors.satEBRW;
+        }
+      }
+      
+      if (field === 'satMath') {
+        const num = parseInt(value);
+        if (isNaN(num) || num < 200 || num > 800) {
+          errors.satMath = language === 'ko' ? 'SAT Math는 200-800 사이여야 합니다' : 'SAT Math must be between 200-800';
+        } else {
+          delete errors.satMath;
+        }
+      }
+      
+      if (field === 'actScore') {
+        const num = parseInt(value);
+        if (isNaN(num) || num < 1 || num > 36) {
+          errors.actScore = language === 'ko' ? 'ACT는 1-36 사이여야 합니다' : 'ACT must be between 1-36';
+        } else {
+          delete errors.actScore;
+        }
+      }
+      
+      if (field === 'englishTestScore') {
+        const num = parseFloat(value);
+        const testType = academicData.englishProficiencyTest;
+        
+        if (testType === 'TOEFL iBT') {
+          if (isNaN(num) || num < 0 || num > 120) {
+            errors.englishTestScore = language === 'ko' ? 'TOEFL iBT는 0-120 사이여야 합니다' : 'TOEFL iBT must be between 0-120';
+          } else {
+            delete errors.englishTestScore;
+          }
+        } else if (testType === 'IELTS') {
+          if (isNaN(num) || num < 0 || num > 9) {
+            errors.englishTestScore = language === 'ko' ? 'IELTS는 0-9 사이여야 합니다' : 'IELTS must be between 0-9';
+          } else {
+            delete errors.englishTestScore;
+          }
+        } else if (testType === 'Duolingo English Test') {
+          if (isNaN(num) || num < 10 || num > 160) {
+            errors.englishTestScore = language === 'ko' ? 'Duolingo는 10-160 사이여야 합니다' : 'Duolingo must be between 10-160';
+          } else {
+            delete errors.englishTestScore;
+          }
+        }
+      }
+    } else {
+      // Clear error if field is empty
+      delete errors[field];
+    }
+    
+    setValidationErrors(errors);
   };
 
   const handleNonAcademicChange = (field: string, value: string | boolean) => {
@@ -832,12 +907,22 @@ const StudentProfilePage: React.FC = () => {
                       value={academicData.gpa}
                       onChange={(e) => handleAcademicChange('gpa', e.target.value)}
                       className="profile-form-input"
+                      style={{
+                        borderColor: validationErrors.gpa ? '#EF4444' : undefined,
+                        boxShadow: validationErrors.gpa ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                      }}
                       placeholder="3.8"
                       required
                     />
-                    <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                      {language === 'ko' ? '0.0 - 4.0 범위로 입력하세요' : 'Enter a value between 0.0 and 4.0'}
-                    </p>
+                    {validationErrors.gpa ? (
+                      <p style={{fontSize: '12px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                        ⚠️ {validationErrors.gpa}
+                      </p>
+                    ) : (
+                      <p style={{fontSize: '12px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                        {language === 'ko' ? '0.0 - 4.0 범위로 입력하세요' : 'Enter a value between 0.0 and 4.0'}
+                      </p>
+                    )}
                   </div>
 
                   <div className="profile-form-group">
@@ -888,8 +973,17 @@ const StudentProfilePage: React.FC = () => {
                           value={academicData.satEBRW}
                           onChange={(e) => handleAcademicChange('satEBRW', e.target.value)}
                           className="profile-form-input"
+                          style={{
+                            borderColor: validationErrors.satEBRW ? '#EF4444' : undefined,
+                            boxShadow: validationErrors.satEBRW ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                          }}
                           placeholder="720"
                         />
+                        {validationErrors.satEBRW && (
+                          <p style={{fontSize: '12px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                            ⚠️ {validationErrors.satEBRW}
+                          </p>
+                        )}
                       </div>
 
                       <div className="profile-form-group">
@@ -903,8 +997,17 @@ const StudentProfilePage: React.FC = () => {
                           value={academicData.satMath}
                           onChange={(e) => handleAcademicChange('satMath', e.target.value)}
                           className="profile-form-input"
+                          style={{
+                            borderColor: validationErrors.satMath ? '#EF4444' : undefined,
+                            boxShadow: validationErrors.satMath ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                          }}
                           placeholder="730"
                         />
+                        {validationErrors.satMath && (
+                          <p style={{fontSize: '12px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                            ⚠️ {validationErrors.satMath}
+                          </p>
+                        )}
                       </div>
                     </>
                   )}
@@ -921,8 +1024,17 @@ const StudentProfilePage: React.FC = () => {
                         value={academicData.actScore}
                         onChange={(e) => handleAcademicChange('actScore', e.target.value)}
                         className="profile-form-input"
+                        style={{
+                          borderColor: validationErrors.actScore ? '#EF4444' : undefined,
+                          boxShadow: validationErrors.actScore ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                        }}
                         placeholder="32"
                       />
+                      {validationErrors.actScore && (
+                        <p style={{fontSize: '12px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                          ⚠️ {validationErrors.actScore}
+                        </p>
+                      )}
                     </div>
                   )}
 
@@ -967,6 +1079,10 @@ const StudentProfilePage: React.FC = () => {
                         value={academicData.englishTestScore}
                         onChange={(e) => handleAcademicChange('englishTestScore', e.target.value)}
                         className="profile-form-input"
+                        style={{
+                          borderColor: validationErrors.englishTestScore ? '#EF4444' : undefined,
+                          boxShadow: validationErrors.englishTestScore ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                        }}
                         placeholder={
                           academicData.englishProficiencyTest === 'TOEFL iBT' ? '105' :
                           academicData.englishProficiencyTest === 'IELTS' ? '7.5' :
@@ -975,6 +1091,11 @@ const StudentProfilePage: React.FC = () => {
                           academicData.englishProficiencyTest === 'Duolingo English Test' ? '120' : ''
                         }
                       />
+                      {validationErrors.englishTestScore && (
+                        <p style={{fontSize: '12px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                          ⚠️ {validationErrors.englishTestScore}
+                        </p>
+                      )}
                     </div>
                   )}
                 </div>

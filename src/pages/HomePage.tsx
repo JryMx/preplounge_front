@@ -53,11 +53,26 @@ const HomePage: React.FC = () => {
   const [results, setResults] = useState<APIResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
 
   const handleGpaChange = (value: string) => {
     // Allow empty or valid decimal input while typing
     if (value === '' || /^\d*\.?\d*$/.test(value)) {
       setGpa(value);
+      
+      // Real-time validation
+      const errors = { ...validationErrors };
+      if (value && value.trim() !== '') {
+        const num = parseFloat(value);
+        if (isNaN(num) || num < 0 || num > 4.0) {
+          errors.gpa = language === 'ko' ? 'GPA는 0과 4.0 사이여야 합니다' : 'GPA must be between 0 and 4.0';
+        } else {
+          delete errors.gpa;
+        }
+      } else {
+        delete errors.gpa;
+      }
+      setValidationErrors(errors);
     }
   };
 
@@ -65,6 +80,20 @@ const HomePage: React.FC = () => {
     // Allow empty or digits only while typing
     if (value === '' || /^\d+$/.test(value)) {
       setSatMath(value);
+      
+      // Real-time validation
+      const errors = { ...validationErrors };
+      if (value && value.trim() !== '') {
+        const num = parseInt(value);
+        if (isNaN(num) || num < 200 || num > 800) {
+          errors.satMath = language === 'ko' ? 'SAT Math는 200-800 사이여야 합니다' : 'SAT Math must be between 200-800';
+        } else {
+          delete errors.satMath;
+        }
+      } else {
+        delete errors.satMath;
+      }
+      setValidationErrors(errors);
     }
   };
 
@@ -72,6 +101,20 @@ const HomePage: React.FC = () => {
     // Allow empty or digits only while typing
     if (value === '' || /^\d+$/.test(value)) {
       setSatEBRW(value);
+      
+      // Real-time validation
+      const errors = { ...validationErrors };
+      if (value && value.trim() !== '') {
+        const num = parseInt(value);
+        if (isNaN(num) || num < 200 || num > 800) {
+          errors.satEBRW = language === 'ko' ? 'SAT EBRW는 200-800 사이여야 합니다' : 'SAT EBRW must be between 200-800';
+        } else {
+          delete errors.satEBRW;
+        }
+      } else {
+        delete errors.satEBRW;
+      }
+      setValidationErrors(errors);
     }
   };
 
@@ -79,6 +122,20 @@ const HomePage: React.FC = () => {
     // Allow empty or digits only while typing
     if (value === '' || /^\d+$/.test(value)) {
       setActScore(value);
+      
+      // Real-time validation
+      const errors = { ...validationErrors };
+      if (value && value.trim() !== '') {
+        const num = parseInt(value);
+        if (isNaN(num) || num < 1 || num > 36) {
+          errors.actScore = language === 'ko' ? 'ACT는 1-36 사이여야 합니다' : 'ACT must be between 1-36';
+        } else {
+          delete errors.actScore;
+        }
+      } else {
+        delete errors.actScore;
+      }
+      setValidationErrors(errors);
     }
   };
 
@@ -262,12 +319,22 @@ const HomePage: React.FC = () => {
                   value={gpa}
                   onChange={(e) => handleGpaChange(e.target.value)}
                   className="profile-calculator-input"
+                  style={{
+                    borderColor: validationErrors.gpa ? '#EF4444' : undefined,
+                    boxShadow: validationErrors.gpa ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                  }}
                   placeholder="3.8"
                   data-testid="input-gpa-home"
                 />
-                <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                  {language === 'ko' ? '0.0 - 4.0 범위로 입력하세요' : 'Enter a value between 0.0 and 4.0'}
-                </p>
+                {validationErrors.gpa ? (
+                  <p style={{fontSize: '11px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                    ⚠️ {validationErrors.gpa}
+                  </p>
+                ) : (
+                  <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                    {language === 'ko' ? '0.0 - 4.0 범위로 입력하세요' : 'Enter a value between 0.0 and 4.0'}
+                  </p>
+                )}
               </div>
 
               <div className="profile-calculator-field">
@@ -307,12 +374,22 @@ const HomePage: React.FC = () => {
                       value={satMath}
                       onChange={(e) => handleSatMathChange(e.target.value)}
                       className="profile-calculator-input"
+                      style={{
+                        borderColor: validationErrors.satMath ? '#EF4444' : undefined,
+                        boxShadow: validationErrors.satMath ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                      }}
                       placeholder="720"
                       data-testid="input-sat-math-home"
                     />
-                    <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                      {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
-                    </p>
+                    {validationErrors.satMath ? (
+                      <p style={{fontSize: '11px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                        ⚠️ {validationErrors.satMath}
+                      </p>
+                    ) : (
+                      <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                        {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
+                      </p>
+                    )}
                   </div>
 
                   <div className="profile-calculator-field">
@@ -326,12 +403,22 @@ const HomePage: React.FC = () => {
                       value={satEBRW}
                       onChange={(e) => handleSatEBRWChange(e.target.value)}
                       className="profile-calculator-input"
+                      style={{
+                        borderColor: validationErrors.satEBRW ? '#EF4444' : undefined,
+                        boxShadow: validationErrors.satEBRW ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                      }}
                       placeholder="730"
                       data-testid="input-sat-ebrw-home"
                     />
-                    <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                      {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
-                    </p>
+                    {validationErrors.satEBRW ? (
+                      <p style={{fontSize: '11px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                        ⚠️ {validationErrors.satEBRW}
+                      </p>
+                    ) : (
+                      <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                        {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
+                      </p>
+                    )}
                   </div>
                 </>
               ) : (
@@ -346,12 +433,22 @@ const HomePage: React.FC = () => {
                     value={actScore}
                     onChange={(e) => handleActChange(e.target.value)}
                     className="profile-calculator-input"
+                    style={{
+                      borderColor: validationErrors.actScore ? '#EF4444' : undefined,
+                      boxShadow: validationErrors.actScore ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                    }}
                     placeholder="30"
                     data-testid="input-act-home"
                   />
-                  <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                    {language === 'ko' ? '1 - 36 범위로 입력하세요' : 'Enter a value between 1 and 36'}
-                  </p>
+                  {validationErrors.actScore ? (
+                    <p style={{fontSize: '11px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                      ⚠️ {validationErrors.actScore}
+                    </p>
+                  ) : (
+                    <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                      {language === 'ko' ? '1 - 36 범위로 입력하세요' : 'Enter a value between 1 and 36'}
+                    </p>
+                  )}
                 </div>
               )}
 
