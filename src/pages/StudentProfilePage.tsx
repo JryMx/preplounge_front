@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList, Loader2 } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
 import { useLanguage } from '../context/LanguageContext';
+import universitiesData from '../data/universities.json';
 import './student-profile-page.css';
 
 interface School {
@@ -39,6 +40,33 @@ interface AnalysisResult {
   strengths: string[];
   weaknesses: string[];
 }
+
+// Helper function to match API school name to database ID
+const findUniversityId = (bilingualName: string): string | null => {
+  // API returns names like "Harvard University (하버드 대학교)"
+  // Extract English name (before parenthesis)
+  const englishMatch = bilingualName.match(/^([^(]+)/);
+  const englishName = englishMatch ? englishMatch[1].trim() : '';
+  
+  // Extract Korean name (inside parenthesis)
+  const koreanMatch = bilingualName.match(/\(([^)]+)\)/);
+  const koreanName = koreanMatch ? koreanMatch[1].trim() : '';
+  
+  // Search for matching university in database
+  const university = universitiesData.find((uni: any) => {
+    const dbEnglish = uni.englishName?.toLowerCase() || '';
+    const dbKorean = uni.name?.toLowerCase() || '';
+    const searchEnglish = englishName.toLowerCase();
+    const searchKorean = koreanName.toLowerCase();
+    
+    // Match either English or Korean name
+    return (searchEnglish && dbEnglish.includes(searchEnglish)) || 
+           (searchKorean && dbKorean.includes(searchKorean)) ||
+           (searchEnglish && dbEnglish === searchEnglish);
+  });
+  
+  return university ? university.id : null;
+};
 
 const StudentProfilePage: React.FC = () => {
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
@@ -233,46 +261,39 @@ const StudentProfilePage: React.FC = () => {
       setApiResults(apiData);
       
       // Save API recommendations to profile context for dashboard
+      // Map API school names to real database IDs
       const allRecommendations = [
         ...(apiData.recommendations.safety || []).slice(0, 5).map((school, index) => ({
-          universityId: `safety-${index}`, // Use unique ID for each recommendation
+          universityId: findUniversityId(school.name) || `safety-${index}`, // Use real DB ID
           universityName: school.name, // Full bilingual name
           universityState: school.state || '', // State from API
           category: 'safety' as const,
           admissionChance: Math.round(school.probability * 100),
           strengthenAreas: [],
-          requiredScore: 0,
-          comparisonRatio: 0,
         })),
         ...(apiData.recommendations.target || []).slice(0, 5).map((school, index) => ({
-          universityId: `target-${index}`,
+          universityId: findUniversityId(school.name) || `target-${index}`,
           universityName: school.name,
           universityState: school.state || '',
           category: 'target' as const,
           admissionChance: Math.round(school.probability * 100),
           strengthenAreas: [],
-          requiredScore: 0,
-          comparisonRatio: 0,
         })),
         ...(apiData.recommendations.reach || []).slice(0, 5).map((school, index) => ({
-          universityId: `reach-${index}`,
+          universityId: findUniversityId(school.name) || `reach-${index}`,
           universityName: school.name,
           universityState: school.state || '',
           category: 'reach' as const,
           admissionChance: Math.round(school.probability * 100),
           strengthenAreas: [],
-          requiredScore: 0,
-          comparisonRatio: 0,
         })),
         ...(apiData.recommendations.prestige || []).slice(0, 5).map((school, index) => ({
-          universityId: `prestige-${index}`,
+          universityId: findUniversityId(school.name) || `prestige-${index}`,
           universityName: school.name,
           universityState: school.state || '',
           category: 'prestige' as const,
           admissionChance: Math.round(school.probability * 100),
           strengthenAreas: [],
-          requiredScore: 0,
-          comparisonRatio: 0,
         })),
       ];
       
