@@ -323,15 +323,24 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     // Only use API-calculated recommendations - no fallback
     const recommendations = profile?.recommendations || [];
     
-    // Filter recommendations by searching both Korean name and English name
+    // Filter recommendations by searching in the bilingual name from API
     const filteredRecommendations = recommendations.filter(rec => {
-      // Find the school in the database to get Korean/English names
-      const school = schoolsDatabase.find(s => s.id === rec.universityId);
-      if (!school) return false;
+      // The API returns names like "Harvard University (하버드 대학교)"
+      // This contains both Korean and English, so just search in that string
+      if (rec.universityName) {
+        const nameMatch = rec.universityName.toLowerCase().includes(lowerQuery);
+        if (nameMatch) return true;
+      }
       
-      const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
-      const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
-      return koreanMatch || englishMatch;
+      // Also try searching in the database as fallback
+      const school = schoolsDatabase.find(s => s.id === rec.universityId);
+      if (school) {
+        const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
+        const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
+        return koreanMatch || englishMatch;
+      }
+      
+      return false;
     });
     
     return filteredRecommendations.map(rec => {
