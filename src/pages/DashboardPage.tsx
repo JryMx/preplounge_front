@@ -457,7 +457,7 @@ const DashboardPage: React.FC = () => {
                   {t('dashboard.actions.browse')}
                 </Link>
 
-                <Link to="/universities/compare" className="dashboard-action-button secondary">
+                <Link to="/compare" className="dashboard-action-button secondary">
                   {t('dashboard.actions.compare')}
                 </Link>
 
