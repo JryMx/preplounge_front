@@ -35,6 +35,11 @@ interface APIResponse {
   };
 }
 
+interface AnalysisResult {
+  strengths: string[];
+  weaknesses: string[];
+}
+
 const StudentProfilePage: React.FC = () => {
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
   const { language } = useLanguage();
@@ -43,7 +48,7 @@ const StudentProfilePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'academic' | 'non-academic'>('academic');
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
-  const [aiAnalysis, setAiAnalysis] = useState<string>('');
+  const [aiAnalysis, setAiAnalysis] = useState<string | AnalysisResult>('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string>('');
   const [apiResults, setApiResults] = useState<APIResponse | null>(null);
