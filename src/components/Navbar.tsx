@@ -45,6 +45,9 @@ const Navbar: React.FC = () => {
                   <Link to="/universities" className="navbar-dropdown-item">
                     {t('nav.universities.all')}
                   </Link>
+                  <Link to="/universities/map" className="navbar-dropdown-item">
+                    {t('nav.universities.map')}
+                  </Link>
                   <Link to="/compare" className="navbar-dropdown-item">
                     {t('nav.universities.compare')}
                   </Link>
@@ -106,6 +109,13 @@ const Navbar: React.FC = () => {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {t('nav.universities.all')}
+                    </Link>
+                    <Link
+                      to="/universities/map"
+                      className="navbar-mobile-submenu-link"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {t('nav.universities.map')}
                     </Link>
                     <Link
                       to="/compare"

@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import ComparePage from './pages/ComparePage';
 import HousingPage from './pages/HousingPage';
+import UniversityMapPage from './pages/UniversityMapPage';
 import { AuthProvider } from './context/AuthContext';
 import { StudentProfileProvider } from './context/StudentProfileContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -26,6 +27,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/universities" element={<UniversitiesPage />} />
+                <Route path="/universities/map" element={<UniversityMapPage />} />
                 <Route path="/university/:id" element={<UniversityProfilePage />} />
                 <Route path="/student-profile" element={<StudentProfilePage />} />
                 <Route path="/profile-calculator" element={<ProfileCalculatorPage />} />

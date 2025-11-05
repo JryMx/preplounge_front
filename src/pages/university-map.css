@@ -1,0 +1,328 @@
+/* University Map Page */
+.university-map-page {
+  min-height: 100vh;
+  background: #FCF8F0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.map-page-header {
+  background: #082F49;
+  padding: 48px 32px;
+  color: white;
+}
+
+.map-header-content {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.map-page-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #FACC15;
+  margin-bottom: 12px;
+}
+
+.map-page-subtitle {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 24px;
+  max-width: 800px;
+}
+
+.map-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.map-stat-item {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #FACC15;
+  padding: 8px 16px;
+  background: rgba(250, 204, 21, 0.1);
+  border-radius: 8px;
+}
+
+/* Map Container */
+.map-container-wrapper {
+  flex: 1;
+  position: relative;
+  min-height: 600px;
+  background: #082F49;
+}
+
+.university-map {
+  width: 100%;
+  height: 600px;
+  z-index: 0;
+}
+
+/* Map Reset Button */
+.map-reset-button {
+  position: absolute;
+  top: 80px;
+  right: 10px;
+  z-index: 1000;
+  background: white;
+  border: 2px solid #082F49;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #082F49;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.map-reset-button:hover {
+  background: #FACC15;
+  border-color: #FACC15;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+}
+
+/* Custom Markers */
+.custom-marker {
+  background: transparent;
+  border: none;
+}
+
+.marker-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.marker-badge {
+  background: #082F49;
+  color: white;
+  border: 3px solid white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 12px rgba(8, 47, 73, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.marker-container.selected .marker-badge {
+  background: #FACC15;
+  color: #082F49;
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(250, 204, 21, 0.4);
+}
+
+.marker-label {
+  background: white;
+  color: #082F49;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Popup Styling */
+.map-popup {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-width: 200px;
+}
+
+.popup-title {
+  font-weight: 700;
+  font-size: 16px;
+  color: #082F49;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #FACC15;
+}
+
+.popup-details {
+  margin-bottom: 12px;
+}
+
+.popup-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.popup-label {
+  font-weight: 500;
+  font-size: 13px;
+  color: rgba(8, 47, 73, 0.7);
+}
+
+.popup-value {
+  font-weight: 600;
+  font-size: 14px;
+  color: #082F49;
+}
+
+.popup-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #FACC15;
+  color: #082F49;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.popup-link:hover {
+  background: #F59E0B;
+  transform: translateY(-1px);
+}
+
+/* Sidebar */
+.map-sidebar {
+  background: white;
+  padding: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sidebar-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #082F49;
+  margin-bottom: 20px;
+}
+
+.sidebar-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.sidebar-item {
+  padding: 16px;
+  background: #FCF8F0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+  border-color: #FACC15;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.2);
+}
+
+.sidebar-item.active {
+  border-color: #FACC15;
+  background: rgba(250, 204, 21, 0.1);
+}
+
+.sidebar-item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.sidebar-abbrev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #082F49;
+  color: white;
+  border-radius: 50%;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.sidebar-item.active .sidebar-abbrev {
+  background: #FACC15;
+  color: #082F49;
+}
+
+.sidebar-name {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #082F49;
+  flex: 1;
+}
+
+.sidebar-item-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(8, 47, 73, 0.1);
+}
+
+.sidebar-tuition {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #082F49;
+}
+
+.sidebar-link {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: #FACC15;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.sidebar-link:hover {
+  color: #F59E0B;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .map-page-title {
+    font-size: 36px;
+  }
+  
+  .university-map {
+    height: 400px;
+  }
+  
+  .sidebar-list {
+    grid-template-columns: 1fr;
+  }
+}
