@@ -392,7 +392,7 @@ const StudentProfilePage: React.FC = () => {
     }));
   };
 
-  const searchResults = searchQuery.trim() ? searchSchools(searchQuery) : [];
+  const searchResults = searchQuery.trim() ? searchSchools(searchQuery, language) : [];
   const currentScore = calculateProfileScore({
     ...academicData,
     ...nonAcademicData,
@@ -1333,60 +1333,81 @@ const StudentProfilePage: React.FC = () => {
                 <h3 className="profile-form-label" style={{marginBottom: '16px'}}>
                   {language === 'ko' ? '검색 결과' : 'Search Results'}
                 </h3>
-                {searchResults.map(school => (
-                  <div
-                    key={school.id}
-                    className="extracurricular-card"
-                    style={{
-                      borderColor: school.category === 'safety' ? '#FACC15' : school.category === 'target' ? '#F59E0B' : '#EF4444',
-                      background: school.category === 'safety' ? '#FFFBEB' : school.category === 'target' ? '#FFF7ED' : '#FEE2E2',
-                      marginBottom: '16px'
-                    }}
-                  >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{school.name}</h4>
-                      <p className="text-sm text-gray-600">
-                        #{school.ranking} • {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptanceRate}%
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-                        school.category === 'safety' ? 'bg-green-100 text-green-800' :
-                        school.category === 'target' ? 'bg-orange-100 text-orange-800' :
-                        'bg-red-100 text-red-800'
-                      }`}>
-                        {language === 'ko' ? (
-                          school.category === 'safety' ? '안전권' : 
-                          school.category === 'target' ? '적정권' : '도전권'
-                        ) : (
-                          school.category === 'safety' ? 'Safety' : 
-                          school.category === 'target' ? 'Target' : 'Reach'
+                {searchResults.map(school => {
+                  const hasApiData = school.category !== undefined;
+                  const categoryColor = 
+                    school.category === 'safety' ? '#10B981' : 
+                    school.category === 'target' ? '#F59E0B' : 
+                    school.category === 'reach' ? '#EF4444' : 
+                    school.category === 'prestige' ? '#8B5CF6' : '#D1D5DB';
+                  const categoryBg = 
+                    school.category === 'safety' ? '#ECFDF5' : 
+                    school.category === 'target' ? '#FFF7ED' : 
+                    school.category === 'reach' ? '#FEE2E2' : 
+                    school.category === 'prestige' ? '#F5F3FF' : '#F9FAFB';
+                  
+                  return (
+                    <div
+                      key={school.id}
+                      className="extracurricular-card"
+                      style={{
+                        borderColor: categoryColor,
+                        background: categoryBg,
+                        marginBottom: '12px'
+                      }}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div style={{ flex: 1 }}>
+                          <h4 className="font-semibold text-gray-900">{school.name}</h4>
+                          <p className="text-sm text-gray-600">
+                            #{school.ranking} • {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptanceRate}%
+                          </p>
+                        </div>
+                        {hasApiData && (
+                          <div className="text-right">
+                            <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
+                              school.category === 'safety' ? 'bg-green-100 text-green-800' :
+                              school.category === 'target' ? 'bg-orange-100 text-orange-800' :
+                              school.category === 'reach' ? 'bg-red-100 text-red-800' :
+                              'bg-purple-100 text-purple-800'
+                            }`}>
+                              {language === 'ko' ? (
+                                school.category === 'safety' ? '안전권' : 
+                                school.category === 'target' ? '적정권' : 
+                                school.category === 'reach' ? '도전권' : '명문권'
+                              ) : (
+                                school.category === 'safety' ? 'Safety' : 
+                                school.category === 'target' ? 'Target' : 
+                                school.category === 'reach' ? 'Reach' : 'Prestige'
+                              )}
+                            </div>
+                          </div>
                         )}
                       </div>
+                      
+                      {hasApiData && (
+                        <div className="mt-4 text-sm">
+                          <div>
+                            <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성' : 'Admission Probability'}:</span>
+                            <span className="ml-2 font-bold text-lg" style={{ color: '#082F49' }}>
+                              {school.admissionProbability}%
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {!hasApiData && (
+                        <div className="mt-4 text-sm text-gray-500">
+                          {language === 'ko' 
+                            ? '프로필 점수를 계산하면 합격 가능성을 확인할 수 있습니다.' 
+                            : 'Calculate your profile score to see admission probability.'}
+                        </div>
+                      )}
                     </div>
-                  </div>
-                  
-                  <div className="grid md:grid-cols-2 gap-4 mt-4 text-sm">
-                    <div>
-                      <span className="font-medium text-gray-600">{language === 'ko' ? '합격률' : 'Acceptance Rate'}:</span>
-                      <span className="ml-2 font-bold">{school.acceptanceRate}%</span>
-                    </div>
-                    <div>
-                      <span className="font-medium text-gray-600">{language === 'ko' ? '예상 합격 확률' : 'Admission Probability'}:</span>
-                      <span className="ml-2 font-bold" style={{
-                        color: school.category === 'safety' ? '#15803D' : 
-                               school.category === 'target' ? '#F59E0B' : 
-                               school.category === 'reach' ? '#DC2626' : '#7C3AED'
-                      }}>
-                        {school.admissionProbability}%
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+                  );
+                })}
+              </div>
+            )}
 
           {showResults && searchResults.length === 0 && searchQuery.trim() && (
             <div className="text-center py-8 text-gray-500">

@@ -75,13 +75,13 @@ interface StudentProfileContextType {
   updateProfile: (profile: Partial<StudentProfile>) => void;
   calculateProfileScore: (profile: Partial<StudentProfile>) => number;
   getRecommendations: () => SchoolRecommendation[];
-  searchSchools: (query: string) => SchoolSearchResult[];
+  searchSchools: (query: string, currentLanguage?: string) => SchoolSearchResult[];
 }
 
 export interface SchoolSearchResult {
   id: string;
   name: string;
-  category: 'safety' | 'target' | 'reach' | 'prestige';
+  category?: 'safety' | 'target' | 'reach' | 'prestige';
   ranking: number;
   acceptanceRate: number;
   admissionProbability: number;
@@ -315,16 +315,13 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     return [];
   };
 
-  const searchSchools = (query: string): SchoolSearchResult[] => {
+  const searchSchools = (query: string, currentLanguage?: string): SchoolSearchResult[] => {
     if (!query.trim()) return [];
     
     const lowerQuery = query.toLowerCase().trim();
     
     // Get API recommendations if available
     const recommendations = profile?.recommendations || [];
-    
-    console.log('Search - Total recommendations:', recommendations.length);
-    console.log('Search - Sample recommendation IDs:', recommendations.slice(0, 3).map(r => r.universityId));
     
     // Search through ALL schools in database
     const filteredSchools = schoolsDatabase.filter(school => {
@@ -333,22 +330,18 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       return koreanMatch || englishMatch;
     });
     
-    console.log('Search - Found schools:', filteredSchools.length);
-    
     // Map results and add API probability if available
     return filteredSchools.slice(0, 50).map(school => {
       // Try to find API recommendation for this school
       const apiRec = recommendations.find(rec => rec.universityId === school.id);
       
-      console.log(`School ${school.id} (${school.englishName}): API match = ${apiRec ? 'YES' : 'NO'}`);
-      
-      // Create bilingual name: "English Name (Korean Name)"
-      const bilingualName = `${school.englishName} (${school.name})`;
+      // Use language-appropriate name
+      const displayName = currentLanguage === 'en' ? school.englishName : school.name;
       
       return {
         id: school.id,
-        name: bilingualName,
-        category: apiRec?.category || 'reach', // Default to reach if no API data
+        name: displayName,
+        category: apiRec?.category, // Undefined if no API data
         ranking: school.ranking,
         acceptanceRate: school.acceptanceRate,
         admissionProbability: apiRec ? Math.round(apiRec.admissionChance * 10) / 10 : 0,
