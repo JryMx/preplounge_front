@@ -365,25 +365,6 @@ const HomePage: React.FC = () => {
           <div className="profile-calculator-content">
             {/* Left side - Input Form */}
             <div className="profile-calculator-form">
-              {/* Score Preview */}
-              <div className="score-preview-box">
-                <div className="score-preview-label">
-                  {language === 'ko' ? '프로필 점수' : 'Profile Score'}
-                </div>
-                <div className="score-preview-value">
-                  {calculateScorePreview() !== null ? calculateScorePreview() : '--'} / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
-                </div>
-                <div className="score-preview-hint">
-                  {language === 'ko' ? 'GPA와 SAT 점수를 기반으로 한 간단한 계산입니다.' : 'Basic calculation based on GPA and test scores.'}
-                  <br />
-                  {language === 'ko' ? '과외활동, 에세이, 개인화된 대학 추천을 포함한 종합적인' : 'For comprehensive'}
-                  <br />
-                  {language === 'ko' ? '분석을 위해서는 전체 프로필을 완성해주세요.' : 'analysis with activities, essays, and personalized'}
-                  <br />
-                  {language === 'ko' ? '' : 'recommendations, complete your full profile.'}
-                </div>
-              </div>
-
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
                   {t('home.calculator.gpa')}
@@ -552,6 +533,27 @@ const HomePage: React.FC = () => {
                 </div>
               )}
             </div>
+
+            {/* Right side - Score Preview */}
+            {!results && (
+              <div className="score-preview-box">
+                <div className="score-preview-label">
+                  {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                </div>
+                <div className="score-preview-value">
+                  {calculateScorePreview() !== null ? calculateScorePreview() : '--'} / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
+                </div>
+                <div className="score-preview-hint">
+                  {language === 'ko' ? 'GPA와 SAT 점수를 기반으로 한 간단한 계산입니다.' : 'Basic calculation based on GPA and test scores.'}
+                  <br />
+                  {language === 'ko' ? '과외활동, 에세이, 개인화된 대학 추천을 포함한 종합적인' : 'For comprehensive'}
+                  <br />
+                  {language === 'ko' ? '분석을 위해서는 전체 프로필을 완성해주세요.' : 'analysis with activities, essays, and personalized'}
+                  <br />
+                  {language === 'ko' ? '' : 'recommendations, complete your full profile.'}
+                </div>
+              </div>
+            )}
 
             {/* Right side - Results Display */}
             {results && (
