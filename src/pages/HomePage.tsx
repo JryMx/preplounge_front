@@ -210,6 +210,64 @@ const HomePage: React.FC = () => {
     fetchAnalysis();
   };
 
+  // Calculate score preview in real-time based on GPA and test scores
+  const calculateScorePreview = (): number | null => {
+    let score = 0;
+    
+    // GPA validation
+    const gpaNum = gpa ? parseFloat(gpa) : null;
+    if (!gpaNum || gpaNum < 0 || gpaNum > 4.0) return null;
+    
+    // GPA Score (30 points max)
+    if (gpaNum >= 3.9) score += 30;
+    else if (gpaNum >= 3.7) score += 28;
+    else if (gpaNum >= 3.5) score += 25;
+    else if (gpaNum >= 3.3) score += 22;
+    else if (gpaNum >= 3.0) score += 19;
+    else if (gpaNum >= 2.7) score += 15;
+    else if (gpaNum >= 2.5) score += 12;
+    else if (gpaNum >= 2.0) score += 8;
+    else score += (gpaNum / 4.0) * 8;
+    
+    // Test Score (25 points max)
+    if (testType === 'SAT') {
+      const mathNum = satMath ? parseInt(satMath) : null;
+      const ebrwNum = satEBRW ? parseInt(satEBRW) : null;
+      
+      if (mathNum && ebrwNum && mathNum >= 200 && mathNum <= 800 && ebrwNum >= 200 && ebrwNum <= 800) {
+        const totalSAT = mathNum + ebrwNum;
+        if (totalSAT >= 1500) score += 25;
+        else if (totalSAT >= 1400) score += 23;
+        else if (totalSAT >= 1300) score += 20;
+        else if (totalSAT >= 1200) score += 17;
+        else if (totalSAT >= 1100) score += 14;
+        else if (totalSAT >= 1000) score += 11;
+        else if (totalSAT >= 900) score += 8;
+        else score += (totalSAT / 1600) * 8;
+      }
+    } else if (testType === 'ACT') {
+      const actNum = actScore ? parseInt(actScore) : null;
+      
+      if (actNum && actNum >= 1 && actNum <= 36) {
+        if (actNum >= 34) score += 25;
+        else if (actNum >= 31) score += 23;
+        else if (actNum >= 28) score += 20;
+        else if (actNum >= 25) score += 17;
+        else if (actNum >= 22) score += 14;
+        else if (actNum >= 19) score += 11;
+        else if (actNum >= 16) score += 8;
+        else score += (actNum / 36) * 8;
+      }
+    }
+    
+    // Course Rigor placeholder (5 points) - assumes some rigor if GPA is strong
+    if (gpaNum >= 3.5) {
+      score += 5;
+    }
+    
+    return Math.round(score);
+  };
+
   const isFormValid = () => {
     if (!gpa) return false;
     if (testType === 'SAT') return satMath && satEBRW;
@@ -307,6 +365,25 @@ const HomePage: React.FC = () => {
           <div className="profile-calculator-content">
             {/* Left side - Input Form */}
             <div className="profile-calculator-form">
+              {/* Score Preview */}
+              <div className="score-preview-box">
+                <div className="score-preview-label">
+                  {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                </div>
+                <div className="score-preview-value">
+                  {calculateScorePreview() !== null ? calculateScorePreview() : '--'} / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
+                </div>
+                <div className="score-preview-hint">
+                  {language === 'ko' ? 'GPA와 SAT 점수를 기반으로 한 간단한 계산입니다.' : 'Basic calculation based on GPA and test scores.'}
+                  <br />
+                  {language === 'ko' ? '과외활동, 에세이, 개인화된 대학 추천을 포함한 종합적인' : 'For comprehensive'}
+                  <br />
+                  {language === 'ko' ? '분석을 위해서는 전체 프로필을 완성해주세요.' : 'analysis with activities, essays, and personalized'}
+                  <br />
+                  {language === 'ko' ? '' : 'recommendations, complete your full profile.'}
+                </div>
+              </div>
+
               <div className="profile-calculator-field">
                 <label className="profile-calculator-label">
                   {t('home.calculator.gpa')}

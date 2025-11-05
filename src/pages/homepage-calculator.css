@@ -188,3 +188,61 @@
 .detailed-analysis-button:hover svg {
   transform: translateX(3px);
 }
+
+/* Score Preview Box */
+.score-preview-box {
+  width: 100%;
+  padding: 24px;
+  background: linear-gradient(135deg, #082F49 0%, #0A3A5C 100%);
+  border: 3px solid #FFFFFF;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  box-shadow: 0px 8px 24px rgba(8, 47, 73, 0.15);
+}
+
+.score-preview-label {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.score-preview-value {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 60px;
+  line-height: 100%;
+  letter-spacing: -0.02em;
+  color: #FACC15;
+  text-align: center;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.score-preview-value .score-max {
+  font-size: 36px;
+  color: #FFFFFF;
+  line-height: 43px;
+}
+
+.score-preview-hint {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 8px;
+}
