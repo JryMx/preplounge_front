@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList, Loader2 } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
@@ -129,6 +129,68 @@ const StudentProfilePage: React.FC = () => {
   const [recommendationLetters, setRecommendationLetters] = useState<RecommendationLetter[]>(
     profile?.recommendationLetters || []
   );
+
+  // Restore recommendations display when navigating back
+  useEffect(() => {
+    if (profile?.recommendations && profile.recommendations.length > 0) {
+      setShowResults(true);
+      
+      // Reconstruct apiResults from saved recommendations
+      const safety = profile.recommendations
+        .filter(r => r.category === 'safety')
+        .map(r => ({
+          name: r.universityName || '',
+          state: r.universityState || '',
+          probability: r.admissionChance / 100,
+          quality_score: 0.5, // Default value
+        }));
+      
+      const target = profile.recommendations
+        .filter(r => r.category === 'target')
+        .map(r => ({
+          name: r.universityName || '',
+          state: r.universityState || '',
+          probability: r.admissionChance / 100,
+          quality_score: 0.5,
+        }));
+      
+      const reach = profile.recommendations
+        .filter(r => r.category === 'reach')
+        .map(r => ({
+          name: r.universityName || '',
+          state: r.universityState || '',
+          probability: r.admissionChance / 100,
+          quality_score: 0.5,
+        }));
+      
+      const prestige = profile.recommendations
+        .filter(r => r.category === 'prestige')
+        .map(r => ({
+          name: r.universityName || '',
+          state: r.universityState || '',
+          probability: r.admissionChance / 100,
+          quality_score: 0.5,
+        }));
+      
+      setApiResults({
+        student_profile: {
+          gpa: profile.gpa || 0,
+          sat_score: profile.satMath && profile.satEBRW ? profile.satMath + profile.satEBRW : null,
+          act_score: profile.actScore || null,
+          test_type: profile.satMath ? 'SAT' : 'ACT',
+        },
+        summary: {
+          total_schools: profile.recommendations.length,
+          total_analyzed: profile.recommendations.length,
+          safety_schools: safety.length,
+          target_schools: target.length,
+          reach_schools: reach.length,
+          prestige_schools: prestige.length,
+        },
+        recommendations: { safety, target, reach, prestige },
+      });
+    }
+  }, [profile?.recommendations]);
 
   const handleAcademicChange = (field: string, value: string) => {
     if (field === 'gpa') {
