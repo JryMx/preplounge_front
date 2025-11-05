@@ -74,7 +74,7 @@ Now analyze this student's profile and return the JSON:`;
 
     // Call OpenAI-compatible API with timeout
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    const timeout = setTimeout(() => controller.abort(), 60000); // 60 second timeout
     
     const apiResponse = await fetch('https://llm.signalplanner.ai/v1/chat/completions', {
       method: 'POST',
@@ -157,7 +157,7 @@ Now analyze this student's profile and return the JSON:`;
     if (error.name === 'AbortError') {
       return res.status(504).json({ 
         error: 'Request timeout',
-        message: 'The AI analysis request took too long. Please try again.' 
+        message: 'The AI analysis request took too long (>60 seconds). Please try again.' 
       });
     }
     
