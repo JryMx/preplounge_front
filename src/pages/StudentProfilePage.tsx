@@ -199,12 +199,56 @@ const StudentProfilePage: React.FC = () => {
   }, [profile?.recommendations]);
 
   const handleAcademicChange = (field: string, value: string) => {
+    // Allow empty string for all fields
+    if (value === '') {
+      setAcademicData(prev => ({ ...prev, [field]: value }));
+      return;
+    }
+
+    // GPA validation: 0-4.0
     if (field === 'gpa') {
       const numValue = parseFloat(value);
-      if (value && (numValue < 0 || numValue > 4.0)) {
+      if (numValue < 0 || numValue > 4.0) {
         return;
       }
     }
+    
+    // SAT section validation: 200-800
+    if (field === 'satEBRW' || field === 'satMath') {
+      const numValue = parseInt(value);
+      if (numValue < 200 || numValue > 800) {
+        return;
+      }
+    }
+    
+    // ACT validation: 1-36
+    if (field === 'actScore') {
+      const numValue = parseInt(value);
+      if (numValue < 1 || numValue > 36) {
+        return;
+      }
+    }
+    
+    // English test score validation based on test type
+    if (field === 'englishTestScore') {
+      const numValue = parseFloat(value);
+      const testType = academicData.englishProficiencyTest;
+      
+      if (testType === 'TOEFL iBT') {
+        if (numValue < 0 || numValue > 120) {
+          return;
+        }
+      } else if (testType === 'IELTS') {
+        if (numValue < 0 || numValue > 9) {
+          return;
+        }
+      } else if (testType === 'Duolingo English Test') {
+        if (numValue < 10 || numValue > 160) {
+          return;
+        }
+      }
+    }
+    
     setAcademicData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -1047,11 +1091,12 @@ const StudentProfilePage: React.FC = () => {
                             <input
                               type="number"
                               min="0"
-                              max="40"
+                              max="168"
                               value={activity.hoursPerWeek || ''}
                               onChange={(e) => {
                                 const val = e.target.value === '' ? 0 : parseInt(e.target.value);
-                                updateExtracurricular(activity.id, 'hoursPerWeek', isNaN(val) ? 0 : val);
+                                const validVal = isNaN(val) ? 0 : Math.min(Math.max(val, 0), 168);
+                                updateExtracurricular(activity.id, 'hoursPerWeek', validVal);
                               }}
                               className="profile-form-input"
                               placeholder="10"
