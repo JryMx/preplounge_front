@@ -59,19 +59,7 @@ const DashboardPage: React.FC = () => {
   const safetySchools = recommendations.filter(r => r.category === 'safety');
   const targetSchools = recommendations.filter(r => r.category === 'target');
   const reachSchools = recommendations.filter(r => r.category === 'reach');
-
-  const profileStrength = () => {
-    const satScore = getSatScore();
-    const factors = [
-      profile.gpa >= 3.7,
-      satScore >= 1400 || profile.actScore >= 30,
-      profile.extracurriculars.length >= 3,
-      profile.leadership.length >= 1,
-      profile.awards.length >= 1,
-      profile.apCourses >= 3,
-    ];
-    return Math.round((factors.filter(Boolean).length / factors.length) * 100);
-  };
+  const prestigeSchools = recommendations.filter(r => r.category === 'prestige');
 
   return (
     <div className="dashboard-page">
@@ -89,7 +77,7 @@ const DashboardPage: React.FC = () => {
           <div className="dashboard-stat-card">
             <div className="dashboard-stat-info">
               <span className="dashboard-stat-label">{t('dashboard.stat.profile')}</span>
-              <span className="dashboard-stat-value" style={{ color: '#3B82F6' }}>{profileStrength()}%</span>
+              <span className="dashboard-stat-value" style={{ color: '#3B82F6' }}>{profile.profileScore || 0}</span>
             </div>
             <div className="dashboard-stat-icon" style={{ background: '#DBEAFE' }}>
               <BarChart3 className="h-7 w-7" style={{ color: '#3B82F6' }} />
@@ -241,6 +229,43 @@ const DashboardPage: React.FC = () => {
                 })}
               </div>
             </div>
+
+            {prestigeSchools.length > 0 && (
+              <div className="dashboard-category">
+                <div className="dashboard-category-header">
+                  <div className="dashboard-category-icon" style={{ background: '#FEF3C7' }}>
+                    <Award className="h-5 w-5" style={{ color: '#FACC15' }} />
+                  </div>
+                  <h3 className="dashboard-category-title">{t('dashboard.category.prestige')}</h3>
+                  <span className="dashboard-category-badge" style={{ background: '#FEF3C7', color: '#D97706' }}>Elite</span>
+                </div>
+                <div className="dashboard-schools-list">
+                  {prestigeSchools.slice(0, 3).map(rec => {
+                    const displayName = parseBilingualText(rec.universityName, language);
+                    const displayState = parseBilingualText(rec.universityState, language);
+                    
+                    return (
+                      <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#FFFBEB', borderColor: '#FACC15' }}>
+                        <div className="dashboard-school-content">
+                          <div className="dashboard-school-left">
+                            <div className="dashboard-school-info">
+                              <h4 className="dashboard-school-name">{displayName}</h4>
+                              {displayState && (
+                                <p className="dashboard-school-meta">{displayState}</p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="dashboard-school-right">
+                            <p className="dashboard-school-chance" style={{ color: '#D97706' }}>{rec.admissionChance}%</p>
+                            <p className="dashboard-school-chance-label">{t('dashboard.chance')}</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="dashboard-sidebar">
