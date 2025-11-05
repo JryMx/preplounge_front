@@ -28,7 +28,7 @@ interface UniversityWithCoords {
 }
 
 // Map Reset Button Component
-function MapResetButton() {
+function MapResetButton({ label }: { label: string }) {
   const map = useMap();
   
   const handleReset = () => {
@@ -37,13 +37,13 @@ function MapResetButton() {
   
   return (
     <button onClick={handleReset} className="map-reset-button">
-      Reset View
+      {label}
     </button>
   );
 }
 
 const UniversityMapPage: React.FC = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null);
 
   // Filter universities that have coordinate data
@@ -103,16 +103,14 @@ const UniversityMapPage: React.FC = () => {
       <div className="map-page-header">
         <div className="map-header-content">
           <h1 className="map-page-title">
-            {language === 'ko' ? '대학 지도' : 'University Map'}
+            {t('map.title')}
           </h1>
           <p className="map-page-subtitle">
-            {language === 'ko' 
-              ? '미국 전역의 주요 대학 위치와 학비 정보를 한눈에 확인하세요' 
-              : 'Explore locations and tuition information for major universities across the United States'}
+            {t('map.subtitle')}
           </p>
           <div className="map-stats">
             <span className="map-stat-item">
-              {universitiesWithCoords.length} {language === 'ko' ? '개 대학 표시' : 'Universities Displayed'}
+              {universitiesWithCoords.length} {t('map.universities.count')}
             </span>
           </div>
         </div>
@@ -131,7 +129,7 @@ const UniversityMapPage: React.FC = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           
-          <MapResetButton />
+          <MapResetButton label={t('map.reset.view')} />
           
           {universitiesWithCoords.map((university) => (
             <Marker

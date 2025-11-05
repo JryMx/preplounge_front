@@ -17,6 +17,12 @@ const translations = {
     'nav.universities.all': '전체 학교 보기',
     'nav.universities.compare': '학교 비교하기',
     'nav.universities.map': '지도에서 보기',
+    
+    // University Map Page
+    'map.title': '대학 지도',
+    'map.subtitle': '미국 전역의 주요 대학 위치와 학비 정보를 한눈에 확인하세요',
+    'map.universities.count': '개 대학 표시',
+    'map.reset.view': '위치 초기화',
     'nav.profile': '프로필 분석',
     'nav.consulting': '컨설팅 추천',
     'nav.housing': '주거 지원',
@@ -364,6 +370,13 @@ const translations = {
     'nav.universities.all': 'View All Schools',
     'nav.universities.compare': 'Compare Schools',
     'nav.universities.map': 'Map View',
+    
+    // University Map Page
+    'map.title': 'University Map',
+    'map.subtitle': 'Explore major U.S. universities and their tuition information at a glance',
+    'map.universities.count': 'universities displayed',
+    'map.reset.view': 'Reset View',
+    
     'nav.profile': 'Profile Analysis',
     'nav.consulting': 'Consulting',
     'nav.housing': 'Housing Support',
