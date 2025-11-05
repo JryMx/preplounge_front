@@ -463,6 +463,54 @@ const StudentProfilePage: React.FC = () => {
       profileScoreRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
     
+    // Calculate areas to strengthen based on profile weaknesses
+    const calculateStrengthenAreas = (profile: any): string[] => {
+      const areas: string[] = [];
+      
+      // Check GPA (below 3.5 is concerning for reach schools)
+      if (profile.gpa < 3.5) {
+        areas.push(language === 'ko' ? 'GPA' : 'GPA');
+      }
+      
+      // Check test scores
+      const satTotal = (profile.satEBRW || 0) + (profile.satMath || 0);
+      if (profile.actScore === 0 && satTotal === 0) {
+        areas.push(language === 'ko' ? '표준화 시험 점수' : 'Standardized Test Scores');
+      } else if (satTotal > 0 && satTotal < 1400) {
+        areas.push(language === 'ko' ? 'SAT 점수' : 'SAT Score');
+      } else if (profile.actScore > 0 && profile.actScore < 30) {
+        areas.push(language === 'ko' ? 'ACT 점수' : 'ACT Score');
+      }
+      
+      // Check extracurriculars (need at least 3 meaningful activities)
+      if (profile.extracurriculars.length < 3) {
+        areas.push(language === 'ko' ? '과외 활동' : 'Extracurricular Activities');
+      }
+      
+      // Check leadership (need at least 1 leadership position)
+      const hasLeadership = profile.extracurriculars.some((ec: any) => 
+        ec.type === 'Leadership' || ec.description.toLowerCase().includes('president') || 
+        ec.description.toLowerCase().includes('captain') || ec.description.toLowerCase().includes('leader')
+      );
+      if (!hasLeadership) {
+        areas.push(language === 'ko' ? '리더십 경험' : 'Leadership Experience');
+      }
+      
+      // Check recommendation letters (need at least 2)
+      if (profile.recommendationLetters.length < 2) {
+        areas.push(language === 'ko' ? '추천서' : 'Recommendation Letters');
+      }
+      
+      // Check personal statement
+      if (!profile.personalStatement || profile.personalStatement.trim().length < 100) {
+        areas.push(language === 'ko' ? '개인 에세이' : 'Personal Essay');
+      }
+      
+      return areas;
+    };
+    
+    const strengthenAreas = calculateStrengthenAreas(profileData);
+    
     // Fetch school recommendations from PrepLounge API
     try {
       let apiUrl = 'https://dev.preplounge.ai/?';
@@ -500,7 +548,7 @@ const StudentProfilePage: React.FC = () => {
             universityState: school.state || '', // State from API
             category: 'safety' as const,
             admissionChance: Math.round(school.probability * 100),
-            strengthenAreas: [],
+            strengthenAreas: [], // Safety schools don't need strengthen areas
             qualityScore: school.quality_score || 0,
           };
         }),
@@ -512,7 +560,7 @@ const StudentProfilePage: React.FC = () => {
             universityState: school.state || '',
             category: 'target' as const,
             admissionChance: Math.round(school.probability * 100),
-            strengthenAreas: [],
+            strengthenAreas: [], // Target schools don't need strengthen areas
             qualityScore: school.quality_score || 0,
           };
         }),
@@ -524,7 +572,7 @@ const StudentProfilePage: React.FC = () => {
             universityState: school.state || '',
             category: 'reach' as const,
             admissionChance: Math.round(school.probability * 100),
-            strengthenAreas: [],
+            strengthenAreas: strengthenAreas, // Show areas to strengthen for reach schools
             qualityScore: school.quality_score || 0,
           };
         }),
@@ -536,7 +584,7 @@ const StudentProfilePage: React.FC = () => {
             universityState: school.state || '',
             category: 'prestige' as const,
             admissionChance: Math.round(school.probability * 100),
-            strengthenAreas: [],
+            strengthenAreas: strengthenAreas, // Show areas to strengthen for prestige schools
             qualityScore: school.quality_score || 0,
           };
         }),
