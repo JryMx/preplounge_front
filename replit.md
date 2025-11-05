@@ -81,6 +81,18 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Comprehensive table view with all comparison data
   - Full bilingual support for all metrics and labels
 - **Housing Support**: Provides real estate listings, currently restricted to California and Georgia, with clear messaging and validation for state-specific searches.
+- **Consulting Programs Directory**: 
+  - Displays 21 verified Korean study abroad consulting companies
+  - Data sourced from Excel file (Sheet 2) with real company information
+  - **Program Tags**: 24 unique service tags parsed from Excel Tags column
+    - Academic: SAT, ACT, AP, IB, A-Level, IGCSE, TOEFL, IELTS, Duolingo, GPA 관리
+    - Activities: 대외활동, 봉사활동, 인턴십, 연구활동, 대회
+    - Services: 집중 컨설팅, 에세이 작성, 추천서 관리, 인터뷰 준비, 아트 컨설팅, 영어시험
+    - Specialized: STEM, 메디컬, 로스쿨
+  - Infinite scroll implementation loads 10 companies initially, then 10 more as user scrolls down
+  - Filtering by specialization tags (multi-select)
+  - Full bilingual support with English translations for all Korean tags
+  - Company details: Name, address, contact info (phone, email, website), service tags
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 
 ## External Dependencies
