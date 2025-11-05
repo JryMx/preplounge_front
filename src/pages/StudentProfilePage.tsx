@@ -260,12 +260,11 @@ const StudentProfilePage: React.FC = () => {
       console.log('API Response:', apiData);
       setApiResults(apiData);
       
-      // Save API recommendations to profile context for dashboard
+      // Save ALL API recommendations to profile context (not just top 5)
       // Map API school names to real database IDs
       const allRecommendations = [
-        ...(apiData.recommendations.safety || []).slice(0, 5).map((school, index) => {
+        ...(apiData.recommendations.safety || []).map((school, index) => {
           const universityId = findUniversityId(school.name);
-          console.log(`Safety school: ${school.name} -> ID: ${universityId}`);
           return {
             universityId: universityId || `safety-${index}`, // Use real DB ID
             universityName: school.name, // Full bilingual name
@@ -275,9 +274,8 @@ const StudentProfilePage: React.FC = () => {
             strengthenAreas: [],
           };
         }),
-        ...(apiData.recommendations.target || []).slice(0, 5).map((school, index) => {
+        ...(apiData.recommendations.target || []).map((school, index) => {
           const universityId = findUniversityId(school.name);
-          console.log(`Target school: ${school.name} -> ID: ${universityId}`);
           return {
             universityId: universityId || `target-${index}`,
             universityName: school.name,
@@ -287,9 +285,8 @@ const StudentProfilePage: React.FC = () => {
             strengthenAreas: [],
           };
         }),
-        ...(apiData.recommendations.reach || []).slice(0, 5).map((school, index) => {
+        ...(apiData.recommendations.reach || []).map((school, index) => {
           const universityId = findUniversityId(school.name);
-          console.log(`Reach school: ${school.name} -> ID: ${universityId}`);
           return {
             universityId: universityId || `reach-${index}`,
             universityName: school.name,
@@ -299,9 +296,8 @@ const StudentProfilePage: React.FC = () => {
             strengthenAreas: [],
           };
         }),
-        ...(apiData.recommendations.prestige || []).slice(0, 5).map((school, index) => {
+        ...(apiData.recommendations.prestige || []).map((school, index) => {
           const universityId = findUniversityId(school.name);
-          console.log(`Prestige school: ${school.name} -> ID: ${universityId}`);
           return {
             universityId: universityId || `prestige-${index}`,
             universityName: school.name,
@@ -312,6 +308,8 @@ const StudentProfilePage: React.FC = () => {
           };
         }),
       ];
+      
+      console.log(`Saved ${allRecommendations.length} total schools for search`);
       
       updateProfile({
         ...profileData,
