@@ -325,33 +325,31 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     // Get API recommendations if available
     const recommendations = profile?.recommendations || [];
     
-    console.log('SEARCH - Total recommendations in profile:', recommendations.length);
-    console.log('SEARCH - All IDs:', recommendations.map(r => `${r.universityId} (${r.category})`));
+    // ONLY search through analyzed schools (those in recommendations)
+    const searchableSchools = recommendations.map(rec => {
+      const school = schoolsDatabase.find(s => s.id === rec.universityId);
+      return school ? { ...school, apiRec: rec } : null;
+    }).filter(Boolean) as Array<typeof schoolsDatabase[0] & { apiRec: SchoolRecommendation }>;
     
-    // Search through ALL schools in database
-    const filteredSchools = schoolsDatabase.filter(school => {
+    // Filter by search query
+    const filteredSchools = searchableSchools.filter(school => {
       const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
       const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
       return koreanMatch || englishMatch;
     });
     
-    // Map results and add API probability if available
-    return filteredSchools.slice(0, 50).map(school => {
-      // Try to find API recommendation for this school
-      const apiRec = recommendations.find(rec => rec.universityId === school.id);
-      
-      console.log(`School: ${school.id} (${school.englishName}) - Match: ${apiRec ? 'YES' : 'NO'}`);
-      
+    // Map results with API data
+    return filteredSchools.map(school => {
       // Use language-appropriate name
       const displayName = currentLanguage === 'en' ? school.englishName : school.name;
       
       return {
         id: school.id,
         name: displayName,
-        category: apiRec?.category, // Undefined if no API data
+        category: school.apiRec.category,
         ranking: school.ranking,
         acceptanceRate: school.acceptanceRate,
-        admissionProbability: apiRec ? Math.round(apiRec.admissionChance * 10) / 10 : 0,
+        admissionProbability: Math.round(school.apiRec.admissionChance * 10) / 10,
       };
     });
   };
