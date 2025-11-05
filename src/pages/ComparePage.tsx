@@ -347,17 +347,7 @@ const ComparePage: React.FC = () => {
                           </span>
                         </>
                       ) : (
-                        <>
-                          {university.englishName}
-                          <span style={{ 
-                            color: 'rgba(8, 47, 73, 0.6)', 
-                            fontSize: '14px', 
-                            marginLeft: '8px',
-                            fontWeight: '400'
-                          }}>
-                            ({university.name})
-                          </span>
-                        </>
+                        university.englishName
                       )}
                     </div>
                   </button>
