@@ -335,6 +335,11 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       // Try to find API recommendation for this school
       const apiRec = recommendations.find(rec => rec.universityId === school.id);
       
+      if (filteredSchools.length <= 5) {
+        console.log(`Searching for school ${school.id} (${school.englishName})`);
+        console.log(`Found recommendation:`, apiRec);
+      }
+      
       // Use language-appropriate name
       const displayName = currentLanguage === 'en' ? school.englishName : school.name;
       

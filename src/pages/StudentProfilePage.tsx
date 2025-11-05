@@ -263,38 +263,54 @@ const StudentProfilePage: React.FC = () => {
       // Save API recommendations to profile context for dashboard
       // Map API school names to real database IDs
       const allRecommendations = [
-        ...(apiData.recommendations.safety || []).slice(0, 5).map((school, index) => ({
-          universityId: findUniversityId(school.name) || `safety-${index}`, // Use real DB ID
-          universityName: school.name, // Full bilingual name
-          universityState: school.state || '', // State from API
-          category: 'safety' as const,
-          admissionChance: Math.round(school.probability * 100),
-          strengthenAreas: [],
-        })),
-        ...(apiData.recommendations.target || []).slice(0, 5).map((school, index) => ({
-          universityId: findUniversityId(school.name) || `target-${index}`,
-          universityName: school.name,
-          universityState: school.state || '',
-          category: 'target' as const,
-          admissionChance: Math.round(school.probability * 100),
-          strengthenAreas: [],
-        })),
-        ...(apiData.recommendations.reach || []).slice(0, 5).map((school, index) => ({
-          universityId: findUniversityId(school.name) || `reach-${index}`,
-          universityName: school.name,
-          universityState: school.state || '',
-          category: 'reach' as const,
-          admissionChance: Math.round(school.probability * 100),
-          strengthenAreas: [],
-        })),
-        ...(apiData.recommendations.prestige || []).slice(0, 5).map((school, index) => ({
-          universityId: findUniversityId(school.name) || `prestige-${index}`,
-          universityName: school.name,
-          universityState: school.state || '',
-          category: 'prestige' as const,
-          admissionChance: Math.round(school.probability * 100),
-          strengthenAreas: [],
-        })),
+        ...(apiData.recommendations.safety || []).slice(0, 5).map((school, index) => {
+          const universityId = findUniversityId(school.name);
+          console.log(`Safety school: ${school.name} -> ID: ${universityId}`);
+          return {
+            universityId: universityId || `safety-${index}`, // Use real DB ID
+            universityName: school.name, // Full bilingual name
+            universityState: school.state || '', // State from API
+            category: 'safety' as const,
+            admissionChance: Math.round(school.probability * 100),
+            strengthenAreas: [],
+          };
+        }),
+        ...(apiData.recommendations.target || []).slice(0, 5).map((school, index) => {
+          const universityId = findUniversityId(school.name);
+          console.log(`Target school: ${school.name} -> ID: ${universityId}`);
+          return {
+            universityId: universityId || `target-${index}`,
+            universityName: school.name,
+            universityState: school.state || '',
+            category: 'target' as const,
+            admissionChance: Math.round(school.probability * 100),
+            strengthenAreas: [],
+          };
+        }),
+        ...(apiData.recommendations.reach || []).slice(0, 5).map((school, index) => {
+          const universityId = findUniversityId(school.name);
+          console.log(`Reach school: ${school.name} -> ID: ${universityId}`);
+          return {
+            universityId: universityId || `reach-${index}`,
+            universityName: school.name,
+            universityState: school.state || '',
+            category: 'reach' as const,
+            admissionChance: Math.round(school.probability * 100),
+            strengthenAreas: [],
+          };
+        }),
+        ...(apiData.recommendations.prestige || []).slice(0, 5).map((school, index) => {
+          const universityId = findUniversityId(school.name);
+          console.log(`Prestige school: ${school.name} -> ID: ${universityId}`);
+          return {
+            universityId: universityId || `prestige-${index}`,
+            universityName: school.name,
+            universityState: school.state || '',
+            category: 'prestige' as const,
+            admissionChance: Math.round(school.probability * 100),
+            strengthenAreas: [],
+          };
+        }),
       ];
       
       updateProfile({
