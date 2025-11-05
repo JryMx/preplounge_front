@@ -12,10 +12,8 @@ app.post('/api/analyze-profile', async (req, res) => {
   try {
     const { academicData, nonAcademicData, extracurriculars, recommendationLetters } = req.body;
 
-    // Build a concise prompt for the LLM
-    const prompt = `You are a friendly college admissions counselor. Give a brief, honest assessment of this student's profile in 2-3 sentences MAX. Be direct and conversational.
-
-CRITICAL: Keep your response under 150 words. Do NOT overthink - just give a quick, practical assessment.
+    // Build a structured prompt for the LLM to return strengths and weaknesses
+    const prompt = `You are a friendly college admissions counselor. Analyze this student's profile and return ONLY a JSON object with strengths and weaknesses.
 
 Student Profile:
 - GPA: ${academicData.gpa}/4.0
@@ -30,24 +28,44 @@ Student Profile:
 - Citizenship: ${nonAcademicData.citizenship}
 - Legacy Status: ${nonAcademicData.legacyStatus ? 'Yes' : 'No'}
 
+Return ONLY this JSON format (no other text):
+{
+  "strengths": [
+    "Brief strength statement",
+    "Another strength",
+    "One more strength"
+  ],
+  "weaknesses": [
+    "Brief area to improve",
+    "Another area to work on",
+    "One more area for growth"
+  ]
+}
+
 Rules:
-1. Use "you" and "your" - talk directly to the student
-2. NO em dashes (—), use regular dashes (-) or commas
-3. Be honest and realistic - don't sugarcoat
-4. 2-3 sentences MAX, under 150 words total
-5. Use simple, everyday language
-6. Cover the FULL RANGE of schools: community colleges, state schools, regional universities, selective schools as appropriate
+1. Return ONLY valid JSON - no markdown, no code blocks, no extra text
+2. List 2-4 strengths and 2-4 weaknesses
+3. Use "you" and "your" - talk directly to the student
+4. Be honest, realistic, and conversational
+5. Keep each point brief (10-15 words max per item)
+6. NO em dashes (—), use regular dashes (-) or commas
+7. Cover the FULL RANGE of schools appropriately (community colleges to Ivy League)
 
-Good Examples:
-- Strong profile (3.9+ GPA, 1500+ SAT): "You've got a really solid profile here. Your GPA and test scores put you in a competitive position for top 50 schools, and you'd be a strong candidate at many flagship state universities too. I'd say you have a good shot at selective universities and would likely be a standout applicant at most state schools."
+Example output for a strong profile:
+{
+  "strengths": [
+    "Your 3.9 GPA and 1500 SAT make you competitive for top 50 schools",
+    "Strong test scores put you in range for selective universities",
+    "You're a standout candidate at most flagship state schools"
+  ],
+  "weaknesses": [
+    "Limited extracurriculars may hurt at highly selective schools",
+    "Consider adding more leadership roles to strengthen your profile",
+    "Personal statement needs development to stand out"
+  ]
+}
 
-- Good profile (3.5-3.8 GPA, 1300-1400 SAT): "Your academics are solid and put you in a good position for many state universities and regional schools. You'd be competitive at schools like Penn State, Ohio State, or University of Arizona, and you could be a strong candidate at less selective state schools. Focus on schools where your stats are in the middle 50% or higher."
-
-- Average profile (3.0-3.4 GPA, 1100-1200 SAT): "You have plenty of college options with these stats. You'd fit well at many regional universities and less selective state schools where you can really thrive. Look at schools like Cal State schools, directional state universities, or solid regional colleges where your GPA is at or above their average."
-
-- Developing profile (2.5-2.9 GPA, under 1100 SAT): "Community college can be a great starting point, or look at open-admission universities where you can build a strong record. Many students start at a 2-year school and transfer to a 4-year university after proving themselves. This path gives you solid options and can save money too."
-
-Now provide your honest, conversational analysis:`;
+Now analyze this student's profile and return the JSON:`;
 
     // Check if API key is available
     if (!process.env.OPEN_AI_KEY) {
@@ -90,7 +108,7 @@ Now provide your honest, conversational analysis:`;
     console.log('AI API Response:', JSON.stringify(data, null, 2));
     
     const choice = data.choices?.[0];
-    const analysis = choice?.message?.content || '';
+    let analysisText = choice?.message?.content || '';
     const finishReason = choice?.finish_reason;
     
     // Hard safeguard: Treat token limit exhaustion as an error
@@ -106,9 +124,28 @@ Now provide your honest, conversational analysis:`;
       });
     }
     
-    if (!analysis) {
+    if (!analysisText) {
       console.error('Empty analysis received from API. Full response:', data);
       throw new Error('AI failed to generate analysis content');
+    }
+    
+    // Try to parse the JSON response
+    let analysis;
+    try {
+      // Remove markdown code blocks if present
+      analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+      analysis = JSON.parse(analysisText);
+      
+      // Validate structure
+      if (!analysis.strengths || !Array.isArray(analysis.strengths) || 
+          !analysis.weaknesses || !Array.isArray(analysis.weaknesses)) {
+        throw new Error('Invalid JSON structure');
+      }
+    } catch (parseError) {
+      console.error('Failed to parse AI response as JSON:', parseError);
+      console.error('Raw response:', analysisText);
+      // Return as plain text if JSON parsing fails
+      analysis = analysisText;
     }
     
     res.json({ analysis });

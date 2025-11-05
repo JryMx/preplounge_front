@@ -437,7 +437,7 @@ const StudentProfilePage: React.FC = () => {
                     {language === 'ko' ? '프로필 분석 중...' : 'Analyzing Your Profile...'}
                   </h3>
                   <p className="analysis-loading-subtitle">
-                    {language === 'ko' ? '잠시만 기다려 주세요, AI가 당신의 정보를 분석하고 있습니다' : 'Give us a moment, our AI is analyzing your information'}
+                    {language === 'ko' ? '잠시만 기다려 주세요, 프로필을 분석하고 있습니다' : 'Give us a minute, we\'re analyzing your profile'}
                   </p>
                   <div className="analysis-loading-dots">
                     <span className="dot"></span>
@@ -479,10 +479,45 @@ const StudentProfilePage: React.FC = () => {
                   <div className="ai-analysis-header">
                     <span className="ai-analysis-icon">✨</span>
                     <span className="ai-analysis-title">
-                      {language === 'ko' ? 'AI 프로필 분석' : 'AI Profile Analysis'}
+                      {language === 'ko' ? '프로필 분석 결과' : 'Here\'s Our Analysis of Your Profile'}
                     </span>
                   </div>
-                  <p className="ai-analysis-text">{aiAnalysis}</p>
+                  
+                  {typeof aiAnalysis === 'string' ? (
+                    <p className="ai-analysis-text">{aiAnalysis}</p>
+                  ) : aiAnalysis && typeof aiAnalysis === 'object' && 'strengths' in aiAnalysis && 'weaknesses' in aiAnalysis ? (
+                    <div className="ai-analysis-table">
+                      <div className="ai-analysis-column strengths-column">
+                        <div className="ai-analysis-column-header strengths-header">
+                          <span className="ai-analysis-column-icon">💪</span>
+                          <span className="ai-analysis-column-title">
+                            {language === 'ko' ? '강점' : 'Strengths'}
+                          </span>
+                        </div>
+                        <ul className="ai-analysis-list">
+                          {aiAnalysis.strengths.map((strength: string, idx: number) => (
+                            <li key={idx} className="ai-analysis-item strengths-item">{strength}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="ai-analysis-column weaknesses-column">
+                        <div className="ai-analysis-column-header weaknesses-header">
+                          <span className="ai-analysis-column-icon">📈</span>
+                          <span className="ai-analysis-column-title">
+                            {language === 'ko' ? '개선할 점' : 'Areas to Improve'}
+                          </span>
+                        </div>
+                        <ul className="ai-analysis-list">
+                          {aiAnalysis.weaknesses.map((weakness: string, idx: number) => (
+                            <li key={idx} className="ai-analysis-item weaknesses-item">{weakness}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="ai-analysis-text">{JSON.stringify(aiAnalysis)}</p>
+                  )}
                 </div>
                 </div>
               )}
