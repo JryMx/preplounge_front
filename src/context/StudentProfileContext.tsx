@@ -316,59 +316,32 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   };
 
   const searchSchools = (query: string): SchoolSearchResult[] => {
-    if (!profile || !query.trim()) return [];
+    if (!query.trim()) return [];
     
     const lowerQuery = query.toLowerCase().trim();
     
-    // Only use API-calculated recommendations - no fallback
+    // Get API recommendations if available
     const recommendations = profile?.recommendations || [];
     
-    console.log('Search query:', lowerQuery);
-    console.log('Total recommendations:', recommendations.length);
-    console.log('First few recommendations:', recommendations.slice(0, 3).map(r => ({
-      id: r.universityId,
-      name: r.universityName
-    })));
-    
-    // Filter recommendations by searching in the bilingual name from API
-    const filteredRecommendations = recommendations.filter(rec => {
-      // The API returns names like "Harvard University (하버드 대학교)"
-      // This contains both Korean and English, so just search in that string
-      if (rec.universityName) {
-        const nameMatch = rec.universityName.toLowerCase().includes(lowerQuery);
-        if (nameMatch) {
-          console.log('Match found in universityName:', rec.universityName);
-          return true;
-        }
-      }
-      
-      // Also try searching in the database as fallback
-      const school = schoolsDatabase.find(s => s.id === rec.universityId);
-      if (school) {
-        const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
-        const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
-        if (koreanMatch || englishMatch) {
-          console.log('Match found in database:', school.name, school.englishName);
-          return true;
-        }
-      }
-      
-      return false;
+    // Search through ALL schools in database
+    const filteredSchools = schoolsDatabase.filter(school => {
+      const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
+      const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
+      return koreanMatch || englishMatch;
     });
     
-    console.log('Filtered recommendations:', filteredRecommendations.length);
-    
-    return filteredRecommendations.map(rec => {
-      // Get school data from database for additional info
-      const school = schoolsDatabase.find(s => s.id === rec.universityId);
+    // Map results and add API probability if available
+    return filteredSchools.slice(0, 50).map(school => {
+      // Try to find API recommendation for this school
+      const apiRec = recommendations.find(rec => rec.universityId === school.id);
       
       return {
-        id: rec.universityId,
-        name: rec.universityName || school?.name || '',
-        category: rec.category,
-        ranking: school?.ranking || 999,
-        acceptanceRate: school?.acceptanceRate || 0,
-        admissionProbability: Math.round(rec.admissionChance * 10) / 10,
+        id: school.id,
+        name: school.name,
+        category: apiRec?.category || 'reach', // Default to reach if no API data
+        ranking: school.ranking,
+        acceptanceRate: school.acceptanceRate,
+        admissionProbability: apiRec ? Math.round(apiRec.admissionChance * 10) / 10 : 0,
       };
     });
   };
