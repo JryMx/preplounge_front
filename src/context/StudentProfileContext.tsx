@@ -338,8 +338,8 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       return koreanMatch || englishMatch;
     });
     
-    // Map results with API data
-    return filteredSchools.map(school => {
+    // Map results with API data and limit to 50 results
+    return filteredSchools.slice(0, 50).map(school => {
       // Use language-appropriate name
       const displayName = currentLanguage === 'en' ? school.englishName : school.name;
       
@@ -349,7 +349,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         category: school.apiRec.category,
         ranking: school.ranking,
         acceptanceRate: school.acceptanceRate,
-        admissionProbability: Math.round(school.apiRec.admissionChance * 10) / 10,
+        admissionProbability: school.apiRec.admissionChance / 100, // Convert back to decimal for consistent display
       };
     });
   };

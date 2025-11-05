@@ -1404,7 +1404,9 @@ const StudentProfilePage: React.FC = () => {
                           <div>
                             <span className="font-medium text-gray-600">{language === 'ko' ? '합격 가능성' : 'Admission Probability'}:</span>
                             <span className="ml-2 font-bold text-lg" style={{ color: '#082F49' }}>
-                              {school.admissionProbability}%
+                              {typeof school.admissionProbability === 'number'
+                                ? `${(school.admissionProbability * 100).toFixed(1)}%`
+                                : 'N/A'}
                             </span>
                           </div>
                         </div>
