@@ -287,6 +287,7 @@ const UniversitiesPage: React.FC = () => {
               <Link
                 key={university.id}
                 to={`/university/${university.id}`}
+                state={{ from: '/universities' }}
                 className="university-card"
               >
                 <img
@@ -329,6 +330,7 @@ const UniversitiesPage: React.FC = () => {
               <Link
                 key={university.id}
                 to={`/university/${university.id}`}
+                state={{ from: '/universities' }}
                 className="university-list-item"
               >
                 <img

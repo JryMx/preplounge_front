@@ -1284,7 +1284,7 @@ const StudentProfilePage: React.FC = () => {
                               }}
                               onClick={() => {
                                 if (universityId) {
-                                  navigate(`/university/${universityId}`);
+                                  navigate(`/university/${universityId}`, { state: { from: '/student-profile' } });
                                 }
                               }}
                             >
@@ -1388,7 +1388,7 @@ const StudentProfilePage: React.FC = () => {
                         background: categoryBg,
                         marginBottom: '12px'
                       }}
-                      onClick={() => navigate(`/university/${school.id}`)}
+                      onClick={() => navigate(`/university/${school.id}`, { state: { from: '/student-profile' } })}
                     >
                       <div className="flex justify-between items-start">
                         <div style={{ flex: 1 }}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { MapPin, Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
@@ -136,14 +136,18 @@ const translateProgramName = (program: string, language: 'ko' | 'en'): string =>
 const UniversityProfilePage: React.FC = () => {
   const { id } = useParams();
   const { t, language } = useLanguage();
+  const location = useLocation();
   const university = getUniversityData(id || '1');
+  
+  // Determine where to navigate back based on where user came from
+  const backLink = (location.state as { from?: string })?.from || '/universities';
 
   if (!university) {
     return (
       <div className="university-profile-not-found">
         <div className="university-profile-not-found-content">
           <h2 className="university-profile-not-found-title">{t('university.notfound.title')}</h2>
-          <Link to="/universities" className="university-profile-not-found-link">
+          <Link to={backLink} className="university-profile-not-found-link">
             {t('university.notfound.back')}
           </Link>
         </div>
@@ -159,7 +163,7 @@ const UniversityProfilePage: React.FC = () => {
       <div className="university-profile-header">
         <div className="university-profile-header-container">
           <Link
-            to="/universities"
+            to={backLink}
             className="university-profile-back-link"
             data-testid="link-back-to-universities"
           >
