@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, BookOpen, Award, Target, Plus, X, Search, Calculator, CheckCircle, ClipboardList, Loader2 } from 'lucide-react';
 import { useStudentProfile, ExtracurricularActivity, RecommendationLetter, ApplicationComponents } from '../context/StudentProfileContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -71,6 +72,7 @@ const findUniversityId = (bilingualName: string): string | null => {
 const StudentProfilePage: React.FC = () => {
   const { profile, updateProfile, calculateProfileScore, searchSchools } = useStudentProfile();
   const { language } = useLanguage();
+  const navigate = useNavigate();
 
   const profileScoreRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<'academic' | 'non-academic'>('academic');
@@ -1260,14 +1262,22 @@ const StudentProfilePage: React.FC = () => {
                             </span>
                           </h4>
                           
-                          {displayedSchools.map((school, index) => (
+                          {displayedSchools.map((school, index) => {
+                            const universityId = findUniversityId(school.name);
+                            
+                            return (
                             <div
                               key={`${category}-${index}`}
-                              className="extracurricular-card"
+                              className="extracurricular-card cursor-pointer hover:shadow-lg transition-shadow"
                               style={{
                                 borderColor: category === 'safety' ? '#10B981' : category === 'target' ? '#F59E0B' : category === 'reach' ? '#EF4444' : '#8B5CF6',
                                 background: category === 'safety' ? '#ECFDF5' : category === 'target' ? '#FFF7ED' : category === 'reach' ? '#FEE2E2' : '#F5F3FF',
                                 marginBottom: '12px'
+                              }}
+                              onClick={() => {
+                                if (universityId) {
+                                  navigate(`/university/${universityId}`);
+                                }
                               }}
                             >
                               <div className="flex justify-between items-start">
@@ -1308,7 +1318,8 @@ const StudentProfilePage: React.FC = () => {
                                 </div>
                               </div>
                             </div>
-                          ))}
+                            );
+                          })}
                           
                           {hasMore && (
                             <div className="text-center mt-3">
@@ -1363,12 +1374,13 @@ const StudentProfilePage: React.FC = () => {
                   return (
                     <div
                       key={school.id}
-                      className="extracurricular-card"
+                      className="extracurricular-card cursor-pointer hover:shadow-lg transition-shadow"
                       style={{
                         borderColor: categoryColor,
                         background: categoryBg,
                         marginBottom: '12px'
                       }}
+                      onClick={() => navigate(`/university/${school.id}`)}
                     >
                       <div className="flex justify-between items-start">
                         <div style={{ flex: 1 }}>
