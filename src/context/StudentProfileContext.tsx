@@ -379,7 +379,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       .map(item => item!.school);
     
     // Map results with API data
-    return filteredSchools.map(school => {
+    const results = filteredSchools.map(school => {
       // Use language-appropriate name
       const displayName = currentLanguage === 'en' ? school.englishName : school.name;
       
@@ -391,6 +391,11 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         admissionProbability: school.apiRec.admissionChance / 100, // Convert back to decimal for consistent display
       };
     });
+    
+    console.log('Search results count:', results.length);
+    console.log('First 5 results:', results.slice(0, 5).map(r => r.name));
+    
+    return results;
   };
 
   const getRecommendations = (): SchoolRecommendation[] => {
