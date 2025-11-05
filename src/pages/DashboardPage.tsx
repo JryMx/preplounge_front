@@ -407,33 +407,8 @@ const DashboardPage: React.FC = () => {
                 </div>
 
                 <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.stat.gpa')}:</span>
-                  <span className="dashboard-profile-value">{profile.gpa}/4.0</span>
-                </div>
-
-                <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.profile.sat')}:</span>
-                  <span className="dashboard-profile-value">{getSatScore() > 0 ? getSatScore() : t('dashboard.profile.nottaken')}</span>
-                </div>
-
-                <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.profile.act')}:</span>
-                  <span className="dashboard-profile-value">{profile.actScore > 0 ? profile.actScore : t('dashboard.profile.nottaken')}</span>
-                </div>
-
-                <div className="dashboard-profile-item">
                   <span className="dashboard-profile-label">{t('dashboard.profile.toefl')}:</span>
                   <span className="dashboard-profile-value">{profile.toeflScore || t('dashboard.profile.nottaken')}</span>
-                </div>
-
-                <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.profile.ap')}:</span>
-                  <span className="dashboard-profile-value">{profile.apCourses || 0}</span>
-                </div>
-
-                <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.profile.activities')}:</span>
-                  <span className="dashboard-profile-value">{profile.extracurriculars.length}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
