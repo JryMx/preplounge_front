@@ -81,9 +81,8 @@ interface StudentProfileContextType {
 export interface SchoolSearchResult {
   id: string;
   name: string;
+  state: string;
   category?: 'safety' | 'target' | 'reach' | 'prestige';
-  ranking: number;
-  acceptanceRate: number;
   admissionProbability: number;
 }
 
@@ -331,24 +330,51 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       return school ? { ...school, apiRec: rec } : null;
     }).filter(Boolean) as Array<typeof schoolsDatabase[0] & { apiRec: SchoolRecommendation }>;
     
-    // Filter by search query
-    const filteredSchools = searchableSchools.filter(school => {
-      const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
-      const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
-      return koreanMatch || englishMatch;
-    });
+    // Filter and rank by search quality
+    const filteredSchools = searchableSchools
+      .map(school => {
+        const koreanName = school.name.toLowerCase();
+        const englishName = school.englishName.toLowerCase();
+        
+        // Check for matches
+        const koreanMatch = koreanName.includes(lowerQuery);
+        const englishMatch = englishName.includes(lowerQuery);
+        
+        if (!koreanMatch && !englishMatch) return null;
+        
+        // Calculate match quality (lower = better)
+        let matchScore = 100;
+        
+        // Exact match = best
+        if (koreanName === lowerQuery || englishName === lowerQuery) {
+          matchScore = 0;
+        }
+        // Starts with query = very good
+        else if (koreanName.startsWith(lowerQuery) || englishName.startsWith(lowerQuery)) {
+          matchScore = 10;
+        }
+        // Contains query = okay
+        else {
+          matchScore = 50;
+        }
+        
+        return { school, matchScore };
+      })
+      .filter(Boolean)
+      .sort((a, b) => a!.matchScore - b!.matchScore)
+      .slice(0, 50)
+      .map(item => item!.school);
     
-    // Map results with API data and limit to 50 results
-    return filteredSchools.slice(0, 50).map(school => {
+    // Map results with API data
+    return filteredSchools.map(school => {
       // Use language-appropriate name
       const displayName = currentLanguage === 'en' ? school.englishName : school.name;
       
       return {
         id: school.id,
         name: displayName,
+        state: school.apiRec.universityState || '',
         category: school.apiRec.category,
-        ranking: school.ranking,
-        acceptanceRate: school.acceptanceRate,
         admissionProbability: school.apiRec.admissionChance / 100, // Convert back to decimal for consistent display
       };
     });

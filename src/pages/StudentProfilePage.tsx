@@ -1386,7 +1386,7 @@ const StudentProfilePage: React.FC = () => {
                         <div style={{ flex: 1 }}>
                           <h4 className="font-semibold text-gray-900">{school.name}</h4>
                           <p className="text-sm text-gray-600">
-                            #{school.ranking} • {language === 'ko' ? '합격률' : 'Acceptance Rate'} {school.acceptanceRate}%
+                            {school.state && parseLocation(school.state)}
                           </p>
                         </div>
                         {hasApiData && (
