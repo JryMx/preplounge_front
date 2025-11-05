@@ -334,7 +334,31 @@ const ComparePage: React.FC = () => {
                     }}
                   >
                     <div className="compare-search-item-name">
-                      {language === 'ko' ? university.name : university.englishName}
+                      {language === 'ko' ? (
+                        <>
+                          {university.name}
+                          <span style={{ 
+                            color: 'rgba(8, 47, 73, 0.6)', 
+                            fontSize: '14px', 
+                            marginLeft: '8px',
+                            fontWeight: '400'
+                          }}>
+                            ({university.englishName})
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {university.englishName}
+                          <span style={{ 
+                            color: 'rgba(8, 47, 73, 0.6)', 
+                            fontSize: '14px', 
+                            marginLeft: '8px',
+                            fontWeight: '400'
+                          }}>
+                            ({university.name})
+                          </span>
+                        </>
+                      )}
                     </div>
                   </button>
                 ))}
