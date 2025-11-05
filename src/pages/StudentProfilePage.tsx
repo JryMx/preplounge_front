@@ -199,56 +199,7 @@ const StudentProfilePage: React.FC = () => {
   }, [profile?.recommendations]);
 
   const handleAcademicChange = (field: string, value: string) => {
-    // Allow empty string for all fields
-    if (value === '') {
-      setAcademicData(prev => ({ ...prev, [field]: value }));
-      return;
-    }
-
-    // GPA validation: 0-4.0
-    if (field === 'gpa') {
-      const numValue = parseFloat(value);
-      if (numValue < 0 || numValue > 4.0) {
-        return;
-      }
-    }
-    
-    // SAT section validation: 200-800
-    if (field === 'satEBRW' || field === 'satMath') {
-      const numValue = parseInt(value);
-      if (numValue < 200 || numValue > 800) {
-        return;
-      }
-    }
-    
-    // ACT validation: 1-36
-    if (field === 'actScore') {
-      const numValue = parseInt(value);
-      if (numValue < 1 || numValue > 36) {
-        return;
-      }
-    }
-    
-    // English test score validation based on test type
-    if (field === 'englishTestScore') {
-      const numValue = parseFloat(value);
-      const testType = academicData.englishProficiencyTest;
-      
-      if (testType === 'TOEFL iBT') {
-        if (numValue < 0 || numValue > 120) {
-          return;
-        }
-      } else if (testType === 'IELTS') {
-        if (numValue < 0 || numValue > 9) {
-          return;
-        }
-      } else if (testType === 'Duolingo English Test') {
-        if (numValue < 10 || numValue > 160) {
-          return;
-        }
-      }
-    }
-    
+    // Allow all typing - validation happens on form submission
     setAcademicData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -314,6 +265,63 @@ const StudentProfilePage: React.FC = () => {
   };
 
   const handleSaveProfile = async () => {
+    // Validate inputs before submission
+    const gpa = parseFloat(academicData.gpa);
+    if (isNaN(gpa) || gpa < 0 || gpa > 4.0) {
+      setApiError(language === 'ko' ? 'GPA는 0과 4.0 사이여야 합니다.' : 'GPA must be between 0 and 4.0.');
+      return;
+    }
+
+    // Validate SAT scores if SAT is selected
+    if (academicData.standardizedTest === 'SAT') {
+      const satEBRW = parseInt(academicData.satEBRW);
+      const satMath = parseInt(academicData.satMath);
+      
+      if (academicData.satEBRW && (isNaN(satEBRW) || satEBRW < 200 || satEBRW > 800)) {
+        setApiError(language === 'ko' ? 'SAT EBRW 점수는 200과 800 사이여야 합니다.' : 'SAT EBRW score must be between 200 and 800.');
+        return;
+      }
+      
+      if (academicData.satMath && (isNaN(satMath) || satMath < 200 || satMath > 800)) {
+        setApiError(language === 'ko' ? 'SAT Math 점수는 200과 800 사이여야 합니다.' : 'SAT Math score must be between 200 and 800.');
+        return;
+      }
+    }
+
+    // Validate ACT score if ACT is selected
+    if (academicData.standardizedTest === 'ACT') {
+      const act = parseInt(academicData.actScore);
+      if (academicData.actScore && (isNaN(act) || act < 1 || act > 36)) {
+        setApiError(language === 'ko' ? 'ACT 점수는 1과 36 사이여야 합니다.' : 'ACT score must be between 1 and 36.');
+        return;
+      }
+    }
+
+    // Validate English test score if applicable
+    if (academicData.englishTestScore) {
+      const score = parseFloat(academicData.englishTestScore);
+      if (academicData.englishProficiencyTest === 'TOEFL iBT' && (isNaN(score) || score < 0 || score > 120)) {
+        setApiError(language === 'ko' ? 'TOEFL iBT 점수는 0과 120 사이여야 합니다.' : 'TOEFL iBT score must be between 0 and 120.');
+        return;
+      }
+      if (academicData.englishProficiencyTest === 'IELTS' && (isNaN(score) || score < 0 || score > 9)) {
+        setApiError(language === 'ko' ? 'IELTS 점수는 0과 9 사이여야 합니다.' : 'IELTS score must be between 0 and 9.');
+        return;
+      }
+      if (academicData.englishProficiencyTest === 'Duolingo English Test' && (isNaN(score) || score < 10 || score > 160)) {
+        setApiError(language === 'ko' ? 'Duolingo 점수는 10과 160 사이여야 합니다.' : 'Duolingo score must be between 10 and 160.');
+        return;
+      }
+    }
+
+    // Validate hours per week for extracurriculars
+    for (const activity of extracurriculars) {
+      if (activity.hoursPerWeek > 168) {
+        setApiError(language === 'ko' ? '주당 활동 시간은 168시간을 초과할 수 없습니다.' : 'Hours per week cannot exceed 168.');
+        return;
+      }
+    }
+
     // Set loading states immediately
     setApiLoading(true);
     setIsAnalyzing(true);
