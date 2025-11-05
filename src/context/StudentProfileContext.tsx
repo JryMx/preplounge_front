@@ -320,11 +320,9 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     if (!query.trim()) return [];
     
     const lowerQuery = query.toLowerCase().trim();
-    console.log('Search query:', lowerQuery);
     
     // Get API recommendations if available
     const recommendations = profile?.recommendations || [];
-    console.log('Total recommendations to search:', recommendations.length);
     
     // ONLY search through analyzed schools (those in recommendations)
     const searchableSchools = recommendations.map(rec => {
@@ -342,18 +340,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         const koreanMatch = koreanName.includes(lowerQuery);
         const englishMatch = englishName.includes(lowerQuery);
         
-        if (!koreanMatch && !englishMatch) {
-          // Debug: Log schools that don't match
-          if (lowerQuery === 'harvard' && (englishName.includes('brigham') || englishName.includes('alabama'))) {
-            console.log('NOT MATCHING:', englishName, 'Korean:', koreanName);
-          }
-          return null;
-        }
-        
-        // Debug: Log schools that DO match
-        if (lowerQuery === 'harvard') {
-          console.log('MATCHED:', englishName, 'Korean:', koreanName);
-        }
+        if (!koreanMatch && !englishMatch) return null;
         
         // Calculate match quality (lower = better)
         let matchScore = 100;
@@ -379,7 +366,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       .map(item => item!.school);
     
     // Map results with API data
-    const results = filteredSchools.map(school => {
+    return filteredSchools.map(school => {
       // Use language-appropriate name
       const displayName = currentLanguage === 'en' ? school.englishName : school.name;
       
@@ -391,11 +378,6 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         admissionProbability: school.apiRec.admissionChance / 100, // Convert back to decimal for consistent display
       };
     });
-    
-    console.log('Search results count:', results.length);
-    console.log('First 5 results:', results.slice(0, 5).map(r => r.name));
-    
-    return results;
   };
 
   const getRecommendations = (): SchoolRecommendation[] => {

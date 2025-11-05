@@ -311,11 +311,19 @@ const StudentProfilePage: React.FC = () => {
         }),
       ];
       
-      console.log(`Saved ${allRecommendations.length} total schools for search`);
+      // Deduplicate schools by universityId (API might return duplicates)
+      const uniqueRecommendations = Array.from(
+        new Map(
+          allRecommendations.map(rec => [rec.universityId, rec])
+        ).values()
+      );
+      
+      console.log(`Total schools from API: ${allRecommendations.length}`);
+      console.log(`Unique schools after deduplication: ${uniqueRecommendations.length}`);
       
       updateProfile({
         ...profileData,
-        recommendations: allRecommendations,
+        recommendations: uniqueRecommendations,
       });
       
       // Reset visible schools to initial state (3 per category)
