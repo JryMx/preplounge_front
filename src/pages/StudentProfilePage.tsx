@@ -1348,12 +1348,18 @@ const StudentProfilePage: React.FC = () => {
                   
                   <div className="grid md:grid-cols-2 gap-4 mt-4 text-sm">
                     <div>
-                      <span className="font-medium text-gray-600">{language === 'ko' ? '필요 점수' : 'Required Score'}:</span>
-                      <span className="ml-2 font-bold">{school.requiredScore}/100</span>
+                      <span className="font-medium text-gray-600">{language === 'ko' ? '합격률' : 'Acceptance Rate'}:</span>
+                      <span className="ml-2 font-bold">{school.acceptanceRate}%</span>
                     </div>
                     <div>
-                      <span className="font-medium text-gray-600">{language === 'ko' ? '매치 비율' : 'Match Ratio'}:</span>
-                      <span className="ml-2 font-bold">{school.comparisonRatio}</span>
+                      <span className="font-medium text-gray-600">{language === 'ko' ? '예상 합격 확률' : 'Admission Probability'}:</span>
+                      <span className="ml-2 font-bold" style={{
+                        color: school.category === 'safety' ? '#15803D' : 
+                               school.category === 'target' ? '#F59E0B' : 
+                               school.category === 'reach' ? '#DC2626' : '#7C3AED'
+                      }}>
+                        {school.admissionProbability}%
+                      </span>
                     </div>
                   </div>
                 </div>
