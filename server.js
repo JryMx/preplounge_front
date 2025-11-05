@@ -91,7 +91,7 @@ Now analyze this student's profile and return the JSON:`;
           }
         ],
         temperature: 1,
-        max_tokens: 2000,
+        max_tokens: 4000,
       }),
       signal: controller.signal,
     });
@@ -116,7 +116,7 @@ Now analyze this student's profile and return the JSON:`;
       console.error('CRITICAL: AI response truncated due to token limit');
       console.error('Reasoning tokens used:', data.usage?.completion_tokens_details?.reasoning_tokens);
       console.error('Total completion tokens:', data.usage?.completion_tokens);
-      console.error('Max tokens configured:', 2000);
+      console.error('Max tokens configured:', 4000);
       
       return res.status(500).json({ 
         error: 'AI token limit exceeded',
