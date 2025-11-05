@@ -55,43 +55,31 @@ const HomePage: React.FC = () => {
   const [error, setError] = useState('');
 
   const handleGpaChange = (value: string) => {
-    if (value) {
-      const numValue = parseFloat(value);
-      if (numValue < 0 || numValue > 4.0) {
-        return;
-      }
+    // Allow empty or valid decimal input while typing
+    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+      setGpa(value);
     }
-    setGpa(value);
   };
 
   const handleSatMathChange = (value: string) => {
-    if (value) {
-      const numValue = parseInt(value);
-      if (numValue < 200 || numValue > 800) {
-        return;
-      }
+    // Allow empty or digits only while typing
+    if (value === '' || /^\d+$/.test(value)) {
+      setSatMath(value);
     }
-    setSatMath(value);
   };
 
   const handleSatEBRWChange = (value: string) => {
-    if (value) {
-      const numValue = parseInt(value);
-      if (numValue < 200 || numValue > 800) {
-        return;
-      }
+    // Allow empty or digits only while typing
+    if (value === '' || /^\d+$/.test(value)) {
+      setSatEBRW(value);
     }
-    setSatEBRW(value);
   };
 
   const handleActChange = (value: string) => {
-    if (value) {
-      const numValue = parseInt(value);
-      if (numValue < 1 || numValue > 36) {
-        return;
-      }
+    // Allow empty or digits only while typing
+    if (value === '' || /^\d+$/.test(value)) {
+      setActScore(value);
     }
-    setActScore(value);
   };
 
   const fetchAnalysis = async () => {
@@ -99,6 +87,31 @@ const HomePage: React.FC = () => {
     
     setLoading(true);
     setError('');
+    
+    // Validate input ranges before submitting
+    const gpaNum = parseFloat(gpa);
+    if (gpaNum < 0 || gpaNum > 4.0) {
+      setError(language === 'ko' ? 'GPA는 0.0에서 4.0 사이여야 합니다.' : 'GPA must be between 0.0 and 4.0');
+      setLoading(false);
+      return;
+    }
+    
+    if (testType === 'SAT') {
+      const mathNum = parseInt(satMath);
+      const ebrwNum = parseInt(satEBRW);
+      if (mathNum < 200 || mathNum > 800 || ebrwNum < 200 || ebrwNum > 800) {
+        setError(language === 'ko' ? 'SAT 점수는 200에서 800 사이여야 합니다.' : 'SAT scores must be between 200 and 800');
+        setLoading(false);
+        return;
+      }
+    } else if (testType === 'ACT') {
+      const actNum = parseInt(actScore);
+      if (actNum < 1 || actNum > 36) {
+        setError(language === 'ko' ? 'ACT 점수는 1에서 36 사이여야 합니다.' : 'ACT score must be between 1 and 36');
+        setLoading(false);
+        return;
+      }
+    }
     
     try {
       let url = 'https://dev.preplounge.ai/?';
