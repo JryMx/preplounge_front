@@ -144,12 +144,6 @@ const LoginPage: React.FC = () => {
             </Link>
           </div>
         </form>
-
-        <div className="login-demo-box">
-          <p className="login-demo-title">{t('login.demo.title')}</p>
-          <p className="login-demo-text">{t('login.demo.email')}</p>
-          <p className="login-demo-text">{t('login.demo.password')}</p>
-        </div>
       </div>
     </div>
   );

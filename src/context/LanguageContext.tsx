@@ -285,9 +285,6 @@ const translations = {
     'login.loading': '로그인 중...',
     'login.signup.prompt': '아직 계정이 없으신가요?',
     'login.signup.link': '회원가입',
-    'login.demo.title': '데모 계정 정보:',
-    'login.demo.email': '이메일: 유효한 이메일 형식',
-    'login.demo.password': '비밀번호: 임의의 비밀번호',
     'login.error.invalid': '이메일 또는 비밀번호가 올바르지 않습니다.',
     'login.error.general': '오류가 발생했습니다. 다시 시도해 주세요.',
     
@@ -605,9 +602,6 @@ const translations = {
     'login.loading': 'Logging in...',
     'login.signup.prompt': "Don't have an account yet?",
     'login.signup.link': 'Sign up',
-    'login.demo.title': 'Demo Account Info:',
-    'login.demo.email': 'Email: Any valid email format',
-    'login.demo.password': 'Password: Any password',
     'login.error.invalid': 'Email or password is incorrect.',
     'login.error.general': 'An error occurred. Please try again.',
     

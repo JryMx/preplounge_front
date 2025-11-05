@@ -435,56 +435,6 @@
   width: 100%;
 }
 
-/* Demo Credentials Box */
-.login-demo-box {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 10px;
-  width: 100%;
-  background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
-  border: 1px solid #7DD3FC;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
-  transition: all 0.3s ease;
-}
-
-.login-demo-box:hover {
-  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
-  transform: translateY(-2px);
-}
-
-.login-demo-title {
-  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 140%;
-  letter-spacing: -0.02em;
-  color: #0C4A6E;
-}
-
-.login-demo-text {
-  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 140%;
-  letter-spacing: -0.02em;
-  color: #075985;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.login-demo-text::before {
-  content: '•';
-  color: #0284C7;
-  font-weight: bold;
-  font-size: 18px;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .login-title {
@@ -508,10 +458,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-  }
-
-  .login-demo-box {
-    padding: 16px;
   }
 }
 
