@@ -320,63 +320,31 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     
     const lowerQuery = query.toLowerCase().trim();
     
-    // Filter schools by searching both Korean name and English name
-    const filteredSchools = schoolsDatabase.filter(school => {
+    // Only use API-calculated recommendations - no fallback
+    const recommendations = profile?.recommendations || [];
+    
+    // Filter recommendations by searching both Korean name and English name
+    const filteredRecommendations = recommendations.filter(rec => {
+      // Find the school in the database to get Korean/English names
+      const school = schoolsDatabase.find(s => s.id === rec.universityId);
+      if (!school) return false;
+      
       const koreanMatch = school.name.toLowerCase().includes(lowerQuery);
       const englishMatch = school.englishName.toLowerCase().includes(lowerQuery);
       return koreanMatch || englishMatch;
     });
-
-    // Check if we have API-calculated recommendations for more accurate probabilities
-    const recommendations = profile?.recommendations || [];
     
-    return filteredSchools.map(school => {
-      // Try to find this school in the API recommendations
-      const apiRecommendation = recommendations.find(rec => rec.universityId === school.id);
+    return filteredRecommendations.map(rec => {
+      // Get school data from database for additional info
+      const school = schoolsDatabase.find(s => s.id === rec.universityId);
       
-      let admissionProbability: number;
-      let category: 'safety' | 'target' | 'reach' | 'prestige';
-      
-      if (apiRecommendation) {
-        // Use API-calculated probability if available
-        admissionProbability = apiRecommendation.admissionChance;
-        category = apiRecommendation.category;
-      } else {
-        // Calculate probability based on profile score and acceptance rate
-        const profileScore = profile.profileScore || 0;
-        const baseAcceptanceRate = school.acceptanceRate / 100;
-        
-        // Calculate probability multiplier based on profile score
-        // Score 90-100: 2.5x multiplier (exceptional candidates)
-        // Score 80-89: 2.0x multiplier (very strong candidates)
-        // Score 70-79: 1.5x multiplier (strong candidates)
-        // Score 60-69: 1.2x multiplier (good candidates)
-        // Score 50-59: 1.0x multiplier (average candidates)
-        // Score <50: 0.7x multiplier (below average candidates)
-        let multiplier = 1.0;
-        if (profileScore >= 90) multiplier = 2.5;
-        else if (profileScore >= 80) multiplier = 2.0;
-        else if (profileScore >= 70) multiplier = 1.5;
-        else if (profileScore >= 60) multiplier = 1.2;
-        else if (profileScore < 50) multiplier = 0.7;
-        
-        // Calculate admission probability (capped at 95%)
-        admissionProbability = Math.min(baseAcceptanceRate * multiplier * 100, 95);
-        
-        // Determine category based on probability
-        if (admissionProbability >= 75) category = 'safety';
-        else if (admissionProbability >= 40) category = 'target';
-        else if (admissionProbability >= 15) category = 'reach';
-        else category = 'prestige';
-      }
-
       return {
-        id: school.id,
-        name: school.name,
-        category,
-        ranking: school.ranking,
-        acceptanceRate: school.acceptanceRate,
-        admissionProbability: Math.round(admissionProbability * 10) / 10,
+        id: rec.universityId,
+        name: rec.universityName || school?.name || '',
+        category: rec.category,
+        ranking: school?.ranking || 999,
+        acceptanceRate: school?.acceptanceRate || 0,
+        admissionProbability: Math.round(rec.admissionChance * 10) / 10,
       };
     });
   };
