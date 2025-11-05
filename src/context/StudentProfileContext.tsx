@@ -326,7 +326,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     const recommendations = profile?.recommendations || [];
     
     console.log('SEARCH - Total recommendations in profile:', recommendations.length);
-    console.log('SEARCH - Sample IDs:', recommendations.slice(0, 5).map(r => `${r.universityId} (${r.category})`));
+    console.log('SEARCH - All IDs:', recommendations.map(r => `${r.universityId} (${r.category})`));
     
     // Search through ALL schools in database
     const filteredSchools = schoolsDatabase.filter(school => {
@@ -340,10 +340,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       // Try to find API recommendation for this school
       const apiRec = recommendations.find(rec => rec.universityId === school.id);
       
-      if (filteredSchools.length <= 5) {
-        console.log(`Searching for school ${school.id} (${school.englishName})`);
-        console.log(`Found recommendation:`, apiRec);
-      }
+      console.log(`School: ${school.id} (${school.englishName}) - Match: ${apiRec ? 'YES' : 'NO'}`);
       
       // Use language-appropriate name
       const displayName = currentLanguage === 'en' ? school.englishName : school.name;
