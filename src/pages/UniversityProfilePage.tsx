@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { MapPin, Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -138,6 +138,11 @@ const UniversityProfilePage: React.FC = () => {
   const { t, language } = useLanguage();
   const location = useLocation();
   const university = getUniversityData(id || '1');
+  
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   // Determine where to navigate back based on where user came from
   const backLink = (location.state as { from?: string })?.from || '/universities';

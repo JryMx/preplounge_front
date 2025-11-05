@@ -75,6 +75,7 @@ const StudentProfilePage: React.FC = () => {
   const navigate = useNavigate();
 
   const profileScoreRef = useRef<HTMLDivElement>(null);
+  const schoolRecommendationsRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<'academic' | 'non-academic'>('academic');
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
@@ -189,6 +190,11 @@ const StudentProfilePage: React.FC = () => {
         },
         recommendations: { safety, target, reach, prestige },
       });
+
+      // Scroll to school recommendations section when navigating back
+      setTimeout(() => {
+        schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
   }, [profile?.recommendations]);
 
@@ -1240,7 +1246,7 @@ const StudentProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="profile-tabs-container">
+        <div className="profile-tabs-container" ref={schoolRecommendationsRef}>
           <div className="profile-tab-content">
             <h2 className="profile-section-title">
               {language === 'ko' ? '학교 추천 및 비교' : 'School Recommendations & Comparison'}
