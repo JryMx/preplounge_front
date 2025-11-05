@@ -320,9 +320,11 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     if (!query.trim()) return [];
     
     const lowerQuery = query.toLowerCase().trim();
+    console.log('Search query:', lowerQuery);
     
     // Get API recommendations if available
     const recommendations = profile?.recommendations || [];
+    console.log('Total recommendations to search:', recommendations.length);
     
     // ONLY search through analyzed schools (those in recommendations)
     const searchableSchools = recommendations.map(rec => {
@@ -340,7 +342,18 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         const koreanMatch = koreanName.includes(lowerQuery);
         const englishMatch = englishName.includes(lowerQuery);
         
-        if (!koreanMatch && !englishMatch) return null;
+        if (!koreanMatch && !englishMatch) {
+          // Debug: Log schools that don't match
+          if (lowerQuery === 'harvard' && (englishName.includes('brigham') || englishName.includes('alabama'))) {
+            console.log('NOT MATCHING:', englishName, 'Korean:', koreanName);
+          }
+          return null;
+        }
+        
+        // Debug: Log schools that DO match
+        if (lowerQuery === 'harvard') {
+          console.log('MATCHED:', englishName, 'Korean:', koreanName);
+        }
         
         // Calculate match quality (lower = better)
         let matchScore = 100;
