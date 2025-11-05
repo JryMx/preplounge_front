@@ -303,8 +303,10 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     updatedProfile.profileScore = calculatedScore;
     updatedProfile.profileRigorScore = calculatedScore;
     
-    // Generate recommendations
-    updatedProfile.recommendations = generateRecommendations(updatedProfile);
+    // Generate recommendations ONLY if not explicitly provided
+    if (!newProfileData.recommendations) {
+      updatedProfile.recommendations = generateRecommendations(updatedProfile);
+    }
     
     setProfile(updatedProfile);
   };
@@ -322,6 +324,9 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     
     // Get API recommendations if available
     const recommendations = profile?.recommendations || [];
+    
+    console.log('SEARCH - Total recommendations in profile:', recommendations.length);
+    console.log('SEARCH - Sample IDs:', recommendations.slice(0, 5).map(r => `${r.universityId} (${r.category})`));
     
     // Search through ALL schools in database
     const filteredSchools = schoolsDatabase.filter(school => {
