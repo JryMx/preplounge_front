@@ -155,10 +155,24 @@ const DashboardPage: React.FC = () => {
           <div className="dashboard-stat-card">
             <div className="dashboard-stat-info">
               <span className="dashboard-stat-label">{t('dashboard.stat.sat')}</span>
-              <span className="dashboard-stat-value" style={{ color: '#F59E0B' }}>{getSatScore() || t('dashboard.notavailable')}</span>
+              <span className="dashboard-stat-value" style={{ color: '#F59E0B' }}>
+                {getSatScore() > 0 ? getSatScore() : t('dashboard.notavailable')}
+              </span>
             </div>
             <div className="dashboard-stat-icon" style={{ background: '#FFFBEB' }}>
               <Target className="h-7 w-7" style={{ color: '#F59E0B' }} />
+            </div>
+          </div>
+
+          <div className="dashboard-stat-card">
+            <div className="dashboard-stat-info">
+              <span className="dashboard-stat-label">{t('dashboard.stat.act')}</span>
+              <span className="dashboard-stat-value" style={{ color: '#EC4899' }}>
+                {profile.actScore || t('dashboard.notavailable')}
+              </span>
+            </div>
+            <div className="dashboard-stat-icon" style={{ background: '#FCE7F3' }}>
+              <Target className="h-7 w-7" style={{ color: '#EC4899' }} />
             </div>
           </div>
 
@@ -399,12 +413,12 @@ const DashboardPage: React.FC = () => {
 
                 <div className="dashboard-profile-item">
                   <span className="dashboard-profile-label">{t('dashboard.profile.sat')}:</span>
-                  <span className="dashboard-profile-value">{getSatScore() || t('dashboard.profile.nottaken')}</span>
+                  <span className="dashboard-profile-value">{getSatScore() > 0 ? getSatScore() : t('dashboard.profile.nottaken')}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
                   <span className="dashboard-profile-label">{t('dashboard.profile.act')}:</span>
-                  <span className="dashboard-profile-value">{profile.actScore || t('dashboard.profile.nottaken')}</span>
+                  <span className="dashboard-profile-value">{profile.actScore > 0 ? profile.actScore : t('dashboard.profile.nottaken')}</span>
                 </div>
 
                 <div className="dashboard-profile-item">
