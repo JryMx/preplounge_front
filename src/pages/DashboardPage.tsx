@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Target, TrendingUp, AlertCircle, BookOpen, Users, Award, ArrowRight, BarChart3 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Target, TrendingUp, AlertCircle, BookOpen, Users, Award, ArrowRight, BarChart3, X } from 'lucide-react';
 import { useStudentProfile } from '../context/StudentProfileContext';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -10,6 +10,10 @@ const DashboardPage: React.FC = () => {
   const { profile, getRecommendations } = useStudentProfile();
   const { user } = useAuth();
   const { t, language } = useLanguage();
+  const navigate = useNavigate();
+  
+  const [showModal, setShowModal] = useState(false);
+  const [modalCategory, setModalCategory] = useState<'safety' | 'target' | 'reach' | 'prestige' | null>(null);
 
   // Calculate total SAT score
   const getSatScore = () => {
@@ -56,10 +60,64 @@ const DashboardPage: React.FC = () => {
   };
 
   const recommendations = getRecommendations();
-  const safetySchools = recommendations.filter(r => r.category === 'safety');
-  const targetSchools = recommendations.filter(r => r.category === 'target');
-  const reachSchools = recommendations.filter(r => r.category === 'reach');
-  const prestigeSchools = recommendations.filter(r => r.category === 'prestige');
+  
+  // Sort schools by quality score (highest first)
+  const safetySchools = recommendations
+    .filter(r => r.category === 'safety')
+    .sort((a, b) => (b.qualityScore || 0) - (a.qualityScore || 0));
+  const targetSchools = recommendations
+    .filter(r => r.category === 'target')
+    .sort((a, b) => (b.qualityScore || 0) - (a.qualityScore || 0));
+  const reachSchools = recommendations
+    .filter(r => r.category === 'reach')
+    .sort((a, b) => (b.qualityScore || 0) - (a.qualityScore || 0));
+  const prestigeSchools = recommendations
+    .filter(r => r.category === 'prestige')
+    .sort((a, b) => (b.qualityScore || 0) - (a.qualityScore || 0));
+
+  // Handle school card click
+  const handleSchoolClick = (universityId: string) => {
+    navigate(`/universities/${universityId}`, { state: { from: '/dashboard' } });
+  };
+
+  // Open modal with specific category
+  const openModal = (category: 'safety' | 'target' | 'reach' | 'prestige') => {
+    setModalCategory(category);
+    setShowModal(true);
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setShowModal(false);
+    setModalCategory(null);
+  };
+
+  // Get schools for modal
+  const getModalSchools = () => {
+    if (modalCategory === 'safety') return safetySchools;
+    if (modalCategory === 'target') return targetSchools;
+    if (modalCategory === 'reach') return reachSchools;
+    if (modalCategory === 'prestige') return prestigeSchools;
+    return [];
+  };
+
+  // Get modal title
+  const getModalTitle = () => {
+    if (modalCategory === 'safety') return t('dashboard.category.safety');
+    if (modalCategory === 'target') return t('dashboard.category.target');
+    if (modalCategory === 'reach') return t('dashboard.category.reach');
+    if (modalCategory === 'prestige') return t('dashboard.category.prestige');
+    return '';
+  };
+
+  // Get category color
+  const getCategoryColor = (category: 'safety' | 'target' | 'reach' | 'prestige') => {
+    if (category === 'safety') return { bg: '#F0FDF4', border: '#BBF7D0', text: '#10B981' };
+    if (category === 'target') return { bg: '#FFFBEB', border: '#FACC15', text: '#F59E0B' };
+    if (category === 'reach') return { bg: '#EFF6FF', border: '#93C5FD', text: '#3B82F6' };
+    if (category === 'prestige') return { bg: '#FFFBEB', border: '#FACC15', text: '#D97706' };
+    return { bg: '#F0FDF4', border: '#BBF7D0', text: '#10B981' };
+  };
 
   return (
     <div className="dashboard-page">
@@ -119,6 +177,7 @@ const DashboardPage: React.FC = () => {
           <div className="dashboard-recommendations">
             <h2 className="dashboard-section-title">{t('dashboard.recommendations.title')}</h2>
 
+            {/* Safety Schools */}
             <div className="dashboard-category">
               <div className="dashboard-category-header">
                 <div className="dashboard-category-icon" style={{ background: '#DCFCE7' }}>
@@ -133,7 +192,12 @@ const DashboardPage: React.FC = () => {
                   const displayState = parseBilingualText(rec.universityState, language);
                   
                   return (
-                    <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#F0FDF4', borderColor: '#BBF7D0' }}>
+                    <div 
+                      key={rec.universityId} 
+                      className="dashboard-school-card" 
+                      style={{ background: '#F0FDF4', borderColor: '#BBF7D0', cursor: 'pointer' }}
+                      onClick={() => handleSchoolClick(rec.universityId)}
+                    >
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
                           <div className="dashboard-school-info">
@@ -152,8 +216,17 @@ const DashboardPage: React.FC = () => {
                   );
                 })}
               </div>
+              {safetySchools.length > 3 && (
+                <button 
+                  className="dashboard-see-all-button"
+                  onClick={() => openModal('safety')}
+                >
+                  {language === 'ko' ? '모두 보기' : 'See All'} ({safetySchools.length})
+                </button>
+              )}
             </div>
 
+            {/* Target Schools */}
             <div className="dashboard-category">
               <div className="dashboard-category-header">
                 <div className="dashboard-category-icon" style={{ background: '#FFFBEB' }}>
@@ -168,7 +241,12 @@ const DashboardPage: React.FC = () => {
                   const displayState = parseBilingualText(rec.universityState, language);
                   
                   return (
-                    <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#FFFBEB', borderColor: '#FACC15' }}>
+                    <div 
+                      key={rec.universityId} 
+                      className="dashboard-school-card" 
+                      style={{ background: '#FFFBEB', borderColor: '#FACC15', cursor: 'pointer' }}
+                      onClick={() => handleSchoolClick(rec.universityId)}
+                    >
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
                           <div className="dashboard-school-info">
@@ -187,8 +265,17 @@ const DashboardPage: React.FC = () => {
                   );
                 })}
               </div>
+              {targetSchools.length > 3 && (
+                <button 
+                  className="dashboard-see-all-button"
+                  onClick={() => openModal('target')}
+                >
+                  {language === 'ko' ? '모두 보기' : 'See All'} ({targetSchools.length})
+                </button>
+              )}
             </div>
 
+            {/* Reach Schools */}
             <div className="dashboard-category">
               <div className="dashboard-category-header">
                 <div className="dashboard-category-icon" style={{ background: '#DBEAFE' }}>
@@ -203,7 +290,12 @@ const DashboardPage: React.FC = () => {
                   const displayState = parseBilingualText(rec.universityState, language);
                   
                   return (
-                    <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#EFF6FF', borderColor: '#93C5FD' }}>
+                    <div 
+                      key={rec.universityId} 
+                      className="dashboard-school-card" 
+                      style={{ background: '#EFF6FF', borderColor: '#93C5FD', cursor: 'pointer' }}
+                      onClick={() => handleSchoolClick(rec.universityId)}
+                    >
                       <div className="dashboard-school-content">
                         <div className="dashboard-school-left">
                           <div className="dashboard-school-info">
@@ -228,8 +320,17 @@ const DashboardPage: React.FC = () => {
                   );
                 })}
               </div>
+              {reachSchools.length > 3 && (
+                <button 
+                  className="dashboard-see-all-button"
+                  onClick={() => openModal('reach')}
+                >
+                  {language === 'ko' ? '모두 보기' : 'See All'} ({reachSchools.length})
+                </button>
+              )}
             </div>
 
+            {/* Prestige Schools */}
             {prestigeSchools.length > 0 && (
               <div className="dashboard-category">
                 <div className="dashboard-category-header">
@@ -245,7 +346,12 @@ const DashboardPage: React.FC = () => {
                     const displayState = parseBilingualText(rec.universityState, language);
                     
                     return (
-                      <div key={rec.universityId} className="dashboard-school-card" style={{ background: '#FFFBEB', borderColor: '#FACC15' }}>
+                      <div 
+                        key={rec.universityId} 
+                        className="dashboard-school-card" 
+                        style={{ background: '#FFFBEB', borderColor: '#FACC15', cursor: 'pointer' }}
+                        onClick={() => handleSchoolClick(rec.universityId)}
+                      >
                         <div className="dashboard-school-content">
                           <div className="dashboard-school-left">
                             <div className="dashboard-school-info">
@@ -264,6 +370,14 @@ const DashboardPage: React.FC = () => {
                     );
                   })}
                 </div>
+                {prestigeSchools.length > 3 && (
+                  <button 
+                    className="dashboard-see-all-button"
+                    onClick={() => openModal('prestige')}
+                  >
+                    {language === 'ko' ? '모두 보기' : 'See All'} ({prestigeSchools.length})
+                  </button>
+                )}
               </div>
             )}
           </div>
@@ -366,6 +480,60 @@ const DashboardPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* See All Modal */}
+      {showModal && modalCategory && (
+        <div className="dashboard-modal-overlay" onClick={closeModal}>
+          <div className="dashboard-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="dashboard-modal-header">
+              <h3 className="dashboard-modal-title">{getModalTitle()}</h3>
+              <button className="dashboard-modal-close" onClick={closeModal}>
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="dashboard-modal-body">
+              {getModalSchools().map(rec => {
+                const displayName = parseBilingualText(rec.universityName, language);
+                const displayState = parseBilingualText(rec.universityState, language);
+                const colors = getCategoryColor(modalCategory);
+                
+                return (
+                  <div 
+                    key={rec.universityId} 
+                    className="dashboard-modal-school-card" 
+                    style={{ background: colors.bg, borderColor: colors.border, cursor: 'pointer' }}
+                    onClick={() => {
+                      closeModal();
+                      handleSchoolClick(rec.universityId);
+                    }}
+                  >
+                    <div className="dashboard-school-content">
+                      <div className="dashboard-school-left">
+                        <div className="dashboard-school-info">
+                          <h4 className="dashboard-school-name">{displayName}</h4>
+                          {displayState && (
+                            <p className="dashboard-school-meta">{displayState}</p>
+                          )}
+                          {rec.strengthenAreas.length > 0 && (
+                            <div className="dashboard-school-warning" style={{ color: '#F59E0B' }}>
+                              <AlertCircle className="h-4 w-4" />
+                              <span>{t('dashboard.strengthen')}: {rec.strengthenAreas.join(', ')}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="dashboard-school-right">
+                        <p className="dashboard-school-chance" style={{ color: colors.text }}>{rec.admissionChance}%</p>
+                        <p className="dashboard-school-chance-label">{t('dashboard.chance')}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

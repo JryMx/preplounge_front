@@ -501,6 +501,7 @@ const StudentProfilePage: React.FC = () => {
             category: 'safety' as const,
             admissionChance: Math.round(school.probability * 100),
             strengthenAreas: [],
+            qualityScore: school.quality_score || 0,
           };
         }),
         ...(apiData.recommendations.target || []).map((school, index) => {
@@ -512,6 +513,7 @@ const StudentProfilePage: React.FC = () => {
             category: 'target' as const,
             admissionChance: Math.round(school.probability * 100),
             strengthenAreas: [],
+            qualityScore: school.quality_score || 0,
           };
         }),
         ...(apiData.recommendations.reach || []).map((school, index) => {
@@ -523,6 +525,7 @@ const StudentProfilePage: React.FC = () => {
             category: 'reach' as const,
             admissionChance: Math.round(school.probability * 100),
             strengthenAreas: [],
+            qualityScore: school.quality_score || 0,
           };
         }),
         ...(apiData.recommendations.prestige || []).map((school, index) => {
@@ -534,6 +537,7 @@ const StudentProfilePage: React.FC = () => {
             category: 'prestige' as const,
             admissionChance: Math.round(school.probability * 100),
             strengthenAreas: [],
+            qualityScore: school.quality_score || 0,
           };
         }),
       ];

@@ -68,6 +68,7 @@ export interface SchoolRecommendation {
   category: 'safety' | 'target' | 'reach' | 'prestige';
   admissionChance: number;
   strengthenAreas: string[];
+  qualityScore?: number; // Quality score from API for sorting
 }
 
 interface StudentProfileContextType {
