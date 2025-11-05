@@ -269,6 +269,10 @@ const StudentProfilePage: React.FC = () => {
     const gpa = parseFloat(academicData.gpa);
     if (isNaN(gpa) || gpa < 0 || gpa > 4.0) {
       setApiError(language === 'ko' ? 'GPA는 0과 4.0 사이여야 합니다.' : 'GPA must be between 0 and 4.0.');
+      setShowResults(true);
+      setTimeout(() => {
+        schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
       return;
     }
 
@@ -279,11 +283,19 @@ const StudentProfilePage: React.FC = () => {
       
       if (academicData.satEBRW && (isNaN(satEBRW) || satEBRW < 200 || satEBRW > 800)) {
         setApiError(language === 'ko' ? 'SAT EBRW 점수는 200과 800 사이여야 합니다.' : 'SAT EBRW score must be between 200 and 800.');
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         return;
       }
       
       if (academicData.satMath && (isNaN(satMath) || satMath < 200 || satMath > 800)) {
         setApiError(language === 'ko' ? 'SAT Math 점수는 200과 800 사이여야 합니다.' : 'SAT Math score must be between 200 and 800.');
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         return;
       }
     }
@@ -293,6 +305,10 @@ const StudentProfilePage: React.FC = () => {
       const act = parseInt(academicData.actScore);
       if (academicData.actScore && (isNaN(act) || act < 1 || act > 36)) {
         setApiError(language === 'ko' ? 'ACT 점수는 1과 36 사이여야 합니다.' : 'ACT score must be between 1 and 36.');
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         return;
       }
     }
@@ -302,14 +318,26 @@ const StudentProfilePage: React.FC = () => {
       const score = parseFloat(academicData.englishTestScore);
       if (academicData.englishProficiencyTest === 'TOEFL iBT' && (isNaN(score) || score < 0 || score > 120)) {
         setApiError(language === 'ko' ? 'TOEFL iBT 점수는 0과 120 사이여야 합니다.' : 'TOEFL iBT score must be between 0 and 120.');
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         return;
       }
       if (academicData.englishProficiencyTest === 'IELTS' && (isNaN(score) || score < 0 || score > 9)) {
         setApiError(language === 'ko' ? 'IELTS 점수는 0과 9 사이여야 합니다.' : 'IELTS score must be between 0 and 9.');
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         return;
       }
       if (academicData.englishProficiencyTest === 'Duolingo English Test' && (isNaN(score) || score < 10 || score > 160)) {
         setApiError(language === 'ko' ? 'Duolingo 점수는 10과 160 사이여야 합니다.' : 'Duolingo score must be between 10 and 160.');
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         return;
       }
     }
@@ -318,6 +346,10 @@ const StudentProfilePage: React.FC = () => {
     for (const activity of extracurriculars) {
       if (activity.hoursPerWeek > 168) {
         setApiError(language === 'ko' ? '주당 활동 시간은 168시간을 초과할 수 없습니다.' : 'Hours per week cannot exceed 168.');
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
         return;
       }
     }
