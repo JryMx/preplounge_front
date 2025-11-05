@@ -413,15 +413,41 @@ const StudentProfilePage: React.FC = () => {
         {showResults && (
           <div ref={profileScoreRef} className="profile-calculator-section" style={{marginBottom: '24px', padding: '40px 32px', borderRadius: '16px'}}>
             <div className="profile-calculator-result-no-border" style={{width: '100%', height: '100%', maxWidth: '600px', margin: '0 auto'}}>
-              <div className="profile-calculator-result-content">
-                <div className="profile-calculator-score-group">
-                  <span className="profile-calculator-score-label">
-                    {language === 'ko' ? '프로필 점수' : 'Profile Score'}
-                  </span>
-                  <div className="profile-calculator-score-display">
-                    <span className="profile-calculator-score-value">{currentScore}</span>
-                    <span className="profile-calculator-score-total">/100</span>
+              
+              {/* Loading Animation */}
+              {isAnalyzing && (
+                <div className="analysis-loading-container">
+                  <div className="analysis-loading-pulse">
+                    <div className="pulse-ring pulse-ring-1"></div>
+                    <div className="pulse-ring pulse-ring-2"></div>
+                    <div className="pulse-ring pulse-ring-3"></div>
+                    <Loader2 className="analysis-spinner" size={32} />
                   </div>
+                  <h3 className="analysis-loading-title">
+                    {language === 'ko' ? '프로필 분석 중...' : 'Analyzing Your Profile...'}
+                  </h3>
+                  <p className="analysis-loading-subtitle">
+                    {language === 'ko' ? '잠시만 기다려 주세요, AI가 당신의 정보를 분석하고 있습니다' : 'Give us a moment, our AI is analyzing your information'}
+                  </p>
+                  <div className="analysis-loading-dots">
+                    <span className="dot"></span>
+                    <span className="dot"></span>
+                    <span className="dot"></span>
+                  </div>
+                </div>
+              )}
+
+              {/* Results - Only show after analysis is complete */}
+              {!isAnalyzing && aiAnalysis && (
+                <div className="profile-calculator-result-content analysis-results-fade-in">
+                  <div className="profile-calculator-score-group">
+                    <span className="profile-calculator-score-label">
+                      {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                    </span>
+                    <div className="profile-calculator-score-display score-pop-in">
+                      <span className="profile-calculator-score-value">{currentScore}</span>
+                      <span className="profile-calculator-score-total">/100</span>
+                    </div>
                 </div>
                 <p className="profile-calculator-description">
                   {language === 'ko' ? (
@@ -439,58 +465,24 @@ const StudentProfilePage: React.FC = () => {
                   )}
                 </p>
                 
-                {/* AI Analysis Display */}
-                {isAnalyzing && (
-                  <div style={{
-                    marginTop: '24px',
-                    padding: '16px 20px',
-                    backgroundColor: 'rgba(250, 204, 21, 0.1)',
-                    border: '1px solid rgba(250, 204, 21, 0.3)',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '12px',
-                    color: '#082F49',
-                    width: '100%'
-                  }}>
-                    <Loader2 className="h-5 w-5 animate-spin" style={{color: '#FACC15'}} />
-                    <span style={{fontSize: '14px'}}>
-                      {language === 'ko' ? '잠시만 기다려 주세요, 정보를 분석하고 있습니다' : 'Give us a moment, we\'re analyzing your information'}
+                <div className="ai-analysis-container">
+                  <div className="ai-analysis-header">
+                    <span className="ai-analysis-icon">✨</span>
+                    <span className="ai-analysis-title">
+                      {language === 'ko' ? 'AI 프로필 분석' : 'AI Profile Analysis'}
                     </span>
                   </div>
-                )}
-                
-                {aiAnalysis && !isAnalyzing && (
-                  <div style={{
-                    marginTop: '24px',
-                    padding: '20px',
-                    backgroundColor: 'rgba(250, 204, 21, 0.08)',
-                    border: '1px solid rgba(250, 204, 21, 0.2)',
-                    borderRadius: '12px',
-                    fontSize: '14px',
-                    lineHeight: '1.8',
-                    color: '#082F49',
-                    fontWeight: '500'
-                  }}>
-                    {aiAnalysis}
-                  </div>
-                )}
-                
-                {analysisError && !isAnalyzing && (
-                  <div style={{
-                    marginTop: '24px',
-                    padding: '16px 20px',
-                    backgroundColor: '#FEE2E2',
-                    border: '1px solid #FECACA',
-                    borderRadius: '12px',
-                    color: '#991B1B',
-                    fontSize: '14px'
-                  }}>
-                    {analysisError}
-                  </div>
-                )}
-              </div>
+                  <p className="ai-analysis-text">{aiAnalysis}</p>
+                </div>
+                </div>
+              )}
+              
+              {/* Error Display */}
+              {!isAnalyzing && analysisError && (
+                <div className="analysis-error-container">
+                  {analysisError}
+                </div>
+              )}
             </div>
           </div>
         )}
