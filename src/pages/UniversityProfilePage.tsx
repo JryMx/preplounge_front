@@ -197,16 +197,6 @@ const UniversityProfilePage: React.FC = () => {
                 <h1 className="university-profile-title" data-testid="text-university-name">
                   {universityName}
                 </h1>
-                <div className="university-profile-badges">
-                  <button 
-                    className="university-profile-compare-btn" 
-                    data-testid="button-compare"
-                    onClick={handleCompare}
-                  >
-                    <Plus className="h-4 w-4" />
-                    {t('university.compare')}
-                  </button>
-                </div>
               </div>
 
               {/* School Details */}
@@ -220,6 +210,16 @@ const UniversityProfilePage: React.FC = () => {
                   <span className="university-profile-detail-value">{university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
                 </div>
               </div>
+
+              <button 
+                className="university-profile-compare-btn" 
+                data-testid="button-compare"
+                onClick={handleCompare}
+                style={{ marginTop: '16px' }}
+              >
+                <Plus className="h-4 w-4" />
+                {t('university.compare')}
+              </button>
             </div>
           </div>
         </div>
