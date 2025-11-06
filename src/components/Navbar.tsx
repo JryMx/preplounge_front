@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
           <div className="navbar-logo">
             <Link to="/">
               <img
-                src="/preplounge-logo-full.png"
+                src="/logo-2.svg"
                 alt="PrepLounge"
               />
             </Link>

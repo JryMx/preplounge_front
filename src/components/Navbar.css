@@ -28,13 +28,7 @@
 }
 
 .navbar-logo img {
-  height: 32px;
-  opacity: 0.85;
-  transition: opacity 0.3s ease;
-}
-
-.navbar-logo img:hover {
-  opacity: 1;
+  height: 24px;
 }
 
 /* Desktop Navigation */
