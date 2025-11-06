@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { Loader2 } from 'lucide-react';
 import universitiesData from '../data/universities.json';
+import { getUniversityLocation } from '../data/universityLocations';
 import './profile-calculator.css';
 
 interface School {
@@ -118,8 +119,9 @@ const ProfileCalculatorPage: React.FC = () => {
     return language === 'ko' ? extractKoreanName(fullName) : extractEnglishName(fullName);
   };
 
-  const getDisplayState = (fullState: string) => {
-    return language === 'ko' ? fullState.match(/\(([^)]+)\)/)?.[1] || fullState : fullState.split(' (')[0];
+  const getDisplayLocation = (schoolName: string) => {
+    const englishName = extractEnglishName(schoolName);
+    return getUniversityLocation(englishName, language);
   };
 
   const findUniversityId = (schoolName: string): string | null => {
@@ -316,7 +318,7 @@ const ProfileCalculatorPage: React.FC = () => {
                         const cardContent = (
                           <>
                             <div className="school-name">{getDisplayName(school.name)}</div>
-                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-state">{getDisplayLocation(school.name)}</div>
                             <div className="school-probability">
                               {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
                             </div>
@@ -350,7 +352,7 @@ const ProfileCalculatorPage: React.FC = () => {
                         const cardContent = (
                           <>
                             <div className="school-name">{getDisplayName(school.name)}</div>
-                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-state">{getDisplayLocation(school.name)}</div>
                             <div className="school-probability">
                               {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
                             </div>
@@ -384,7 +386,7 @@ const ProfileCalculatorPage: React.FC = () => {
                         const cardContent = (
                           <>
                             <div className="school-name">{getDisplayName(school.name)}</div>
-                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-state">{getDisplayLocation(school.name)}</div>
                             <div className="school-probability">
                               {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
                             </div>
@@ -418,7 +420,7 @@ const ProfileCalculatorPage: React.FC = () => {
                         const cardContent = (
                           <>
                             <div className="school-name">{getDisplayName(school.name)}</div>
-                            <div className="school-state">{getDisplayState(school.state)}</div>
+                            <div className="school-state">{getDisplayLocation(school.name)}</div>
                             <div className="school-probability">
                               {language === 'ko' ? '합격 확률' : 'Admission Probability'}: <strong>{(school.probability * 100).toFixed(0)}%</strong>
                             </div>
