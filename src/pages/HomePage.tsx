@@ -1126,12 +1126,12 @@ const HomePage: React.FC = () => {
                           </div>
                         );
                       })}
+                      {results.recommendations.safety.length > 3 && (
+                        <Link to="/student-profile" className="see-more-button-grid">
+                          {language === 'ko' ? '더 보기' : 'See more'}
+                        </Link>
+                      )}
                     </div>
-                    {results.recommendations.safety.length > 3 && (
-                      <Link to="/student-profile" className="see-more-button">
-                        {language === 'ko' ? '더 보기' : 'See more'}
-                      </Link>
-                    )}
                   </div>
                 )}
 
@@ -1165,12 +1165,12 @@ const HomePage: React.FC = () => {
                           </div>
                         );
                       })}
+                      {results.recommendations.target.length > 3 && (
+                        <Link to="/student-profile" className="see-more-button-grid">
+                          {language === 'ko' ? '더 보기' : 'See more'}
+                        </Link>
+                      )}
                     </div>
-                    {results.recommendations.target.length > 3 && (
-                      <Link to="/student-profile" className="see-more-button">
-                        {language === 'ko' ? '더 보기' : 'See more'}
-                      </Link>
-                    )}
                   </div>
                 )}
 
@@ -1204,12 +1204,12 @@ const HomePage: React.FC = () => {
                           </div>
                         );
                       })}
+                      {results.recommendations.reach.length > 3 && (
+                        <Link to="/student-profile" className="see-more-button-grid">
+                          {language === 'ko' ? '더 보기' : 'See more'}
+                        </Link>
+                      )}
                     </div>
-                    {results.recommendations.reach.length > 3 && (
-                      <Link to="/student-profile" className="see-more-button">
-                        {language === 'ko' ? '더 보기' : 'See more'}
-                      </Link>
-                    )}
                   </div>
                 )}
 
@@ -1243,12 +1243,12 @@ const HomePage: React.FC = () => {
                           </div>
                         );
                       })}
+                      {results.recommendations.prestige.length > 3 && (
+                        <Link to="/student-profile" className="see-more-button-grid">
+                          {language === 'ko' ? '더 보기' : 'See more'}
+                        </Link>
+                      )}
                     </div>
-                    {results.recommendations.prestige.length > 3 && (
-                      <Link to="/student-profile" className="see-more-button">
-                        {language === 'ko' ? '더 보기' : 'See more'}
-                      </Link>
-                    )}
                   </div>
                 )}
 

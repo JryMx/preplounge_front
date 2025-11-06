@@ -42,8 +42,8 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Connects to PrepLounge AI API for real admission predictions.
   - Supports SAT and ACT scoring systems.
   - Returns comprehensive university recommendations categorized as Safety/Target/Reach/Prestige.
-  - **HomePage**: Live profile score preview with real-time calculation and top 3 highest-quality schools per category.
-  - **Profile Calculator Page**: Displays top 12 highest-quality schools per category.
+  - **HomePage**: Live profile score preview with real-time calculation and top 3 highest-quality schools per category in a fixed 2x2 grid layout (3 schools + "See More" button positioned as 4th grid item).
+  - **Profile Calculator Page**: Displays top 12 highest-quality schools per category in a fixed 2-column grid layout.
   - **Dashboard Page**: Displays top 3 schools per category.
   - All schools sorted by quality score.
   - Full bilingual support, loading states, and error handling.

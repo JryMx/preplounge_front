@@ -226,6 +226,38 @@
   transform: translateY(0px);
 }
 
+.see-more-button-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #FEF9C3;
+  border: 2px solid #FACC15;
+  border-radius: 8px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+  color: #854D0E;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 88px;
+}
+
+.see-more-button-grid:hover {
+  background: #FACC15;
+  color: #082F49;
+  transform: translateY(-1px);
+  box-shadow: 0px 4px 12px rgba(250, 204, 21, 0.3);
+}
+
+.see-more-button-grid:active {
+  transform: translateY(0px);
+}
+
 /* Form Override for Homepage */
 .profile-calculator-section .profile-calculator-form {
   width: 320px;
