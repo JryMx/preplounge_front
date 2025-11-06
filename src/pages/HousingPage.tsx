@@ -227,13 +227,13 @@ const HousingPage = () => {
                     <div className="housing-card-location" data-testid={`text-location-${listing.id}`}>
                       <MapPin className="h-4 w-4" />
                       <span>{listing.city}, {listing.state}</span>
-                      {listing.bedrooms && (
+                      {listing.bedrooms && Number.isInteger(listing.bedrooms) && listing.bedrooms > 0 && (
                         <>
                           <span className="housing-card-location-separator">•</span>
                           <span>{listing.bedrooms} bed</span>
                         </>
                       )}
-                      {listing.bathrooms && (
+                      {listing.bathrooms && typeof listing.bathrooms === 'number' && listing.bathrooms > 0 && (
                         <>
                           <span className="housing-card-location-separator">•</span>
                           <span>{listing.bathrooms} bath</span>
