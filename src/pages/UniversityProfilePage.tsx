@@ -191,6 +191,7 @@ const UniversityProfilePage: React.FC = () => {
               alt={universityName}
               className="university-profile-image"
               data-testid="img-university-logo"
+              onError={(e) => { e.currentTarget.src = '/preplounge-logo.png'; }}
             />
 
             <div className="university-profile-hero-content">

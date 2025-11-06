@@ -294,6 +294,7 @@ const UniversitiesPage: React.FC = () => {
                   src={university.image}
                   alt={language === 'ko' ? university.name : university.englishName}
                   className="university-card-image"
+                  onError={(e) => { e.currentTarget.src = '/preplounge-logo.png'; }}
                 />
                 <div className="university-card-content">
                   <h3 className="university-card-title">{language === 'ko' ? university.name : university.englishName}</h3>
@@ -337,6 +338,7 @@ const UniversitiesPage: React.FC = () => {
                   src={university.image}
                   alt={language === 'ko' ? university.name : university.englishName}
                   className="university-list-image"
+                  onError={(e) => { e.currentTarget.src = '/preplounge-logo.png'; }}
                 />
                 <div className="university-list-content">
                   <div className="university-list-header">
