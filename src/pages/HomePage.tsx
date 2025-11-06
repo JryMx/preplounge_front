@@ -369,7 +369,7 @@ const HomePage: React.FC = () => {
   };
 
   // Load housing listings for a specific area
-  const loadListingsForArea = async (centerLat: number, centerLng: number, cityName?: string) => {
+  const loadListingsForArea = async (cityName?: string) => {
     setListingsLoading(true);
     try {
       // Define major cities across available states
@@ -440,7 +440,7 @@ const HomePage: React.FC = () => {
 
   // Load housing listings from all available cities on mount
   useEffect(() => {
-    loadListingsForArea(37.7749, -122.4194); // San Francisco coordinates
+    loadListingsForArea();
   }, []);
 
   // Handle search input change
@@ -476,7 +476,7 @@ const HomePage: React.FC = () => {
     // Load listings near this university
     // Try to extract city name from university name or use nearby cities
     const cityName = extractCityFromUniversityName(university.englishName);
-    loadListingsForArea(university.lat, university.lng, cityName);
+    loadListingsForArea(cityName);
   };
 
   // Helper function to calculate distance between two coordinates (in km)
