@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
+import { Search } from 'lucide-react';
 import L from 'leaflet';
 import { useLanguage } from '../context/LanguageContext';
 import { Link } from 'react-router-dom';
@@ -52,10 +53,41 @@ function ZoomHandler({ onZoomChange }: { onZoomChange: (zoom: number) => void })
   return null;
 }
 
+// Map Fly To Component - moves map to specific location
+function MapFlyTo({ 
+  center, 
+  zoom, 
+  onComplete 
+}: { 
+  center: [number, number] | null; 
+  zoom: number;
+  onComplete?: () => void;
+}) {
+  const map = useMap();
+  
+  if (center) {
+    map.flyTo(center, zoom, {
+      duration: 1.5,
+      easeLinearity: 0.5
+    });
+    
+    // Reset center after animation to prevent re-renders
+    if (onComplete) {
+      setTimeout(onComplete, 1500);
+    }
+  }
+  
+  return null;
+}
+
 const UniversityMapPage: React.FC = () => {
   const { language, t } = useLanguage();
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null);
   const [currentZoom, setCurrentZoom] = useState<number>(4);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<UniversityWithCoords[]>([]);
+  const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
+  const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
 
   // Filter universities that have coordinate data
   const universitiesWithCoords = useMemo(() => {
@@ -82,17 +114,29 @@ const UniversityMapPage: React.FC = () => {
 
   // Filter universities based on zoom level to reduce clutter
   const visibleUniversities = useMemo(() => {
+    let filtered: UniversityWithCoords[] = [];
+    
     if (currentZoom <= 5) {
       // Zoomed out: show only 10 major universities
-      return universitiesWithCoords.slice(0, 10);
+      filtered = universitiesWithCoords.slice(0, 10);
     } else if (currentZoom <= 7) {
       // Medium zoom: show 20 universities
-      return universitiesWithCoords.slice(0, 20);
+      filtered = universitiesWithCoords.slice(0, 20);
     } else {
       // Zoomed in: show all universities
-      return universitiesWithCoords;
+      filtered = universitiesWithCoords;
     }
-  }, [universitiesWithCoords, currentZoom]);
+    
+    // Always include the selected university in visible markers
+    if (selectedUniversity) {
+      const selectedUni = universitiesWithCoords.find(u => u.id === selectedUniversity);
+      if (selectedUni && !filtered.find(u => u.id === selectedUniversity)) {
+        filtered = [...filtered, selectedUni];
+      }
+    }
+    
+    return filtered;
+  }, [universitiesWithCoords, currentZoom, selectedUniversity]);
 
   // Create custom marker icon function
   const createCustomIcon = (abbreviation: string, tuition: number, isSelected: boolean) => {
@@ -122,6 +166,45 @@ const UniversityMapPage: React.FC = () => {
       : `$${tuition.toLocaleString()}`;
   };
 
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query.trim().length > 0) {
+      const results = universitiesWithCoords.filter((uni) => {
+        const searchTerm = query.toLowerCase();
+        return (
+          uni.name.toLowerCase().includes(searchTerm) ||
+          uni.englishName.toLowerCase().includes(searchTerm) ||
+          uni.abbreviation.toLowerCase().includes(searchTerm)
+        );
+      }).slice(0, 10); // Limit to 10 results
+      
+      setSearchResults(results);
+      setShowSearchResults(true);
+    } else {
+      setSearchResults([]);
+      setShowSearchResults(false);
+    }
+  };
+
+  // Handle university selection from search
+  const handleUniversitySelect = (university: UniversityWithCoords) => {
+    setSelectedUniversity(university.id);
+    setMapCenter([university.lat, university.lng]);
+    setCurrentZoom(12);
+    setSearchQuery('');
+    setShowSearchResults(false);
+  };
+
+  // Handle search button click
+  const handleSearch = () => {
+    if (searchResults.length > 0) {
+      handleUniversitySelect(searchResults[0]);
+    }
+  };
+
   return (
     <div className="university-map-page">
       {/* Header */}
@@ -143,6 +226,51 @@ const UniversityMapPage: React.FC = () => {
               </span>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className="map-search-container">
+        <div className="map-search-wrapper">
+          <div className="map-search-input-wrapper">
+            <Search className="map-search-icon" size={20} />
+            <input
+              type="text"
+              className="map-search-input"
+              placeholder={language === 'ko' ? '대학 이름으로 검색' : 'Search by university name'}
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+            />
+          </div>
+          <button 
+            className="map-search-button"
+            onClick={handleSearch}
+            disabled={searchResults.length === 0}
+          >
+            {language === 'ko' ? '검색' : 'Search'}
+          </button>
+          
+          {/* Search Results Dropdown */}
+          {showSearchResults && searchResults.length > 0 && (
+            <div className="map-search-results">
+              {searchResults.map((university) => (
+                <div
+                  key={university.id}
+                  className="map-search-result-item"
+                  onClick={() => handleUniversitySelect(university)}
+                >
+                  <div className="search-result-name">
+                    {language === 'ko' ? university.name : university.englishName}
+                  </div>
+                  <div className="search-result-details">
+                    <span className="search-result-abbrev">{university.abbreviation}</span>
+                    <span className="search-result-tuition">{formatTuition(university.tuition)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -168,6 +296,11 @@ const UniversityMapPage: React.FC = () => {
           
           <MapResetButton label={t('map.reset.view')} />
           <ZoomHandler onZoomChange={setCurrentZoom} />
+          <MapFlyTo 
+            center={mapCenter} 
+            zoom={currentZoom} 
+            onComplete={() => setMapCenter(null)}
+          />
           
           {visibleUniversities.map((university) => (
             <Marker

@@ -372,3 +372,139 @@
   margin-left: 16px;
   font-style: italic;
 }
+
+/* Search Bar Container */
+.map-search-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 24px 20px;
+}
+
+.map-search-wrapper {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  max-width: 600px;
+}
+
+.map-search-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.map-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9CA3AF;
+  pointer-events: none;
+}
+
+.map-search-input {
+  width: 100%;
+  padding: 12px 20px 12px 48px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.map-search-input:focus {
+  outline: none;
+  border-color: #FACC15;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
+}
+
+.map-search-input:focus ~ .map-search-icon {
+  color: #FACC15;
+}
+
+.map-search-input-wrapper:focus-within .map-search-icon {
+  color: #FACC15;
+}
+
+.map-search-input::placeholder {
+  color: #9CA3AF;
+}
+
+.map-search-button {
+  padding: 12px 32px;
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  background: #FACC15;
+  color: #082F49;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.map-search-button:hover:not(:disabled) {
+  background: #F5C000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
+}
+
+.map-search-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Search Results Dropdown */
+.map-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.map-search-result-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.map-search-result-item:last-child {
+  border-bottom: none;
+}
+
+.map-search-result-item:hover {
+  background: #FCF8F0;
+}
+
+.search-result-name {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #082F49;
+  margin-bottom: 4px;
+}
+
+.search-result-details {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.search-result-abbrev {
+  font-weight: 600;
+  color: #FACC15;
+}
+
+.search-result-tuition {
+  color: #6B7280;
+}
