@@ -15,6 +15,8 @@ export interface CozyingListing {
   propertyType?: string;
   images?: string[];
   url?: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface CozyingSearchParams {
@@ -91,6 +93,9 @@ export async function searchListings(params: CozyingSearchParams = {}): Promise<
       amenities: home.amenities || [],
       available: home.homeStatus === 'Active' || true,
       url: home.url || '',
+      // Check if coordinates are already in the API response
+      lat: home.lat || home.latitude || home.coordinates?.[1] || home.location?.lat,
+      lng: home.lng || home.longitude || home.coordinates?.[0] || home.location?.lng,
     }));
   } catch (error) {
     console.error('Error fetching Cozying listings:', error);
@@ -188,6 +193,41 @@ export async function geocodeLocation(query: string): Promise<{ city: string; st
     return null;
   } catch (error) {
     console.error('Geocoding error:', error);
+    return null;
+  }
+}
+
+// Geocode a full address to get lat/lng coordinates
+export async function geocodeAddress(address: string): Promise<{ lat: number; lng: number } | null> {
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?` + 
+      `q=${encodeURIComponent(address)}, United States` +
+      `&format=json` +
+      `&limit=1`;
+    
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'PrepLounge/1.0 (Student housing search app)'
+      }
+    });
+    
+    if (!response.ok) {
+      return null;
+    }
+    
+    const data = await response.json();
+    
+    if (data && data.length > 0) {
+      const result = data[0];
+      return {
+        lat: parseFloat(result.lat),
+        lng: parseFloat(result.lon)
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Address geocoding error:', error);
     return null;
   }
 }

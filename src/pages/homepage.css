@@ -584,6 +584,18 @@
   position: relative;
 }
 
+.housing-map-container .leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 16px;
+  z-index: 0;
+}
+
+.housing-map-container .custom-housing-marker {
+  background: transparent;
+  border: none;
+}
+
 .housing-cta-button {
   display: flex;
   flex-direction: row;

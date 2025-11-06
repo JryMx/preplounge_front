@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Target, Users, BookOpen, Trophy, Globe, Loader2 } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
+import { searchListings, CozyingListing, geocodeAddress } from '../lib/cozyingApi';
 import '../hero-section-style.css';
 import './profile-calculator.css';
 import './homepage-calculator.css';
 import './homepage.css';
+import 'leaflet/dist/leaflet.css';
+
+// Fix for default marker icons in Leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 interface School {
   name: string;
@@ -43,6 +55,11 @@ interface APIResponse {
   };
 }
 
+interface ListingWithCoords extends CozyingListing {
+  lat?: number;
+  lng?: number;
+}
+
 const HomePage: React.FC = () => {
   const { t, language } = useLanguage();
   const [gpa, setGpa] = useState('');
@@ -54,6 +71,8 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
+  const [listings, setListings] = useState<ListingWithCoords[]>([]);
+  const [listingsLoading, setListingsLoading] = useState(true);
 
   const handleGpaChange = (value: string) => {
     // Allow empty or valid decimal input while typing
@@ -209,6 +228,62 @@ const HomePage: React.FC = () => {
   const handleAnalyze = () => {
     fetchAnalysis();
   };
+
+  // Load housing listings for San Francisco area on mount
+  useEffect(() => {
+    const loadListings = async () => {
+      setListingsLoading(true);
+      try {
+        // Fetch listings for San Francisco and surrounding areas
+        const cities = ['San Francisco', 'Oakland', 'Berkeley'];
+        const allListings: ListingWithCoords[] = [];
+        
+        // Fetch listings from multiple cities
+        for (const city of cities) {
+          try {
+            const cityListings = await searchListings({
+              city,
+              state: 'CA',
+              sorted: 'newest',
+              currentPage: 1,
+              homesPerGroup: 100, // Get more listings per city
+            });
+            
+            // Check if listings already have coordinates, otherwise geocode
+            const listingsWithCoords: ListingWithCoords[] = [];
+            
+            for (let i = 0; i < Math.min(cityListings.length, 50); i++) {
+              const listing = cityListings[i];
+              
+              // If coordinates already exist, use them
+              if (listing.lat && listing.lng) {
+                listingsWithCoords.push(listing as ListingWithCoords);
+              } else if (listing.address) {
+                // Otherwise geocode the address
+                await new Promise(resolve => setTimeout(resolve, i * 100)); // Rate limiting
+                const coords = await geocodeAddress(listing.address);
+                if (coords) {
+                  listingsWithCoords.push({ ...listing, lat: coords.lat, lng: coords.lng });
+                }
+              }
+            }
+            
+            allListings.push(...listingsWithCoords);
+          } catch (error) {
+            console.error(`Error fetching listings for ${city}:`, error);
+          }
+        }
+        
+        setListings(allListings);
+      } catch (error) {
+        console.error('Error loading listings:', error);
+      } finally {
+        setListingsLoading(false);
+      }
+    };
+    
+    loadListings();
+  }, []);
 
   // Calculate score preview in real-time based on GPA and test scores
   const calculateScorePreview = (): number | null => {
@@ -1030,33 +1105,102 @@ const HomePage: React.FC = () => {
             </div>
 
             <div className="housing-map-container">
-              <div style={{
-                width: '100%',
-                height: '360px',
-                background: 'linear-gradient(135deg, #E0F2FE 0%, #D1FAE5 100%)',
-                border: '1px solid #E7E5E4',
-                borderRadius: '16px',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                <div style={{ position: 'absolute', inset: 0, padding: '16px' }}>
-                  <div style={{ position: 'absolute', top: '32px', left: '48px', background: '#ef4444', color: 'white', fontSize: '11px', padding: '4px 8px', borderRadius: '9999px', fontWeight: '500' }}>
-                    H
-                  </div>
-                  <div style={{ position: 'absolute', top: '64px', right: '80px', background: '#3b82f6', color: 'white', fontSize: '11px', padding: '4px 8px', borderRadius: '9999px', fontWeight: '500' }}>
-                    UCLA
-                  </div>
-                  <div style={{ position: 'absolute', bottom: '80px', left: '64px', background: '#10b981', color: 'white', fontSize: '11px', padding: '4px 8px', borderRadius: '9999px', fontWeight: '500' }}>
-                    USC
-                  </div>
-                  <div style={{ position: 'absolute', top: '48px', right: '128px', background: 'white', padding: '4px 8px', borderRadius: '4px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', fontSize: '11px', fontWeight: '600', color: '#212529' }}>
-                    $200K
-                  </div>
-                  <div style={{ position: 'absolute', bottom: '128px', left: '96px', background: 'white', padding: '4px 8px', borderRadius: '4px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', fontSize: '11px', fontWeight: '600', color: '#212529' }}>
-                    $781K
-                  </div>
+              {listingsLoading ? (
+                <div style={{
+                  width: '100%',
+                  height: '360px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, #E0F2FE 0%, #D1FAE5 100%)',
+                }}>
+                  <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
                 </div>
-              </div>
+              ) : (
+                <MapContainer
+                  center={[37.7749, -122.4194]} // San Francisco
+                  zoom={10}
+                  style={{
+                    width: '100%',
+                    height: '360px',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    border: '1px solid #E7E5E4',
+                  }}
+                  scrollWheelZoom={false}
+                  zoomControl={true}
+                >
+                  <TileLayer
+                    attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
+                    url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                    subdomains="abcd"
+                    maxZoom={19}
+                    minZoom={3}
+                  />
+                  
+                  {/* Display listings from cozying API */}
+                  {listings.filter(listing => listing.lat && listing.lng).map((listing) => {
+                    const priceK = listing.price ? Math.round(listing.price / 1000) : 0;
+                    return (
+                      <Marker
+                        key={listing.id}
+                        position={[listing.lat!, listing.lng!]}
+                        icon={L.divIcon({
+                          className: 'custom-housing-marker',
+                          html: `
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                              <div style="background: white; padding: 4px 8px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-size: 11px; font-weight: 600; color: #212529; margin-bottom: 4px;">
+                                $${priceK}K
+                              </div>
+                              <div style="background: #3b82f6; color: white; font-size: 10px; padding: 4px 6px; border-radius: 9999px; font-weight: 500;">
+                                ${listing.bedrooms || '?'}bd
+                              </div>
+                            </div>
+                          `,
+                          iconSize: [60, 60],
+                          iconAnchor: [30, 50],
+                        })}
+                      >
+                        <Popup>
+                          <div style={{ minWidth: '200px' }}>
+                            <div style={{ fontWeight: '600', marginBottom: '4px' }}>
+                              {listing.title}
+                            </div>
+                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>
+                              {listing.address}
+                            </div>
+                            <div style={{ fontSize: '14px', fontWeight: '600', color: '#082F49' }}>
+                              ${listing.price?.toLocaleString()}
+                            </div>
+                            {listing.bedrooms && listing.bathrooms && (
+                              <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                                {listing.bedrooms} bed • {listing.bathrooms} bath
+                              </div>
+                            )}
+                            {listing.url && (
+                              <a
+                                href={listing.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  display: 'inline-block',
+                                  marginTop: '8px',
+                                  fontSize: '12px',
+                                  color: '#3b82f6',
+                                  textDecoration: 'underline'
+                                }}
+                              >
+                                View Details
+                              </a>
+                            )}
+                          </div>
+                        </Popup>
+                      </Marker>
+                    );
+                  })}
+                </MapContainer>
+              )}
             </div>
 
             <Link to="/housing" className="housing-cta-button">
