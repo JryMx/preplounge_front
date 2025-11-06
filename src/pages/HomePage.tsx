@@ -770,12 +770,12 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Campus Image Section */}
-      <section
-        className="relative bg-center bg-cover bg-no-repeat h-screen min-h-[400px] max-h-[600px] md:h-screen md:max-h-none"
-        style={{
-          backgroundImage: `url('/campus-students.png')`,
-        }}
-      >
+      <section className="relative w-full">
+        <img 
+          src="/campus-students.png" 
+          alt="Students on campus lawn"
+          className="w-full h-auto object-contain"
+        />
       </section>
 
       {/* Quick Profile Calculator */}
