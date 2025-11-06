@@ -65,7 +65,16 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Filtering by specialization tags (multi-select).
   - Full bilingual support with English translations for all Korean tags.
   - Company details include name, address, contact, and service tags.
-- **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
+- **Interactive University Map**:
+  - Displays 38 universities with geographic coordinates on an interactive U.S. map.
+  - Uses CARTO tile provider for reliable map rendering (600px fixed height).
+  - Custom markers show university abbreviations and tuition prices ($K format).
+  - Zoom-based marker filtering to prevent clutter: 10 universities at zoom ≤5, 20 at zoom ≤7, all 38 at zoom >7.
+  - Live counter shows visible/total universities with helpful zoom hint.
+  - Reset button to return to default USA view.
+  - Clicking markers opens popups with university details and navigation links.
+  - Full bilingual support with react-leaflet@4.2.1.
+- **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, UniversityMapPage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 
 ### System Design Choices
 - The profile score is a deterministic, mathematical calculation (out of 100) based on academic (GPA, test scores, course rigor) and non-academic components (extracurriculars, personal statement, recommendations, legacy, English proficiency).

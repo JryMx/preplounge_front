@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { useLanguage } from '../context/LanguageContext';
 import { Link } from 'react-router-dom';
@@ -42,9 +42,20 @@ function MapResetButton({ label }: { label: string }) {
   );
 }
 
+// Zoom Event Handler Component
+function ZoomHandler({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  useMapEvents({
+    zoomend: (e) => {
+      onZoomChange(e.target.getZoom());
+    },
+  });
+  return null;
+}
+
 const UniversityMapPage: React.FC = () => {
   const { language, t } = useLanguage();
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null);
+  const [currentZoom, setCurrentZoom] = useState<number>(4);
 
   // Filter universities that have coordinate data
   const universitiesWithCoords = useMemo(() => {
@@ -68,6 +79,20 @@ const UniversityMapPage: React.FC = () => {
     
     return result;
   }, []);
+
+  // Filter universities based on zoom level to reduce clutter
+  const visibleUniversities = useMemo(() => {
+    if (currentZoom <= 5) {
+      // Zoomed out: show only 10 major universities
+      return universitiesWithCoords.slice(0, 10);
+    } else if (currentZoom <= 7) {
+      // Medium zoom: show 20 universities
+      return universitiesWithCoords.slice(0, 20);
+    } else {
+      // Zoomed in: show all universities
+      return universitiesWithCoords;
+    }
+  }, [universitiesWithCoords, currentZoom]);
 
   // Create custom marker icon function
   const createCustomIcon = (abbreviation: string, tuition: number, isSelected: boolean) => {
@@ -110,8 +135,13 @@ const UniversityMapPage: React.FC = () => {
           </p>
           <div className="map-stats">
             <span className="map-stat-item">
-              {universitiesWithCoords.length} {t('map.universities.count')}
+              {visibleUniversities.length} / {universitiesWithCoords.length} {t('map.universities.count')}
             </span>
+            {currentZoom <= 7 && (
+              <span className="map-stat-hint">
+                {language === 'ko' ? '확대하면 더 많은 대학을 볼 수 있습니다' : 'Zoom in to see more universities'}
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -133,8 +163,9 @@ const UniversityMapPage: React.FC = () => {
           />
           
           <MapResetButton label={t('map.reset.view')} />
+          <ZoomHandler onZoomChange={setCurrentZoom} />
           
-          {universitiesWithCoords.map((university) => (
+          {visibleUniversities.map((university) => (
             <Marker
               key={university.id}
               position={[university.lat, university.lng]}
