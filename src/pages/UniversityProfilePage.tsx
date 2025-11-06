@@ -21,6 +21,7 @@ interface ApplicationRequirements {
 
 interface AcademicInfo {
   graduationRate?: number;
+  averageEarnings?: number;
   degreeTypes?: {
     bachelors: boolean;
     masters: boolean;
@@ -395,6 +396,25 @@ const UniversityProfilePage: React.FC = () => {
                   <span className="academic-info-label">{language === 'ko' ? '졸업률' : 'Graduation Rate'}</span>
                   <span className="academic-info-value graduation-rate" data-testid="text-graduation-rate">
                     {university.academicInfo.graduationRate}%
+                  </span>
+                </div>
+              )}
+
+              {/* Average Earnings After Graduation */}
+              {university.academicInfo?.averageEarnings !== undefined && (
+                <div className="academic-info-item">
+                  <span className="academic-info-label">{language === 'ko' ? '졸업 후 평균 소득' : 'Average Earnings After Graduation'}</span>
+                  <span className="academic-info-value" data-testid="text-average-earnings">
+                    ${university.academicInfo.averageEarnings.toLocaleString()}
+                  </span>
+                </div>
+              )}
+
+              {/* Data Source Note */}
+              {(university.academicInfo?.graduationRate !== undefined || university.academicInfo?.averageEarnings !== undefined) && (
+                <div className="academic-info-item">
+                  <span style={{ fontSize: '12px', color: '#6B7280', fontStyle: 'italic' }}>
+                    {language === 'ko' ? '출처: College Scorecard' : 'Source: College Scorecard'}
                   </span>
                 </div>
               )}
