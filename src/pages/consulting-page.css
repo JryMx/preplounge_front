@@ -560,8 +560,27 @@
 
 .consulting-program-specialties {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.consulting-specialties-title {
+  font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #082F49;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.consulting-specialties-tags {
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
+  align-items: center;
 }
 
 .consulting-specialty-tag {
