@@ -360,7 +360,10 @@
 .university-list-image {
   width: 120px;
   height: 120px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: #FFFFFF;
+  padding: 12px;
   border-radius: 12px;
   flex-shrink: 0;
 }
