@@ -936,18 +936,30 @@ const HomePage: React.FC = () => {
             {/* Right side - Score Preview */}
             {!results && (
               <div className="score-preview-box">
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  gap: '16px',
+                  flex: 1
+                }}>
                   <div className="score-preview-label">
                     {language === 'ko' ? '프로필 점수' : 'Profile Score'}
                   </div>
-                  <div className="score-preview-value">
+                  <div className="score-preview-value" style={{ marginBottom: '8px' }}>
                     -- / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
                   </div>
-                  <div className="score-preview-hint">
-                    {language === 'ko' ? 'GPA와 시험 점수를 입력하고 분석을 시작하세요.' : 'Enter your GPA and test scores, then start the analysis.'}
-                    <br />
-                    <br />
-                    {language === 'ko' ? '맞춤형 대학 추천과 합격 확률을 확인할 수 있습니다.' : 'Get personalized university recommendations and admission probabilities.'}
+                  <div className="score-preview-hint" style={{ 
+                    textAlign: 'center',
+                    lineHeight: '1.6',
+                    maxWidth: '90%'
+                  }}>
+                    <div style={{ marginBottom: '12px' }}>
+                      {language === 'ko' ? 'GPA와 시험 점수를 입력하고 분석을 시작하세요.' : 'Enter your GPA and test scores, then start the analysis.'}
+                    </div>
+                    <div>
+                      {language === 'ko' ? '맞춤형 대학 추천과 합격 확률을 확인할 수 있습니다.' : 'Get personalized university recommendations and admission probabilities.'}
+                    </div>
                   </div>
                 </div>
                 
@@ -955,7 +967,7 @@ const HomePage: React.FC = () => {
                   onClick={handleAnalyze}
                   disabled={!isFormValid() || loading}
                   className="profile-calculator-button"
-                  style={{ marginTop: 'auto', width: '100%' }}
+                  style={{ width: '100%' }}
                   data-testid="button-analyze-home"
                 >
                   {loading ? (
