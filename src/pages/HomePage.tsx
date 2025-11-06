@@ -510,23 +510,6 @@ const HomePage: React.FC = () => {
                 </div>
               )}
 
-              <button
-                onClick={handleAnalyze}
-                disabled={!isFormValid() || loading}
-                className="profile-calculator-button"
-                style={{ marginTop: '20px' }}
-                data-testid="button-analyze-home"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin" size={20} />
-                    <span>{language === 'ko' ? '분석 중...' : 'Analyzing...'}</span>
-                  </>
-                ) : (
-                  <span>{language === 'ko' ? '분석 시작하기' : 'Start Analysis'}</span>
-                )}
-              </button>
-
               {error && (
                 <div className="profile-calculator-error" data-testid="text-error-home">
                   {error}
@@ -537,21 +520,40 @@ const HomePage: React.FC = () => {
             {/* Right side - Score Preview */}
             {!results && (
               <div className="score-preview-box">
-                <div className="score-preview-label">
-                  {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                  <div className="score-preview-label">
+                    {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                  </div>
+                  <div className="score-preview-value">
+                    {calculateScorePreview() !== null ? calculateScorePreview() : '--'} / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
+                  </div>
+                  <div className="score-preview-hint">
+                    {language === 'ko' ? 'GPA와 SAT 점수를 기반으로 한 간단한 계산입니다.' : 'Basic calculation based on GPA and test scores.'}
+                    <br />
+                    {language === 'ko' ? '과외활동, 에세이, 개인화된 대학 추천을 포함한 종합적인' : 'For comprehensive'}
+                    <br />
+                    {language === 'ko' ? '분석을 위해서는 전체 프로필을 완성해주세요.' : 'analysis with activities, essays, and personalized'}
+                    <br />
+                    {language === 'ko' ? '' : 'recommendations, complete your full profile.'}
+                  </div>
                 </div>
-                <div className="score-preview-value">
-                  {calculateScorePreview() !== null ? calculateScorePreview() : '--'} / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
-                </div>
-                <div className="score-preview-hint">
-                  {language === 'ko' ? 'GPA와 SAT 점수를 기반으로 한 간단한 계산입니다.' : 'Basic calculation based on GPA and test scores.'}
-                  <br />
-                  {language === 'ko' ? '과외활동, 에세이, 개인화된 대학 추천을 포함한 종합적인' : 'For comprehensive'}
-                  <br />
-                  {language === 'ko' ? '분석을 위해서는 전체 프로필을 완성해주세요.' : 'analysis with activities, essays, and personalized'}
-                  <br />
-                  {language === 'ko' ? '' : 'recommendations, complete your full profile.'}
-                </div>
+                
+                <button
+                  onClick={handleAnalyze}
+                  disabled={!isFormValid() || loading}
+                  className="profile-calculator-button"
+                  style={{ marginTop: 'auto', width: '100%' }}
+                  data-testid="button-analyze-home"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="animate-spin" size={20} />
+                      <span>{language === 'ko' ? '분석 중...' : 'Analyzing...'}</span>
+                    </>
+                  ) : (
+                    <span>{language === 'ko' ? '분석 시작하기' : 'Start Analysis'}</span>
+                  )}
+                </button>
               </div>
             )}
 
