@@ -27,24 +27,55 @@ const consultingCompanies: ConsultingCompany[] = consultingCompaniesData as Cons
 const ConsultingPage: React.FC = () => {
   const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [visibleCount, setVisibleCount] = useState(10);
 
-  const filteredCompanies = consultingCompanies.filter(company => {
-    if (!searchTerm.trim()) return true;
+  // Get all unique tags from all companies
+  const allTags = React.useMemo(() => {
+    const tagSet = new Set<string>();
+    consultingCompanies.forEach(company => {
+      company.tags.forEach(tag => tagSet.add(tag));
+      company.specialties.forEach(specialty => tagSet.add(specialty));
+    });
+    return Array.from(tagSet).sort();
+  }, []);
 
+  const filteredCompanies = consultingCompanies.filter(company => {
+    // Combine all tags from company
+    const companyAllTags = [...company.specialties, ...company.tags];
+    
+    // Search filter
     const searchLower = searchTerm.toLowerCase();
-    return (
+    const matchesSearch = !searchTerm.trim() || (
       company.name.toLowerCase().includes(searchLower) ||
       company.location.toLowerCase().includes(searchLower) ||
-      company.specialties.some(s => s.toLowerCase().includes(searchLower)) ||
-      company.tags.some(t => t.toLowerCase().includes(searchLower))
+      companyAllTags.some(t => t.toLowerCase().includes(searchLower))
     );
+
+    // Tag filter - company must have ALL selected tags (AND logic)
+    const matchesTags = selectedTags.length === 0 || 
+      selectedTags.every(selectedTag => companyAllTags.includes(selectedTag));
+
+    return matchesSearch && matchesTags;
   });
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev =>
+      prev.includes(tag)
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
+  };
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setSelectedTags([]);
+  };
 
   // Reset visible count when filters change
   useEffect(() => {
     setVisibleCount(10);
-  }, [searchTerm]);
+  }, [searchTerm, selectedTags]);
 
   // Infinite scroll handler
   const handleScroll = useCallback(() => {
@@ -94,6 +125,55 @@ const ConsultingPage: React.FC = () => {
           </div>
         </div>
 
+        <div className="consulting-tags-container">
+          <div className="consulting-tags-header">
+            <h3 className="consulting-tags-title">
+              {language === 'ko' ? '태그로 필터링' : 'Filter by Tags'}
+            </h3>
+            {(selectedTags.length > 0 || searchTerm) && (
+              <button
+                onClick={clearAllFilters}
+                className="consulting-tags-clear"
+              >
+                {language === 'ko' ? '모든 필터 초기화' : 'Clear All'}
+              </button>
+            )}
+          </div>
+
+          <div className="consulting-tags-grid">
+            {allTags.map(tag => (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={`consulting-tag ${selectedTags.includes(tag) ? 'active' : ''}`}
+              >
+                <span className="consulting-tag-text">{translateConsulting(tag, language)}</span>
+              </button>
+            ))}
+          </div>
+
+          {selectedTags.length > 0 && (
+            <div className="consulting-selected-tags">
+              <span className="consulting-selected-tags-label">
+                {language === 'ko' ? '선택된 태그 (모두 포함):' : 'Selected Tags (All must match):'}
+              </span>
+              <div className="consulting-selected-tags-list">
+                {selectedTags.map(tag => (
+                  <div key={tag} className="consulting-selected-tag">
+                    <span className="consulting-selected-tag-text">{translateConsulting(tag, language)}</span>
+                    <button
+                      onClick={() => toggleTag(tag)}
+                      className="consulting-selected-tag-remove"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         <div className="consulting-results-info">
           {language === 'ko' 
             ? `전체 ${consultingCompanies.length}개 중 ${Math.min(visibleCount, filteredCompanies.length)}개의 컨설팅 프로그램을 표시하고 있습니다`
@@ -116,25 +196,24 @@ const ConsultingPage: React.FC = () => {
                   </div>
                 </div>
 
-                {(company.specialties.length > 0 || company.tags.length > 0) && (
-                  <div className="consulting-program-specialties">
-                    <span className="consulting-specialties-title">
-                      {language === 'ko' ? '전문 분야: ' : 'Specialties: '}
-                    </span>
-                    <div className="consulting-specialties-tags">
-                      {company.specialties.map(specialty => (
-                        <div key={specialty} className="consulting-specialty-tag">
-                          <span className="consulting-specialty-tag-text">{translateConsulting(specialty, language)}</span>
-                        </div>
-                      ))}
-                      {company.tags.map(tag => (
-                        <div key={tag} className="consulting-specialty-tag">
-                          <span className="consulting-specialty-tag-text">{translateConsulting(tag, language)}</span>
-                        </div>
-                      ))}
+                {(company.specialties.length > 0 || company.tags.length > 0) && (() => {
+                  // Combine and deduplicate all tags
+                  const allCompanyTags = Array.from(new Set([...company.specialties, ...company.tags]));
+                  return (
+                    <div className="consulting-program-specialties">
+                      <span className="consulting-specialties-title">
+                        {language === 'ko' ? '전문 분야: ' : 'Specialties: '}
+                      </span>
+                      <div className="consulting-specialties-tags">
+                        {allCompanyTags.map(tag => (
+                          <div key={tag} className="consulting-specialty-tag">
+                            <span className="consulting-specialty-tag-text">{translateConsulting(tag, language)}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
 
                 <div className="consulting-program-footer">
                   <div className="consulting-program-contact">
@@ -215,7 +294,7 @@ const ConsultingPage: React.FC = () => {
           <div className="consulting-empty-state">
             <Search className="consulting-empty-icon" />
             <p className="consulting-empty-message">
-              {searchTerm
+              {(searchTerm || selectedTags.length > 0)
                 ? (language === 'ko' 
                     ? '검색 조건에 맞는 컨설팅 프로그램이 없습니다.'
                     : 'No consulting programs match your search criteria.')
@@ -223,12 +302,12 @@ const ConsultingPage: React.FC = () => {
                     ? '컨설팅 프로그램을 불러오는 중입니다...'
                     : 'Loading consulting programs...')}
             </p>
-            {searchTerm && (
+            {(searchTerm || selectedTags.length > 0) && (
               <button
-                onClick={() => setSearchTerm('')}
+                onClick={clearAllFilters}
                 className="consulting-empty-button"
               >
-                {language === 'ko' ? '검색 초기화' : 'Clear Search'}
+                {language === 'ko' ? '모든 필터 초기화' : 'Clear All Filters'}
               </button>
             )}
           </div>
