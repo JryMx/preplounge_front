@@ -555,13 +555,15 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding: 10px 20px;
   gap: 10px;
   background: #082F49;
   border-radius: 6px;
   border: none;
   cursor: pointer;
   transition: background 0.3s ease;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .housing-search-button:hover:not(:disabled) {
