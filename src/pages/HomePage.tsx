@@ -151,12 +151,24 @@ const HomePage: React.FC = () => {
   const handleGpaChange = (value: string) => {
     // Allow empty or valid decimal input while typing
     if (value === '' || /^\d*\.?\d*$/.test(value)) {
-      setGpa(value);
+      let finalValue = value;
+      
+      // Auto-cap at maximum value if exceeded
+      if (value && value.trim() !== '') {
+        const num = parseFloat(value);
+        if (!isNaN(num) && num > 4.0) {
+          finalValue = '4.0';
+        } else if (!isNaN(num) && num < 0) {
+          finalValue = '0';
+        }
+      }
+      
+      setGpa(finalValue);
       
       // Real-time validation
       const errors = { ...validationErrors };
-      if (value && value.trim() !== '') {
-        const num = parseFloat(value);
+      if (finalValue && finalValue.trim() !== '') {
+        const num = parseFloat(finalValue);
         if (isNaN(num) || num < 0 || num > 4.0) {
           errors.gpa = language === 'ko' ? 'GPA는 0과 4.0 사이여야 합니다' : 'GPA must be between 0 and 4.0';
         } else {
@@ -172,12 +184,24 @@ const HomePage: React.FC = () => {
   const handleSatMathChange = (value: string) => {
     // Allow empty or digits only while typing
     if (value === '' || /^\d+$/.test(value)) {
-      setSatMath(value);
+      let finalValue = value;
+      
+      // Auto-cap at maximum value if exceeded
+      if (value && value.trim() !== '') {
+        const num = parseInt(value);
+        if (!isNaN(num) && num > 800) {
+          finalValue = '800';
+        } else if (!isNaN(num) && num < 200) {
+          finalValue = '200';
+        }
+      }
+      
+      setSatMath(finalValue);
       
       // Real-time validation
       const errors = { ...validationErrors };
-      if (value && value.trim() !== '') {
-        const num = parseInt(value);
+      if (finalValue && finalValue.trim() !== '') {
+        const num = parseInt(finalValue);
         if (isNaN(num) || num < 200 || num > 800) {
           errors.satMath = language === 'ko' ? 'SAT Math는 200-800 사이여야 합니다' : 'SAT Math must be between 200-800';
         } else {
@@ -193,12 +217,24 @@ const HomePage: React.FC = () => {
   const handleSatEBRWChange = (value: string) => {
     // Allow empty or digits only while typing
     if (value === '' || /^\d+$/.test(value)) {
-      setSatEBRW(value);
+      let finalValue = value;
+      
+      // Auto-cap at maximum value if exceeded
+      if (value && value.trim() !== '') {
+        const num = parseInt(value);
+        if (!isNaN(num) && num > 800) {
+          finalValue = '800';
+        } else if (!isNaN(num) && num < 200) {
+          finalValue = '200';
+        }
+      }
+      
+      setSatEBRW(finalValue);
       
       // Real-time validation
       const errors = { ...validationErrors };
-      if (value && value.trim() !== '') {
-        const num = parseInt(value);
+      if (finalValue && finalValue.trim() !== '') {
+        const num = parseInt(finalValue);
         if (isNaN(num) || num < 200 || num > 800) {
           errors.satEBRW = language === 'ko' ? 'SAT EBRW는 200-800 사이여야 합니다' : 'SAT EBRW must be between 200-800';
         } else {
@@ -214,12 +250,24 @@ const HomePage: React.FC = () => {
   const handleActChange = (value: string) => {
     // Allow empty or digits only while typing
     if (value === '' || /^\d+$/.test(value)) {
-      setActScore(value);
+      let finalValue = value;
+      
+      // Auto-cap at maximum value if exceeded
+      if (value && value.trim() !== '') {
+        const num = parseInt(value);
+        if (!isNaN(num) && num > 36) {
+          finalValue = '36';
+        } else if (!isNaN(num) && num < 1) {
+          finalValue = '1';
+        }
+      }
+      
+      setActScore(finalValue);
       
       // Real-time validation
       const errors = { ...validationErrors };
-      if (value && value.trim() !== '') {
-        const num = parseInt(value);
+      if (finalValue && finalValue.trim() !== '') {
+        const num = parseInt(finalValue);
         if (isNaN(num) || num < 1 || num > 36) {
           errors.actScore = language === 'ko' ? 'ACT는 1-36 사이여야 합니다' : 'ACT must be between 1-36';
         } else {
@@ -768,6 +816,7 @@ const HomePage: React.FC = () => {
                       type="number"
                       min="200"
                       max="800"
+                      step="10"
                       value={satMath}
                       onChange={(e) => handleSatMathChange(e.target.value)}
                       className="profile-calculator-input"
@@ -797,6 +846,7 @@ const HomePage: React.FC = () => {
                       type="number"
                       min="200"
                       max="800"
+                      step="10"
                       value={satEBRW}
                       onChange={(e) => handleSatEBRWChange(e.target.value)}
                       className="profile-calculator-input"
