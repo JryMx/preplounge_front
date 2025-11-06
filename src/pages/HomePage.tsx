@@ -123,9 +123,9 @@ const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<UniversityWithCoords[]>([]);
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
-  const [mapCenter, setMapCenter] = useState<[number, number]>([37.0902, -95.7129]); // Center of USA
-  const [mapZoom, setMapZoom] = useState<number>(4);
-  const [currentZoom, setCurrentZoom] = useState<number>(4);
+  const [mapCenter, setMapCenter] = useState<[number, number]>([37.7749, -122.4194]); // San Francisco
+  const [mapZoom, setMapZoom] = useState<number>(10);
+  const [currentZoom, setCurrentZoom] = useState<number>(10);
   
   // Get universities with coordinates for search
   const universitiesWithCoords = useMemo(() => {
@@ -375,7 +375,7 @@ const HomePage: React.FC = () => {
 
   // Load housing listings from all available cities on mount
   useEffect(() => {
-    loadListingsForArea(37.0902, -95.7129); // Center of USA
+    loadListingsForArea(37.7749, -122.4194); // San Francisco coordinates
   }, []);
 
   // Handle search input change
