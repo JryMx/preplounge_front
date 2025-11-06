@@ -1,11 +1,35 @@
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session';
+import passportLib from './config/passport.js';
+import { configurePassport } from './config/passport.js';
+import authRoutes from './routes/auth.js';
 
 const app = express();
 const PORT = 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5000',
+  credentials: true
+}));
 app.use(express.json());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+
+configurePassport();
+app.use(passportLib.initialize());
+app.use(passportLib.session());
+
+app.use('/api/auth', authRoutes);
 
 // Profile analysis endpoint
 app.post('/api/analyze-profile', async (req, res) => {

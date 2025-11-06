@@ -28,6 +28,7 @@ const translations = {
     'nav.housing': '주거 지원',
     'nav.dashboard': '대시보드',
     'nav.login': '로그인',
+    'nav.logout': '로그아웃',
     'nav.language': 'English',
     
     // HomePage - Hero
@@ -382,6 +383,7 @@ const translations = {
     'nav.housing': 'Housing Support',
     'nav.dashboard': 'Dashboard',
     'nav.login': 'Login',
+    'nav.logout': 'Logout',
     'nav.language': '한국어',
     
     // HomePage - Hero

@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, LogOut, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import AuthModal from './AuthModal';
 import './Navbar.css';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUniversitiesMenuOpen, setIsUniversitiesMenuOpen] = useState(false);
   const [isMobileUniversitiesMenuOpen, setIsMobileUniversitiesMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
   const { language, setLanguage, t } = useLanguage();
   
   const toggleLanguage = () => {
@@ -68,14 +71,40 @@ const Navbar: React.FC = () => {
               <span>{t('nav.language')}</span>
             </button>
 
-            {isAuthenticated ? (
-              <Link to="/dashboard" className="navbar-auth-button">
-                <span className="navbar-auth-button-text">{t('nav.dashboard')}</span>
-              </Link>
+            {isAuthenticated && user ? (
+              <div 
+                className="navbar-user-menu"
+                onMouseEnter={() => setIsUserMenuOpen(true)}
+                onMouseLeave={() => setIsUserMenuOpen(false)}
+              >
+                <button className="navbar-user-button">
+                  {user.photo ? (
+                    <img src={user.photo} alt={user.displayName} className="navbar-user-avatar" />
+                  ) : (
+                    <div className="navbar-user-avatar-placeholder">
+                      <User size={18} />
+                    </div>
+                  )}
+                  <span className="navbar-user-name">{user.displayName}</span>
+                  <ChevronDown size={16} />
+                </button>
+                {isUserMenuOpen && (
+                  <div className="navbar-user-dropdown">
+                    <Link to="/student-profile" className="navbar-user-dropdown-item">
+                      <User size={16} />
+                      {t('nav.profile')}
+                    </Link>
+                    <button onClick={logout} className="navbar-user-dropdown-item">
+                      <LogOut size={16} />
+                      {t('nav.logout')}
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
-              <Link to="/login" className="navbar-auth-button">
+              <button onClick={() => setIsAuthModalOpen(true)} className="navbar-auth-button">
                 <span className="navbar-auth-button-text">{t('nav.login')}</span>
-              </Link>
+              </button>
             )}
           </div>
 
@@ -140,28 +169,47 @@ const Navbar: React.FC = () => {
                 {t('nav.housing')}
               </Link>
               <div className="navbar-mobile-divider">
-                {isAuthenticated ? (
-                  <Link
-                    to="/dashboard"
-                    className="navbar-mobile-auth-button"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {t('nav.dashboard')}
-                  </Link>
+                {isAuthenticated && user ? (
+                  <>
+                    <div className="navbar-mobile-user-info">
+                      {user.photo ? (
+                        <img src={user.photo} alt={user.displayName} className="navbar-mobile-user-avatar" />
+                      ) : (
+                        <div className="navbar-mobile-user-avatar-placeholder">
+                          <User size={18} />
+                        </div>
+                      )}
+                      <span className="navbar-mobile-user-name">{user.displayName}</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsMenuOpen(false);
+                      }}
+                      className="navbar-mobile-auth-button"
+                    >
+                      <LogOut size={16} />
+                      {t('nav.logout')}
+                    </button>
+                  </>
                 ) : (
-                  <Link
-                    to="/login"
+                  <button
+                    onClick={() => {
+                      setIsAuthModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
                     className="navbar-mobile-auth-button"
-                    onClick={() => setIsMenuOpen(false)}
                   >
                     {t('nav.login')}
-                  </Link>
+                  </button>
                 )}
               </div>
             </div>
           </div>
         )}
       </div>
+      
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </nav>
   );
 };
