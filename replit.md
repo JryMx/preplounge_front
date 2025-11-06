@@ -65,6 +65,7 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Features dual-handle range sliders for tuition and SAT scores.
   - Sorting options: "Recommended" (default), Alphabetical, SAT Range.
   - Full bilingual support.
+  - **University Images**: 1,134 universities use PrepLounge logo (displayed at 20% opacity for subtle branding), 100 universities retain official seals at full opacity.
 - **University Comparison**:
   - Side-by-side comparison of up to 4 universities.
   - Clean, text-only search interface with up to 100 results.
