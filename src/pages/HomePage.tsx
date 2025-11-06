@@ -849,10 +849,16 @@ const HomePage: React.FC = () => {
               )}
             </div>
 
-            {/* Right side - Analyze Button */}
+            {/* Right side - Score Preview */}
             {!results && (
               <div className="score-preview-box">
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', textAlign: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                  <div className="score-preview-label">
+                    {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                  </div>
+                  <div className="score-preview-value">
+                    -- / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
+                  </div>
                   <div className="score-preview-hint">
                     {language === 'ko' ? 'GPA와 시험 점수를 입력하고 분석을 시작하세요.' : 'Enter your GPA and test scores, then start the analysis.'}
                     <br />
