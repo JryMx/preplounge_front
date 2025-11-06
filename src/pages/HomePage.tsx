@@ -1577,7 +1577,11 @@ const HomePage: React.FC = () => {
               )}
             </div>
 
-            <Link to="/housing" className="housing-cta-button">
+            <Link 
+              to="/housing" 
+              className="housing-cta-button"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
+            >
               <span className="housing-cta-button-text">
                 {language === 'ko' ? '매물 자세히 알아보기' : 'Explore Listings in Detail'}
               </span>

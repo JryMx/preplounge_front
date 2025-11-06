@@ -14,6 +14,9 @@ const HousingPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    // Scroll to top when page loads
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
     // Start with Fresno, CA which has listings
     loadListings('Fresno', 'CA');
   }, []);
