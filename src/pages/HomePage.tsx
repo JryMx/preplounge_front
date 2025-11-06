@@ -414,35 +414,95 @@ const HomePage: React.FC = () => {
     loadListingsForArea(university.lat, university.lng, cityName);
   };
 
-  // Filter listings based on zoom level to reduce clutter
-  const visibleListings = useMemo(() => {
+  // Helper function to calculate distance between two coordinates (in km)
+  const getDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+    const R = 6371; // Earth's radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  // Cluster listings based on zoom level
+  type ClusterItem = {
+    lat: number;
+    lng: number;
+    count: number;
+    listings: ListingWithCoords[];
+    isCluster: boolean;
+  };
+
+  const clusteredListings = useMemo(() => {
     const listingsWithCoords = listings.filter(listing => listing.lat && listing.lng);
     
-    // If zoomed out, show fewer listings
+    // Determine clustering distance based on zoom level
+    let clusterDistance = 0; // km
     if (currentZoom <= 8) {
-      // Very zoomed out: show only 10 most expensive listings
-      return listingsWithCoords
-        .sort((a, b) => (b.price || 0) - (a.price || 0))
-        .slice(0, 10);
+      clusterDistance = 50; // 50km radius for clustering
     } else if (currentZoom <= 10) {
-      // Medium zoom: show 25 listings
-      return listingsWithCoords
-        .sort((a, b) => (b.price || 0) - (a.price || 0))
-        .slice(0, 25);
+      clusterDistance = 20; // 20km radius
     } else if (currentZoom <= 12) {
-      // Closer zoom: show 50 listings
-      return listingsWithCoords
-        .sort((a, b) => (b.price || 0) - (a.price || 0))
-        .slice(0, 50);
+      clusterDistance = 5; // 5km radius
     } else if (currentZoom <= 14) {
-      // More zoomed in: show 100 listings
-      return listingsWithCoords
-        .sort((a, b) => (b.price || 0) - (a.price || 0))
-        .slice(0, 100);
-    } else {
-      // Fully zoomed in: show all listings
-      return listingsWithCoords;
+      clusterDistance = 1; // 1km radius
     }
+    // Above zoom 14, no clustering (clusterDistance = 0)
+
+    if (clusterDistance === 0) {
+      // No clustering, return individual listings
+      return listingsWithCoords.map(listing => ({
+        lat: listing.lat!,
+        lng: listing.lng!,
+        count: 1,
+        listings: [listing],
+        isCluster: false
+      }));
+    }
+
+    // Cluster listings
+    const clusters: ClusterItem[] = [];
+    const processed = new Set<string>();
+
+    listingsWithCoords.forEach(listing => {
+      if (processed.has(listing.id)) return;
+
+      const cluster: ClusterItem = {
+        lat: listing.lat!,
+        lng: listing.lng!,
+        count: 1,
+        listings: [listing],
+        isCluster: false
+      };
+
+      // Find nearby listings to cluster
+      listingsWithCoords.forEach(other => {
+        if (listing.id === other.id || processed.has(other.id)) return;
+        
+        const distance = getDistance(listing.lat!, listing.lng!, other.lat!, other.lng!);
+        if (distance <= clusterDistance) {
+          cluster.listings.push(other);
+          cluster.count++;
+          processed.add(other.id);
+        }
+      });
+
+      processed.add(listing.id);
+      
+      // If multiple listings, mark as cluster and calculate center
+      if (cluster.count > 1) {
+        cluster.isCluster = true;
+        cluster.lat = cluster.listings.reduce((sum, l) => sum + l.lat!, 0) / cluster.count;
+        cluster.lng = cluster.listings.reduce((sum, l) => sum + l.lng!, 0) / cluster.count;
+      }
+
+      clusters.push(cluster);
+    });
+
+    return clusters;
   }, [listings, currentZoom]);
 
   // Extract city name from university name (e.g., "University of California-Los Angeles" -> "Los Angeles")
@@ -1395,69 +1455,127 @@ const HomePage: React.FC = () => {
                     minZoom={3}
                   />
                   
-                  {/* Display listings from cozying API - filtered by zoom level */}
-                  {visibleListings.map((listing) => {
-                    const price = listing.price || 0;
-                    const priceDisplay = price >= 1000000 
-                      ? `$${(price / 1000000).toFixed(1)}M`
-                      : `$${Math.round(price / 1000)}K`;
-                    const hasBedrooms = listing.bedrooms && Number.isInteger(listing.bedrooms) && listing.bedrooms > 0;
-                    return (
-                      <Marker
-                        key={listing.id}
-                        position={[listing.lat!, listing.lng!]}
-                        icon={L.divIcon({
-                          className: 'custom-housing-marker',
-                          html: `
-                            <div style="display: flex; flex-direction: column; align-items: center;">
-                              <div style="background: white; padding: 4px 8px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-size: 11px; font-weight: 600; color: #212529; margin-bottom: 4px;">
-                                ${priceDisplay}
+                  {/* Display listings from cozying API - with clustering */}
+                  {clusteredListings.map((cluster, index) => {
+                    if (cluster.isCluster) {
+                      // Cluster marker - show count
+                      return (
+                        <Marker
+                          key={`cluster-${index}`}
+                          position={[cluster.lat, cluster.lng]}
+                          icon={L.divIcon({
+                            className: 'custom-housing-marker',
+                            html: `
+                              <div style="
+                                width: 32px;
+                                height: 32px;
+                                background: #3b82f6;
+                                border: 3px solid white;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                                font-size: 14px;
+                                font-weight: 700;
+                                color: white;
+                              ">
+                                ${cluster.count}
                               </div>
-                              ${hasBedrooms ? `<div style="background: #3b82f6; color: white; font-size: 10px; padding: 4px 6px; border-radius: 9999px; font-weight: 500;">
-                                ${listing.bedrooms}bd
-                              </div>` : ''}
-                            </div>
-                          `,
-                          iconSize: [60, 60],
-                          iconAnchor: [30, 50],
-                        })}
-                      >
-                        <Popup>
-                          <div style={{ minWidth: '200px' }}>
-                            <div style={{ fontWeight: '600', marginBottom: '4px' }}>
-                              {listing.title}
-                            </div>
-                            <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>
-                              {listing.address}
-                            </div>
-                            <div style={{ fontSize: '14px', fontWeight: '600', color: '#082F49' }}>
-                              ${listing.price?.toLocaleString()}
-                            </div>
-                            {listing.bedrooms && listing.bathrooms && (
-                              <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-                                {listing.bedrooms} bed • {listing.bathrooms} bath
+                            `,
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 16],
+                          })}
+                        >
+                          <Popup>
+                            <div style={{ minWidth: '200px', maxHeight: '300px', overflowY: 'auto' }}>
+                              <div style={{ fontWeight: '600', marginBottom: '8px' }}>
+                                {cluster.count} Listings in this area
                               </div>
-                            )}
-                            {listing.url && (
-                              <a
-                                href={listing.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{
-                                  display: 'inline-block',
-                                  marginTop: '8px',
-                                  fontSize: '12px',
-                                  color: '#3b82f6',
-                                  textDecoration: 'underline'
-                                }}
-                              >
-                                View Details
-                              </a>
-                            )}
-                          </div>
-                        </Popup>
-                      </Marker>
-                    );
+                              {cluster.listings.slice(0, 5).map((listing, idx) => (
+                                <div key={listing.id} style={{ 
+                                  padding: '8px 0', 
+                                  borderBottom: idx < Math.min(4, cluster.listings.length - 1) ? '1px solid #eee' : 'none' 
+                                }}>
+                                  <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '2px' }}>
+                                    ${listing.price?.toLocaleString()}
+                                  </div>
+                                  <div style={{ fontSize: '11px', color: '#666' }}>
+                                    {listing.bedrooms && listing.bathrooms 
+                                      ? `${listing.bedrooms} bed • ${listing.bathrooms} bath`
+                                      : listing.address}
+                                  </div>
+                                </div>
+                              ))}
+                              {cluster.count > 5 && (
+                                <div style={{ fontSize: '11px', color: '#666', marginTop: '8px', fontStyle: 'italic' }}>
+                                  + {cluster.count - 5} more listings
+                                </div>
+                              )}
+                            </div>
+                          </Popup>
+                        </Marker>
+                      );
+                    } else {
+                      // Individual listing marker - blue circle with hole
+                      const listing = cluster.listings[0];
+                      return (
+                        <Marker
+                          key={listing.id}
+                          position={[cluster.lat, cluster.lng]}
+                          icon={L.divIcon({
+                            className: 'custom-housing-marker',
+                            html: `
+                              <div style="
+                                width: 16px;
+                                height: 16px;
+                                background: #3b82f6;
+                                border: 3px solid white;
+                                border-radius: 50%;
+                                box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+                              "></div>
+                            `,
+                            iconSize: [16, 16],
+                            iconAnchor: [8, 8],
+                          })}
+                        >
+                          <Popup>
+                            <div style={{ minWidth: '200px' }}>
+                              <div style={{ fontWeight: '600', marginBottom: '4px' }}>
+                                {listing.title}
+                              </div>
+                              <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>
+                                {listing.address}
+                              </div>
+                              <div style={{ fontSize: '14px', fontWeight: '600', color: '#082F49' }}>
+                                ${listing.price?.toLocaleString()}
+                              </div>
+                              {listing.bedrooms && listing.bathrooms && (
+                                <div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+                                  {listing.bedrooms} bed • {listing.bathrooms} bath
+                                </div>
+                              )}
+                              {listing.url && (
+                                <a
+                                  href={listing.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={{
+                                    display: 'inline-block',
+                                    marginTop: '8px',
+                                    fontSize: '12px',
+                                    color: '#3b82f6',
+                                    textDecoration: 'underline'
+                                  }}
+                                >
+                                  View Details
+                                </a>
+                              )}
+                            </div>
+                          </Popup>
+                        </Marker>
+                      );
+                    }
                   })}
                 </MapContainer>
               )}
