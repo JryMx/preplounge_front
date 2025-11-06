@@ -198,9 +198,6 @@ const UniversityProfilePage: React.FC = () => {
                   {universityName}
                 </h1>
                 <div className="university-profile-badges">
-                  <span className="university-profile-badge commonapp" data-testid="badge-commonapp">
-                    {t('university.commonapp.yes')}
-                  </span>
                   <button 
                     className="university-profile-compare-btn" 
                     data-testid="button-compare"
