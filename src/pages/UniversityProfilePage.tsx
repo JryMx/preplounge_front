@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { MapPin, Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
@@ -137,6 +137,7 @@ const UniversityProfilePage: React.FC = () => {
   const { id } = useParams();
   const { t, language } = useLanguage();
   const location = useLocation();
+  const navigate = useNavigate();
   const university = getUniversityData(id || '1');
   
   // Scroll to top when component mounts
@@ -146,6 +147,13 @@ const UniversityProfilePage: React.FC = () => {
   
   // Determine where to navigate back based on where user came from
   const backLink = (location.state as { from?: string })?.from || '/universities';
+
+  // Handle adding university to comparison
+  const handleCompare = () => {
+    if (university) {
+      navigate(`/compare?add=${university.id}`);
+    }
+  };
 
   if (!university) {
     return (
@@ -193,7 +201,11 @@ const UniversityProfilePage: React.FC = () => {
                   <span className="university-profile-badge commonapp" data-testid="badge-commonapp">
                     {t('university.commonapp.yes')}
                   </span>
-                  <button className="university-profile-compare-btn" data-testid="button-compare">
+                  <button 
+                    className="university-profile-compare-btn" 
+                    data-testid="button-compare"
+                    onClick={handleCompare}
+                  >
                     <Plus className="h-4 w-4" />
                     {t('university.compare')}
                   </button>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Plus, BookOpen, Search } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useSearchParams } from 'react-router-dom';
 import universitiesData from '../data/universities.json';
 import './compare-page.css';
 
@@ -25,6 +26,7 @@ interface University {
 
 const ComparePage: React.FC = () => {
   const { language } = useLanguage();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedUniversities, setSelectedUniversities] = useState<University[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
@@ -83,6 +85,23 @@ const ComparePage: React.FC = () => {
   const removeUniversity = (universityId: string) => {
     setSelectedUniversities(prev => prev.filter(uni => uni.id !== universityId));
   };
+
+  // Handle adding university from URL parameter
+  useEffect(() => {
+    const addUniversityId = searchParams.get('add');
+    if (addUniversityId) {
+      const universityToAdd = allUniversities.find(uni => uni.id === addUniversityId);
+      if (universityToAdd && !selectedUniversities.find(uni => uni.id === addUniversityId)) {
+        if (selectedUniversities.length < 4) {
+          setSelectedUniversities(prev => [...prev, universityToAdd]);
+        }
+      }
+      // Remove the query parameter after adding
+      searchParams.delete('add');
+      setSearchParams(searchParams, { replace: true });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   // Translation helper for school type
   const translateType = (type: string) => {
