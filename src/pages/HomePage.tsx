@@ -773,7 +773,7 @@ const HomePage: React.FC = () => {
       <section
         className="relative bg-center bg-cover bg-no-repeat h-screen min-h-[400px] max-h-[600px] md:h-screen md:max-h-none"
         style={{
-          backgroundImage: `url('https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=1600')`,
+          backgroundImage: `url('/campus-students.png')`,
         }}
       >
       </section>
