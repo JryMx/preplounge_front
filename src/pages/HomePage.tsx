@@ -192,19 +192,17 @@ const HomePage: React.FC = () => {
         const num = parseInt(value);
         if (!isNaN(num) && num > 800) {
           finalValue = '800';
-        } else if (!isNaN(num) && num < 200) {
-          finalValue = '200';
         }
       }
       
       setSatMath(finalValue);
       
-      // Real-time validation
+      // Real-time validation (allow 0-800 while typing)
       const errors = { ...validationErrors };
       if (finalValue && finalValue.trim() !== '') {
         const num = parseInt(finalValue);
-        if (isNaN(num) || num < 200 || num > 800) {
-          errors.satMath = language === 'ko' ? 'SAT Math는 200-800 사이여야 합니다' : 'SAT Math must be between 200-800';
+        if (isNaN(num) || num < 0 || num > 800) {
+          errors.satMath = language === 'ko' ? 'SAT Math는 0-800 사이여야 합니다' : 'SAT Math must be between 0-800';
         } else {
           delete errors.satMath;
         }
@@ -212,6 +210,16 @@ const HomePage: React.FC = () => {
         delete errors.satMath;
       }
       setValidationErrors(errors);
+    }
+  };
+
+  const handleSatMathBlur = () => {
+    // Auto-correct to 200 if below 200 when user finishes typing
+    if (satMath && satMath.trim() !== '') {
+      const num = parseInt(satMath);
+      if (!isNaN(num) && num > 0 && num < 200) {
+        setSatMath('200');
+      }
     }
   };
 
@@ -225,19 +233,17 @@ const HomePage: React.FC = () => {
         const num = parseInt(value);
         if (!isNaN(num) && num > 800) {
           finalValue = '800';
-        } else if (!isNaN(num) && num < 200) {
-          finalValue = '200';
         }
       }
       
       setSatEBRW(finalValue);
       
-      // Real-time validation
+      // Real-time validation (allow 0-800 while typing)
       const errors = { ...validationErrors };
       if (finalValue && finalValue.trim() !== '') {
         const num = parseInt(finalValue);
-        if (isNaN(num) || num < 200 || num > 800) {
-          errors.satEBRW = language === 'ko' ? 'SAT EBRW는 200-800 사이여야 합니다' : 'SAT EBRW must be between 200-800';
+        if (isNaN(num) || num < 0 || num > 800) {
+          errors.satEBRW = language === 'ko' ? 'SAT EBRW는 0-800 사이여야 합니다' : 'SAT EBRW must be between 0-800';
         } else {
           delete errors.satEBRW;
         }
@@ -245,6 +251,16 @@ const HomePage: React.FC = () => {
         delete errors.satEBRW;
       }
       setValidationErrors(errors);
+    }
+  };
+
+  const handleSatEBRWBlur = () => {
+    // Auto-correct to 200 if below 200 when user finishes typing
+    if (satEBRW && satEBRW.trim() !== '') {
+      const num = parseInt(satEBRW);
+      if (!isNaN(num) && num > 0 && num < 200) {
+        setSatEBRW('200');
+      }
     }
   };
 
@@ -841,11 +857,12 @@ const HomePage: React.FC = () => {
                     </label>
                     <input
                       type="number"
-                      min="200"
+                      min="0"
                       max="800"
                       step="10"
                       value={satMath}
                       onChange={(e) => handleSatMathChange(e.target.value)}
+                      onBlur={handleSatMathBlur}
                       className="profile-calculator-input"
                       style={{
                         borderColor: validationErrors.satMath ? '#EF4444' : undefined,
@@ -860,7 +877,7 @@ const HomePage: React.FC = () => {
                       </p>
                     ) : (
                       <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                        {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
+                        {language === 'ko' ? '200 미만 입력시 자동으로 200으로 설정' : 'Values below 200 will auto-adjust to 200'}
                       </p>
                     )}
                   </div>
@@ -871,11 +888,12 @@ const HomePage: React.FC = () => {
                     </label>
                     <input
                       type="number"
-                      min="200"
+                      min="0"
                       max="800"
                       step="10"
                       value={satEBRW}
                       onChange={(e) => handleSatEBRWChange(e.target.value)}
+                      onBlur={handleSatEBRWBlur}
                       className="profile-calculator-input"
                       style={{
                         borderColor: validationErrors.satEBRW ? '#EF4444' : undefined,
@@ -890,7 +908,7 @@ const HomePage: React.FC = () => {
                       </p>
                     ) : (
                       <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                        {language === 'ko' ? '200 - 800 범위로 입력하세요' : 'Enter a value between 200 and 800'}
+                        {language === 'ko' ? '200 미만 입력시 자동으로 200으로 설정' : 'Values below 200 will auto-adjust to 200'}
                       </p>
                     )}
                   </div>
