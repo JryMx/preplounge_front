@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import UniversitiesPage from './pages/UniversitiesPage';
 import UniversityProfilePage from './pages/UniversityProfilePage';
@@ -22,6 +23,7 @@ function App() {
       <AuthProvider>
         <StudentProfileProvider>
           <Router>
+            <ScrollToTop />
             <div className="min-h-screen bg-gray-50">
               <Navbar />
               <Routes>
