@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Target, Users, BookOpen, Trophy, Globe, Loader2 } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
 import { searchListings, CozyingListing, geocodeAddress } from '../lib/cozyingApi';
+import { getUniversityCoordinates } from '../data/universityCoordinates';
 import '../hero-section-style.css';
 import './profile-calculator.css';
 import './homepage-calculator.css';
@@ -60,6 +61,52 @@ interface ListingWithCoords extends CozyingListing {
   lng?: number;
 }
 
+interface UniversityWithCoords {
+  id: string;
+  name: string;
+  englishName: string;
+  lat: number;
+  lng: number;
+  abbreviation: string;
+}
+
+// Map Fly To Component - moves map to specific location
+function MapFlyTo({ 
+  center, 
+  zoom
+}: { 
+  center: [number, number]; 
+  zoom: number;
+}) {
+  const map = useMap();
+  
+  useEffect(() => {
+    map.flyTo(center, zoom, {
+      duration: 1.5,
+      easeLinearity: 0.5
+    });
+  }, [center, zoom, map]);
+  
+  return null;
+}
+
+// Zoom Event Handler Component - tracks zoom level changes
+function ZoomHandler({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  const map = useMap();
+  
+  // Set initial zoom on mount
+  useEffect(() => {
+    onZoomChange(map.getZoom());
+  }, [map, onZoomChange]);
+  
+  useMapEvents({
+    zoomend: (e) => {
+      onZoomChange(e.target.getZoom());
+    },
+  });
+  return null;
+}
+
 const HomePage: React.FC = () => {
   const { t, language } = useLanguage();
   const [gpa, setGpa] = useState('');
@@ -73,6 +120,33 @@ const HomePage: React.FC = () => {
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
   const [listings, setListings] = useState<ListingWithCoords[]>([]);
   const [listingsLoading, setListingsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<UniversityWithCoords[]>([]);
+  const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
+  const [mapCenter, setMapCenter] = useState<[number, number]>([37.7749, -122.4194]); // San Francisco
+  const [mapZoom, setMapZoom] = useState<number>(10);
+  const [currentZoom, setCurrentZoom] = useState<number>(10);
+  
+  // Get universities with coordinates for search
+  const universitiesWithCoords = useMemo(() => {
+    const result: UniversityWithCoords[] = [];
+    
+    universitiesData.forEach((uni: any) => {
+      const coords = getUniversityCoordinates(uni.englishName);
+      if (coords) {
+        result.push({
+          id: uni.id,
+          name: uni.name,
+          englishName: uni.englishName,
+          lat: coords.lat,
+          lng: coords.lng,
+          abbreviation: coords.abbreviation,
+        });
+      }
+    });
+    
+    return result;
+  }, []);
 
   const handleGpaChange = (value: string) => {
     // Allow empty or valid decimal input while typing
@@ -229,61 +303,173 @@ const HomePage: React.FC = () => {
     fetchAnalysis();
   };
 
-  // Load housing listings for San Francisco area on mount
-  useEffect(() => {
-    const loadListings = async () => {
-      setListingsLoading(true);
-      try {
-        // Fetch listings for San Francisco and surrounding areas
-        const cities = ['San Francisco', 'Oakland', 'Berkeley'];
-        const allListings: ListingWithCoords[] = [];
-        
-        // Fetch listings from multiple cities
-        for (const city of cities) {
-          try {
-            const cityListings = await searchListings({
-              city,
-              state: 'CA',
-              sorted: 'newest',
-              currentPage: 1,
-              homesPerGroup: 100, // Get more listings per city
-            });
+  // Load housing listings for a specific area
+  const loadListingsForArea = async (centerLat: number, centerLng: number, cityName?: string) => {
+    setListingsLoading(true);
+    try {
+      // Determine nearby cities based on coordinates
+      const cities = cityName 
+        ? [cityName]
+        : ['San Francisco', 'Oakland', 'Berkeley']; // Default to SF area
+      
+      const allListings: ListingWithCoords[] = [];
+      
+      // Fetch listings from multiple cities
+      for (const city of cities) {
+        try {
+          const cityListings = await searchListings({
+            city,
+            state: 'CA',
+            sorted: 'newest',
+            currentPage: 1,
+            homesPerGroup: 100,
+          });
+          
+          // Check if listings already have coordinates, otherwise geocode
+          const listingsWithCoords: ListingWithCoords[] = [];
+          
+          for (let i = 0; i < Math.min(cityListings.length, 50); i++) {
+            const listing = cityListings[i];
             
-            // Check if listings already have coordinates, otherwise geocode
-            const listingsWithCoords: ListingWithCoords[] = [];
-            
-            for (let i = 0; i < Math.min(cityListings.length, 50); i++) {
-              const listing = cityListings[i];
-              
-              // If coordinates already exist, use them
-              if (listing.lat && listing.lng) {
-                listingsWithCoords.push(listing as ListingWithCoords);
-              } else if (listing.address) {
-                // Otherwise geocode the address
-                await new Promise(resolve => setTimeout(resolve, i * 100)); // Rate limiting
-                const coords = await geocodeAddress(listing.address);
-                if (coords) {
-                  listingsWithCoords.push({ ...listing, lat: coords.lat, lng: coords.lng });
-                }
+            // If coordinates already exist, use them
+            if (listing.lat && listing.lng) {
+              listingsWithCoords.push(listing as ListingWithCoords);
+            } else if (listing.address) {
+              // Otherwise geocode the address
+              await new Promise(resolve => setTimeout(resolve, i * 100)); // Rate limiting
+              const coords = await geocodeAddress(listing.address);
+              if (coords) {
+                listingsWithCoords.push({ ...listing, lat: coords.lat, lng: coords.lng });
               }
             }
-            
-            allListings.push(...listingsWithCoords);
-          } catch (error) {
-            console.error(`Error fetching listings for ${city}:`, error);
           }
+          
+          allListings.push(...listingsWithCoords);
+        } catch (error) {
+          console.error(`Error fetching listings for ${city}:`, error);
         }
-        
-        setListings(allListings);
-      } catch (error) {
-        console.error('Error loading listings:', error);
-      } finally {
-        setListingsLoading(false);
+      }
+      
+      setListings(allListings);
+    } catch (error) {
+      console.error('Error loading listings:', error);
+    } finally {
+      setListingsLoading(false);
+    }
+  };
+
+  // Load housing listings for San Francisco area on mount
+  useEffect(() => {
+    loadListingsForArea(37.7749, -122.4194);
+  }, []);
+
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query.trim().length > 0) {
+      const results = universitiesWithCoords.filter((uni) => {
+        const searchTerm = query.toLowerCase();
+        return (
+          uni.name.toLowerCase().includes(searchTerm) ||
+          uni.englishName.toLowerCase().includes(searchTerm)
+        );
+      }).slice(0, 10); // Limit to 10 results
+      
+      setSearchResults(results);
+      setShowSearchResults(true);
+    } else {
+      setSearchResults([]);
+      setShowSearchResults(false);
+    }
+  };
+
+  // Handle university selection from search
+  const handleUniversitySelect = (university: UniversityWithCoords) => {
+    setMapCenter([university.lat, university.lng]);
+    setMapZoom(12);
+    setCurrentZoom(12);
+    setSearchQuery('');
+    setShowSearchResults(false);
+    
+    // Load listings near this university
+    // Try to extract city name from university name or use nearby cities
+    const cityName = extractCityFromUniversityName(university.englishName);
+    loadListingsForArea(university.lat, university.lng, cityName);
+  };
+
+  // Filter listings based on zoom level to reduce clutter
+  const visibleListings = useMemo(() => {
+    const listingsWithCoords = listings.filter(listing => listing.lat && listing.lng);
+    
+    // If zoomed out, show fewer listings
+    if (currentZoom <= 8) {
+      // Very zoomed out: show only 20 most recent/expensive listings
+      return listingsWithCoords
+        .sort((a, b) => (b.price || 0) - (a.price || 0))
+        .slice(0, 20);
+    } else if (currentZoom <= 10) {
+      // Medium zoom: show 50 listings
+      return listingsWithCoords
+        .sort((a, b) => (b.price || 0) - (a.price || 0))
+        .slice(0, 50);
+    } else if (currentZoom <= 12) {
+      // Closer zoom: show 100 listings
+      return listingsWithCoords
+        .sort((a, b) => (b.price || 0) - (a.price || 0))
+        .slice(0, 100);
+    } else {
+      // Zoomed in: show all listings
+      return listingsWithCoords;
+    }
+  }, [listings, currentZoom]);
+
+  // Extract city name from university name (e.g., "University of California-Los Angeles" -> "Los Angeles")
+  const extractCityFromUniversityName = (name: string): string | undefined => {
+    if (name.includes('Los Angeles')) return 'Los Angeles';
+    if (name.includes('San Francisco')) return 'San Francisco';
+    if (name.includes('Berkeley')) return 'Berkeley';
+    if (name.includes('Oakland')) return 'Oakland';
+    if (name.includes('San Jose')) return 'San Jose';
+    if (name.includes('Palo Alto')) return 'Palo Alto';
+    if (name.includes('Stanford')) return 'Palo Alto';
+    if (name.includes('Boston')) return 'Boston';
+    if (name.includes('New York')) return 'New York';
+    if (name.includes('Chicago')) return 'Chicago';
+    return undefined;
+  };
+
+  // Handle search button click
+  const handleSearch = () => {
+    if (searchResults.length > 0) {
+      handleUniversitySelect(searchResults[0]);
+    }
+  };
+
+  // Handle Enter key press
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  // Close search results when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.housing-search-field')) {
+        setShowSearchResults(false);
       }
     };
-    
-    loadListings();
-  }, []);
+
+    if (showSearchResults) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [showSearchResults]);
 
   // Calculate score preview in real-time based on GPA and test scores
   const calculateScorePreview = (): number | null => {
@@ -1088,20 +1274,68 @@ const HomePage: React.FC = () => {
           </div>
 
           <div className="housing-content-column">
-            <div className="housing-search-field">
+            <div className="housing-search-field" style={{ position: 'relative', width: '100%' }}>
               <div className="housing-search-input-wrapper">
                 <Search className="housing-search-icon" />
                 <input
                   type="text"
                   placeholder={language === 'ko' ? '대학 이름으로 검색' : 'Search by university name'}
                   className="housing-search-input"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onKeyPress={handleKeyPress}
                 />
-                <button className="housing-search-button">
+                <button 
+                  className="housing-search-button"
+                  onClick={handleSearch}
+                  disabled={searchResults.length === 0}
+                >
                   <span className="housing-search-button-text">
                     {language === 'ko' ? '검색' : 'Search'}
                   </span>
                 </button>
               </div>
+              
+              {/* Search Results Dropdown */}
+              {showSearchResults && searchResults.length > 0 && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  marginTop: '4px',
+                  background: 'white',
+                  border: '1px solid #E7E5E4',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                  zIndex: 1000,
+                  maxHeight: '300px',
+                  overflowY: 'auto'
+                }}>
+                  {searchResults.map((university) => (
+                    <div
+                      key={university.id}
+                      onClick={() => handleUniversitySelect(university)}
+                      style={{
+                        padding: '12px 16px',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #F3F4F6',
+                        transition: 'background 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#F9FAFB';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'white';
+                      }}
+                    >
+                      <div style={{ fontWeight: '600', color: '#082F49' }}>
+                        {language === 'ko' ? university.name : university.englishName}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="housing-map-container">
@@ -1119,8 +1353,8 @@ const HomePage: React.FC = () => {
                 </div>
               ) : (
                 <MapContainer
-                  center={[37.7749, -122.4194]} // San Francisco
-                  zoom={10}
+                  center={mapCenter}
+                  zoom={mapZoom}
                   style={{
                     width: '100%',
                     height: '360px',
@@ -1128,9 +1362,11 @@ const HomePage: React.FC = () => {
                     overflow: 'hidden',
                     border: '1px solid #E7E5E4',
                   }}
-                  scrollWheelZoom={false}
+                  scrollWheelZoom={true}
                   zoomControl={true}
                 >
+                  <MapFlyTo center={mapCenter} zoom={mapZoom} />
+                  <ZoomHandler onZoomChange={setCurrentZoom} />
                   <TileLayer
                     attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
                     url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -1139,8 +1375,8 @@ const HomePage: React.FC = () => {
                     minZoom={3}
                   />
                   
-                  {/* Display listings from cozying API */}
-                  {listings.filter(listing => listing.lat && listing.lng).map((listing) => {
+                  {/* Display listings from cozying API - filtered by zoom level */}
+                  {visibleListings.map((listing) => {
                     const priceK = listing.price ? Math.round(listing.price / 1000) : 0;
                     return (
                       <Marker

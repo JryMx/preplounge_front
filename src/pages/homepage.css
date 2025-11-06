@@ -564,8 +564,13 @@
   transition: background 0.3s ease;
 }
 
-.housing-search-button:hover {
+.housing-search-button:hover:not(:disabled) {
   background: #0a3b5e;
+}
+
+.housing-search-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .housing-search-button-text {
