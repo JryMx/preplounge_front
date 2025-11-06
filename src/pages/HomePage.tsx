@@ -703,7 +703,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (results) {
       const targetScore = calculateProfileScore();
-      const duration = 2000; // 2 seconds
+      const duration = 1200; // 1.2 seconds - faster animation
       const steps = 60;
       const increment = targetScore / steps;
       let current = 0;
@@ -974,13 +974,64 @@ const HomePage: React.FC = () => {
             {results && (
               <div className="profile-calculator-results fade-in">
                 <div className="score-preview-box" style={{ marginTop: 0, marginBottom: '24px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
                     <div className="score-preview-label">
                       {language === 'ko' ? '프로필 점수' : 'Profile Score'}
                     </div>
-                    <div className="score-preview-value">
-                      {animatedScore} / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
+                    
+                    {/* Speedometer Gauge */}
+                    <div style={{ position: 'relative', width: '160px', height: '160px' }}>
+                      <svg width="160" height="160" viewBox="0 0 160 160">
+                        {/* Background arc */}
+                        <path
+                          d="M 20 80 A 60 60 0 1 1 140 80"
+                          fill="none"
+                          stroke="rgba(255, 255, 255, 0.2)"
+                          strokeWidth="12"
+                          strokeLinecap="round"
+                        />
+                        {/* Animated progress arc */}
+                        <path
+                          d="M 20 80 A 60 60 0 1 1 140 80"
+                          fill="none"
+                          stroke="#FACC15"
+                          strokeWidth="12"
+                          strokeLinecap="round"
+                          strokeDasharray={`${(animatedScore / 100) * 188.5} 188.5`}
+                          style={{ transition: 'stroke-dasharray 0.3s ease-out' }}
+                        />
+                        {/* Center circle */}
+                        <circle cx="80" cy="80" r="50" fill="rgba(8, 47, 73, 0.8)" />
+                      </svg>
+                      
+                      {/* Score text in center */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        textAlign: 'center',
+                        marginTop: '5px'
+                      }}>
+                        <div style={{
+                          fontSize: '48px',
+                          fontWeight: 800,
+                          color: '#FACC15',
+                          lineHeight: 1
+                        }}>
+                          {animatedScore}
+                        </div>
+                        <div style={{
+                          fontSize: '14px',
+                          fontWeight: 600,
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          marginTop: '4px'
+                        }}>
+                          / 100{language === 'ko' ? '점' : ''}
+                        </div>
+                      </div>
                     </div>
+                    
                     <div className="score-preview-hint">
                       {language === 'ko' ? 'AI 분석을 기반으로 한 종합 점수입니다.' : 'Comprehensive score based on AI analysis.'}
                     </div>
