@@ -123,9 +123,9 @@ const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<UniversityWithCoords[]>([]);
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
-  const [mapCenter, setMapCenter] = useState<[number, number]>([37.7749, -122.4194]); // San Francisco
-  const [mapZoom, setMapZoom] = useState<number>(10);
-  const [currentZoom, setCurrentZoom] = useState<number>(10);
+  const [mapCenter, setMapCenter] = useState<[number, number]>([37.0902, -95.7129]); // Center of USA
+  const [mapZoom, setMapZoom] = useState<number>(4);
+  const [currentZoom, setCurrentZoom] = useState<number>(4);
   
   // Get universities with coordinates for search
   const universitiesWithCoords = useMemo(() => {
@@ -307,19 +307,34 @@ const HomePage: React.FC = () => {
   const loadListingsForArea = async (centerLat: number, centerLng: number, cityName?: string) => {
     setListingsLoading(true);
     try {
-      // Determine nearby cities based on coordinates
-      const cities = cityName 
-        ? [cityName]
-        : ['San Francisco', 'Oakland', 'Berkeley']; // Default to SF area
+      // Define major cities across available states
+      const cityStateList = cityName 
+        ? [{ city: cityName, state: 'CA' }]  // Try CA first if specific city provided
+        : [
+            // California cities
+            { city: 'Los Angeles', state: 'CA' },
+            { city: 'San Francisco', state: 'CA' },
+            { city: 'San Diego', state: 'CA' },
+            { city: 'Sacramento', state: 'CA' },
+            { city: 'Fresno', state: 'CA' },
+            { city: 'Oakland', state: 'CA' },
+            { city: 'Berkeley', state: 'CA' },
+            { city: 'San Jose', state: 'CA' },
+            // Georgia cities
+            { city: 'Atlanta', state: 'GA' },
+            { city: 'Savannah', state: 'GA' },
+            { city: 'Augusta', state: 'GA' },
+            { city: 'Columbus', state: 'GA' },
+          ];
       
       const allListings: ListingWithCoords[] = [];
       
       // Fetch listings from multiple cities
-      for (const city of cities) {
+      for (const { city, state } of cityStateList) {
         try {
           const cityListings = await searchListings({
             city,
-            state: 'CA',
+            state,
             sorted: 'newest',
             currentPage: 1,
             homesPerGroup: 100,
@@ -358,9 +373,9 @@ const HomePage: React.FC = () => {
     }
   };
 
-  // Load housing listings for San Francisco area on mount
+  // Load housing listings from all available cities on mount
   useEffect(() => {
-    loadListingsForArea(37.7749, -122.4194);
+    loadListingsForArea(37.0902, -95.7129); // Center of USA
   }, []);
 
   // Handle search input change
