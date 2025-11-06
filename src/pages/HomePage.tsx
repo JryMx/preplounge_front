@@ -126,6 +126,7 @@ const HomePage: React.FC = () => {
   const [mapCenter, setMapCenter] = useState<[number, number]>([37.7749, -122.4194]); // San Francisco
   const [mapZoom, setMapZoom] = useState<number>(10);
   const [currentZoom, setCurrentZoom] = useState<number>(10);
+  const [animatedScore, setAnimatedScore] = useState<number>(0);
   
   // Get universities with coordinates for search
   const universitiesWithCoords = useMemo(() => {
@@ -640,6 +641,89 @@ const HomePage: React.FC = () => {
       .slice(0, count);
   };
 
+  const calculateProfileScore = (): number => {
+    if (!results) return 0;
+    
+    let score = 0;
+    const gpaNum = gpa ? parseFloat(gpa) : 0;
+    
+    // GPA Score (30 points max)
+    if (gpaNum >= 3.9) score += 30;
+    else if (gpaNum >= 3.7) score += 28;
+    else if (gpaNum >= 3.5) score += 25;
+    else if (gpaNum >= 3.3) score += 22;
+    else if (gpaNum >= 3.0) score += 19;
+    else if (gpaNum >= 2.7) score += 15;
+    else if (gpaNum >= 2.5) score += 12;
+    else if (gpaNum >= 2.0) score += 8;
+    else score += (gpaNum / 4.0) * 8;
+    
+    // Test Score (25 points max)
+    if (testType === 'SAT') {
+      const mathNum = satMath ? parseInt(satMath) : 0;
+      const ebrwNum = satEBRW ? parseInt(satEBRW) : 0;
+      const totalSAT = mathNum + ebrwNum;
+      
+      if (totalSAT >= 1500) score += 25;
+      else if (totalSAT >= 1400) score += 23;
+      else if (totalSAT >= 1300) score += 20;
+      else if (totalSAT >= 1200) score += 17;
+      else if (totalSAT >= 1100) score += 14;
+      else if (totalSAT >= 1000) score += 11;
+      else if (totalSAT >= 900) score += 8;
+      else score += (totalSAT / 1600) * 8;
+    } else if (testType === 'ACT') {
+      const actNum = actScore ? parseInt(actScore) : 0;
+      
+      if (actNum >= 34) score += 25;
+      else if (actNum >= 31) score += 23;
+      else if (actNum >= 28) score += 20;
+      else if (actNum >= 25) score += 17;
+      else if (actNum >= 22) score += 14;
+      else if (actNum >= 19) score += 11;
+      else if (actNum >= 16) score += 8;
+      else score += (actNum / 36) * 8;
+    }
+    
+    // Course Rigor placeholder (5 points)
+    if (gpaNum >= 3.5) score += 5;
+    
+    // Results quality bonus (40 points based on school distribution)
+    const totalSchools = results.summary.total_analyzed;
+    const prestigeRatio = results.summary.prestige_schools / Math.max(totalSchools, 1);
+    const reachRatio = results.summary.reach_schools / Math.max(totalSchools, 1);
+    const targetRatio = results.summary.target_schools / Math.max(totalSchools, 1);
+    
+    score += prestigeRatio * 15 + reachRatio * 12 + targetRatio * 8 + 5;
+    
+    return Math.min(Math.round(score), 100);
+  };
+
+  // Animate score counter
+  useEffect(() => {
+    if (results) {
+      const targetScore = calculateProfileScore();
+      const duration = 2000; // 2 seconds
+      const steps = 60;
+      const increment = targetScore / steps;
+      let current = 0;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= targetScore) {
+          setAnimatedScore(targetScore);
+          clearInterval(timer);
+        } else {
+          setAnimatedScore(Math.floor(current));
+        }
+      }, duration / steps);
+      
+      return () => clearInterval(timer);
+    } else {
+      setAnimatedScore(0);
+    }
+  }, [results, gpa, satMath, satEBRW, actScore, testType]);
+
   return (
     <div className="min-h-screen" style={{ background: '#FCF8F0' }}>
       {/* Hero Section */}
@@ -888,7 +972,21 @@ const HomePage: React.FC = () => {
 
             {/* Right side - Results Display */}
             {results && (
-              <div className="profile-calculator-results">
+              <div className="profile-calculator-results fade-in">
+                <div className="score-preview-box" style={{ marginTop: 0, marginBottom: '24px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                    <div className="score-preview-label">
+                      {language === 'ko' ? '프로필 점수' : 'Profile Score'}
+                    </div>
+                    <div className="score-preview-value">
+                      {animatedScore} / <span className="score-max">100{language === 'ko' ? '점' : ''}</span>
+                    </div>
+                    <div className="score-preview-hint">
+                      {language === 'ko' ? 'AI 분석을 기반으로 한 종합 점수입니다.' : 'Comprehensive score based on AI analysis.'}
+                    </div>
+                  </div>
+                </div>
+
                 <div className="results-summary">
                   <h3 className="results-title" data-testid="text-results-title-home">
                     {language === 'ko' ? '분석 결과' : 'Analysis Results'}
