@@ -1495,7 +1495,10 @@ const HomePage: React.FC = () => {
             <p className="majors-cta-text">
               {language === 'ko' ? '단 3분! 나에게 딱 맞는 전공을 찾아보세요' : 'Just 3 minutes! Find the perfect major for you'}
             </p>
-            <button className="majors-cta-button">
+            <button 
+              className="majors-cta-button"
+              onClick={() => window.open('https://smore.im/quiz/qJ6zmxtDvp', '_blank')}
+            >
               <span className="majors-cta-button-text">
                 {language === 'ko' ? '전공 찾고 대학 로드맵 준비하기' : 'Find Your Major & Plan Your College Roadmap'}
               </span>
