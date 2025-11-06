@@ -294,7 +294,8 @@ const UniversitiesPage: React.FC = () => {
                   src={university.image}
                   alt={language === 'ko' ? university.name : university.englishName}
                   className="university-card-image"
-                  onError={(e) => { e.currentTarget.src = '/preplounge-logo.png'; }}
+                  style={{ opacity: university.image.includes('preplounge-logo') ? 0.2 : 1 }}
+                  onError={(e) => { e.currentTarget.src = '/preplounge-logo-final.png'; e.currentTarget.style.opacity = '0.2'; }}
                 />
                 <div className="university-card-content">
                   <h3 className="university-card-title">{language === 'ko' ? university.name : university.englishName}</h3>
@@ -338,7 +339,8 @@ const UniversitiesPage: React.FC = () => {
                   src={university.image}
                   alt={language === 'ko' ? university.name : university.englishName}
                   className="university-list-image"
-                  onError={(e) => { e.currentTarget.src = '/preplounge-logo.png'; }}
+                  style={{ opacity: university.image.includes('preplounge-logo') ? 0.2 : 1 }}
+                  onError={(e) => { e.currentTarget.src = '/preplounge-logo-final.png'; e.currentTarget.style.opacity = '0.2'; }}
                 />
                 <div className="university-list-content">
                   <div className="university-list-header">
