@@ -6,31 +6,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #FCF8F0 0%, #FEF3C7 100%);
+  background: #FCF8F0;
   padding: 20px;
   position: relative;
   overflow-y: auto;
-}
-
-/* Subtle background pattern */
-.login-page-container::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(250, 204, 21, 0.1) 0%, transparent 70%);
-  animation: float 20s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-20px, 20px);
-  }
 }
 
 /* Content Wrapper */
