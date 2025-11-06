@@ -315,15 +315,15 @@ const UniversitiesPage: React.FC = () => {
                     </div>
                     <div className="university-card-stat">
                       <DollarSign className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">${university.tuition.toLocaleString()}</span>
+                      <span className="university-card-stat-text">{t('universities.tuition')} ${university.tuition.toLocaleString()}</span>
                     </div>
                     <div className="university-card-stat">
                       <BookOpen className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">SAT: {university.satRange}</span>
+                      <span className="university-card-stat-text">SAT {university.satRange}</span>
                     </div>
                     <div className="university-card-stat">
                       <BookOpen className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">ACT: {university.actRange}</span>
+                      <span className="university-card-stat-text">ACT {university.actRange}</span>
                     </div>
                   </div>
                 </div>
@@ -360,15 +360,15 @@ const UniversitiesPage: React.FC = () => {
                     </div>
                     <div className="university-card-stat">
                       <DollarSign className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">${university.tuition.toLocaleString()}</span>
+                      <span className="university-card-stat-text">{t('universities.tuition')} ${university.tuition.toLocaleString()}</span>
                     </div>
                     <div className="university-card-stat">
                       <BookOpen className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">SAT: {university.satRange}</span>
+                      <span className="university-card-stat-text">SAT {university.satRange}</span>
                     </div>
                     <div className="university-card-stat">
                       <BookOpen className="university-card-stat-icon h-4 w-4" />
-                      <span className="university-card-stat-text">ACT: {university.actRange}</span>
+                      <span className="university-card-stat-text">ACT {university.actRange}</span>
                     </div>
                   </div>
                 </div>
