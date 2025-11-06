@@ -153,6 +153,10 @@ const UniversityMapPage: React.FC = () => {
           zoom={4}
           className="university-map"
           scrollWheelZoom={true}
+          touchZoom={true}
+          doubleClickZoom={true}
+          boxZoom={true}
+          keyboard={true}
         >
           <TileLayer
             attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
