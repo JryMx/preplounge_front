@@ -1553,22 +1553,20 @@ const HomePage: React.FC = () => {
                                   {listing.bedrooms} bed • {listing.bathrooms} bath
                                 </div>
                               )}
-                              {listing.url && (
-                                <a
-                                  href={listing.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  style={{
-                                    display: 'inline-block',
-                                    marginTop: '8px',
-                                    fontSize: '12px',
-                                    color: '#3b82f6',
-                                    textDecoration: 'underline'
-                                  }}
-                                >
-                                  View Details
-                                </a>
-                              )}
+                              <a
+                                href={listing.url ? `https://cozying.ai/${listing.url}` : 'https://cozying.ai/'}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  display: 'inline-block',
+                                  marginTop: '8px',
+                                  fontSize: '12px',
+                                  color: '#3b82f6',
+                                  textDecoration: 'underline'
+                                }}
+                              >
+                                View Details
+                              </a>
                             </div>
                           </Popup>
                         </Marker>
