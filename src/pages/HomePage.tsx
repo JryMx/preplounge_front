@@ -1377,7 +1377,10 @@ const HomePage: React.FC = () => {
                   
                   {/* Display listings from cozying API - filtered by zoom level */}
                   {visibleListings.map((listing) => {
-                    const priceK = listing.price ? Math.round(listing.price / 1000) : 0;
+                    const price = listing.price || 0;
+                    const priceDisplay = price >= 1000000 
+                      ? `$${(price / 1000000).toFixed(1)}M`
+                      : `$${Math.round(price / 1000)}K`;
                     const hasBedrooms = listing.bedrooms && Number.isInteger(listing.bedrooms) && listing.bedrooms > 0;
                     return (
                       <Marker
@@ -1388,7 +1391,7 @@ const HomePage: React.FC = () => {
                           html: `
                             <div style="display: flex; flex-direction: column; align-items: center;">
                               <div style="background: white; padding: 4px 8px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); font-size: 11px; font-weight: 600; color: #212529; margin-bottom: 4px;">
-                                $${priceK}K
+                                ${priceDisplay}
                               </div>
                               ${hasBedrooms ? `<div style="background: #3b82f6; color: white; font-size: 10px; padding: 4px 6px; border-radius: 9999px; font-weight: 500;">
                                 ${listing.bedrooms}bd
