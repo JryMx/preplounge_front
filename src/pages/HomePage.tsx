@@ -405,22 +405,27 @@ const HomePage: React.FC = () => {
     
     // If zoomed out, show fewer listings
     if (currentZoom <= 8) {
-      // Very zoomed out: show only 20 most recent/expensive listings
+      // Very zoomed out: show only 10 most expensive listings
       return listingsWithCoords
         .sort((a, b) => (b.price || 0) - (a.price || 0))
-        .slice(0, 20);
+        .slice(0, 10);
     } else if (currentZoom <= 10) {
-      // Medium zoom: show 50 listings
+      // Medium zoom: show 25 listings
+      return listingsWithCoords
+        .sort((a, b) => (b.price || 0) - (a.price || 0))
+        .slice(0, 25);
+    } else if (currentZoom <= 12) {
+      // Closer zoom: show 50 listings
       return listingsWithCoords
         .sort((a, b) => (b.price || 0) - (a.price || 0))
         .slice(0, 50);
-    } else if (currentZoom <= 12) {
-      // Closer zoom: show 100 listings
+    } else if (currentZoom <= 14) {
+      // More zoomed in: show 100 listings
       return listingsWithCoords
         .sort((a, b) => (b.price || 0) - (a.price || 0))
         .slice(0, 100);
     } else {
-      // Zoomed in: show all listings
+      // Fully zoomed in: show all listings
       return listingsWithCoords;
     }
   }, [listings, currentZoom]);
