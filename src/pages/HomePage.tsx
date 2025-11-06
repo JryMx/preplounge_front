@@ -439,18 +439,16 @@ const HomePage: React.FC = () => {
   const clusteredListings = useMemo(() => {
     const listingsWithCoords = listings.filter(listing => listing.lat && listing.lng);
     
-    // Determine clustering distance based on zoom level
+    // Determine clustering distance based on zoom level (less aggressive)
     let clusterDistance = 0; // km
-    if (currentZoom <= 8) {
-      clusterDistance = 50; // 50km radius for clustering
+    if (currentZoom <= 6) {
+      clusterDistance = 30; // 30km radius - only when very zoomed out
+    } else if (currentZoom <= 8) {
+      clusterDistance = 10; // 10km radius
     } else if (currentZoom <= 10) {
-      clusterDistance = 20; // 20km radius
-    } else if (currentZoom <= 12) {
-      clusterDistance = 5; // 5km radius
-    } else if (currentZoom <= 14) {
-      clusterDistance = 1; // 1km radius
+      clusterDistance = 2; // 2km radius - small grouping
     }
-    // Above zoom 14, no clustering (clusterDistance = 0)
+    // Above zoom 10, no clustering (clusterDistance = 0)
 
     if (clusterDistance === 0) {
       // No clustering, return individual listings
