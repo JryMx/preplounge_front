@@ -2,20 +2,26 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import passportLib from './config/passport.js';
-import { configurePassport } from './config/passport.js';
+import { configurePassport, initializeDatabase } from './config/passport.js';
 import authRoutes from './routes/auth.js';
 
 const app = express();
 const PORT = 3001;
 
 app.use(cors({
-  origin: 'http://localhost:5000',
+  origin: ['http://localhost:5000', 'http://127.0.0.1:5000'],
   credentials: true
 }));
 app.use(express.json());
 
+if (!process.env.SESSION_SECRET) {
+  console.error('FATAL: SESSION_SECRET environment variable is not set. This is required for secure session management.');
+  console.error('Please set SESSION_SECRET in your environment variables before starting the server.');
+  process.exit(1);
+}
+
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -24,6 +30,8 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
+
+await initializeDatabase();
 
 configurePassport();
 app.use(passportLib.initialize());

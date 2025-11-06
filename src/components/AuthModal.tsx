@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { X } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import '../styles/auth-modal.css';
 
 interface AuthModalProps {
@@ -7,6 +9,14 @@ interface AuthModalProps {
 }
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { checkAuth } = useAuth();
+
   if (!isOpen) return null;
 
   const handleGoogleLogin = () => {
@@ -15,6 +25,39 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   const handleKakaoLogin = () => {
     window.location.href = 'http://localhost:3001/api/auth/kakao';
+  };
+
+  const handleEmailAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const endpoint = mode === 'signin' ? '/api/auth/login' : '/api/auth/register';
+      const body = mode === 'signin' 
+        ? { email, password }
+        : { email, password, name };
+
+      const response = await fetch(`http://localhost:3001${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(body),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        await checkAuth();
+        onClose();
+      } else {
+        setError(data.error || 'Authentication failed');
+      }
+    } catch (err) {
+      setError('Network error. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -27,6 +70,72 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         <div className="auth-modal-header">
           <h2>Welcome to PrepLounge</h2>
           <p>Sign in to save your profile and track your college journey</p>
+        </div>
+
+        <div className="auth-modal-tabs">
+          <button
+            className={`auth-tab ${mode === 'signin' ? 'active' : ''}`}
+            onClick={() => { setMode('signin'); setError(''); }}
+          >
+            Sign In
+          </button>
+          <button
+            className={`auth-tab ${mode === 'signup' ? 'active' : ''}`}
+            onClick={() => { setMode('signup'); setError(''); }}
+          >
+            Sign Up
+          </button>
+        </div>
+
+        <form onSubmit={handleEmailAuth} className="auth-form">
+          {mode === 'signup' && (
+            <div className="auth-input-group">
+              <label htmlFor="name">Full Name</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+          )}
+
+          <div className="auth-input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div className="auth-input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+              minLength={6}
+            />
+          </div>
+
+          {error && <div className="auth-error">{error}</div>}
+
+          <button type="submit" className="auth-submit-button" disabled={loading}>
+            {loading ? 'Please wait...' : mode === 'signin' ? 'Sign In' : 'Sign Up'}
+          </button>
+        </form>
+
+        <div className="auth-divider">
+          <span>OR</span>
         </div>
 
         <div className="auth-modal-buttons">
