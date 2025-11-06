@@ -71,8 +71,12 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Custom markers show university abbreviations and tuition prices ($K format).
   - Zoom-based marker filtering to prevent clutter: 10 universities at zoom ≤5, 20 at zoom ≤7, all 38 at zoom >7.
   - Live counter shows visible/total universities with helpful zoom hint.
+  - **University Search**: Real-time autocomplete search by Korean/English name or abbreviation, with smooth fly-to animation on selection.
+  - Search results dropdown with university details (name, abbreviation, tuition).
+  - Keyboard support (Enter key) and click-to-select functionality.
   - Reset button to return to default USA view.
   - Clicking markers opens popups with university details and navigation links.
+  - Multiple zoom methods: scroll wheel, trackpad gestures, touch zoom, double-click, keyboard (+/-), box zoom (Shift+drag).
   - Full bilingual support with react-leaflet@4.2.1.
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, UniversityMapPage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 

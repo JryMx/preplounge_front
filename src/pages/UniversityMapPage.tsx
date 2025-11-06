@@ -95,6 +95,7 @@ const UniversityMapPage: React.FC = () => {
     
     universitiesData.forEach((uni: any) => {
       const coords = getUniversityCoordinates(uni.englishName);
+      
       if (coords) {
         result.push({
           id: uni.id,

@@ -467,7 +467,7 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   max-height: 400px;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 .map-search-result-item {
