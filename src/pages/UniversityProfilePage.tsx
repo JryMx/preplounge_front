@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { MapPin, Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
+import { Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
 import './university-profile-page.css';
@@ -212,26 +212,15 @@ const UniversityProfilePage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="university-profile-location" data-testid="text-location">
-                <MapPin className="h-5 w-5" />
-                <span>{university.location}</span>
-                <span>•</span>
-                <span>{university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
-              </div>
-
               {/* School Details */}
               <div className="university-profile-details-grid">
                 <div className="university-profile-detail-item">
-                  <span className="university-profile-detail-label">{t('university.location')}:</span>
-                  <span className="university-profile-detail-value">{university.location}</span>
+                  <span className="university-profile-detail-label">{t('university.size')}:</span>
+                  <span className="university-profile-detail-value">{translateSize(university.size, language)}</span>
                 </div>
                 <div className="university-profile-detail-item">
                   <span className="university-profile-detail-label">{t('university.type')}:</span>
                   <span className="university-profile-detail-value">{university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
-                </div>
-                <div className="university-profile-detail-item">
-                  <span className="university-profile-detail-label">{t('university.size')}:</span>
-                  <span className="university-profile-detail-value">{translateSize(university.size, language)}</span>
                 </div>
               </div>
             </div>
