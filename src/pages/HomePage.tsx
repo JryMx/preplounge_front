@@ -853,37 +853,6 @@ const HomePage: React.FC = () => {
                 <>
                   <div className="profile-calculator-field">
                     <label className="profile-calculator-label">
-                      {t('home.calculator.sat.math')}
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      max="800"
-                      step="10"
-                      value={satMath}
-                      onChange={(e) => handleSatMathChange(e.target.value)}
-                      onBlur={handleSatMathBlur}
-                      className="profile-calculator-input"
-                      style={{
-                        borderColor: validationErrors.satMath ? '#EF4444' : undefined,
-                        boxShadow: validationErrors.satMath ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
-                      }}
-                      placeholder="720"
-                      data-testid="input-sat-math-home"
-                    />
-                    {validationErrors.satMath ? (
-                      <p style={{fontSize: '11px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
-                        ⚠️ {validationErrors.satMath}
-                      </p>
-                    ) : (
-                      <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
-                        {language === 'ko' ? '200 미만 입력시 자동으로 200으로 설정' : 'Values below 200 will auto-adjust to 200'}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="profile-calculator-field">
-                    <label className="profile-calculator-label">
                       {t('home.calculator.sat.ebrw')}
                     </label>
                     <input
@@ -905,6 +874,37 @@ const HomePage: React.FC = () => {
                     {validationErrors.satEBRW ? (
                       <p style={{fontSize: '11px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
                         ⚠️ {validationErrors.satEBRW}
+                      </p>
+                    ) : (
+                      <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
+                        {language === 'ko' ? '200 미만 입력시 자동으로 200으로 설정' : 'Values below 200 will auto-adjust to 200'}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="profile-calculator-field">
+                    <label className="profile-calculator-label">
+                      {t('home.calculator.sat.math')}
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      max="800"
+                      step="10"
+                      value={satMath}
+                      onChange={(e) => handleSatMathChange(e.target.value)}
+                      onBlur={handleSatMathBlur}
+                      className="profile-calculator-input"
+                      style={{
+                        borderColor: validationErrors.satMath ? '#EF4444' : undefined,
+                        boxShadow: validationErrors.satMath ? '0 0 0 3px rgba(239, 68, 68, 0.1)' : undefined,
+                      }}
+                      placeholder="720"
+                      data-testid="input-sat-math-home"
+                    />
+                    {validationErrors.satMath ? (
+                      <p style={{fontSize: '11px', color: '#EF4444', marginTop: '4px', fontWeight: '500'}}>
+                        ⚠️ {validationErrors.satMath}
                       </p>
                     ) : (
                       <p style={{fontSize: '11px', color: 'rgba(8, 47, 73, 0.6)', marginTop: '4px'}}>
