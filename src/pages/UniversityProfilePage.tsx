@@ -191,7 +191,8 @@ const UniversityProfilePage: React.FC = () => {
               alt={universityName}
               className="university-profile-image"
               data-testid="img-university-logo"
-              onError={(e) => { e.currentTarget.src = '/preplounge-logo.png'; }}
+              style={{ opacity: university.image.includes('preplounge-logo') ? 0.2 : 1 }}
+              onError={(e) => { e.currentTarget.src = '/preplounge-logo-final.png'; e.currentTarget.style.opacity = '0.2'; }}
             />
 
             <div className="university-profile-hero-content">
