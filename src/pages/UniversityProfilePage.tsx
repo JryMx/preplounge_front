@@ -3,6 +3,7 @@ import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
+import { getUniversityLocation } from '../data/universityLocations';
 import './university-profile-page.css';
 
 interface ApplicationRequirements {
@@ -202,15 +203,16 @@ const UniversityProfilePage: React.FC = () => {
                 </h1>
               </div>
 
+              {/* Location and Type */}
+              <div style={{ marginTop: '8px', fontSize: '16px', color: '#64748B' }}>
+                {getUniversityLocation(university.englishName, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}
+              </div>
+
               {/* School Details */}
               <div className="university-profile-details-grid">
                 <div className="university-profile-detail-item">
                   <span className="university-profile-detail-label">{t('university.size')}:</span>
                   <span className="university-profile-detail-value">{translateSize(university.size, language)}</span>
-                </div>
-                <div className="university-profile-detail-item">
-                  <span className="university-profile-detail-label">{t('university.type')}:</span>
-                  <span className="university-profile-detail-value">{university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
                 </div>
               </div>
 

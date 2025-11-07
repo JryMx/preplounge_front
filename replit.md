@@ -57,6 +57,8 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Features loading states, error handling, and bilingual UI.
 - **University Profile Pages**:
   - Detailed profiles for 1,234 unique U.S. universities.
+  - Displays location and type directly under university name in "City, State • Type" format (e.g., "Cambridge, Massachusetts • Private" or "케임브리지, 메사추세츠 • 사립").
+  - Location mapping available for 40+ top universities via universityLocations.ts with bilingual city/state data.
   - Displays quick stats, application requirements (data-driven from IPEDS 2023 with status badges), and academic information (graduation rates, degree types, 26,145 program entries across 26 categories).
   - Includes action buttons: "Check Admission Probability" and "Add to Comparison List".
   - Full bilingual support.
