@@ -59,8 +59,9 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Detailed profiles for 1,234 unique U.S. universities.
   - Displays location and type with map icon directly under university name:
     - English format: "📍 City, State Abbreviation • Type" (e.g., "📍 Cambridge, MA • Private")
-    - Korean format: "📍 State명 City • Type" (e.g., "📍 캘리포니아주 Claremont • 사립", "📍 매사추세츠주 Cambridge • 사립")
+    - Korean format: "📍 State명 City명 • Type" (e.g., "📍 캘리포니아주 클레어몬트 • 사립", "📍 매사추세츠주 케임브리지 • 사립")
     - All 50 U.S. states have official Korean translations from IPEDS dictionary.
+    - Major cities (150+) have Korean phonetic translations; untranslated cities remain in English.
   - All 1,234 universities include comprehensive data from IPEDS 2024 dataset:
     - **Full Address**: Clickable Google Maps link with street, city, state, and ZIP code (e.g., "Massachusetts Hall, Cambridge, MA, 2138"). Gracefully handles missing street addresses.
     - **School Size**: Based on Institution size category and Carnegie Classification (e.g., "Large (20,000 and above)" or "대형 (20,000명 이상)")
