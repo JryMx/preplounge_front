@@ -80,7 +80,8 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Displays 1,234 curated U.S. universities with infinite scroll.
   - Features dual-handle range sliders for tuition and SAT scores.
   - Sorting options: "Recommended" (default), Alphabetical, SAT Range.
-  - Full bilingual support.
+  - Full bilingual support with Korean-translated city names on listing cards.
+  - **Location Display on Listing Cards**: Consistent format across all pages showing Korean state + city names (e.g., "캘리포니아주 클레어몬트 • 사립", "매사추세츠주 케임브리지 • 사립").
   - **University Images**: 1,134 universities use PrepLounge logo (displayed at 20% opacity for subtle branding), 100 universities retain official seals at full opacity.
 - **University Comparison**:
   - Side-by-side comparison of up to 4 universities.
