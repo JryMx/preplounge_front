@@ -59,9 +59,10 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Detailed profiles for 1,234 unique U.S. universities.
   - Displays location and type directly under university name in "City, State Abbreviation • Type" format (e.g., "Cambridge, MA • Private" or "Stanford, CA • 사립").
   - All 1,234 universities include comprehensive data from IPEDS 2024 dataset:
-    - **Address**: Clickable Google Maps link using city and state (e.g., "Cambridge, MA" redirects to Google Maps search)
+    - **Full Address**: Clickable Google Maps link with street, city, state, and ZIP code (e.g., "Massachusetts Hall, Cambridge, MA, 2138"). Gracefully handles missing street addresses.
     - **School Size**: Based on Institution size category and Carnegie Classification (e.g., "Large (20,000 and above)" or "대형 (20,000명 이상)")
     - **Degree of Urbanization**: Location classification (e.g., "City: Midsize" or "중규모 도시", "Suburb: Large" or "대도시 교외")
+    - **Official Website**: Clickable link to university's official website (e.g., "www.harvard.edu/")
   - State names automatically converted to standard abbreviations (MA, CA, NY, etc.).
   - Displays quick stats, application requirements (data-driven from IPEDS 2023 with status badges), and academic information (graduation rates, degree types, 26,145 program entries across 26 categories).
   - Includes action buttons: "Check Admission Probability" and "Add to Comparison List".

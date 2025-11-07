@@ -36,6 +36,9 @@ interface University {
   location: string;
   city?: string;
   state?: string;
+  street?: string;
+  zipCode?: number;
+  url?: string;
   sizeCategory?: string;
   carnegieSize?: string;
   urbanization?: string;
@@ -117,9 +120,34 @@ const translateUrbanization = (urbanization?: string, language?: 'ko' | 'en'): s
   return urbanization;
 };
 
-const getGoogleMapsLink = (universityName: string, city?: string, state?: string): string => {
-  const query = `${universityName}, ${city || ''}, ${state || ''}`.trim();
+const formatFullAddress = (street?: string, city?: string, state?: string, zipCode?: number): string => {
+  const parts = [];
+  if (street) parts.push(street);
+  if (city) parts.push(city);
+  if (state) parts.push(getStateAbbreviation(state));
+  if (zipCode) parts.push(zipCode.toString());
+  
+  return parts.length > 0 ? parts.join(', ') : 'N/A';
+};
+
+const getGoogleMapsLink = (street?: string, city?: string, state?: string, zipCode?: number): string => {
+  const addressParts = [];
+  if (street) addressParts.push(street);
+  if (city) addressParts.push(city);
+  if (state) addressParts.push(state);
+  if (zipCode) addressParts.push(zipCode.toString());
+  
+  const query = addressParts.join(', ');
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+};
+
+const formatWebsiteUrl = (url?: string): string => {
+  if (!url) return '';
+  // Add https:// if not present
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    return `https://${url}`;
+  }
+  return url;
 };
 
 const getRequirementBadgeType = (status?: string): 'required' | 'optional' | 'not-considered' => {
@@ -268,17 +296,17 @@ const UniversityProfilePage: React.FC = () => {
 
               {/* School Details */}
               <div className="university-profile-details-grid">
-                {/* Address with Google Maps link */}
+                {/* Full Address with Google Maps link */}
                 <div className="university-profile-detail-item">
                   <span className="university-profile-detail-label">{language === 'ko' ? '주소' : 'Address'}:</span>
                   <a 
-                    href={getGoogleMapsLink(university.englishName, university.city, university.state)}
+                    href={getGoogleMapsLink(university.street, university.city, university.state, university.zipCode)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="university-profile-detail-value"
                     style={{ color: '#3B82F6', textDecoration: 'underline', cursor: 'pointer' }}
                   >
-                    {formatLocationDisplay(university.city, university.state, language)}
+                    {formatFullAddress(university.street, university.city, university.state, university.zipCode)}
                   </a>
                 </div>
 
@@ -293,6 +321,22 @@ const UniversityProfilePage: React.FC = () => {
                   <span className="university-profile-detail-label">{language === 'ko' ? '지역 유형' : 'Urbanization'}:</span>
                   <span className="university-profile-detail-value">{translateUrbanization(university.urbanization, language)}</span>
                 </div>
+
+                {/* Official Website */}
+                {university.url && (
+                  <div className="university-profile-detail-item">
+                    <span className="university-profile-detail-label">{language === 'ko' ? '공식 웹사이트' : 'Official Website'}:</span>
+                    <a 
+                      href={formatWebsiteUrl(university.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="university-profile-detail-value"
+                      style={{ color: '#3B82F6', textDecoration: 'underline', cursor: 'pointer' }}
+                    >
+                      {university.url}
+                    </a>
+                  </div>
+                )}
               </div>
 
               <button 
