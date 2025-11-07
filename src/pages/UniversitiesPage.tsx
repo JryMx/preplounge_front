@@ -11,6 +11,8 @@ interface University {
   name: string;
   englishName: string;
   location: string;
+  city?: string;
+  state?: string;
   tuition: number;
   acceptanceRate: number;
   satRange: string;
@@ -23,6 +25,49 @@ interface University {
 
 // Load real university data from JSON file
 const universities: University[] = universitiesData as University[];
+
+// Helper function to format location display
+const formatLocationDisplay = (city?: string, state?: string, language?: 'ko' | 'en'): string => {
+  if (!city && !state) {
+    return language === 'ko' ? '미국' : 'United States';
+  }
+  
+  if (!city && state) {
+    return state;
+  }
+  
+  if (city && !state) {
+    return city;
+  }
+  
+  // Both city and state are available
+  if (language === 'ko') {
+    // For Korean, just show city for brevity in list view
+    return city!;
+  }
+  
+  // For English, show "City, ST" format
+  const stateAbbr = getStateAbbreviation(state!);
+  return `${city}, ${stateAbbr}`;
+};
+
+// Helper function to get state abbreviation
+const getStateAbbreviation = (state: string): string => {
+  const abbreviations: Record<string, string> = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+    'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+    'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA',
+    'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+    'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+    'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+    'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH',
+    'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+    'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+    'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY',
+    'District of Columbia': 'DC', 'Puerto Rico': 'PR'
+  };
+  return abbreviations[state] || state;
+};
 
 const UniversitiesPage: React.FC = () => {
   const { t, language } = useLanguage();
@@ -305,7 +350,7 @@ const UniversitiesPage: React.FC = () => {
 
                   <div className="university-card-location">
                     <MapPin className="h-4 w-4" />
-                    <span>{university.location} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
+                    <span>{formatLocationDisplay(university.city, university.state, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
                   </div>
 
                   <div className="university-card-stats">
@@ -350,7 +395,7 @@ const UniversitiesPage: React.FC = () => {
                     )}
                     <div className="university-card-location" style={{marginTop: '8px'}}>
                       <MapPin className="h-4 w-4" />
-                      <span>{university.location} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
+                      <span>{formatLocationDisplay(university.city, university.state, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
                     </div>
                   </div>
                   <div className="university-list-stats">
