@@ -3,7 +3,6 @@ import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
-import { getUniversityLocation } from '../data/universityLocations';
 import './university-profile-page.css';
 
 interface ApplicationRequirements {
@@ -35,6 +34,8 @@ interface University {
   name: string;
   englishName: string;
   location: string;
+  city?: string;
+  state?: string;
   tuition: number;
   acceptanceRate: number;
   satRange: string;
@@ -62,6 +63,30 @@ const translateSize = (size: string, language: 'ko' | 'en'): string => {
   if (size === '작음 (<5,000)') return 'Small (<5,000)';
   
   return size;
+};
+
+const getStateAbbreviation = (state: string): string => {
+  const stateAbbreviations: Record<string, string> = {
+    'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR', 'California': 'CA',
+    'Colorado': 'CO', 'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL', 'Georgia': 'GA',
+    'Hawaii': 'HI', 'Idaho': 'ID', 'Illinois': 'IL', 'Indiana': 'IN', 'Iowa': 'IA',
+    'Kansas': 'KS', 'Kentucky': 'KY', 'Louisiana': 'LA', 'Maine': 'ME', 'Maryland': 'MD',
+    'Massachusetts': 'MA', 'Michigan': 'MI', 'Minnesota': 'MN', 'Mississippi': 'MS', 'Missouri': 'MO',
+    'Montana': 'MT', 'Nebraska': 'NE', 'Nevada': 'NV', 'New Hampshire': 'NH', 'New Jersey': 'NJ',
+    'New Mexico': 'NM', 'New York': 'NY', 'North Carolina': 'NC', 'North Dakota': 'ND', 'Ohio': 'OH',
+    'Oklahoma': 'OK', 'Oregon': 'OR', 'Pennsylvania': 'PA', 'Rhode Island': 'RI', 'South Carolina': 'SC',
+    'South Dakota': 'SD', 'Tennessee': 'TN', 'Texas': 'TX', 'Utah': 'UT', 'Vermont': 'VT',
+    'Virginia': 'VA', 'Washington': 'WA', 'West Virginia': 'WV', 'Wisconsin': 'WI', 'Wyoming': 'WY',
+    'District of Columbia': 'DC', 'Puerto Rico': 'PR'
+  };
+  return stateAbbreviations[state] || state;
+};
+
+const formatLocationDisplay = (city?: string, state?: string, language?: 'ko' | 'en'): string => {
+  if (!city || !state) {
+    return language === 'ko' ? '미국' : 'United States';
+  }
+  return `${city}, ${getStateAbbreviation(state)}`;
 };
 
 const getRequirementBadgeType = (status?: string): 'required' | 'optional' | 'not-considered' => {
@@ -205,7 +230,7 @@ const UniversityProfilePage: React.FC = () => {
 
               {/* Location and Type */}
               <div style={{ marginTop: '8px', fontSize: '16px', color: '#64748B' }}>
-                {getUniversityLocation(university.englishName, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}
+                {formatLocationDisplay(university.city, university.state, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}
               </div>
 
               {/* School Details */}
