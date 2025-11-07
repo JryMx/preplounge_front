@@ -171,7 +171,7 @@ const getRequirementBadgeType = (status?: string): 'required' | 'optional' | 'no
 };
 
 const translateRequirementStatus = (language: 'ko' | 'en', status?: string): string => {
-  if (!status) return language === 'ko' ? '고려 안 됨' : 'Not Considered';
+  if (!status) return language === 'ko' ? '불필요' : 'Not Considered';
   
   if (status.includes('Required')) {
     return language === 'ko' ? '필수' : 'Required';
@@ -180,7 +180,7 @@ const translateRequirementStatus = (language: 'ko' | 'en', status?: string): str
     return language === 'ko' ? '선택 (제출 시 고려)' : 'Optional (Considered if submitted)';
   }
   if (status.includes('Not considered')) {
-    return language === 'ko' ? '고려 안 됨' : 'Not Considered';
+    return language === 'ko' ? '불필요' : 'Not Considered';
   }
   
   return status;
