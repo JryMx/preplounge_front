@@ -23,7 +23,7 @@ export const cityTranslations: Record<string, string> = {
   'Alva': '앨바',
   'Americus': '아메리커스',
   'Ames': '에임스',
-  'Amherst': '앰허스트',
+  'Amherst': '애머스트',
   'Anchorage': '앵커리지',
   'Anderson': '앤더슨',
   'Angola': '앙골라',
