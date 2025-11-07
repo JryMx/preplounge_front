@@ -951,15 +951,18 @@ const translateUrbanization = (urbanization?: string, language?: 'ko' | 'en'): s
   // Translate urbanization categories
   if (language === 'ko') {
     if (urbanization.includes('City: Large')) return '대도시';
-    if (urbanization.includes('City: Midsize')) return '중규모 도시';
+    if (urbanization.includes('City: Midsize')) return '중소도시';
     if (urbanization.includes('City: Small')) return '소도시';
-    if (urbanization.includes('Suburb: Large')) return '대도시 교외';
-    if (urbanization.includes('Suburb: Midsize')) return '중규모 도시 교외';
-    if (urbanization.includes('Suburb: Small')) return '소도시 교외';
-    if (urbanization.includes('Town: Fringe')) return '도시 인근 타운';
-    if (urbanization.includes('Town: Distant')) return '원거리 타운';
-    if (urbanization.includes('Town: Remote')) return '외딴 타운';
-    if (urbanization.includes('Rural')) return '농촌 지역';
+    if (urbanization.includes('Suburb: Large')) return '교외';
+    if (urbanization.includes('Suburb: Midsize')) return '교외';
+    if (urbanization.includes('Suburb: Small')) return '교외';
+    if (urbanization.includes('Town: Fringe')) return '지방도시';
+    if (urbanization.includes('Town: Distant')) return '지방도시';
+    if (urbanization.includes('Town: Remote')) return '지방도시';
+    if (urbanization.includes('Rural: Fringe')) return '시골';
+    if (urbanization.includes('Rural: Distant')) return '시골';
+    if (urbanization.includes('Rural: Remote')) return '시골';
+    if (urbanization.includes('Rural')) return '시골';
   } else {
     // For English, clean up the format to show just the descriptive part
     if (urbanization.includes('City: Large')) return 'Large City';
