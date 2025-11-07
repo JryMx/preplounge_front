@@ -901,10 +901,22 @@ const getCityTranslation = (city: string): string => {
 };
 
 const formatLocationDisplay = (city?: string, state?: string, language?: 'ko' | 'en'): string => {
-  if (!city || !state) {
+  // If both are missing, show country
+  if (!city && !state) {
     return language === 'ko' ? '미국' : 'United States';
   }
   
+  // If only state is available
+  if (!city && state) {
+    return language === 'ko' ? getStateTranslation(state) : state;
+  }
+  
+  // If only city is available
+  if (city && !state) {
+    return language === 'ko' ? getCityTranslation(city) : city;
+  }
+  
+  // Both city and state are available
   if (language === 'ko') {
     // Format: "State명 City명" (e.g., "캘리포니아주 클레어몬트")
     return `${getStateTranslation(state)} ${getCityTranslation(city)}`;
