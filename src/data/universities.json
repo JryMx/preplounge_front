@@ -282,7 +282,7 @@
     "actRange": "24 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.67,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -421,7 +421,7 @@
     "actRange": "25 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.72,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -558,7 +558,7 @@
     "actRange": "17 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -689,7 +689,7 @@
     "actRange": "21 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -957,7 +957,7 @@
     "actRange": "23 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.39,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -1029,7 +1029,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.29,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -1098,7 +1098,7 @@
     "actRange": "18 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.21,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -1869,7 +1869,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.33,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -2159,7 +2159,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -2230,7 +2230,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.39,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -2299,7 +2299,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -2433,7 +2433,7 @@
     "actRange": "21 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.57,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -2572,7 +2572,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.2,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -2763,7 +2763,7 @@
     "actRange": "18 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.36,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -2904,7 +2904,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -3234,7 +3234,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -3361,7 +3361,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -3575,7 +3575,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -3648,7 +3648,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -3863,7 +3863,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -3935,7 +3935,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -4007,7 +4007,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -4153,7 +4153,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -4226,7 +4226,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -4297,7 +4297,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -4439,7 +4439,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -4649,7 +4649,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -5105,7 +5105,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -5178,7 +5178,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -5320,7 +5320,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -5385,7 +5385,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -5757,7 +5757,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -6291,7 +6291,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -6362,7 +6362,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -6854,7 +6854,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -7343,7 +7343,7 @@
     "actRange": "31 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Colorado_College_seal.svg/1024px-Colorado_College_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.98,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -7953,7 +7953,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -8153,7 +8153,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -8482,7 +8482,7 @@
     "actRange": "29 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.73,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -8897,7 +8897,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -9626,7 +9626,7 @@
     "actRange": "29 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.85,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -10059,7 +10059,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -10119,7 +10119,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -10320,7 +10320,7 @@
     "actRange": "25 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.64,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -10459,7 +10459,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -10575,7 +10575,7 @@
     "actRange": "20 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.26,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -10648,7 +10648,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.31,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -10720,7 +10720,7 @@
     "actRange": "19 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.27,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -11478,7 +11478,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.42,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -11548,7 +11548,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.26,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -12274,7 +12274,7 @@
     "actRange": "26 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.63,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -12338,7 +12338,7 @@
     "actRange": "15 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.28,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -12468,7 +12468,7 @@
     "actRange": "23 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.45,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -12785,7 +12785,7 @@
     "actRange": "17 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.06,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -12916,7 +12916,7 @@
     "actRange": "32 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/6/63/Emory_University_Seal.svg/1024px-Emory_University_Seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not considered for admission, even if submitted",
@@ -13053,7 +13053,7 @@
     "actRange": "28 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Georgia_Tech_seal.svg/1024px-Georgia_Tech_seal.svg.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.96,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13182,7 +13182,7 @@
     "actRange": "21 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.35,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13253,7 +13253,7 @@
     "actRange": "18 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.23,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13327,7 +13327,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.38,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13399,7 +13399,7 @@
     "actRange": "25 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.65,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13539,7 +13539,7 @@
     "actRange": "15 - 19",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.12,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13733,7 +13733,7 @@
     "actRange": "23 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.51,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13797,7 +13797,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.24,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13930,7 +13930,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.39,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -13989,7 +13989,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.13,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -14057,7 +14057,7 @@
     "actRange": "21 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.39,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -14246,7 +14246,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -14984,7 +14984,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.41,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -15048,7 +15048,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -15382,7 +15382,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -15843,7 +15843,7 @@
     "actRange": "26 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.56,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -16122,7 +16122,7 @@
     "actRange": "25 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.55,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -16195,7 +16195,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -17068,7 +17068,7 @@
     "actRange": "23 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.41,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -17277,7 +17277,7 @@
     "actRange": "33 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Northwestern_University_seal.svg/1024px-Northwestern_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -17492,7 +17492,7 @@
     "actRange": "21 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.38,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -17625,7 +17625,7 @@
     "actRange": "21 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.01,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -17767,7 +17767,7 @@
     "actRange": "20 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.17,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -17833,7 +17833,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -17901,7 +17901,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.29,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -18255,7 +18255,7 @@
     "actRange": "16 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.45,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -18426,7 +18426,7 @@
     "actRange": "19 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -18607,7 +18607,7 @@
     "actRange": "26 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.67,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -18674,7 +18674,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -18813,7 +18813,7 @@
     "actRange": "22 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.36,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -18881,7 +18881,7 @@
     "actRange": "21 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.27,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -19163,7 +19163,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -19225,7 +19225,7 @@
     "actRange": "22 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -19295,7 +19295,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -19503,7 +19503,7 @@
     "actRange": "27 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.67,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -19785,7 +19785,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -20264,7 +20264,7 @@
     "actRange": "25 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.49,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -20604,7 +20604,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.23,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -20735,7 +20735,7 @@
     "actRange": "23 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.56,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -20941,7 +20941,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.21,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -21204,7 +21204,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.55,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -21279,7 +21279,7 @@
     "actRange": "22 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.54,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -21750,7 +21750,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -22353,7 +22353,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -22556,7 +22556,7 @@
     "actRange": "21 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -22907,7 +22907,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -23318,7 +23318,7 @@
     "actRange": "24 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.59,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -23520,7 +23520,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -23588,7 +23588,7 @@
     "actRange": "17 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.22,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -23793,7 +23793,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.44,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -24147,7 +24147,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.15,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -24217,7 +24217,7 @@
     "actRange": "20 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -24270,7 +24270,7 @@
     "actRange": "16 - 22",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.06,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -24329,7 +24329,7 @@
     "actRange": "20 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.24,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -24460,7 +24460,7 @@
     "actRange": "14 - 21",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/UnionCollegeSeal.svg/800px-UnionCollegeSeal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.89,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -24544,7 +24544,7 @@
     "actRange": "16 - 20",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -24680,7 +24680,7 @@
     "actRange": "15 - 19",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.11,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -25088,7 +25088,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.03,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -25155,7 +25155,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.34,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -25679,7 +25679,7 @@
     "actRange": "23 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.44,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -25947,7 +25947,7 @@
     "actRange": "33 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e8/Formal_Seal_of_Bowdoin_College%2C_Brunswick%2C_ME%2C_USA.svg/1024px-Formal_Seal_of_Bowdoin_College%2C_Brunswick%2C_ME%2C_USA.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -26459,7 +26459,7 @@
     "actRange": "23 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.33,
     "applicationRequirements": {
       "gpa": "Not considered for admission, even if submitted",
@@ -26656,7 +26656,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.22,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -26723,7 +26723,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -26849,7 +26849,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -26982,7 +26982,7 @@
     "actRange": "26 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.53,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -27453,7 +27453,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -27658,7 +27658,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -27722,7 +27722,7 @@
     "actRange": "26 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.59,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -27856,7 +27856,7 @@
     "actRange": "19 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.38,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -27985,7 +27985,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -28050,7 +28050,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -28119,7 +28119,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -28296,7 +28296,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -28359,7 +28359,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -28648,7 +28648,7 @@
     "actRange": "33 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/0/00/Boston_College_seal.svg/1024px-Boston_College_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -28719,7 +28719,7 @@
     "actRange": "32 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Boston_University_seal.svg/1024px-Boston_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -28793,7 +28793,7 @@
     "actRange": "31 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/3/32/Brandeis_University_seal.svg/1024px-Brandeis_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -28926,7 +28926,7 @@
     "actRange": "30 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.74,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -29119,7 +29119,7 @@
     "actRange": "30 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.76,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -29241,7 +29241,7 @@
     "actRange": "26 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.6,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -29644,7 +29644,7 @@
     "actRange": "28 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.77,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -29837,7 +29837,7 @@
     "actRange": "26 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.63,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -29907,7 +29907,7 @@
     "actRange": "29 - 33",
     "image": "https://www.umass.edu/university-relations/sites/default/files/2023-12/UMASS_Medium-TM.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.88,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -30055,7 +30055,7 @@
     "actRange": "23 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.5,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -30159,7 +30159,7 @@
     "actRange": "34 - 36",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/4/44/MIT_Seal.svg/1024px-MIT_Seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -30467,7 +30467,7 @@
     "actRange": "33 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/commons/b/bb/NU_RGB_seal_R.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -30542,7 +30542,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.56,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -30872,7 +30872,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.39,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -31007,7 +31007,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -31280,7 +31280,7 @@
     "actRange": "25 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.55,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -31407,7 +31407,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -31800,7 +31800,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32077,7 +32077,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.22,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32139,7 +32139,7 @@
     "actRange": "22 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.49,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32283,7 +32283,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32331,7 +32331,7 @@
     "actRange": "19 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32455,7 +32455,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32513,7 +32513,7 @@
     "actRange": "22 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.34,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32582,7 +32582,7 @@
     "actRange": "18 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.18,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -32984,7 +32984,7 @@
     "actRange": "30 - 33",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Hillsdale_College_seal.svg/1024px-Hillsdale_College_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.95,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -33113,7 +33113,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.66,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -33174,7 +33174,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -33240,7 +33240,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -33304,7 +33304,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.11,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -33378,7 +33378,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -33438,7 +33438,7 @@
     "actRange": "31 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Seal_of_the_University_of_Michigan.svg/1024px-Seal_of_the_University_of_Michigan.svg.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.98,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -33725,7 +33725,7 @@
     "actRange": "17 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.24,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -33873,7 +33873,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -34217,7 +34217,7 @@
     "actRange": "21 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.35,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -34438,7 +34438,7 @@
     "actRange": "18 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -34701,7 +34701,7 @@
     "actRange": "25 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -35376,7 +35376,7 @@
     "actRange": "22 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.33,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -35446,7 +35446,7 @@
     "actRange": "21 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.25,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -35786,7 +35786,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -36151,7 +36151,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -36413,7 +36413,7 @@
     "actRange": "17 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.22,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -36685,7 +36685,7 @@
     "actRange": "14 - 18",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -36750,7 +36750,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -36820,7 +36820,7 @@
     "actRange": "21 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.62,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -37367,7 +37367,7 @@
     "actRange": "18 - 21",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -37642,7 +37642,7 @@
     "actRange": "19 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -37827,7 +37827,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -37951,7 +37951,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.25,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -38021,7 +38021,7 @@
     "actRange": "16 - 22",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -38085,7 +38085,7 @@
     "actRange": "23 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.58,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -38294,7 +38294,7 @@
     "actRange": "20 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.31,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -38430,7 +38430,7 @@
     "actRange": "18 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.25,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -38641,7 +38641,7 @@
     "actRange": "26 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.74,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -38857,7 +38857,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.28,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -38932,7 +38932,7 @@
     "actRange": "33 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/WashU_St._Louis_seal.svg/1024px-WashU_St._Louis_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -39003,7 +39003,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -39076,7 +39076,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -39211,7 +39211,7 @@
     "actRange": "18 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.36,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -39424,7 +39424,7 @@
     "actRange": "19 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -39602,7 +39602,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.33,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -39743,7 +39743,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -39882,7 +39882,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -40210,7 +40210,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.28,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -40424,7 +40424,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.18,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -40555,7 +40555,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -40697,7 +40697,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -41237,7 +41237,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.14,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -41299,7 +41299,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -41436,7 +41436,7 @@
     "actRange": "26 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.49,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -42203,7 +42203,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -42814,7 +42814,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -43264,7 +43264,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -43399,7 +43399,7 @@
     "actRange": "33 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Colgate_University_Seal_2018.svg/1200px-Colgate_University_Seal_2018.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -44409,7 +44409,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.18,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -44650,7 +44650,7 @@
     "actRange": "30 - 33",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/3/3e/Fordham_University_seal.svg/800px-Fordham_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.92,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -44721,7 +44721,7 @@
     "actRange": "32 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Hamilton_College_seal.svg/1024px-Hamilton_College_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -45238,7 +45238,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.27,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -45417,7 +45417,7 @@
     "actRange": "25 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.59,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -45556,7 +45556,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -45604,7 +45604,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -46250,7 +46250,7 @@
     "actRange": "33 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/New_York_University_Seal.svg/1024px-New_York_University_Seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -46393,7 +46393,7 @@
     "actRange": "25 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.67,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -46458,7 +46458,7 @@
     "actRange": "24 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.55,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -46769,7 +46769,7 @@
     "actRange": "29 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.84,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -46845,7 +46845,7 @@
     "actRange": "31 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c8/University_of_Rochester_seal.svg/1024px-University_of_Rochester_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -46915,7 +46915,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -46975,7 +46975,7 @@
     "actRange": "23 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.36,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -47109,7 +47109,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -47239,7 +47239,7 @@
     "actRange": "29 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.81,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -47293,7 +47293,7 @@
     "actRange": "26 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.54,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -47362,7 +47362,7 @@
     "actRange": "30 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.86,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -47831,7 +47831,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.24,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -47895,7 +47895,7 @@
     "actRange": "19 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.29,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -48096,7 +48096,7 @@
     "actRange": "29 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/6/67/State_University_of_New_York_at_Binghamton_Seal.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.91,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -48165,7 +48165,7 @@
     "actRange": "27 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.69,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -48366,7 +48366,7 @@
     "actRange": "24 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.58,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -48496,7 +48496,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.24,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -48832,7 +48832,7 @@
     "actRange": "23 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -49366,7 +49366,7 @@
     "actRange": "28 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.82,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -49432,7 +49432,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -49550,7 +49550,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -49616,7 +49616,7 @@
     "actRange": "33 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/c/c7/Vassar_College_Seal.svg",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -49991,7 +49991,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -50322,7 +50322,7 @@
     "actRange": "34 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Duke_University_seal.svg/1024px-Duke_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -50394,7 +50394,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.31,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -50530,7 +50530,7 @@
     "actRange": "23 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.54,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -50600,7 +50600,7 @@
     "actRange": "15 - 20",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -50866,7 +50866,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -50931,7 +50931,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -51001,7 +51001,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -51341,7 +51341,7 @@
     "actRange": "22 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.62,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -51550,7 +51550,7 @@
     "actRange": "22 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.45,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -51621,7 +51621,7 @@
     "actRange": "17 - 18",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.18,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -51949,7 +51949,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -52211,7 +52211,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.32,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -52413,7 +52413,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -52904,7 +52904,7 @@
     "actRange": "18 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.23,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -52976,7 +52976,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.15,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -53100,7 +53100,7 @@
     "actRange": "20 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.39,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -53168,7 +53168,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.31,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -53312,7 +53312,7 @@
     "actRange": "32 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/0/08/Case_Western_Reserve_University_seal.svg/1024px-Case_Western_Reserve_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -53520,7 +53520,7 @@
     "actRange": "24 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.61,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -53659,7 +53659,7 @@
     "actRange": "17 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -53874,7 +53874,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -54142,7 +54142,7 @@
     "actRange": "18 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -54280,7 +54280,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -54347,7 +54347,7 @@
     "actRange": "17 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.22,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -54482,7 +54482,7 @@
     "actRange": "15 - 22",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.02,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -54877,7 +54877,7 @@
     "actRange": "30 - 33",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/7/75/Formal_Seal_of_Oberlin_College%2C_Oberlin%2C_OH%2C_USA.svg/1024px-Formal_Seal_of_Oberlin_College%2C_Oberlin%2C_OH%2C_USA.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.98,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -55155,7 +55155,7 @@
     "actRange": "22 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.46,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -55231,7 +55231,7 @@
     "actRange": "25 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.54,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -55642,7 +55642,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.01,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -55840,7 +55840,7 @@
     "actRange": "17 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.23,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -56760,7 +56760,7 @@
     "actRange": "21 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -57030,7 +57030,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -57097,7 +57097,7 @@
     "actRange": "17 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.48,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -57165,7 +57165,7 @@
     "actRange": "28 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.7,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -57300,7 +57300,7 @@
     "actRange": "22 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.41,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -57502,7 +57502,7 @@
     "actRange": "17 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -58310,7 +58310,7 @@
     "actRange": "26 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.47,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -58507,7 +58507,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -58572,7 +58572,7 @@
     "actRange": "34 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Carnegie_Mellon_University_seal.svg/1024px-Carnegie_Mellon_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -58710,7 +58710,7 @@
     "actRange": "23 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.42,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -58975,7 +58975,7 @@
     "actRange": "27 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.76,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -59052,7 +59052,7 @@
     "actRange": "26 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.61,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -59191,7 +59191,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -59393,7 +59393,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -59661,7 +59661,7 @@
     "actRange": "33 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Formal_Seal_of_Haverford_College%2C_Haverford_Township%2C_PA%2C_USA.svg/1024px-Formal_Seal_of_Haverford_College%2C_Haverford_Township%2C_PA%2C_USA.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -60528,7 +60528,7 @@
     "actRange": "23 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -60729,7 +60729,7 @@
     "actRange": "22 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.52,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -60800,7 +60800,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -60935,7 +60935,7 @@
     "actRange": "24 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.34,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61197,7 +61197,7 @@
     "actRange": "23 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.51,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61464,7 +61464,7 @@
     "actRange": "18 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.54,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61523,7 +61523,7 @@
     "actRange": "27 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.72,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61664,7 +61664,7 @@
     "actRange": "34 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UPenn_shield_with_banner.svg/1024px-UPenn_shield_with_banner.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61736,7 +61736,7 @@
     "actRange": "23 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.36,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61801,7 +61801,7 @@
     "actRange": "22 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.34,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61932,7 +61932,7 @@
     "actRange": "19 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.35,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -61998,7 +61998,7 @@
     "actRange": "29 - 33",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.82,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -62071,7 +62071,7 @@
     "actRange": "19 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.33,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -62273,7 +62273,7 @@
     "actRange": "27 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.58,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -62413,7 +62413,7 @@
     "actRange": "25 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.56,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -62551,7 +62551,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.28,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -62756,7 +62756,7 @@
     "actRange": "33 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/c/cb/Formal_Logo_of_Swarthmore_College%2C_Swarthmore%2C_PA%2C_USA.svg/1024px-Formal_Logo_of_Swarthmore_College%2C_Swarthmore%2C_PA%2C_USA.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -62961,7 +62961,7 @@
     "actRange": "28 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.62,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -63026,7 +63026,7 @@
     "actRange": "32 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/d/da/Villanova_University_seal.svg/1024px-Villanova_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -63229,7 +63229,7 @@
     "actRange": "24 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.44,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -63367,7 +63367,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.36,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -63437,7 +63437,7 @@
     "actRange": "20 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.34,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -63770,7 +63770,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.28,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -63836,7 +63836,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -63968,7 +63968,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.12,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -64167,7 +64167,7 @@
     "actRange": "24 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.51,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -64446,7 +64446,7 @@
     "actRange": "24 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.51,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -64516,7 +64516,7 @@
     "actRange": "22 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.39,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -64580,7 +64580,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -64722,7 +64722,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -64979,7 +64979,7 @@
     "actRange": "28 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.78,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65249,7 +65249,7 @@
     "actRange": "22 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.32,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65314,7 +65314,7 @@
     "actRange": "22 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.42,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65378,7 +65378,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.25,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65441,7 +65441,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65503,7 +65503,7 @@
     "actRange": "26 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.66,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65576,7 +65576,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.32,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65836,7 +65836,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -65968,7 +65968,7 @@
     "actRange": "21 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.43,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -66101,7 +66101,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.42,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -66274,7 +66274,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -66395,7 +66395,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -66537,7 +66537,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.52,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -66751,7 +66751,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.17,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -66820,7 +66820,7 @@
     "actRange": "18 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -67023,7 +67023,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.22,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -67157,7 +67157,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.12,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -67294,7 +67294,7 @@
     "actRange": "20 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.32,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -67914,7 +67914,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -68268,7 +68268,7 @@
     "actRange": "20 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.33,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -68615,7 +68615,7 @@
     "actRange": "22 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.41,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -68687,7 +68687,7 @@
     "actRange": "17 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -68757,7 +68757,7 @@
     "actRange": "26 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.61,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -68961,7 +68961,7 @@
     "actRange": "18 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.24,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -69294,7 +69294,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.21,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -69433,7 +69433,7 @@
     "actRange": "19 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.25,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -69574,7 +69574,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.17,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -69850,7 +69850,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.14,
     "applicationRequirements": {
       "gpa": "Not considered for admission, even if submitted",
@@ -70053,7 +70053,7 @@
     "actRange": "19 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -70192,7 +70192,7 @@
     "actRange": "18 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.26,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -70260,7 +70260,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -70328,7 +70328,7 @@
     "actRange": "19 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.28,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -70404,7 +70404,7 @@
     "actRange": "16 - 22",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.12,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -70617,7 +70617,7 @@
     "actRange": "20 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.32,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -70760,7 +70760,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -70826,7 +70826,7 @@
     "actRange": "16 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.22,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -70898,7 +70898,7 @@
     "actRange": "30 - 34",
     "image": "https://upload.wikimedia.org/wikipedia/en/thumb/f/f8/Southern_Methodist_University_seal.svg/1024px-Southern_Methodist_University_seal.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.9,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -71458,7 +71458,7 @@
     "actRange": "25 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.62,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -71535,7 +71535,7 @@
     "actRange": "18 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.29,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -71748,7 +71748,7 @@
     "actRange": "17 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.06,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -72023,7 +72023,7 @@
     "actRange": "16 - 20",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.12,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -72092,7 +72092,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.28,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -72378,7 +72378,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -72794,7 +72794,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -73094,7 +73094,7 @@
     "actRange": "27 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.6,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -73221,7 +73221,7 @@
     "actRange": "20 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.45,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -73502,7 +73502,7 @@
     "actRange": "16 - 23",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.24,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -73572,7 +73572,7 @@
     "actRange": "28 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.53,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -73703,7 +73703,7 @@
     "actRange": "21 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.35,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -73907,7 +73907,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -74464,7 +74464,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -74869,7 +74869,7 @@
     "actRange": "22 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.42,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -75135,7 +75135,7 @@
     "actRange": "22 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.35,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -75538,7 +75538,7 @@
     "actRange": "32 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Washington_and_lee_univ_seal.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -75807,7 +75807,7 @@
     "actRange": "26 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.73,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -75938,7 +75938,7 @@
     "actRange": "21 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.31,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -76005,7 +76005,7 @@
     "actRange": "27 - 31",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.68,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -76141,7 +76141,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.44,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -76357,7 +76357,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -76637,7 +76637,7 @@
     "actRange": "17 - 22",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.05,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -76889,7 +76889,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.12,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -77031,7 +77031,7 @@
     "actRange": "16 - 22",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -77159,7 +77159,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.12,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -77497,7 +77497,7 @@
     "actRange": "22 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.36,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -77635,7 +77635,7 @@
     "actRange": "22 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -77843,7 +77843,7 @@
     "actRange": "27 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.73,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",
@@ -77977,7 +77977,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -78097,7 +78097,7 @@
     "actRange": "22 - 29",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.34,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -78165,7 +78165,7 @@
     "actRange": "22 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.5,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -78575,7 +78575,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -78714,7 +78714,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -78768,7 +78768,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -78835,7 +78835,7 @@
     "actRange": "18 - 24",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -78901,7 +78901,7 @@
     "actRange": "28 - 32",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Seal_of_the_University_of_Wisconsin.svg/1024px-Seal_of_the_University_of_Wisconsin.svg.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.97,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -79049,7 +79049,7 @@
     "actRange": "21 - 27",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -79335,7 +79335,7 @@
     "actRange": "34 - 35",
     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Seal_of_Leland_Stanford_Junior_University.svg/1024px-Seal_of_Leland_Stanford_Junior_University.svg.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 4,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -79533,7 +79533,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -79858,7 +79858,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80020,7 +80020,7 @@
     "actRange": "20 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.31,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80091,7 +80091,7 @@
     "actRange": "16 - 25",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.27,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80244,7 +80244,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80310,7 +80310,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80357,7 +80357,7 @@
     "actRange": "28 - 32",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.66,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80409,7 +80409,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80456,7 +80456,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80520,7 +80520,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80583,7 +80583,7 @@
     "actRange": "16 - 22",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.16,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -80813,7 +80813,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Not considered for admission, even if submitted",
@@ -81025,7 +81025,7 @@
     "actRange": "15 - 21",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.02,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -81348,7 +81348,7 @@
     "actRange": "18 - 30",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.52,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -81420,7 +81420,7 @@
     "actRange": "19 - 26",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": 3.31,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -81795,7 +81795,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "공립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Not considered for admission, even if submitted",
@@ -81933,7 +81933,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -82250,7 +82250,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -82409,7 +82409,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -82581,7 +82581,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Required to be considered for admission",
@@ -82628,7 +82628,7 @@
     "actRange": "20 - 28",
     "image": "/preplounge-logo-final.png",
     "type": "사립",
-    "size": "작음 (<5,000)",
+    "size": "소형 (<5,000)",
     "estimatedGPA": null,
     "applicationRequirements": {
       "gpa": "Not required for admission, but considered if submitted",

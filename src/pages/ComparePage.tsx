@@ -117,7 +117,7 @@ const ComparePage: React.FC = () => {
   const translateSize = (size: string) => {
     if (language === 'ko') return size;
     const translations: { [key: string]: string } = {
-      '작음 (<5,000)': 'Small (<5,000)',
+      '소형 (<5,000)': 'Small (<5,000)',
       '중간 (5,000-15,000)': 'Medium (5,000-15,000)',
       '큼 (15,000+)': 'Large (15,000+)',
     };
