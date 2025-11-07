@@ -495,9 +495,6 @@ const UniversitiesPage: React.FC = () => {
                 />
                 <div className="university-card-content">
                   <h3 className="university-card-title">{language === 'ko' ? university.name : university.englishName}</h3>
-                  {language === 'ko' && university.name !== university.englishName && (
-                    <p className="university-card-subtitle">{university.englishName}</p>
-                  )}
 
                   <div className="university-card-location">
                     <MapPin className="h-4 w-4" />
@@ -541,9 +538,6 @@ const UniversitiesPage: React.FC = () => {
                 <div className="university-list-content">
                   <div className="university-list-header">
                     <h3 className="university-list-title">{language === 'ko' ? university.name : university.englishName}</h3>
-                    {language === 'ko' && university.name !== university.englishName && (
-                      <p className="university-list-subtitle">{university.englishName}</p>
-                    )}
                     <div className="university-card-location" style={{marginTop: '8px'}}>
                       <MapPin className="h-4 w-4" />
                       <span>{formatLocationDisplay(university.city, university.state, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
