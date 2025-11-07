@@ -186,49 +186,49 @@ const translateRequirementStatus = (language: 'ko' | 'en', status?: string): str
   return status;
 };
 
-// Simplified program name translations (key categories)
+// Program name translations (official translation dictionary)
 const translateProgramName = (program: string, language: 'ko' | 'en'): string => {
   if (language === 'en') return program;
   
   const translations: Record<string, string> = {
-    'Agricultural/Animal/Plant/Veterinary Science and Related Fields': '농업/동물/식물/수의학',
-    'Natural Resources and Conservation': '자연자원 및 보존',
+    'Agricultural/Animal/Plant/Veterinary Science and Related Fields': '농학, 생물과학, 수의학 등',
+    'Natural Resources and Conservation': '자연자원 및 환경보전학',
     'Architecture and Related Services': '건축학',
-    'Area, Ethnic, Cultural, Gender, and Group Studies': '지역/민족/문화/젠더 연구',
-    'Communication, Journalism, and Related Programs': '커뮤니케이션 및 저널리즘',
-    'Communications Technologies/Technicians and Support Services': '통신 기술',
-    'Computer and Information Sciences and Support Services': '컴퓨터 및 정보과학',
-    'Personal and Culinary Services': '요리 및 개인 서비스',
+    'Area, Ethnic, Cultural, Gender, and Group Studies': '지역, 민족, 문화, 젠더 및 집단 연구',
+    'Communication, Journalism, and Related Programs': '커뮤니케이션학 및 언론학',
+    'Communications Technologies/Technicians and Support Services': '커뮤니케이션 기술',
+    'Computer and Information Sciences and Support Services': '컴퓨터과학',
+    'Culinary, Entertainment, and Personal Services': '조리학, 엔터테인먼트학, 서비스학 등',
     'Education': '교육학',
     'Engineering': '공학',
     'Engineering/Engineering-related Technologies/Technicians': '공학 기술',
-    'Foreign Languages, Literatures, and Linguistics': '외국어 및 언어학',
-    'Family and Consumer Sciences/Human Sciences': '가정학',
+    'Foreign Languages, Literatures, and Linguistics': '어문학',
+    'Family and Consumer Sciences/Human Sciences': '소비자과학 및 인류학',
     'Legal Professions and Studies': '법학',
-    'English Language and Literature/Letters': '영문학',
-    'Liberal Arts and Sciences, General Studies and Humanities': '인문교양',
-    'Library Science': '도서관학',
-    'Biological and Biomedical Sciences': '생물학 및 의생명과학',
+    'English Language and Literature/Letters': '영어영문학',
+    'Liberal Arts and Sciences, General Studies and Humanities': '인문학',
+    'Library Science': '문헌학',
+    'Biological and Biomedical Sciences': '생명학 및 의생명과학',
     'Mathematics and Statistics': '수학 및 통계학',
-    'Military Science and Military Technologies': '군사학',
-    'Multi/Interdisciplinary Studies': '융합전공',
-    'Parks, Recreation, Leisure, and Fitness Studies': '레저 및 체육학',
+    'Military Technologies and Applied Sciences': '군사학',
+    'Multi/Interdisciplinary Studies': '다학제 및 융합학',
+    'Parks, Recreation, Leisure, Fitness, and Kinesiology': '레저스포츠학',
     'Philosophy and Religious Studies': '철학 및 종교학',
     'Theology and Religious Vocations': '신학',
-    'Physical Sciences': '물리학',
-    'Science Technologies/Technicians': '과학 기술',
+    'Physical Sciences': '물상과학',
+    'Science Technologies/Technicians': '과학기술학',
     'Psychology': '심리학',
-    'Homeland Security, Law Enforcement, Firefighting and Related': '공공안전',
-    'Public Administration and Social Service Professions': '행정학 및 사회복지',
+    'Homeland Security, Law Enforcement, Firefighting and Related Protective Services': '안전학, 법행정학, 소방학 등',
+    'Public Administration and Social Service Professions': '행정학',
     'Social Sciences': '사회과학',
-    'Construction Trades': '건설 기술',
+    'Construction Trades': '건설무역학',
     'Mechanic and Repair Technologies/Technicians': '정비 기술',
-    'Precision Production': '정밀 생산',
-    'Transportation and Materials Moving': '운송학',
-    'Visual and Performing Arts': '예술',
-    'Health Professions and Related Programs': '보건의료',
+    'Precision Production': '정밀공학',
+    'Transportation and Materials Moving': '운수 및 원자재이송학',
+    'Visual and Performing Arts': '시각 및 공연예술',
+    'Health Professions and Related Programs': '보건학',
     'Business, Management, Marketing, and Related Support Services': '경영학',
-    'History': '역사학'
+    'History': '사학'
   };
   
   return translations[program] || program;
