@@ -870,7 +870,7 @@ const getCityTranslation = (city: string): string => {
     'Cheney': '체니',
     'Ellensburg': '엘렌즈버그',
     'Pullman': '풀먼',
-    'Bellev ue': '벨뷰',
+    'Bellevue': '벨뷰',
     'Morgantown': '모건타운',
     'Fairmont': '페어몬트',
     'Shepherdstown': '셰퍼즈타운',
@@ -892,8 +892,7 @@ const getCityTranslation = (city: string): string => {
     'Fond du Lac': '폰듀락',
     'Sheboygan': '시보이건',
     'Green Bay': '그린베이',
-    'Wausau': '와우소',
-    'Casper': '캐스퍼'
+    'Wausau': '와우소'
   };
   
   // Return manual translation or fall back to English for rare cities
