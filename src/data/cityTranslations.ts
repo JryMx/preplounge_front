@@ -677,7 +677,7 @@ export const cityTranslations: Record<string, string> = {
   'San Rafael': '산라파엘',
   'Sandy Springs': '샌디스프링스',
   'Santa Barbara': '산타바바라',
-  'Santa Clara': '산타클래라',
+  'Santa Clara': '산타클라라',
   'Santa Clarita': '산타클래리타',
   'Santa Cruz': '산타크루즈',
   'Santa Fe': '산타페',
