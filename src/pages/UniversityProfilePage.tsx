@@ -458,7 +458,7 @@ const UniversityProfilePage: React.FC = () => {
               )}
               {university.applicationRequirements?.prepProgram && (
                 <div className="requirement-item">
-                  <span className="requirement-name">{language === 'ko' ? '대학 준비 프로그램 이수' : 'College Prep Program Completion'}</span>
+                  <span className="requirement-name">{language === 'ko' ? '대학 준비 과정 이수 경험' : 'College Prep Program Completion'}</span>
                   <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.prepProgram)}`} data-testid="badge-prep">
                     {translateRequirementStatus(language, university.applicationRequirements.prepProgram)}
                   </span>
@@ -466,7 +466,7 @@ const UniversityProfilePage: React.FC = () => {
               )}
               {university.applicationRequirements?.recommendations && (
                 <div className="requirement-item">
-                  <span className="requirement-name">{language === 'ko' ? '추천서' : 'Recommendation'}</span>
+                  <span className="requirement-name">{language === 'ko' ? '추천서 여부' : 'Recommendation'}</span>
                   <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.recommendations)}`} data-testid="badge-recommendation">
                     {translateRequirementStatus(language, university.applicationRequirements.recommendations)}
                   </span>
@@ -474,7 +474,7 @@ const UniversityProfilePage: React.FC = () => {
               )}
               {university.applicationRequirements?.competencies && (
                 <div className="requirement-item">
-                  <span className="requirement-name">{language === 'ko' ? '역량 증명' : 'Demonstration of Competencies'}</span>
+                  <span className="requirement-name">{language === 'ko' ? '대외활동 경력' : 'Demonstration of Competencies'}</span>
                   <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.competencies)}`} data-testid="badge-competencies">
                     {translateRequirementStatus(language, university.applicationRequirements.competencies)}
                   </span>
@@ -482,7 +482,7 @@ const UniversityProfilePage: React.FC = () => {
               )}
               {university.applicationRequirements?.workExperience && (
                 <div className="requirement-item">
-                  <span className="requirement-name">{language === 'ko' ? '업무 경험' : 'Work Experience'}</span>
+                  <span className="requirement-name">{language === 'ko' ? '근무 경험' : 'Work Experience'}</span>
                   <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.workExperience)}`} data-testid="badge-work-experience">
                     {translateRequirementStatus(language, university.applicationRequirements.workExperience)}
                   </span>
@@ -498,7 +498,7 @@ const UniversityProfilePage: React.FC = () => {
               )}
               {university.applicationRequirements?.legacyStatus && (
                 <div className="requirement-item">
-                  <span className="requirement-name">{language === 'ko' ? '동문 자녀 여부' : 'Legacy Status'}</span>
+                  <span className="requirement-name">{language === 'ko' ? '가족 중 동문 여부' : 'Legacy Status'}</span>
                   <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.legacyStatus)}`} data-testid="badge-legacy">
                     {translateRequirementStatus(language, university.applicationRequirements.legacyStatus)}
                   </span>
@@ -506,7 +506,7 @@ const UniversityProfilePage: React.FC = () => {
               )}
               {university.applicationRequirements?.testScores && (
                 <div className="requirement-item">
-                  <span className="requirement-name">{language === 'ko' ? '입학시험 점수' : 'Admission Test Scores'}</span>
+                  <span className="requirement-name">{language === 'ko' ? '입학 시험 점수' : 'Admission Test Scores'}</span>
                   <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.testScores)}`} data-testid="badge-test-scores">
                     {translateRequirementStatus(language, university.applicationRequirements.testScores)}
                   </span>
@@ -514,7 +514,7 @@ const UniversityProfilePage: React.FC = () => {
               )}
               {university.applicationRequirements?.englishProficiency && (
                 <div className="requirement-item">
-                  <span className="requirement-name">{language === 'ko' ? '영어 능력 시험' : 'English Proficiency Test'}</span>
+                  <span className="requirement-name">{language === 'ko' ? '영어 능력 시험 점수' : 'English Proficiency Test'}</span>
                   <span className={`requirement-badge ${getRequirementBadgeType(university.applicationRequirements.englishProficiency)}`} data-testid="badge-english">
                     {translateRequirementStatus(language, university.applicationRequirements.englishProficiency)}
                   </span>
@@ -562,7 +562,7 @@ const UniversityProfilePage: React.FC = () => {
               {/* Degree Types */}
               {university.academicInfo?.degreeTypes && (
                 <div className="academic-info-item">
-                  <span className="academic-info-label">{language === 'ko' ? '제공 학위 유형' : 'Degree Types Offered'}</span>
+                  <span className="academic-info-label">{language === 'ko' ? '수여 학위' : 'Degree Types Offered'}</span>
                   <div className="degree-types" data-testid="section-degree-types">
                     {university.academicInfo.degreeTypes.bachelors && (
                       <span className="degree-badge">{language === 'ko' ? '학사' : 'Bachelor\'s'}</span>
