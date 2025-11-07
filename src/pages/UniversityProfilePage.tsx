@@ -36,6 +36,10 @@ interface University {
   location: string;
   city?: string;
   state?: string;
+  sizeCategory?: string;
+  carnegieSize?: string;
+  urbanization?: string;
+  carnegieClassification?: string;
   tuition: number;
   acceptanceRate: number;
   satRange: string;
@@ -53,16 +57,6 @@ const universities: University[] = universitiesData as University[];
 
 const getUniversityData = (id: string) => {
   return universities.find(uni => uni.id === id);
-};
-
-const translateSize = (size: string, language: 'ko' | 'en'): string => {
-  if (language === 'ko') return size;
-  
-  if (size === '큼 (15,000+)') return 'Large (15,000+)';
-  if (size === '중간 (5,000-15,000)') return 'Medium (5,000-15,000)';
-  if (size === '작음 (<5,000)') return 'Small (<5,000)';
-  
-  return size;
 };
 
 const getStateAbbreviation = (state: string): string => {
@@ -87,6 +81,45 @@ const formatLocationDisplay = (city?: string, state?: string, language?: 'ko' | 
     return language === 'ko' ? '미국' : 'United States';
   }
   return `${city}, ${getStateAbbreviation(state)}`;
+};
+
+const formatSchoolSize = (sizeCategory?: string, carnegieSize?: string, language?: 'ko' | 'en'): string => {
+  if (!sizeCategory) return language === 'ko' ? '정보 없음' : 'N/A';
+  
+  if (language === 'ko') {
+    if (sizeCategory === '20,000 and above') return '대형 (20,000명 이상)';
+    if (sizeCategory === '10,000 - 19,999') return '대형 (10,000-19,999명)';
+    if (sizeCategory === '5,000 - 9,999') return '중형 (5,000-9,999명)';
+    if (sizeCategory === '3,000 - 4,999') return '중형 (3,000-4,999명)';
+    if (sizeCategory === '1,000 - 2,999') return '소형 (1,000-2,999명)';
+    if (sizeCategory.includes('Under')) return '소형 (1,000명 미만)';
+  }
+  
+  return `${carnegieSize || ''} (${sizeCategory})`.trim();
+};
+
+const translateUrbanization = (urbanization?: string, language?: 'ko' | 'en'): string => {
+  if (!urbanization) return language === 'ko' ? '정보 없음' : 'N/A';
+  if (language === 'en') return urbanization;
+  
+  // Translate urbanization categories to Korean
+  if (urbanization.includes('City: Large')) return '대도시';
+  if (urbanization.includes('City: Midsize')) return '중규모 도시';
+  if (urbanization.includes('City: Small')) return '소도시';
+  if (urbanization.includes('Suburb: Large')) return '대도시 교외';
+  if (urbanization.includes('Suburb: Midsize')) return '중규모 도시 교외';
+  if (urbanization.includes('Suburb: Small')) return '소도시 교외';
+  if (urbanization.includes('Town: Fringe')) return '도시 인근 타운';
+  if (urbanization.includes('Town: Distant')) return '원거리 타운';
+  if (urbanization.includes('Town: Remote')) return '외딴 타운';
+  if (urbanization.includes('Rural')) return '농촌 지역';
+  
+  return urbanization;
+};
+
+const getGoogleMapsLink = (universityName: string, city?: string, state?: string): string => {
+  const query = `${universityName}, ${city || ''}, ${state || ''}`.trim();
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 };
 
 const getRequirementBadgeType = (status?: string): 'required' | 'optional' | 'not-considered' => {
@@ -235,9 +268,30 @@ const UniversityProfilePage: React.FC = () => {
 
               {/* School Details */}
               <div className="university-profile-details-grid">
+                {/* Address with Google Maps link */}
                 <div className="university-profile-detail-item">
-                  <span className="university-profile-detail-label">{t('university.size')}:</span>
-                  <span className="university-profile-detail-value">{translateSize(university.size, language)}</span>
+                  <span className="university-profile-detail-label">{language === 'ko' ? '주소' : 'Address'}:</span>
+                  <a 
+                    href={getGoogleMapsLink(university.englishName, university.city, university.state)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="university-profile-detail-value"
+                    style={{ color: '#3B82F6', textDecoration: 'underline', cursor: 'pointer' }}
+                  >
+                    {formatLocationDisplay(university.city, university.state, language)}
+                  </a>
+                </div>
+
+                {/* School Size */}
+                <div className="university-profile-detail-item">
+                  <span className="university-profile-detail-label">{language === 'ko' ? '학교 규모' : 'School Size'}:</span>
+                  <span className="university-profile-detail-value">{formatSchoolSize(university.sizeCategory, university.carnegieSize, language)}</span>
+                </div>
+
+                {/* Degree of Urbanization */}
+                <div className="university-profile-detail-item">
+                  <span className="university-profile-detail-label">{language === 'ko' ? '지역 유형' : 'Urbanization'}:</span>
+                  <span className="university-profile-detail-value">{translateUrbanization(university.urbanization, language)}</span>
                 </div>
               </div>
 
