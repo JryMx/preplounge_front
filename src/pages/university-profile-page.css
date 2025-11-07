@@ -150,7 +150,7 @@
 .university-profile-details-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 8px;
 }
 
 .university-profile-detail-item {

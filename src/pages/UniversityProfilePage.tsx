@@ -103,19 +103,32 @@ const formatSchoolSize = (sizeCategory?: string, carnegieSize?: string, language
 
 const translateUrbanization = (urbanization?: string, language?: 'ko' | 'en'): string => {
   if (!urbanization) return language === 'ko' ? '정보 없음' : 'N/A';
-  if (language === 'en') return urbanization;
   
-  // Translate urbanization categories to Korean
-  if (urbanization.includes('City: Large')) return '대도시';
-  if (urbanization.includes('City: Midsize')) return '중규모 도시';
-  if (urbanization.includes('City: Small')) return '소도시';
-  if (urbanization.includes('Suburb: Large')) return '대도시 교외';
-  if (urbanization.includes('Suburb: Midsize')) return '중규모 도시 교외';
-  if (urbanization.includes('Suburb: Small')) return '소도시 교외';
-  if (urbanization.includes('Town: Fringe')) return '도시 인근 타운';
-  if (urbanization.includes('Town: Distant')) return '원거리 타운';
-  if (urbanization.includes('Town: Remote')) return '외딴 타운';
-  if (urbanization.includes('Rural')) return '농촌 지역';
+  // Translate urbanization categories
+  if (language === 'ko') {
+    if (urbanization.includes('City: Large')) return '대도시';
+    if (urbanization.includes('City: Midsize')) return '중규모 도시';
+    if (urbanization.includes('City: Small')) return '소도시';
+    if (urbanization.includes('Suburb: Large')) return '대도시 교외';
+    if (urbanization.includes('Suburb: Midsize')) return '중규모 도시 교외';
+    if (urbanization.includes('Suburb: Small')) return '소도시 교외';
+    if (urbanization.includes('Town: Fringe')) return '도시 인근 타운';
+    if (urbanization.includes('Town: Distant')) return '원거리 타운';
+    if (urbanization.includes('Town: Remote')) return '외딴 타운';
+    if (urbanization.includes('Rural')) return '농촌 지역';
+  } else {
+    // For English, clean up the format to show just the descriptive part
+    if (urbanization.includes('City: Large')) return 'Large City';
+    if (urbanization.includes('City: Midsize')) return 'Midsize City';
+    if (urbanization.includes('City: Small')) return 'Small City';
+    if (urbanization.includes('Suburb: Large')) return 'Large Suburb';
+    if (urbanization.includes('Suburb: Midsize')) return 'Midsize Suburb';
+    if (urbanization.includes('Suburb: Small')) return 'Small Suburb';
+    if (urbanization.includes('Town: Fringe')) return 'Town: Fringe';
+    if (urbanization.includes('Town: Distant')) return 'Town: Distant';
+    if (urbanization.includes('Town: Remote')) return 'Town: Remote';
+    if (urbanization.includes('Rural')) return 'Rural';
+  }
   
   return urbanization;
 };
