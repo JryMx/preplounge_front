@@ -934,6 +934,14 @@ const formatSchoolSize = (sizeCategory?: string, carnegieSize?: string, language
     if (sizeCategory === '3,000 - 4,999') return '중형 (3,000-4,999명)';
     if (sizeCategory === '1,000 - 2,999') return '소형 (1,000-2,999명)';
     if (sizeCategory.includes('Under')) return '소형 (1,000명 미만)';
+  } else {
+    // English translations
+    if (sizeCategory === '20,000 and above') return 'Large (20,000 and above)';
+    if (sizeCategory === '10,000 - 19,999') return 'Large (10,000-19,999)';
+    if (sizeCategory === '5,000 - 9,999') return 'Medium (5,000-9,999)';
+    if (sizeCategory === '3,000 - 4,999') return 'Medium (3,000-4,999)';
+    if (sizeCategory === '1,000 - 2,999') return 'Small (1,000-2,999)';
+    if (sizeCategory.includes('Under')) return 'Small (Under 1,000)';
   }
   
   return `${carnegieSize || ''} (${sizeCategory})`.trim();
