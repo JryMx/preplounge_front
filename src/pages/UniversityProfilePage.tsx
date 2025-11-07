@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Users, DollarSign, BookOpen, ArrowLeft, Plus } from 'lucide-react';
+import { Users, DollarSign, BookOpen, ArrowLeft, Plus, MapPin } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import universitiesData from '../data/universities.json';
 import './university-profile-page.css';
@@ -79,10 +79,74 @@ const getStateAbbreviation = (state: string): string => {
   return stateAbbreviations[state] || state;
 };
 
+const getStateTranslation = (state: string): string => {
+  const translations: Record<string, string> = {
+    'Alabama': '앨라배마주',
+    'Alaska': '알래스카주',
+    'Arizona': '애리조나주',
+    'Arkansas': '아칸소주',
+    'California': '캘리포니아주',
+    'Colorado': '콜로라도주',
+    'Connecticut': '코네티컷주',
+    'Delaware': '델라웨어주',
+    'District of Columbia': '워싱턴 D.C.',
+    'Florida': '플로리다주',
+    'Georgia': '조지아주',
+    'Hawaii': '하와이주',
+    'Idaho': '아이다호주',
+    'Illinois': '일리노이주',
+    'Indiana': '인디애나주',
+    'Iowa': '아이오와주',
+    'Kansas': '캔자스주',
+    'Kentucky': '켄터키주',
+    'Louisiana': '루이지애나주',
+    'Maine': '메인주',
+    'Maryland': '메릴랜드주',
+    'Massachusetts': '매사추세츠주',
+    'Michigan': '미시간주',
+    'Minnesota': '미네소타주',
+    'Mississippi': '미시시피주',
+    'Missouri': '미주리주',
+    'Montana': '몬태나주',
+    'Nebraska': '네브래스카주',
+    'Nevada': '네바다주',
+    'New Hampshire': '뉴햄프셔주',
+    'New Jersey': '뉴저지주',
+    'New Mexico': '뉴멕시코주',
+    'New York': '뉴욕주',
+    'North Carolina': '노스캐롤라이나주',
+    'North Dakota': '노스다코타주',
+    'Ohio': '오하이오주',
+    'Oklahoma': '오클라호마주',
+    'Oregon': '오리건주',
+    'Pennsylvania': '펜실베이니아주',
+    'Rhode Island': '로드아일랜드주',
+    'South Carolina': '사우스캐롤라이나주',
+    'South Dakota': '사우스다코타주',
+    'Tennessee': '테네시주',
+    'Texas': '텍사스주',
+    'Utah': '유타주',
+    'Vermont': '버몬트주',
+    'Virginia': '버지니아주',
+    'Washington': '워싱턴주',
+    'West Virginia': '웨스트버지니아주',
+    'Wisconsin': '위스콘신주',
+    'Wyoming': '와이오밍주',
+    'Puerto Rico': '푸에르토리코'
+  };
+  return translations[state] || state;
+};
+
 const formatLocationDisplay = (city?: string, state?: string, language?: 'ko' | 'en'): string => {
   if (!city || !state) {
     return language === 'ko' ? '미국' : 'United States';
   }
+  
+  if (language === 'ko') {
+    // Format: "State명 City명" (e.g., "캘리포니아주 클레어몬트")
+    return `${getStateTranslation(state)} ${city}`;
+  }
+  
   return `${city}, ${getStateAbbreviation(state)}`;
 };
 
@@ -345,8 +409,9 @@ const UniversityProfilePage: React.FC = () => {
               </div>
 
               {/* Location and Type */}
-              <div style={{ marginTop: '8px', fontSize: '16px', color: '#64748B' }}>
-                {formatLocationDisplay(university.city, university.state, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}
+              <div style={{ marginTop: '8px', fontSize: '16px', color: '#64748B', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <MapPin className="h-4 w-4" style={{ flexShrink: 0 }} />
+                <span>{formatLocationDisplay(university.city, university.state, language)} • {university.type === '공립' ? (language === 'ko' ? '공립' : 'Public') : (language === 'ko' ? '사립' : 'Private')}</span>
               </div>
 
               {/* School Details */}
