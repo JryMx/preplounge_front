@@ -362,7 +362,7 @@ const ComparePage: React.FC = () => {
                             marginLeft: '8px',
                             fontWeight: '400'
                           }}>
-                            ({university.englishName})
+                            {university.englishName}
                           </span>
                         </>
                       ) : (
