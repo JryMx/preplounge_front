@@ -133,6 +133,48 @@ const translateUrbanization = (urbanization?: string, language?: 'ko' | 'en'): s
   return urbanization;
 };
 
+const translateCarnegieClassification = (classification?: string, language?: 'ko' | 'en'): string => {
+  if (!classification) return language === 'ko' ? '정보 없음' : 'N/A';
+  if (language === 'en') return classification;
+  
+  const translations: Record<string, string> = {
+    'Mixed Associate Large': '전문학사 학위 수여 대학',
+    'Mixed Associate Medium': '전문학사 학위 수여 대학',
+    'Mixed Associate Small': '전문학사 학위 수여 대학',
+    'Mixed Associate/Baccalaureate': '전문학사 및 학사 학위 수여 대학',
+    'Mixed Baccalaureate': '학사 학위 수여 대학',
+    'Mixed Undergraduate/Graduate-Doctorate Large': '박사 학위 수여 대학',
+    'Mixed Undergraduate/Graduate-Doctorate Medium': '박사 학위 수여 대학',
+    'Mixed Undergraduate/Graduate-Doctorate Small': '박사 학위 수여 대학',
+    'Mixed Undergraduate/Graduate-Master\'s Large/Medium': '석사 학위 수여 대학',
+    'Mixed Undergraduate/Graduate-Master\'s Small': '석사 학위 수여 대학',
+    'Professions-focused Associate Large/Medium': '직업 중심 전문학사 학위 수여 대학',
+    'Professions-focused Associate Small': '직업 중심 전문학사 학위 수여 대학',
+    'Professions-focused Associate/Baccalaureate': '직업 중심 전문학사 및 학사 학위 수여 대학',
+    'Professions-focused Baccalaureate Medium': '직업 중심 학사 학위 수여 대학',
+    'Professions-focused Baccalaureate Small': '직업 중심 학사 학위 수여 대학',
+    'Professions-focused Undergraduate/Graduate-Doctorate Large': '직업 중심 박사 학위 수여 대학',
+    'Professions-focused Undergraduate/Graduate-Doctorate Medium': '직업 중심 박사 학위 수여 대학',
+    'Professions-focused Undergraduate/Graduate-Doctorate Small': '직업 중심 박사 학위 수여 대학',
+    'Professions-focused Undergraduate/Graduate-Master\'s Large/Medium': '직업 중심 석사 학위 수여 대학',
+    'Professions-focused Undergraduate/Graduate-Master\'s Small': '직업 중심 석사 학위 수여 대학',
+    'Special Focus: Applied and Career Studies': '실용·직업전문학교',
+    'Special Focus: Arts and Sciences': '인문·자연과학 대학',
+    'Special Focus: Arts, Music, and Design': '예술대학',
+    'Special Focus: Business': '경영대학',
+    'Special Focus: Graduate Studies': '대학원',
+    'Special Focus: Law': '법과대학',
+    'Special Focus: Medical Schools and Centers': '의과대학',
+    'Special Focus: Nursing': '간호대학',
+    'Special Focus: Other Health Professions': '기타 보건대학',
+    'Special Focus: Technology, Engineering, and Sciences': '공과대학',
+    'Special Focus: Theological Studies': '신학대학',
+    'Not classified': '분류 없음'
+  };
+  
+  return translations[classification] || classification;
+};
+
 const formatFullAddress = (street?: string, city?: string, state?: string, zipCode?: number): string => {
   const parts = [];
   if (street) parts.push(street);
@@ -328,6 +370,14 @@ const UniversityProfilePage: React.FC = () => {
                   <span className="university-profile-detail-label">{language === 'ko' ? '학교 규모' : 'School Size'}:</span>
                   <span className="university-profile-detail-value">{formatSchoolSize(university.sizeCategory, university.carnegieSize, language)}</span>
                 </div>
+
+                {/* Carnegie Classification */}
+                {university.carnegieClassification && (
+                  <div className="university-profile-detail-item">
+                    <span className="university-profile-detail-label">{language === 'ko' ? '카네기 분류' : 'Carnegie Classification'}:</span>
+                    <span className="university-profile-detail-value">{translateCarnegieClassification(university.carnegieClassification, language)}</span>
+                  </div>
+                )}
 
                 {/* Degree of Urbanization */}
                 <div className="university-profile-detail-item">
