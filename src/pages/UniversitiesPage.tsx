@@ -50,30 +50,6 @@ const getStateTranslation = (state: string): string => {
   return translations[state] || state;
 };
 
-// Helper function to translate city names to Korean (600+ cities)
-  if (!city && !state) {
-    return language === 'ko' ? '미국' : 'United States';
-  }
-  
-  if (!city && state) {
-    return language === 'ko' ? getStateTranslation(state) : state;
-  }
-  
-  if (city && !state) {
-    return city;
-  }
-  
-  // Both city and state are available
-  if (language === 'ko') {
-    // Format: "State명 City명" (e.g., "캘리포니아주 클레어몬트")
-    return `${getStateTranslation(state!)} ${getCityTranslation(city!)}`;
-  }
-  
-  // For English, show "City, ST" format
-  const stateAbbr = getStateAbbreviation(state!);
-  return `${city}, ${stateAbbr}`;
-};
-
 // Helper function to get state abbreviation
 const getStateAbbreviation = (state: string): string => {
   const abbreviations: Record<string, string> = {

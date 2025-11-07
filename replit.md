@@ -61,10 +61,10 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
     - English format: "📍 City, State Abbreviation • Type" (e.g., "📍 Cambridge, MA • Private")
     - Korean format: "📍 State명 City명 • Type" (e.g., "📍 캘리포니아주 클레어몬트 • 사립", "📍 매사추세츠주 케임브리지 • 사립", "📍 아이오와주 그리넬 • 사립")
     - All 50 U.S. states have official Korean translations from IPEDS dictionary.
-    - **100% City Coverage with High-Quality Korean Translations**: All 796 unique city names handled using a tiered approach:
-      - **Tier 1 & 2**: 600+ major cities with curated Korean translations (76.3% of universities, 942/1,234)
-      - **Tier 3**: Remaining cities display in English (23.7% of universities, 292/1,234)
-      - Manual Korean translations for the vast majority; English fallback for clarity over confusing automated romanization.
+    - **100% City Coverage with Korean Translations**: All 796 unique city names across all 1,234 universities have Korean translations.
+      - **Centralized Translation System**: `src/data/cityTranslations.ts` contains 849 entries covering all city name variants.
+      - **Smart Normalization**: Automatic handling of variants like "St." vs "Saint" and spacing differences.
+      - **Complete Coverage**: Every university displays Korean city names in Korean language mode across all pages (UniversitiesPage, UniversityProfilePage, ComparePage, UniversityMapPage, etc.).
   - All 1,234 universities include comprehensive data from IPEDS 2024 dataset:
     - **Full Address**: Clickable Google Maps link with street, city, state, and ZIP code (e.g., "Massachusetts Hall, Cambridge, MA, 2138"). Gracefully handles missing street addresses.
     - **School Size**: Based on Institution size category and Carnegie Classification (e.g., "Large (20,000 and above)" or "대형 (20,000명 이상)")
