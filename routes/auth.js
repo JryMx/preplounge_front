@@ -77,7 +77,10 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/');
+    const frontendUrl = process.env.REPLIT_DEV_DOMAIN 
+      ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+      : 'http://localhost:5000';
+    res.redirect(frontendUrl);
   }
 );
 
@@ -86,7 +89,10 @@ router.get('/kakao', passport.authenticate('kakao'));
 router.get('/kakao/callback',
   passport.authenticate('kakao', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('/');
+    const frontendUrl = process.env.REPLIT_DEV_DOMAIN 
+      ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+      : 'http://localhost:5000';
+    res.redirect(frontendUrl);
   }
 );
 
