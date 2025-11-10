@@ -90,7 +90,11 @@ const Navbar: React.FC = () => {
                 </button>
                 {isUserMenuOpen && (
                   <div className="navbar-user-dropdown">
-                    <Link to="/student-profile" className="navbar-user-dropdown-item">
+                    <Link 
+                      to="/student-profile" 
+                      className="navbar-user-dropdown-item"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
                       <User size={16} />
                       {t('nav.profile')}
                     </Link>
