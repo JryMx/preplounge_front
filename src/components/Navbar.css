@@ -385,6 +385,15 @@
   padding: 8px 0;
 }
 
+.navbar-user-dropdown::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
 .navbar-user-dropdown-item {
   display: flex;
   align-items: center;
