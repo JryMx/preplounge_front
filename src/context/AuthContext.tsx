@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { getBackendURL } from '../lib/backendUrl';
 
 interface User {
   id: string;
@@ -24,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/auth/user', {
+      const response = await fetch(`${getBackendURL()}/api/auth/user`, {
         credentials: 'include',
       });
       const data = await response.json();
@@ -39,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch('http://localhost:3001/api/auth/logout', {
+      await fetch(`${getBackendURL()}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       });

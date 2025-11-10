@@ -67,10 +67,14 @@ export function configurePassport() {
   }));
 
   if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    const baseURL = process.env.REPLIT_DEV_DOMAIN 
+      ? `https://${process.env.REPLIT_DEV_DOMAIN}:3001` 
+      : 'http://localhost:3001';
+    
     passport.use(new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: '/api/auth/google/callback',
+      callbackURL: `${baseURL}/api/auth/google/callback`,
     }, async (accessToken, refreshToken, profile, done) => {
       try {
         const email = profile.emails?.[0]?.value;
@@ -111,10 +115,14 @@ export function configurePassport() {
   }
 
   if (process.env.KAKAO_CLIENT_ID && process.env.KAKAO_CLIENT_SECRET) {
+    const baseURL = process.env.REPLIT_DEV_DOMAIN 
+      ? `https://${process.env.REPLIT_DEV_DOMAIN}:3001` 
+      : 'http://localhost:3001';
+    
     passport.use(new KakaoStrategy({
       clientID: process.env.KAKAO_CLIENT_ID,
       clientSecret: process.env.KAKAO_CLIENT_SECRET,
-      callbackURL: '/api/auth/kakao/callback',
+      callbackURL: `${baseURL}/api/auth/kakao/callback`,
     }, async (accessToken, refreshToken, profile, done) => {
       try {
         const email = profile._json?.kakao_account?.email || null;

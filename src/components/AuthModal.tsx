@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { getBackendURL } from '../lib/backendUrl';
 import '../styles/auth-modal.css';
 
 interface AuthModalProps {
@@ -20,11 +21,11 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   if (!isOpen) return null;
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:3001/api/auth/google';
+    window.location.href = `${getBackendURL()}/api/auth/google`;
   };
 
   const handleKakaoLogin = () => {
-    window.location.href = 'http://localhost:3001/api/auth/kakao';
+    window.location.href = `${getBackendURL()}/api/auth/kakao`;
   };
 
   const handleEmailAuth = async (e: React.FormEvent) => {
@@ -38,7 +39,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         ? { email, password }
         : { email, password, name };
 
-      const response = await fetch(`http://localhost:3001${endpoint}`, {
+      const response = await fetch(`${getBackendURL()}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

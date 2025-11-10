@@ -8,8 +8,17 @@ import authRoutes from './routes/auth.js';
 const app = express();
 const PORT = 3001;
 
+const allowedOrigins = [
+  'http://localhost:5000',
+  'http://127.0.0.1:5000'
+];
+
+if (process.env.REPLIT_DEV_DOMAIN) {
+  allowedOrigins.push(`https://${process.env.REPLIT_DEV_DOMAIN}`);
+}
+
 app.use(cors({
-  origin: ['http://localhost:5000', 'http://127.0.0.1:5000'],
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(express.json());
