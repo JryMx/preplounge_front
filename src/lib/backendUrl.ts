@@ -6,7 +6,7 @@ export function getBackendURL(): string {
   const hostname = window.location.hostname;
   
   if (hostname.includes('replit.dev')) {
-    return `https://${hostname}:3001`;
+    return `https://${hostname}:4200`;
   }
   
   return 'http://localhost:3001';

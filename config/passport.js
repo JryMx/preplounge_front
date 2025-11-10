@@ -68,7 +68,7 @@ export function configurePassport() {
 
   if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     const baseURL = process.env.REPLIT_DEV_DOMAIN 
-      ? `https://${process.env.REPLIT_DEV_DOMAIN}:3001` 
+      ? `https://${process.env.REPLIT_DEV_DOMAIN}:4200` 
       : 'http://localhost:3001';
     
     passport.use(new GoogleStrategy({
@@ -116,7 +116,7 @@ export function configurePassport() {
 
   if (process.env.KAKAO_CLIENT_ID && process.env.KAKAO_CLIENT_SECRET) {
     const baseURL = process.env.REPLIT_DEV_DOMAIN 
-      ? `https://${process.env.REPLIT_DEV_DOMAIN}:3001` 
+      ? `https://${process.env.REPLIT_DEV_DOMAIN}:4200` 
       : 'http://localhost:3001';
     
     passport.use(new KakaoStrategy({
