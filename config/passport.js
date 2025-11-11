@@ -1,8 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as KakaoStrategy } from 'passport-kakao';
-import { Strategy as LocalStrategy } from 'passport-local';
-import bcrypt from 'bcrypt';
 import pg from 'pg';
 
 const pool = new pg.Pool({
@@ -68,35 +66,6 @@ export async function initializeDatabase() {
 export { pool };
 
 export function configurePassport() {
-  passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-  }, async (email, password, done) => {
-    try {
-      const result = await pool.query('SELECT * FROM users WHERE email = $1 AND provider = $2', [email, 'local']);
-      const user = result.rows[0];
-      
-      if (!user) {
-        return done(null, false, { message: 'Invalid email or password' });
-      }
-      
-      const isValid = await bcrypt.compare(password, user.password_hash);
-      if (!isValid) {
-        return done(null, false, { message: 'Invalid email or password' });
-      }
-      
-      return done(null, {
-        id: user.id,
-        email: user.email,
-        displayName: user.name,
-        provider: user.provider,
-        photo: user.photo
-      });
-    } catch (error) {
-      return done(error);
-    }
-  }));
-
   if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     const baseURL = process.env.REPLIT_DEV_DOMAIN 
       ? `https://${process.env.REPLIT_DEV_DOMAIN}:4200` 
