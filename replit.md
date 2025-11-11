@@ -113,6 +113,24 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Clicking markers opens popups with university details and navigation links.
   - Multiple zoom methods: scroll wheel, trackpad gestures, touch zoom, double-click, keyboard (+/-), box zoom (Shift+drag).
   - Full bilingual support with react-leaflet@4.2.1.
+- **Dashboard**:
+  - Personalized dashboard for authenticated users with student profiles.
+  - Displays user profile statistics: Profile Score, GPA, SAT/ACT scores, extracurricular activities count.
+  - **Favorite Schools Section**: Shows all universities the user has favorited with heart icon.
+    - Displays favorited universities with red heart icon and light red background.
+    - Clicking any favorited university navigates to its detailed profile page.
+    - Shows university name, location, and acceptance rate.
+    - Count badge shows total number of favorited schools.
+    - Section only appears when user has favorited universities.
+  - **AI-Recommended Schools**: Displays personalized university recommendations from AI analysis.
+    - Safety Schools (top 3): High admission probability with green styling.
+    - Target Schools (top 3): Good fit universities with yellow styling.
+    - Reach Schools (top 3): Challenge schools with blue styling and areas to strengthen.
+    - Prestige Schools (top 3): Elite universities with gold styling (when applicable).
+    - "See All" button for each category when more than 3 schools available.
+  - Profile summary and areas to strengthen with actionable recommendations.
+  - Quick action buttons for browsing universities, comparing schools, and updating profile.
+  - Full bilingual support with Korean and English translations.
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, UniversityMapPage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 
 ### System Design Choices
