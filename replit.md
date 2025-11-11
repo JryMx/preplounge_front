@@ -116,6 +116,11 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 - **Dashboard**:
   - Personalized dashboard for authenticated users with student profiles.
   - Displays user profile statistics: Profile Score, GPA, SAT/ACT scores, extracurricular activities count.
+  - **Profile Analysis History**: Comprehensive sidebar displaying user's most recent profile inputs.
+    - Academic Profile: GPA, SAT breakdown (total, EBRW, Math), ACT, TOEFL, AP courses count.
+    - Extracurricular Profile: Intended major, activities count, recommendation letters count, leadership positions, awards count, citizenship status.
+    - Conditional rendering shows only fields with values for cleaner display.
+    - Full bilingual support with organized sections.
   - **Favorite Schools Section**: Shows all universities the user has favorited with heart icon.
     - Displays favorited universities with red heart icon and light red background.
     - Clicking any favorited university navigates to its detailed profile page.
