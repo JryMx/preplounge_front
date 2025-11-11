@@ -17,11 +17,12 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 
 ### Technical Implementations
 - **Frontend Stack**: React 18, TypeScript, Vite, Tailwind CSS, and Lucide React.
-- **State Management**: React Context API (`LanguageProvider`, `AuthProvider`, `StudentProfileProvider`) for global state.
+- **State Management**: React Context API (`LanguageProvider`, `AuthProvider`, `StudentProfileProvider`, `FavoritesProvider`) for global state.
 - **Routing**: React Router for client-side navigation.
 - **Internationalization**: Custom `LanguageContext` for managing translations.
 - **Data Handling**: Integration of real university data from CSV sources, stored in `universities.json`.
 - **Infinite Scroll**: Used for seamless browsing on university and consulting pages.
+- **Favorites System**: Client-side favorites management using `FavoritesContext` with localStorage persistence for device-specific university bookmarking.
 
 ### Feature Specifications
 - **Authentication System**:
@@ -76,7 +77,8 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - State names automatically converted to standard abbreviations (MA, CA, NY, etc.).
   - Displays quick stats, application requirements (data-driven from IPEDS 2023 with status badges), and academic information (graduation rates, degree types, 26,145 program entries across 26 categories).
   - **Available Majors**: All 38 program categories have official Korean translations from IPEDS translation dictionary (e.g., "Engineering" → "공학", "Computer and Information Sciences" → "컴퓨터과학").
-  - Includes action buttons: "Check Admission Probability" and "Add to Comparison List".
+  - Includes action buttons: "Check Admission Probability" and "Add to Favorites"/"Remove from Favorites".
+  - **Favorites Feature**: Toggle button with heart icon shows filled red heart when favorited, outlined heart when not. Favorites persist in localStorage for device-specific bookmarking.
   - Full bilingual support with Korean translations for all data fields.
 - **University Browsing & Detail**:
   - Displays 1,234 curated U.S. universities with infinite scroll.

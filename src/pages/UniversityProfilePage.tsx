@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
-import { Users, DollarSign, BookOpen, ArrowLeft, Plus, MapPin } from 'lucide-react';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import { Users, DollarSign, BookOpen, ArrowLeft, Heart, MapPin } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useFavorites } from '../context/FavoritesContext';
 import universitiesData from '../data/universities.json';
 import { getCityTranslation } from '../data/cityTranslations';
 import './university-profile-page.css';
@@ -369,8 +370,8 @@ const translateProgramName = (program: string, language: 'ko' | 'en'): string =>
 const UniversityProfilePage: React.FC = () => {
   const { id } = useParams();
   const { t, language } = useLanguage();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const location = useLocation();
-  const navigate = useNavigate();
   const university = getUniversityData(id || '1');
   
   // Scroll to top when component mounts
@@ -381,12 +382,14 @@ const UniversityProfilePage: React.FC = () => {
   // Determine where to navigate back based on where user came from
   const backLink = (location.state as { from?: string })?.from || '/universities';
 
-  // Handle adding university to comparison
-  const handleCompare = () => {
+  // Handle favorite toggle
+  const handleFavoriteToggle = () => {
     if (university) {
-      navigate(`/compare?add=${university.id}`);
+      toggleFavorite(university.id);
     }
   };
+
+  const isUniversityFavorite = university ? isFavorite(university.id) : false;
 
   if (!university) {
     return (
@@ -495,12 +498,19 @@ const UniversityProfilePage: React.FC = () => {
 
               <button 
                 className="university-profile-compare-btn" 
-                data-testid="button-compare"
-                onClick={handleCompare}
-                style={{ marginTop: '16px' }}
+                data-testid="button-favorite"
+                onClick={handleFavoriteToggle}
+                style={{ 
+                  marginTop: '16px',
+                  backgroundColor: isUniversityFavorite ? '#DC2626' : '#082F49',
+                  transition: 'all 0.2s'
+                }}
               >
-                <Plus className="h-4 w-4" />
-                {t('university.compare')}
+                <Heart 
+                  className="h-4 w-4" 
+                  fill={isUniversityFavorite ? 'currentColor' : 'none'}
+                />
+                {isUniversityFavorite ? t('university.removeFromFavorites') : t('university.addToFavorites')}
               </button>
             </div>
           </div>
@@ -747,14 +757,20 @@ const UniversityProfilePage: React.FC = () => {
               </Link>
               <button 
                 className="action-button secondary"
-                data-testid="button-add-comparison"
-                onClick={() => {
-                  // TODO: Implement comparison list functionality
-                  console.log('Add to comparison:', university.name);
+                data-testid="button-add-favorite"
+                onClick={handleFavoriteToggle}
+                style={{ 
+                  backgroundColor: isUniversityFavorite ? '#DC2626' : undefined,
+                  borderColor: isUniversityFavorite ? '#DC2626' : undefined,
+                  color: isUniversityFavorite ? '#FFFFFF' : undefined,
+                  transition: 'all 0.2s'
                 }}
               >
-                <Plus className="h-5 w-5" />
-                {language === 'ko' ? '비교 목록에 추가' : 'Add to Comparison List'}
+                <Heart 
+                  className="h-5 w-5" 
+                  fill={isUniversityFavorite ? 'currentColor' : 'none'}
+                />
+                {isUniversityFavorite ? t('university.removeFromFavorites') : t('university.addToFavorites')}
               </button>
             </div>
           </div>
