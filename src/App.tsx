@@ -16,13 +16,15 @@ import UniversityMapPage from './pages/UniversityMapPage';
 import { AuthProvider } from './context/AuthContext';
 import { StudentProfileProvider } from './context/StudentProfileContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { FavoritesProvider } from './context/FavoritesContext';
 
 function App() {
   return (
     <LanguageProvider>
       <AuthProvider>
-        <StudentProfileProvider>
-          <Router>
+        <FavoritesProvider>
+          <StudentProfileProvider>
+            <Router>
             <ScrollToTop />
             <div className="min-h-screen bg-gray-50">
               <Navbar />
@@ -41,8 +43,9 @@ function App() {
                 <Route path="/housing" element={<HousingPage />} />
               </Routes>
             </div>
-          </Router>
-        </StudentProfileProvider>
+            </Router>
+          </StudentProfileProvider>
+        </FavoritesProvider>
       </AuthProvider>
     </LanguageProvider>
   );
