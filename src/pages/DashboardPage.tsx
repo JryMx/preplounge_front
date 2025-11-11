@@ -456,22 +456,97 @@ const DashboardPage: React.FC = () => {
 
           <div className="dashboard-sidebar">
             <div className="dashboard-sidebar-card">
-              <h2 className="dashboard-sidebar-title">{t('dashboard.profile.title')}</h2>
+              <h2 className="dashboard-sidebar-title">{t('dashboard.profileHistory.title')}</h2>
+              <p className="dashboard-profile-subtitle">{t('dashboard.profileHistory.subtitle')}</p>
 
-              <div>
-                <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.profile.major')}:</span>
-                  <span className="dashboard-profile-value">{profile.intendedMajor || t('dashboard.profile.undecided')}</span>
+              <div style={{ marginTop: '16px' }}>
+                {/* Academic Profile */}
+                <div className="dashboard-profile-section">
+                  <h3 className="dashboard-profile-section-title">{t('dashboard.profileHistory.academic')}</h3>
+                  
+                  <div className="dashboard-profile-item">
+                    <span className="dashboard-profile-label">{t('dashboard.stat.gpa')}:</span>
+                    <span className="dashboard-profile-value">{profile.gpa.toFixed(2)}</span>
+                  </div>
+
+                  {getSatScore() > 0 && (
+                    <>
+                      <div className="dashboard-profile-item">
+                        <span className="dashboard-profile-label">{t('dashboard.profile.sat')} {t('dashboard.profileHistory.total')}:</span>
+                        <span className="dashboard-profile-value">{getSatScore()}</span>
+                      </div>
+                      <div className="dashboard-profile-item-sub">
+                        <span className="dashboard-profile-label-sub">EBRW:</span>
+                        <span className="dashboard-profile-value-sub">{profile.satEBRW}</span>
+                      </div>
+                      <div className="dashboard-profile-item-sub">
+                        <span className="dashboard-profile-label-sub">Math:</span>
+                        <span className="dashboard-profile-value-sub">{profile.satMath}</span>
+                      </div>
+                    </>
+                  )}
+
+                  {profile.actScore > 0 && (
+                    <div className="dashboard-profile-item">
+                      <span className="dashboard-profile-label">{t('dashboard.profile.act')}:</span>
+                      <span className="dashboard-profile-value">{profile.actScore}</span>
+                    </div>
+                  )}
+
+                  {profile.toeflScore > 0 && (
+                    <div className="dashboard-profile-item">
+                      <span className="dashboard-profile-label">{t('dashboard.profile.toefl')}:</span>
+                      <span className="dashboard-profile-value">{profile.toeflScore}</span>
+                    </div>
+                  )}
+
+                  {profile.apCourses > 0 && (
+                    <div className="dashboard-profile-item">
+                      <span className="dashboard-profile-label">{t('dashboard.profile.ap')}:</span>
+                      <span className="dashboard-profile-value">{profile.apCourses} {t('dashboard.profileHistory.courses')}</span>
+                    </div>
+                  )}
                 </div>
 
-                <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.profile.toefl')}:</span>
-                  <span className="dashboard-profile-value">{profile.toeflScore || t('dashboard.profile.nottaken')}</span>
-                </div>
+                {/* Non-Academic Profile */}
+                <div className="dashboard-profile-section">
+                  <h3 className="dashboard-profile-section-title">{t('dashboard.profileHistory.extracurricular')}</h3>
+                  
+                  <div className="dashboard-profile-item">
+                    <span className="dashboard-profile-label">{t('dashboard.profile.major')}:</span>
+                    <span className="dashboard-profile-value">{profile.intendedMajor || t('dashboard.profile.undecided')}</span>
+                  </div>
 
-                <div className="dashboard-profile-item">
-                  <span className="dashboard-profile-label">{t('dashboard.profile.leadership')}:</span>
-                  <span className="dashboard-profile-value">{profile.leadership.length}</span>
+                  <div className="dashboard-profile-item">
+                    <span className="dashboard-profile-label">{t('dashboard.profile.activities')}:</span>
+                    <span className="dashboard-profile-value">{profile.extracurriculars.length} {t('dashboard.profileHistory.activities')}</span>
+                  </div>
+
+                  <div className="dashboard-profile-item">
+                    <span className="dashboard-profile-label">{t('dashboard.profileHistory.recommendations')}:</span>
+                    <span className="dashboard-profile-value">{profile.recommendationLetters.length} {t('dashboard.profileHistory.letters')}</span>
+                  </div>
+
+                  {profile.leadership.length > 0 && (
+                    <div className="dashboard-profile-item">
+                      <span className="dashboard-profile-label">{t('dashboard.profile.leadership')}:</span>
+                      <span className="dashboard-profile-value">{profile.leadership.length} {t('dashboard.profileHistory.positions')}</span>
+                    </div>
+                  )}
+
+                  {profile.awards.length > 0 && (
+                    <div className="dashboard-profile-item">
+                      <span className="dashboard-profile-label">{t('dashboard.profileHistory.awards')}:</span>
+                      <span className="dashboard-profile-value">{profile.awards.length} {t('dashboard.profileHistory.awardsCount')}</span>
+                    </div>
+                  )}
+
+                  <div className="dashboard-profile-item">
+                    <span className="dashboard-profile-label">{t('dashboard.profileHistory.citizenship')}:</span>
+                    <span className="dashboard-profile-value">
+                      {profile.citizenship === 'domestic' ? t('dashboard.profileHistory.domestic') : t('dashboard.profileHistory.international')}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
