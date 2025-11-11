@@ -123,7 +123,7 @@ const DashboardPage: React.FC = () => {
     if (category === 'safety') return { bg: '#F0FDF4', border: '#BBF7D0', text: '#10B981' };
     if (category === 'target') return { bg: '#FFFBEB', border: '#FACC15', text: '#F59E0B' };
     if (category === 'reach') return { bg: '#EFF6FF', border: '#93C5FD', text: '#3B82F6' };
-    if (category === 'prestige') return { bg: '#FFFBEB', border: '#FACC15', text: '#D97706' };
+    if (category === 'prestige') return { bg: '#FAF5FF', border: '#E9D5FF', text: '#A855F7' };
     return { bg: '#F0FDF4', border: '#BBF7D0', text: '#10B981' };
   };
 
@@ -406,11 +406,11 @@ const DashboardPage: React.FC = () => {
             {prestigeSchools.length > 0 && (
               <div className="dashboard-category">
                 <div className="dashboard-category-header">
-                  <div className="dashboard-category-icon" style={{ background: '#FEF3C7' }}>
-                    <Award className="h-5 w-5" style={{ color: '#FACC15' }} />
+                  <div className="dashboard-category-icon" style={{ background: '#FAF5FF' }}>
+                    <Award className="h-5 w-5" style={{ color: '#A855F7' }} />
                   </div>
                   <h3 className="dashboard-category-title">{t('dashboard.category.prestige')}</h3>
-                  <span className="dashboard-category-badge" style={{ background: '#FEF3C7', color: '#D97706' }}>Elite</span>
+                  <span className="dashboard-category-badge" style={{ background: '#F3E8FF', color: '#9333EA' }}>Elite</span>
                 </div>
                 <div className="dashboard-schools-list">
                   {prestigeSchools.slice(0, 3).map(rec => {
@@ -421,7 +421,7 @@ const DashboardPage: React.FC = () => {
                       <div 
                         key={rec.universityId} 
                         className="dashboard-school-card" 
-                        style={{ background: '#FFFBEB', borderColor: '#FACC15', cursor: 'pointer' }}
+                        style={{ background: '#FAF5FF', borderColor: '#E9D5FF', cursor: 'pointer' }}
                         onClick={() => handleSchoolClick(rec.universityId)}
                       >
                         <div className="dashboard-school-content">
@@ -434,7 +434,7 @@ const DashboardPage: React.FC = () => {
                             </div>
                           </div>
                           <div className="dashboard-school-right">
-                            <p className="dashboard-school-chance" style={{ color: '#D97706' }}>{rec.admissionChance}%</p>
+                            <p className="dashboard-school-chance" style={{ color: '#A855F7' }}>{rec.admissionChance}%</p>
                             <p className="dashboard-school-chance-label">{t('dashboard.chance')}</p>
                           </div>
                         </div>
