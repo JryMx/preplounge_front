@@ -26,8 +26,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         </button>
 
         <div className="auth-modal-header">
-          <h2>Welcome to PrepLounge</h2>
-          <p>Sign in to save your profile and track your college journey</p>
+          <h2>PrepLounge에 오신 것을 환영합니다</h2>
+          <p>프로필을 저장하고 대학 입시 여정을 관리하세요</p>
         </div>
 
         <div className="auth-modal-buttons">
@@ -50,7 +50,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            Continue with Google
+            Google로 계속하기
           </button>
 
           <button className="auth-button kakao-button" onClick={handleKakaoLogin}>
@@ -60,13 +60,13 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 d="M12 3C6.477 3 2 6.477 2 10.75c0 2.76 1.833 5.18 4.578 6.557l-1.143 4.196c-.073.269.215.49.455.35l4.917-2.865C11.187 19.025 11.59 19 12 19c5.523 0 10-3.477 10-7.75S17.523 3 12 3z"
               />
             </svg>
-            Continue with Kakao
+            Kakao로 계속하기
           </button>
         </div>
 
         <div className="auth-modal-footer">
           <p>
-            By continuing, you agree to PrepLounge's Terms of Service and Privacy Policy
+            계속 진행하시면 PrepLounge의 서비스 약관 및 개인정보 보호정책에 동의하는 것으로 간주됩니다
           </p>
         </div>
       </div>
