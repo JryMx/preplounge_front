@@ -26,15 +26,14 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
 
 ### Feature Specifications
 - **Authentication System**:
-  - Multiple authentication methods: Email/Password, Google OAuth, and Kakao OAuth.
+  - **OAuth-Only Authentication**: Google and Kakao OAuth exclusively - email/password authentication removed.
   - **Fully Implemented OAuth**: Google and Kakao OAuth fully functional with dynamic callback URLs supporting both Replit and localhost environments.
-  - PostgreSQL database stores user accounts with support for multiple providers.
-  - Secure password hashing with bcrypt for email/password accounts.
+  - PostgreSQL database stores user accounts with support for multiple OAuth providers.
   - Session-based authentication with express-session and passport.js.
-  - AuthModal component provides tabbed interface for Sign In and Sign Up.
+  - AuthModal component provides clean OAuth button interface for Google and Kakao sign-in.
   - Database schema supports nullable emails for Kakao users without email permissions.
   - Partial unique indexes allow multiple accounts without emails while preventing duplicate emails.
-  - Users can sign in with any method; separate accounts are created for different providers even with the same email.
+  - Separate accounts are created for different providers even with the same email.
   - Navbar displays user menu with logout functionality when authenticated.
   - CORS configured for both localhost and 127.0.0.1 origins.
   - **Dynamic Backend URLs**: Frontend automatically detects Replit environment and uses appropriate backend URLs.
