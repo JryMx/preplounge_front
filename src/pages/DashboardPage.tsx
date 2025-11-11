@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Target, TrendingUp, AlertCircle, BookOpen, Users, Award, ArrowRight, BarChart3, X } from 'lucide-react';
+import { Target, TrendingUp, AlertCircle, BookOpen, Users, Award, ArrowRight, BarChart3, X, Heart } from 'lucide-react';
 import { useStudentProfile } from '../context/StudentProfileContext';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import { useFavorites } from '../context/FavoritesContext';
+import universitiesData from '../data/universities.json';
 import './dashboard-page.css';
 
 const DashboardPage: React.FC = () => {
   const { profile, getRecommendations } = useStudentProfile();
   const { user } = useAuth();
   const { t, language } = useLanguage();
+  const { favorites } = useFavorites();
   const navigate = useNavigate();
   
   const [showModal, setShowModal] = useState(false);
   const [modalCategory, setModalCategory] = useState<'safety' | 'target' | 'reach' | 'prestige' | null>(null);
+
+  // Get favorited universities
+  const favoriteUniversities = universitiesData.filter((uni: any) => 
+    favorites.includes(uni.id)
+  );
 
   // Calculate total SAT score
   const getSatScore = () => {
@@ -124,7 +132,7 @@ const DashboardPage: React.FC = () => {
       <div className="dashboard-container">
         <div className="dashboard-header">
           <h1 className="dashboard-welcome">
-            {t('dashboard.welcome')}, {user.name}!
+            {t('dashboard.welcome')}, {user.displayName}!
           </h1>
           <p className="dashboard-subtitle">
             {t('dashboard.subtitle')}
@@ -189,6 +197,56 @@ const DashboardPage: React.FC = () => {
 
         <div className="dashboard-main-content">
           <div className="dashboard-recommendations">
+            {/* Favorite Schools */}
+            {favoriteUniversities.length > 0 && (
+              <>
+                <h2 className="dashboard-section-title">{t('dashboard.favorites.title')}</h2>
+                <div className="dashboard-category">
+                  <div className="dashboard-category-header">
+                    <div className="dashboard-category-icon" style={{ background: '#FEE2E2' }}>
+                      <Heart className="h-5 w-5" style={{ color: '#EF4444' }} />
+                    </div>
+                    <h3 className="dashboard-category-title">{t('dashboard.favorites.saved')}</h3>
+                    <span className="dashboard-category-badge" style={{ background: '#FEE2E2', color: '#EF4444' }}>
+                      {favoriteUniversities.length}
+                    </span>
+                  </div>
+                  <div className="dashboard-schools-list">
+                    {favoriteUniversities.map((uni: any) => {
+                      const displayName = language === 'ko' ? uni.name : uni.englishName;
+                      const displayLocation = language === 'ko' ? uni.location : uni.englishLocation;
+                      
+                      return (
+                        <div 
+                          key={uni.id} 
+                          className="dashboard-school-card" 
+                          style={{ background: '#FEF2F2', borderColor: '#FECACA', cursor: 'pointer' }}
+                          onClick={() => navigate(`/universities/${uni.id}`)}
+                        >
+                          <div className="dashboard-school-content">
+                            <div className="dashboard-school-left">
+                              <div className="dashboard-school-info">
+                                <h4 className="dashboard-school-name">{displayName}</h4>
+                                {displayLocation && (
+                                  <p className="dashboard-school-meta">{displayLocation}</p>
+                                )}
+                              </div>
+                            </div>
+                            <div className="dashboard-school-right">
+                              <p className="dashboard-school-chance" style={{ color: '#EF4444' }}>
+                                {uni.acceptanceRate}%
+                              </p>
+                              <p className="dashboard-school-chance-label">{t('dashboard.school.acceptance')}</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </>
+            )}
+
             <h2 className="dashboard-section-title">{t('dashboard.recommendations.title')}</h2>
 
             {/* Safety Schools */}

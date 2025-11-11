@@ -369,6 +369,8 @@ const translations = {
     'dashboard.actions.update': '프로필 업데이트',
     'dashboard.school.acceptance': '합격률',
     'dashboard.notavailable': 'N/A',
+    'dashboard.favorites.title': '관심 학교',
+    'dashboard.favorites.saved': '저장된 학교',
   },
   en: {
     // Navbar
@@ -729,6 +731,8 @@ const translations = {
     'dashboard.actions.update': 'Update Profile',
     'dashboard.school.acceptance': 'acceptance',
     'dashboard.notavailable': 'N/A',
+    'dashboard.favorites.title': 'Favorite Schools',
+    'dashboard.favorites.saved': 'Saved Schools',
   },
 };
 
