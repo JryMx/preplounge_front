@@ -58,8 +58,7 @@ PrepLounge is an AI-powered study abroad platform designed to assist students in
   - Generates a brief, honest 2-3 sentence assessment of the student's profile, integrated into the Profile Score section.
   - Analysis is realistic and personalized, acknowledging strengths and areas for improvement.
   - Features loading states, error handling, and bilingual UI.
-  - **Auto-Redirect to Dashboard**: After successful profile analysis completion (both API recommendations and AI analysis), users are automatically redirected to the Dashboard after 1.5 seconds, allowing them to see results before navigation.
-  - Redirect is gated by dual success flags (apiCallSuccess && aiAnalysisSuccess) to ensure users remain on the page when errors occur, preserving error message visibility.
+  - Users remain on profile page after analysis to review results and manually navigate to Dashboard when ready.
 - **University Profile Pages**:
   - Detailed profiles for 1,234 unique U.S. universities.
   - Displays location and type with map icon directly under university name:

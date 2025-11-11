@@ -461,10 +461,6 @@ const StudentProfilePage: React.FC = () => {
     updateProfile(profileData);
     setShowResults(true);
     
-    // Track whether both API and AI analysis completed successfully
-    let apiCallSuccess = false;
-    let aiAnalysisSuccess = false;
-    
     // Scroll to profile score section
     setTimeout(() => {
       profileScoreRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -619,7 +615,6 @@ const StudentProfilePage: React.FC = () => {
         reach: 3,
         prestige: 3
       });
-      apiCallSuccess = true; // Mark API call as successful
     } catch (error) {
       console.error('Error fetching school recommendations:', error);
       setApiError(
@@ -655,7 +650,6 @@ const StudentProfilePage: React.FC = () => {
 
       const data = await response.json();
       setAiAnalysis(data.analysis);
-      aiAnalysisSuccess = true; // Mark AI analysis as successful
     } catch (error) {
       console.error('Error generating analysis:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -666,13 +660,6 @@ const StudentProfilePage: React.FC = () => {
       );
     } finally {
       setIsAnalyzing(false);
-    }
-    
-    // Redirect to dashboard only if BOTH API and AI analysis were successful
-    if (apiCallSuccess && aiAnalysisSuccess) {
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 1500);
     }
   };
 
