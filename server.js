@@ -4,6 +4,7 @@ import session from 'express-session';
 import passportLib from './config/passport.js';
 import { configurePassport, initializeDatabase } from './config/passport.js';
 import authRoutes from './routes/auth.js';
+import profileRoutes from './routes/profile.js';
 
 const app = express();
 const PORT = 3001;
@@ -47,6 +48,7 @@ app.use(passportLib.initialize());
 app.use(passportLib.session());
 
 app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
 
 // Profile analysis endpoint
 app.post('/api/analyze-profile', async (req, res) => {

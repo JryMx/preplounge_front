@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import universitiesData from '../data/universities.json';
+import { getBackendURL } from '../lib/backendUrl';
 
 export interface StudentProfile {
   // Academic Inputs
@@ -73,10 +74,11 @@ export interface SchoolRecommendation {
 
 interface StudentProfileContextType {
   profile: StudentProfile | null;
-  updateProfile: (profile: Partial<StudentProfile>) => void;
+  updateProfile: (profile: Partial<StudentProfile>) => Promise<void>;
   calculateProfileScore: (profile: Partial<StudentProfile>) => number;
   getRecommendations: () => SchoolRecommendation[];
   searchSchools: (query: string, currentLanguage?: string) => SchoolSearchResult[];
+  loading: boolean;
 }
 
 export interface SchoolSearchResult {
@@ -114,6 +116,31 @@ const schoolsDatabase = universitiesData.map((university: any) => {
 
 export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ children }) => {
   const [profile, setProfile] = useState<StudentProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Load profile from backend when component mounts
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const response = await fetch(`${getBackendURL()}/api/profile`, {
+          credentials: 'include',
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.profile) {
+            setProfile(data.profile);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading profile:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, []);
 
   const calculateProfileScore = (profileData: Partial<StudentProfile>): number => {
     let score = 0;
@@ -250,7 +277,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     return Math.round(Math.min(score, 100));
   };
 
-  const updateProfile = (newProfileData: Partial<StudentProfile>) => {
+  const updateProfile = async (newProfileData: Partial<StudentProfile>) => {
     const updatedProfile = profile ? { ...profile, ...newProfileData } : {
       gpa: 0,
       satEBRW: 0,
@@ -309,6 +336,20 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     }
     
     setProfile(updatedProfile);
+    
+    // Save to backend
+    try {
+      await fetch(`${getBackendURL()}/api/profile`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(updatedProfile),
+      });
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   };
 
   const generateRecommendations = (_profile: StudentProfile): SchoolRecommendation[] => {
@@ -401,6 +442,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     calculateProfileScore,
     getRecommendations,
     searchSchools,
+    loading,
   };
 
   return (

@@ -27,6 +27,35 @@ export async function initializeDatabase() {
       
       CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email_unique ON users(email) WHERE email IS NOT NULL;
       CREATE UNIQUE INDEX IF NOT EXISTS idx_users_provider_unique ON users(provider, provider_id);
+      
+      CREATE TABLE IF NOT EXISTS student_profiles (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        gpa DECIMAL(3,2),
+        sat_ebrw INTEGER,
+        sat_math INTEGER,
+        act_score INTEGER,
+        toefl_score INTEGER,
+        ap_courses INTEGER,
+        ib_score INTEGER,
+        intended_major TEXT,
+        personal_statement TEXT,
+        legacy_status BOOLEAN DEFAULT FALSE,
+        citizenship VARCHAR(20) DEFAULT 'domestic',
+        extracurriculars JSONB DEFAULT '[]',
+        recommendation_letters JSONB DEFAULT '[]',
+        application_components JSONB DEFAULT '{}',
+        leadership JSONB DEFAULT '[]',
+        volunteering JSONB DEFAULT '[]',
+        awards JSONB DEFAULT '[]',
+        profile_score INTEGER,
+        profile_rigor_score INTEGER,
+        recommendations JSONB DEFAULT '[]',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+      
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_student_profiles_user_id ON student_profiles(user_id);
     `);
     console.log('Database initialized successfully');
   } catch (error) {
@@ -35,6 +64,8 @@ export async function initializeDatabase() {
     client.release();
   }
 }
+
+export { pool };
 
 export function configurePassport() {
   passport.use(new LocalStrategy({
