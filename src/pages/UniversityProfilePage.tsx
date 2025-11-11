@@ -503,6 +503,7 @@ const UniversityProfilePage: React.FC = () => {
                 style={{ 
                   marginTop: '16px',
                   backgroundColor: isUniversityFavorite ? '#DC2626' : '#082F49',
+                  color: '#FFFFFF',
                   transition: 'all 0.2s'
                 }}
               >

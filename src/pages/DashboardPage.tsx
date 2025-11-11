@@ -85,7 +85,7 @@ const DashboardPage: React.FC = () => {
 
   // Handle school card click
   const handleSchoolClick = (universityId: string) => {
-    navigate(`/universities/${universityId}`, { state: { from: '/dashboard' } });
+    navigate(`/university/${universityId}`, { state: { from: '/dashboard' } });
   };
 
   // Open modal with specific category
@@ -221,7 +221,7 @@ const DashboardPage: React.FC = () => {
                           key={uni.id} 
                           className="dashboard-school-card" 
                           style={{ background: '#FEF2F2', borderColor: '#FECACA', cursor: 'pointer' }}
-                          onClick={() => navigate(`/universities/${uni.id}`)}
+                          onClick={() => navigate(`/university/${uni.id}`)}
                         >
                           <div className="dashboard-school-content">
                             <div className="dashboard-school-left">
