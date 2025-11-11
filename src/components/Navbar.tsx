@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, ChevronDown, Globe, LogOut, User } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, LogOut, User, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import AuthModal from './AuthModal';
@@ -90,6 +90,14 @@ const Navbar: React.FC = () => {
                 </button>
                 {isUserMenuOpen && (
                   <div className="navbar-user-dropdown">
+                    <Link 
+                      to="/dashboard" 
+                      className="navbar-user-dropdown-item"
+                      onClick={() => setIsUserMenuOpen(false)}
+                    >
+                      <LayoutDashboard size={16} />
+                      {t('nav.dashboard')}
+                    </Link>
                     <Link 
                       to="/student-profile" 
                       className="navbar-user-dropdown-item"
@@ -185,6 +193,14 @@ const Navbar: React.FC = () => {
                       )}
                       <span className="navbar-mobile-user-name">{user.displayName}</span>
                     </div>
+                    <Link
+                      to="/dashboard"
+                      className="navbar-mobile-auth-button"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <LayoutDashboard size={16} />
+                      {t('nav.dashboard')}
+                    </Link>
                     <button
                       onClick={() => {
                         logout();
