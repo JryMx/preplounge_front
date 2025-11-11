@@ -328,6 +328,13 @@ const translations = {
     'signup.error.password.mismatch': '비밀번호가 일치하지 않습니다',
     'signup.error.general': '오류가 발생했습니다. 다시 시도해 주세요.',
     
+    // Auth Modal
+    'auth.welcome': 'PrepLounge에 오신 것을 환영합니다',
+    'auth.description': '프로필을 저장하고 대학 입시 여정을 관리하세요',
+    'auth.google': 'Google로 계속하기',
+    'auth.kakao': 'Kakao로 계속하기',
+    'auth.terms': '계속 진행하시면 PrepLounge의 서비스 약관 및 개인정보 보호정책에 동의하는 것으로 간주됩니다',
+    
     // Dashboard Page
     'dashboard.welcome': '다시 오신 것을 환영합니다',
     'dashboard.subtitle': '맞춤형 대학 입학 분석 및 추천 결과입니다.',
@@ -704,6 +711,13 @@ const translations = {
     'signup.error.password.short': 'Password must be at least 6 characters',
     'signup.error.password.mismatch': 'Passwords do not match',
     'signup.error.general': 'An error occurred. Please try again.',
+    
+    // Auth Modal
+    'auth.welcome': 'Welcome to PrepLounge',
+    'auth.description': 'Sign in to save your profile and track your college journey',
+    'auth.google': 'Continue with Google',
+    'auth.kakao': 'Continue with Kakao',
+    'auth.terms': "By continuing, you agree to PrepLounge's Terms of Service and Privacy Policy",
     
     // Dashboard Page
     'dashboard.welcome': 'Welcome back',
