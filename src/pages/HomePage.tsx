@@ -121,7 +121,17 @@ const HomePage: React.FC = () => {
   const [satEBRW, setSatEBRW] = useState(profile?.satEBRW ? profile.satEBRW.toString() : '');
   const [satMath, setSatMath] = useState(profile?.satMath ? profile.satMath.toString() : '');
   const [actScore, setActScore] = useState(profile?.actScore ? profile.actScore.toString() : '');
-  const [results, setResults] = useState<APIResponse | null>(null);
+  
+  // Initialize results from localStorage if available
+  const [results, setResults] = useState<APIResponse | null>(() => {
+    try {
+      const savedResults = localStorage.getItem('homepage_calculator_results');
+      return savedResults ? JSON.parse(savedResults) : null;
+    } catch {
+      return null;
+    }
+  });
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
@@ -362,6 +372,13 @@ const HomePage: React.FC = () => {
       
       const data: APIResponse = await response.json();
       setResults(data);
+      
+      // Save results to localStorage for persistence
+      try {
+        localStorage.setItem('homepage_calculator_results', JSON.stringify(data));
+      } catch (error) {
+        console.error('Failed to save results to localStorage:', error);
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       console.error('API error:', errorMessage, err);
@@ -464,6 +481,30 @@ const HomePage: React.FC = () => {
       }
     }
   }, [profile]);
+
+  // Clear results when input values change (user is editing)
+  useEffect(() => {
+    const savedResults = localStorage.getItem('homepage_calculator_results');
+    if (savedResults) {
+      try {
+        const parsed = JSON.parse(savedResults);
+        // Check if the saved results match current input values
+        const gpaMatch = parsed.student_profile?.gpa === parseFloat(gpa);
+        const testMatch = testType === 'SAT' 
+          ? (parsed.student_profile?.sat_score === (parseInt(satMath) + parseInt(satEBRW)))
+          : (parsed.student_profile?.act_score === parseInt(actScore));
+        
+        // If inputs don't match saved results, clear the results
+        if (!gpaMatch || !testMatch) {
+          setResults(null);
+          localStorage.removeItem('homepage_calculator_results');
+        }
+      } catch {
+        // Invalid saved data, clear it
+        localStorage.removeItem('homepage_calculator_results');
+      }
+    }
+  }, [gpa, satMath, satEBRW, actScore, testType]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
