@@ -21,6 +21,13 @@ if (process.env.REPLIT_DEV_DOMAIN) {
   allowedOrigins.push(`https://${process.env.REPLIT_DEV_DOMAIN}`);
 }
 
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
+const prodDomains = ['https://dev.preplounge.ai', 'https://preplounge.ai'];
+allowedOrigins.push(...prodDomains);
+
 app.use(cors({
   origin: allowedOrigins,
   credentials: true
@@ -38,9 +45,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
   }
 }));
 
@@ -219,13 +227,29 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend server is running' });
 });
 
-app.use('/', createProxyMiddleware({
-  target: 'http://localhost:5173',
-  changeOrigin: true,
-  ws: true,
-  logLevel: 'silent'
-}));
+if (process.env.NODE_ENV === 'production') {
+  import('path').then(({ default: path }) => {
+    import('url').then(({ fileURLToPath }) => {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = path.dirname(__filename);
+      
+      app.use(express.static(path.join(__dirname, 'dist')));
+      
+      app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+      });
+    });
+  });
+} else {
+  app.use('/', createProxyMiddleware({
+    target: 'http://localhost:5173',
+    changeOrigin: true,
+    ws: true,
+    logLevel: 'silent'
+  }));
+}
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend server running on http://0.0.0.0:${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
