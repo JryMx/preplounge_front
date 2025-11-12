@@ -109,13 +109,16 @@ const StudentProfilePage: React.FC = () => {
     }
   );
 
+  // Get prefilled data from navigation state (from HomePage calculator)
+  const prefilledData = location.state?.prefilledData;
+  
   const [academicData, setAcademicData] = useState({
-    gpa: profile?.gpa?.toString() || '',
+    gpa: prefilledData?.gpa || profile?.gpa?.toString() || '',
     highSchoolType: '',
-    standardizedTest: profile?.satEBRW && profile?.satMath ? 'SAT' : profile?.actScore ? 'ACT' : '',
-    satEBRW: profile?.satEBRW?.toString() || '',
-    satMath: profile?.satMath?.toString() || '',
-    actScore: profile?.actScore?.toString() || '',
+    standardizedTest: prefilledData?.testType || (profile?.satEBRW && profile?.satMath ? 'SAT' : profile?.actScore ? 'ACT' : ''),
+    satEBRW: prefilledData?.satEBRW || profile?.satEBRW?.toString() || '',
+    satMath: prefilledData?.satMath || profile?.satMath?.toString() || '',
+    actScore: prefilledData?.actScore || profile?.actScore?.toString() || '',
     englishProficiencyTest: profile?.toeflScore ? 'TOEFL iBT' : '',
     englishTestScore: profile?.toeflScore?.toString() || '',
     intendedMajor: profile?.intendedMajor || '',

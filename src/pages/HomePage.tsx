@@ -1256,6 +1256,15 @@ const HomePage: React.FC = () => {
 
                 <Link
                   to="/student-profile"
+                  state={{
+                    prefilledData: {
+                      gpa,
+                      testType,
+                      satEBRW,
+                      satMath,
+                      actScore
+                    }
+                  }}
                   className="detailed-analysis-button"
                   data-testid="button-detailed-analysis-home"
                 >
