@@ -36,16 +36,37 @@ router.get('/google/callback', async (req, res) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'X-Client-ID': process.env.GOOGLE_CLIENT_ID || '',
+          'X-Client-Secret': process.env.GOOGLE_CLIENT_SECRET || ''
         },
         body: JSON.stringify({
           token,
-          type: 'preplounge'
+          type: 'preplounge',
+          client_id: process.env.GOOGLE_CLIENT_ID,
+          client_secret: process.env.GOOGLE_CLIENT_SECRET
         })
       });
       
       if (!verifyResponse.ok) {
-        console.error('Token verification failed:', verifyResponse.status, await verifyResponse.text());
+        const errorText = await verifyResponse.text();
+        console.error('=== OAuth Token Verification Failed ===');
+        console.error('Status:', verifyResponse.status);
+        console.error('Status Text:', verifyResponse.statusText);
+        console.error('Response Body:', errorText);
+        console.error('Request Headers:', JSON.stringify({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer [REDACTED]',
+          'X-Client-ID': process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
+          'X-Client-Secret': process.env.GOOGLE_CLIENT_SECRET ? '[SET]' : '[MISSING]'
+        }));
+        console.error('Request Body:', JSON.stringify({
+          token: '[REDACTED]',
+          type: 'preplounge',
+          client_id: process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
+          client_secret: '[SET]'
+        }));
+        console.error('=====================================');
         return res.redirect('/?error=invalid_token');
       }
       
@@ -120,16 +141,37 @@ router.get('/kakao/callback', async (req, res) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'X-Client-ID': process.env.KAKAO_CLIENT_ID || '',
+          'X-Client-Secret': process.env.KAKAO_CLIENT_SECRET || ''
         },
         body: JSON.stringify({
           token,
-          type: 'preplounge'
+          type: 'preplounge',
+          client_id: process.env.KAKAO_CLIENT_ID,
+          client_secret: process.env.KAKAO_CLIENT_SECRET
         })
       });
       
       if (!verifyResponse.ok) {
-        console.error('Token verification failed:', verifyResponse.status, await verifyResponse.text());
+        const errorText = await verifyResponse.text();
+        console.error('=== OAuth Token Verification Failed ===');
+        console.error('Status:', verifyResponse.status);
+        console.error('Status Text:', verifyResponse.statusText);
+        console.error('Response Body:', errorText);
+        console.error('Request Headers:', JSON.stringify({
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer [REDACTED]',
+          'X-Client-ID': process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
+          'X-Client-Secret': process.env.GOOGLE_CLIENT_SECRET ? '[SET]' : '[MISSING]'
+        }));
+        console.error('Request Body:', JSON.stringify({
+          token: '[REDACTED]',
+          type: 'preplounge',
+          client_id: process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
+          client_secret: '[SET]'
+        }));
+        console.error('=====================================');
         return res.redirect('/?error=invalid_token');
       }
       
