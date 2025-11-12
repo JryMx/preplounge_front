@@ -4,6 +4,7 @@ import { Search, Target, Users, BookOpen, Trophy, Globe, Loader2 } from 'lucide-
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { useLanguage } from '../context/LanguageContext';
+import { useStudentProfile } from '../context/StudentProfileContext';
 import universitiesData from '../data/universities.json';
 import { searchListings, CozyingListing, geocodeAddress } from '../lib/cozyingApi';
 import { getUniversityCoordinates } from '../data/universityCoordinates';
@@ -110,11 +111,16 @@ function ZoomHandler({ onZoomChange }: { onZoomChange: (zoom: number) => void })
 
 const HomePage: React.FC = () => {
   const { t, language } = useLanguage();
-  const [gpa, setGpa] = useState('');
-  const [testType, setTestType] = useState<'SAT' | 'ACT'>('SAT');
-  const [satEBRW, setSatEBRW] = useState('');
-  const [satMath, setSatMath] = useState('');
-  const [actScore, setActScore] = useState('');
+  const { profile } = useStudentProfile();
+  
+  // Initialize from profile context if available, otherwise use empty strings
+  const [gpa, setGpa] = useState(profile?.gpa ? profile.gpa.toString() : '');
+  const [testType, setTestType] = useState<'SAT' | 'ACT'>(
+    profile?.satEBRW && profile?.satMath ? 'SAT' : profile?.actScore ? 'ACT' : 'SAT'
+  );
+  const [satEBRW, setSatEBRW] = useState(profile?.satEBRW ? profile.satEBRW.toString() : '');
+  const [satMath, setSatMath] = useState(profile?.satMath ? profile.satMath.toString() : '');
+  const [actScore, setActScore] = useState(profile?.actScore ? profile.actScore.toString() : '');
   const [results, setResults] = useState<APIResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -443,6 +449,21 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     loadListingsForArea(37.7749, -122.4194); // San Francisco coordinates
   }, []);
+
+  // Update calculator values when profile changes (e.g., after navigating back from profile page)
+  useEffect(() => {
+    if (profile) {
+      if (profile.gpa) setGpa(profile.gpa.toString());
+      if (profile.satEBRW && profile.satMath) {
+        setTestType('SAT');
+        setSatEBRW(profile.satEBRW.toString());
+        setSatMath(profile.satMath.toString());
+      } else if (profile.actScore) {
+        setTestType('ACT');
+        setActScore(profile.actScore.toString());
+      }
+    }
+  }, [profile]);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
