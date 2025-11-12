@@ -19,6 +19,7 @@ export async function initializeDatabase() {
         provider VARCHAR(50) DEFAULT 'local',
         provider_id VARCHAR(255),
         photo VARCHAR(500),
+        type VARCHAR(50) DEFAULT 'preplounge',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
