@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useAuth } from './AuthContext';
 
 interface FavoritesContextType {
   favorites: string[];
@@ -11,16 +12,30 @@ interface FavoritesContextType {
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
 export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    const stored = localStorage.getItem('prepLoungeFavorites');
-    return stored ? JSON.parse(stored) : [];
-  });
+  const { user, loading } = useAuth();
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
-    localStorage.setItem('prepLoungeFavorites', JSON.stringify(favorites));
-  }, [favorites]);
+    if (loading) return;
+
+    if (user) {
+      const stored = localStorage.getItem('prepLoungeFavorites');
+      setFavorites(stored ? JSON.parse(stored) : []);
+    } else {
+      setFavorites([]);
+      localStorage.removeItem('prepLoungeFavorites');
+    }
+  }, [user, loading]);
+
+  useEffect(() => {
+    if (user && favorites.length >= 0) {
+      localStorage.setItem('prepLoungeFavorites', JSON.stringify(favorites));
+    }
+  }, [favorites, user]);
 
   const addFavorite = (universityId: string) => {
+    if (!user) return;
+    
     setFavorites(prev => {
       if (!prev.includes(universityId)) {
         return [...prev, universityId];
@@ -30,14 +45,19 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
   };
 
   const removeFavorite = (universityId: string) => {
+    if (!user) return;
+    
     setFavorites(prev => prev.filter(id => id !== universityId));
   };
 
   const isFavorite = (universityId: string) => {
+    if (!user) return false;
     return favorites.includes(universityId);
   };
 
   const toggleFavorite = (universityId: string) => {
+    if (!user) return;
+    
     if (isFavorite(universityId)) {
       removeFavorite(universityId);
     } else {
