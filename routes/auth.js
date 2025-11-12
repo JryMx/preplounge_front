@@ -1,6 +1,5 @@
 import express from 'express';
 import passport from '../config/passport.js';
-import { pool } from '../config/passport.js';
 
 const router = express.Router();
 
@@ -50,7 +49,7 @@ router.get('/google/callback', async (req, res) => {
       
       const verifiedData = await verifyResponse.json();
       
-      if (!verifiedData.user || !verifiedData.user.email) {
+      if (!verifiedData.user || !verifiedData.user.id) {
         console.error('Verification response missing user data');
         return res.redirect('/?error=invalid_verification_response');
       }
@@ -61,30 +60,13 @@ router.get('/google/callback', async (req, res) => {
       return res.redirect('/?error=verification_failed');
     }
     
-    let dbUser = await pool.query(
-      'SELECT * FROM users WHERE provider = $1 AND provider_id = $2',
-      ['google', userData.provider_id || userData.id]
-    );
-    
-    if (dbUser.rows.length === 0) {
-      const insertResult = await pool.query(
-        'INSERT INTO users (email, name, provider, provider_id, photo, type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [userData.email, userData.name, 'google', userData.provider_id || userData.id, userData.photo, 'preplounge']
-      );
-      dbUser = insertResult;
-    } else {
-      await pool.query(
-        'UPDATE users SET type = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
-        ['preplounge', dbUser.rows[0].id]
-      );
-    }
-    
     req.login({
-      id: dbUser.rows[0].id,
-      email: dbUser.rows[0].email,
-      displayName: dbUser.rows[0].name,
-      provider: dbUser.rows[0].provider,
-      photo: dbUser.rows[0].photo
+      id: userData.id,
+      email: userData.email,
+      displayName: userData.name,
+      provider: 'google',
+      photo: userData.photo,
+      token: token
     }, (err) => {
       if (err) {
         console.error('Login error:', err);
@@ -148,7 +130,7 @@ router.get('/kakao/callback', async (req, res) => {
       
       const verifiedData = await verifyResponse.json();
       
-      if (!verifiedData.user || !verifiedData.user.email) {
+      if (!verifiedData.user || !verifiedData.user.id) {
         console.error('Verification response missing user data');
         return res.redirect('/?error=invalid_verification_response');
       }
@@ -159,30 +141,13 @@ router.get('/kakao/callback', async (req, res) => {
       return res.redirect('/?error=verification_failed');
     }
     
-    let dbUser = await pool.query(
-      'SELECT * FROM users WHERE provider = $1 AND provider_id = $2',
-      ['kakao', userData.provider_id || userData.id]
-    );
-    
-    if (dbUser.rows.length === 0) {
-      const insertResult = await pool.query(
-        'INSERT INTO users (email, name, provider, provider_id, photo, type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [userData.email, userData.name, 'kakao', userData.provider_id || userData.id, userData.photo, 'preplounge']
-      );
-      dbUser = insertResult;
-    } else {
-      await pool.query(
-        'UPDATE users SET type = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
-        ['preplounge', dbUser.rows[0].id]
-      );
-    }
-    
     req.login({
-      id: dbUser.rows[0].id,
-      email: dbUser.rows[0].email,
-      displayName: dbUser.rows[0].name,
-      provider: dbUser.rows[0].provider,
-      photo: dbUser.rows[0].photo
+      id: userData.id,
+      email: userData.email,
+      displayName: userData.name,
+      provider: 'kakao',
+      photo: userData.photo,
+      token: token
     }, (err) => {
       if (err) {
         console.error('Login error:', err);

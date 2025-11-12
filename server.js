@@ -41,7 +41,7 @@ app.use(session({
   }
 }));
 
-await initializeDatabase();
+initializeDatabase();
 
 configurePassport();
 app.use(passportLib.initialize());

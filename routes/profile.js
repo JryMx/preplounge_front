@@ -1,5 +1,4 @@
 import express from 'express';
-import { pool } from '../config/passport.js';
 
 const router = express.Router();
 
@@ -11,44 +10,81 @@ const requireAuth = (req, res, next) => {
   next();
 };
 
+// Transform API response to frontend format
+const apiToFrontend = (apiProfile) => {
+  if (!apiProfile) return null;
+  
+  return {
+    gpa: parseFloat(apiProfile.gpa) || 0,
+    satEBRW: apiProfile.sat_ebrw || apiProfile.satEBRW || 0,
+    satMath: apiProfile.sat_math || apiProfile.satMath || 0,
+    actScore: apiProfile.act_score || apiProfile.actScore || 0,
+    toeflScore: apiProfile.toefl_score || apiProfile.toeflScore || 0,
+    apCourses: apiProfile.ap_courses || apiProfile.apCourses || 0,
+    ibScore: apiProfile.ib_score || apiProfile.ibScore || 0,
+    intendedMajor: apiProfile.intended_major || apiProfile.intendedMajor || '',
+    personalStatement: apiProfile.personal_statement || apiProfile.personalStatement || '',
+    legacyStatus: apiProfile.legacy_status !== undefined ? apiProfile.legacy_status : (apiProfile.legacyStatus || false),
+    citizenship: apiProfile.citizenship || 'domestic',
+    extracurriculars: apiProfile.extracurriculars || [],
+    recommendationLetters: apiProfile.recommendation_letters || apiProfile.recommendationLetters || [],
+    applicationComponents: apiProfile.application_components || apiProfile.applicationComponents || {},
+    leadership: apiProfile.leadership || [],
+    volunteering: apiProfile.volunteering || [],
+    awards: apiProfile.awards || [],
+    profileScore: apiProfile.profile_score || apiProfile.profileScore || 0,
+    profileRigorScore: apiProfile.profile_rigor_score || apiProfile.profileRigorScore || 0,
+    recommendations: apiProfile.recommendations || []
+  };
+};
+
+// Transform frontend format to API request
+const frontendToApi = (frontendProfile) => {
+  return {
+    gpa: frontendProfile.gpa || 0,
+    sat_ebrw: frontendProfile.satEBRW || 0,
+    sat_math: frontendProfile.satMath || 0,
+    act_score: frontendProfile.actScore || 0,
+    toefl_score: frontendProfile.toeflScore || 0,
+    ap_courses: frontendProfile.apCourses || 0,
+    ib_score: frontendProfile.ibScore || 0,
+    intended_major: frontendProfile.intendedMajor || '',
+    personal_statement: frontendProfile.personalStatement || '',
+    legacy_status: frontendProfile.legacyStatus || false,
+    citizenship: frontendProfile.citizenship || 'domestic',
+    extracurriculars: frontendProfile.extracurriculars || [],
+    recommendation_letters: frontendProfile.recommendationLetters || [],
+    application_components: frontendProfile.applicationComponents || {},
+    leadership: frontendProfile.leadership || [],
+    volunteering: frontendProfile.volunteering || [],
+    awards: frontendProfile.awards || [],
+    profile_score: frontendProfile.profileScore || 0,
+    profile_rigor_score: frontendProfile.profileRigorScore || 0,
+    recommendations: frontendProfile.recommendations || []
+  };
+};
+
 // Get user's profile
 router.get('/', requireAuth, async (req, res) => {
   try {
-    const result = await pool.query(
-      'SELECT * FROM student_profiles WHERE user_id = $1',
-      [req.user.id]
-    );
+    const response = await fetch(`https://api-dev.loaning.ai/v1/user/${req.user.id}/profile`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${req.user.token}`
+      }
+    });
     
-    if (result.rows.length === 0) {
-      return res.json({ profile: null });
+    if (!response.ok) {
+      if (response.status === 404) {
+        return res.json({ profile: null });
+      }
+      throw new Error(`API request failed: ${response.status}`);
     }
     
-    const dbProfile = result.rows[0];
-    
-    // Transform database format to frontend format
-    const profile = {
-      gpa: parseFloat(dbProfile.gpa) || 0,
-      satEBRW: dbProfile.sat_ebrw || 0,
-      satMath: dbProfile.sat_math || 0,
-      actScore: dbProfile.act_score || 0,
-      toeflScore: dbProfile.toefl_score || 0,
-      apCourses: dbProfile.ap_courses || 0,
-      ibScore: dbProfile.ib_score || 0,
-      intendedMajor: dbProfile.intended_major || '',
-      personalStatement: dbProfile.personal_statement || '',
-      legacyStatus: dbProfile.legacy_status || false,
-      citizenship: dbProfile.citizenship || 'domestic',
-      extracurriculars: dbProfile.extracurriculars || [],
-      recommendationLetters: dbProfile.recommendation_letters || [],
-      applicationComponents: dbProfile.application_components || {},
-      leadership: dbProfile.leadership || [],
-      volunteering: dbProfile.volunteering || [],
-      awards: dbProfile.awards || [],
-      profileScore: dbProfile.profile_score || 0,
-      profileRigorScore: dbProfile.profile_rigor_score || 0,
-      recommendations: dbProfile.recommendations || []
-    };
-    
+    const data = await response.json();
+    const apiProfile = data.profile || data.student_profile || data || null;
+    const profile = apiToFrontend(apiProfile);
     res.json({ profile });
   } catch (error) {
     console.error('Error fetching profile:', error);
@@ -59,106 +95,26 @@ router.get('/', requireAuth, async (req, res) => {
 // Save or update user's profile
 router.post('/', requireAuth, async (req, res) => {
   try {
-    const profile = req.body;
+    const frontendProfile = req.body;
+    const apiProfile = frontendToApi(frontendProfile);
     
-    // Check if profile exists
-    const existingResult = await pool.query(
-      'SELECT id FROM student_profiles WHERE user_id = $1',
-      [req.user.id]
-    );
+    const response = await fetch(`https://api-dev.loaning.ai/v1/user/${req.user.id}/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${req.user.token}`
+      },
+      body: JSON.stringify(apiProfile)
+    });
     
-    const now = new Date();
-    
-    if (existingResult.rows.length > 0) {
-      // Update existing profile
-      await pool.query(
-        `UPDATE student_profiles SET
-          gpa = $1,
-          sat_ebrw = $2,
-          sat_math = $3,
-          act_score = $4,
-          toefl_score = $5,
-          ap_courses = $6,
-          ib_score = $7,
-          intended_major = $8,
-          personal_statement = $9,
-          legacy_status = $10,
-          citizenship = $11,
-          extracurriculars = $12,
-          recommendation_letters = $13,
-          application_components = $14,
-          leadership = $15,
-          volunteering = $16,
-          awards = $17,
-          profile_score = $18,
-          profile_rigor_score = $19,
-          recommendations = $20,
-          updated_at = $21
-        WHERE user_id = $22`,
-        [
-          profile.gpa || 0,
-          profile.satEBRW || 0,
-          profile.satMath || 0,
-          profile.actScore || 0,
-          profile.toeflScore || 0,
-          profile.apCourses || 0,
-          profile.ibScore || 0,
-          profile.intendedMajor || '',
-          profile.personalStatement || '',
-          profile.legacyStatus || false,
-          profile.citizenship || 'domestic',
-          JSON.stringify(profile.extracurriculars || []),
-          JSON.stringify(profile.recommendationLetters || []),
-          JSON.stringify(profile.applicationComponents || {}),
-          JSON.stringify(profile.leadership || []),
-          JSON.stringify(profile.volunteering || []),
-          JSON.stringify(profile.awards || []),
-          profile.profileScore || 0,
-          profile.profileRigorScore || 0,
-          JSON.stringify(profile.recommendations || []),
-          now,
-          req.user.id
-        ]
-      );
-    } else {
-      // Insert new profile
-      await pool.query(
-        `INSERT INTO student_profiles (
-          user_id, gpa, sat_ebrw, sat_math, act_score, toefl_score,
-          ap_courses, ib_score, intended_major, personal_statement,
-          legacy_status, citizenship, extracurriculars, recommendation_letters,
-          application_components, leadership, volunteering, awards,
-          profile_score, profile_rigor_score, recommendations, created_at, updated_at
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)`,
-        [
-          req.user.id,
-          profile.gpa || 0,
-          profile.satEBRW || 0,
-          profile.satMath || 0,
-          profile.actScore || 0,
-          profile.toeflScore || 0,
-          profile.apCourses || 0,
-          profile.ibScore || 0,
-          profile.intendedMajor || '',
-          profile.personalStatement || '',
-          profile.legacyStatus || false,
-          profile.citizenship || 'domestic',
-          JSON.stringify(profile.extracurriculars || []),
-          JSON.stringify(profile.recommendationLetters || []),
-          JSON.stringify(profile.applicationComponents || {}),
-          JSON.stringify(profile.leadership || []),
-          JSON.stringify(profile.volunteering || []),
-          JSON.stringify(profile.awards || []),
-          profile.profileScore || 0,
-          profile.profileRigorScore || 0,
-          JSON.stringify(profile.recommendations || []),
-          now,
-          now
-        ]
-      );
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('API error:', response.status, errorText);
+      throw new Error(`API request failed: ${response.status}`);
     }
     
-    res.json({ success: true });
+    const data = await response.json();
+    res.json({ success: true, data });
   } catch (error) {
     console.error('Error saving profile:', error);
     res.status(500).json({ error: 'Failed to save profile' });
