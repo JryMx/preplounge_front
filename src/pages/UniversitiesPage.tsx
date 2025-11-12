@@ -187,17 +187,17 @@ const UniversitiesPage: React.FC = () => {
   });
 
   const handleTypeToggle = (type: string) => {
-    setFilters(prev => ({
+    setFilters((prev: { types: string[]; sortBy: string; tuitionRange: [number, number]; satRange: [number, number] }) => ({
       ...prev,
       types: prev.types.includes(type)
-        ? prev.types.filter(t => t !== type)
+        ? prev.types.filter((t: string) => t !== type)
         : [...prev.types, type]
     }));
     setDisplayCount(12);
   };
 
   const handleSortChange = (sortBy: string) => {
-    setFilters(prev => ({ ...prev, sortBy }));
+    setFilters((prev: { types: string[]; sortBy: string; tuitionRange: [number, number]; satRange: [number, number] }) => ({ ...prev, sortBy }));
     setDisplayCount(12);
   };
 
@@ -208,7 +208,7 @@ const UniversitiesPage: React.FC = () => {
       Math.min(min, max),
       Math.max(min, max)
     ];
-    setFilters(prev => ({ ...prev, tuitionRange: validRange }));
+    setFilters((prev: { types: string[]; sortBy: string; tuitionRange: [number, number]; satRange: [number, number] }) => ({ ...prev, tuitionRange: validRange }));
     setDisplayCount(12);
   };
   
@@ -224,7 +224,7 @@ const UniversitiesPage: React.FC = () => {
       Math.min(min, max),
       Math.max(min, max)
     ];
-    setFilters(prev => ({ ...prev, satRange: validRange }));
+    setFilters((prev: { types: string[]; sortBy: string; tuitionRange: [number, number]; satRange: [number, number] }) => ({ ...prev, satRange: validRange }));
     setDisplayCount(12);
   };
 
