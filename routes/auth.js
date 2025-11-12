@@ -4,12 +4,14 @@ import passport from '../config/passport.js';
 const router = express.Router();
 
 router.get('/google', (req, res) => {
-  const frontendUrl = process.env.REPLIT_DEV_DOMAIN 
-    ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+  const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+  
+  const frontendUrl = replitDomain 
+    ? `https://${replitDomain}`
     : 'http://localhost:5000';
   
-  const backendUrl = process.env.REPLIT_DEV_DOMAIN 
-    ? `https://${process.env.REPLIT_DEV_DOMAIN}:4200`
+  const backendUrl = replitDomain 
+    ? `https://${replitDomain}:3001`
     : 'http://localhost:3001';
   
   const redirectUri = `${backendUrl}/api/auth/google/callback`;
@@ -73,8 +75,9 @@ router.get('/google/callback', async (req, res) => {
         return res.redirect('/?error=session_failed');
       }
       
-      const frontendUrl = process.env.REPLIT_DEV_DOMAIN 
-        ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+      const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+      const frontendUrl = replitDomain 
+        ? `https://${replitDomain}`
         : 'http://localhost:5000';
       res.redirect(frontendUrl);
     });
@@ -85,12 +88,14 @@ router.get('/google/callback', async (req, res) => {
 });
 
 router.get('/kakao', (req, res) => {
-  const frontendUrl = process.env.REPLIT_DEV_DOMAIN 
-    ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+  const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+  
+  const frontendUrl = replitDomain 
+    ? `https://${replitDomain}`
     : 'http://localhost:5000';
   
-  const backendUrl = process.env.REPLIT_DEV_DOMAIN 
-    ? `https://${process.env.REPLIT_DEV_DOMAIN}:4200`
+  const backendUrl = replitDomain 
+    ? `https://${replitDomain}:3001`
     : 'http://localhost:3001';
   
   const redirectUri = `${backendUrl}/api/auth/kakao/callback`;
@@ -154,8 +159,9 @@ router.get('/kakao/callback', async (req, res) => {
         return res.redirect('/?error=session_failed');
       }
       
-      const frontendUrl = process.env.REPLIT_DEV_DOMAIN 
-        ? `https://${process.env.REPLIT_DEV_DOMAIN}`
+      const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+      const frontendUrl = replitDomain 
+        ? `https://${replitDomain}`
         : 'http://localhost:5000';
       res.redirect(frontendUrl);
     });
