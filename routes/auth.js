@@ -21,13 +21,45 @@ router.get('/google', (req, res) => {
 
 router.get('/google/callback', async (req, res) => {
   try {
-    const { token, user } = req.query;
+    const { token } = req.query;
     
-    if (!token || !user) {
-      return res.redirect('/?error=authentication_failed');
+    if (!token) {
+      console.error('OAuth callback missing required token parameter');
+      return res.redirect('/?error=missing_token');
     }
     
-    const userData = JSON.parse(decodeURIComponent(user));
+    let userData;
+    
+    try {
+      const verifyResponse = await fetch('https://api-dev.loaning.ai/v1/oauth/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          token,
+          type: 'preplounge'
+        })
+      });
+      
+      if (!verifyResponse.ok) {
+        console.error('Token verification failed:', verifyResponse.status, await verifyResponse.text());
+        return res.redirect('/?error=invalid_token');
+      }
+      
+      const verifiedData = await verifyResponse.json();
+      
+      if (!verifiedData.user || !verifiedData.user.email) {
+        console.error('Verification response missing user data');
+        return res.redirect('/?error=invalid_verification_response');
+      }
+      
+      userData = verifiedData.user;
+    } catch (verifyError) {
+      console.error('Token verification error:', verifyError);
+      return res.redirect('/?error=verification_failed');
+    }
     
     let dbUser = await pool.query(
       'SELECT * FROM users WHERE provider = $1 AND provider_id = $2',

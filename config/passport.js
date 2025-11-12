@@ -26,7 +26,21 @@ export async function initializeDatabase() {
       
       CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email_unique ON users(email) WHERE email IS NOT NULL;
       CREATE UNIQUE INDEX IF NOT EXISTS idx_users_provider_unique ON users(provider, provider_id);
+    `);
+    
+    await client.query(`
+      DO $$ 
+      BEGIN 
+        IF NOT EXISTS (
+          SELECT 1 FROM information_schema.columns 
+          WHERE table_name = 'users' AND column_name = 'type'
+        ) THEN
+          ALTER TABLE users ADD COLUMN type VARCHAR(50) DEFAULT 'preplounge';
+        END IF;
+      END $$;
+    `);
       
+    await client.query(`
       CREATE TABLE IF NOT EXISTS student_profiles (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
