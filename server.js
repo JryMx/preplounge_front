@@ -1,15 +1,18 @@
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import passportLib from './config/passport.js';
 import { configurePassport, initializeDatabase } from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
   'http://localhost:5000',
   'http://127.0.0.1:5000'
 ];
@@ -215,6 +218,13 @@ Now analyze this student's profile and return the JSON:`;
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend server is running' });
 });
+
+app.use('/', createProxyMiddleware({
+  target: 'http://localhost:5173',
+  changeOrigin: true,
+  ws: true,
+  logLevel: 'silent'
+}));
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend server running on http://0.0.0.0:${PORT}`);

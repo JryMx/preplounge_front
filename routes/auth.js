@@ -8,11 +8,11 @@ router.get('/google', (req, res) => {
   
   const frontendUrl = replitDomain 
     ? `https://${replitDomain}`
-    : 'http://localhost:5000';
+    : 'http://localhost:5173';
   
   const backendUrl = replitDomain 
-    ? `https://${replitDomain}:3001`
-    : 'http://localhost:3001';
+    ? `https://${replitDomain}`
+    : 'http://localhost:5000';
   
   const redirectUri = `${backendUrl}/api/auth/google/callback`;
   const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/google?type=preplounge&redirect=${encodeURIComponent(redirectUri)}&platform=web`;
@@ -78,7 +78,7 @@ router.get('/google/callback', async (req, res) => {
       const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
       const frontendUrl = replitDomain 
         ? `https://${replitDomain}`
-        : 'http://localhost:5000';
+        : 'http://localhost:5173';
       res.redirect(frontendUrl);
     });
   } catch (error) {
@@ -92,11 +92,11 @@ router.get('/kakao', (req, res) => {
   
   const frontendUrl = replitDomain 
     ? `https://${replitDomain}`
-    : 'http://localhost:5000';
+    : 'http://localhost:5173';
   
   const backendUrl = replitDomain 
-    ? `https://${replitDomain}:3001`
-    : 'http://localhost:3001';
+    ? `https://${replitDomain}`
+    : 'http://localhost:5000';
   
   const redirectUri = `${backendUrl}/api/auth/kakao/callback`;
   const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/kakao?type=preplounge&redirect=${encodeURIComponent(redirectUri)}&platform=web`;
@@ -162,7 +162,7 @@ router.get('/kakao/callback', async (req, res) => {
       const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
       const frontendUrl = replitDomain 
         ? `https://${replitDomain}`
-        : 'http://localhost:5000';
+        : 'http://localhost:5173';
       res.redirect(frontendUrl);
     });
   } catch (error) {
