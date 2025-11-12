@@ -95,16 +95,37 @@ const formatLocationDisplay = (city: string | undefined, state: string | undefin
 
 const UniversitiesPage: React.FC = () => {
   const { t, language } = useLanguage();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [searchTerm, setSearchTerm] = useState(() => {
+    const stored = localStorage.getItem('prepLoungeUniversitiesSearch');
+    return stored || '';
+  });
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>(() => {
+    const stored = localStorage.getItem('prepLoungeUniversitiesViewMode');
+    return (stored === 'grid' || stored === 'list') ? stored : 'grid';
+  });
   const [displayCount, setDisplayCount] = useState(12);
   const itemsPerLoad = 12;
   const loadMoreRef = useRef<HTMLDivElement>(null);
-  const [filters, setFilters] = useState({
-    types: [] as string[],
-    sortBy: '',
-    tuitionRange: [0, 70000] as [number, number],
-    satRange: [800, 1600] as [number, number],
+  const [filters, setFilters] = useState(() => {
+    const stored = localStorage.getItem('prepLoungeUniversitiesFilters');
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        return {
+          types: [] as string[],
+          sortBy: '',
+          tuitionRange: [0, 70000] as [number, number],
+          satRange: [800, 1600] as [number, number],
+        };
+      }
+    }
+    return {
+      types: [] as string[],
+      sortBy: '',
+      tuitionRange: [0, 70000] as [number, number],
+      satRange: [800, 1600] as [number, number],
+    };
   });
 
   const filteredUniversities = universities.filter(uni => {
@@ -210,6 +231,18 @@ const UniversitiesPage: React.FC = () => {
   // Infinite scroll: show universities up to displayCount
   const displayedUniversities = sortedUniversities.slice(0, displayCount);
   const hasMore = displayCount < sortedUniversities.length;
+
+  useEffect(() => {
+    localStorage.setItem('prepLoungeUniversitiesSearch', searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    localStorage.setItem('prepLoungeUniversitiesViewMode', viewMode);
+  }, [viewMode]);
+
+  useEffect(() => {
+    localStorage.setItem('prepLoungeUniversitiesFilters', JSON.stringify(filters));
+  }, [filters]);
 
   // Infinite scroll effect
   useEffect(() => {
@@ -460,6 +493,8 @@ const UniversitiesPage: React.FC = () => {
                   tuitionRange: [0, 70000],
                   satRange: [800, 1600]
                 });
+                localStorage.removeItem('prepLoungeUniversitiesSearch');
+                localStorage.removeItem('prepLoungeUniversitiesFilters');
               }}
               className="universities-filter-button active" style={{marginTop: '16px'}}
             >
