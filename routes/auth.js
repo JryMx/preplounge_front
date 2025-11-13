@@ -131,6 +131,11 @@ router.post('/session', async (req, res) => {
   try {
     console.log('=== Creating Session from OAuth Tokens ===');
     console.log('Request body:', JSON.stringify(req.body, null, 2));
+    console.log('Request headers:', {
+      origin: req.headers.origin,
+      referer: req.headers.referer,
+      cookie: req.headers.cookie ? 'present' : 'none'
+    });
     console.log('==========================================');
     
     const { accessToken, refreshToken, userId, name, email, role, partner, provider } = req.body;
@@ -155,7 +160,8 @@ router.post('/session', async (req, res) => {
         return res.status(500).json({ error: 'Failed to create session' });
       }
       
-      console.log('Session created successfully for user:', userId, 'via provider:', provider || 'google');
+      console.log('✓ Session created successfully for user:', userId, 'via provider:', provider || 'google');
+      console.log('✓ Session ID:', req.sessionID);
       res.json({ success: true, user: req.user });
     });
   } catch (error) {

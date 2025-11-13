@@ -40,15 +40,18 @@ if (!process.env.SESSION_SECRET) {
   process.exit(1);
 }
 
+const isReplit = process.env.REPLIT_DEV_DOMAIN || process.env.REPLIT_DOMAINS;
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: isProduction || isReplit,
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    sameSite: (isProduction || isReplit) ? 'none' : 'lax'
   }
 }));
 
