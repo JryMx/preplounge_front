@@ -22,10 +22,16 @@ router.get('/google', (req, res) => {
 
 router.get('/google/callback', async (req, res) => {
   try {
+    console.log('=== Google OAuth Callback Received ===');
+    console.log('Query params:', JSON.stringify(req.query, null, 2));
+    console.log('Full URL:', req.url);
+    console.log('=====================================');
+    
     const { token } = req.query;
     
     if (!token) {
       console.error('OAuth callback missing required token parameter');
+      console.error('Available query params:', Object.keys(req.query));
       return res.redirect('/?error=missing_token');
     }
     
