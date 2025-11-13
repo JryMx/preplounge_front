@@ -24,84 +24,35 @@ router.get('/google/callback', async (req, res) => {
   try {
     console.log('=== Google OAuth Callback Received ===');
     console.log('Query params:', JSON.stringify(req.query, null, 2));
-    console.log('Full URL:', req.url);
     console.log('=====================================');
     
-    const { token } = req.query;
+    const { accessToken, refreshToken, userId, name, email, success } = req.query;
     
-    if (!token) {
-      console.error('OAuth callback missing required token parameter');
+    if (!accessToken || !userId) {
+      console.error('OAuth callback missing required parameters');
       console.error('Available query params:', Object.keys(req.query));
-      return res.redirect('/?error=missing_token');
+      return res.redirect('/?error=missing_oauth_data');
     }
     
-    let userData;
-    
-    try {
-      const verifyResponse = await fetch('https://api-dev.loaning.ai/v1/oauth/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-          'X-Client-ID': process.env.GOOGLE_CLIENT_ID || '',
-          'X-Client-Secret': process.env.GOOGLE_CLIENT_SECRET || ''
-        },
-        body: JSON.stringify({
-          token,
-          type: 'preplounge',
-          client_id: process.env.GOOGLE_CLIENT_ID,
-          client_secret: process.env.GOOGLE_CLIENT_SECRET
-        })
-      });
-      
-      if (!verifyResponse.ok) {
-        const errorText = await verifyResponse.text();
-        console.error('=== OAuth Token Verification Failed ===');
-        console.error('Status:', verifyResponse.status);
-        console.error('Status Text:', verifyResponse.statusText);
-        console.error('Response Body:', errorText);
-        console.error('Request Headers:', JSON.stringify({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer [REDACTED]',
-          'X-Client-ID': process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
-          'X-Client-Secret': process.env.GOOGLE_CLIENT_SECRET ? '[SET]' : '[MISSING]'
-        }));
-        console.error('Request Body:', JSON.stringify({
-          token: '[REDACTED]',
-          type: 'preplounge',
-          client_id: process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
-          client_secret: '[SET]'
-        }));
-        console.error('=====================================');
-        return res.redirect('/?error=invalid_token');
-      }
-      
-      const verifiedData = await verifyResponse.json();
-      
-      if (!verifiedData.user || !verifiedData.user.id) {
-        console.error('Verification response missing user data');
-        return res.redirect('/?error=invalid_verification_response');
-      }
-      
-      userData = verifiedData.user;
-    } catch (verifyError) {
-      console.error('Token verification error:', verifyError);
-      return res.redirect('/?error=verification_failed');
+    if (success === 'false') {
+      console.error('OAuth authentication failed on provider side');
+      return res.redirect('/?error=oauth_failed');
     }
     
     req.login({
-      id: userData.id,
-      email: userData.email,
-      displayName: userData.name,
+      id: userId,
+      email: email || '',
+      displayName: name || '',
       provider: 'google',
-      photo: userData.photo,
-      token: token
+      accessToken: accessToken,
+      refreshToken: refreshToken || ''
     }, (err) => {
       if (err) {
         console.error('Login error:', err);
         return res.redirect('/?error=session_failed');
       }
       
+      console.log('User logged in successfully:', userId);
       const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
       const frontendUrl = replitDomain 
         ? `https://${replitDomain}`
@@ -133,80 +84,37 @@ router.get('/kakao', (req, res) => {
 
 router.get('/kakao/callback', async (req, res) => {
   try {
-    const { token } = req.query;
+    console.log('=== Kakao OAuth Callback Received ===');
+    console.log('Query params:', JSON.stringify(req.query, null, 2));
+    console.log('=====================================');
     
-    if (!token) {
-      console.error('OAuth callback missing required token parameter');
-      return res.redirect('/?error=missing_token');
+    const { accessToken, refreshToken, userId, name, email, success } = req.query;
+    
+    if (!accessToken || !userId) {
+      console.error('OAuth callback missing required parameters');
+      console.error('Available query params:', Object.keys(req.query));
+      return res.redirect('/?error=missing_oauth_data');
     }
     
-    let userData;
-    
-    try {
-      const verifyResponse = await fetch('https://api-dev.loaning.ai/v1/oauth/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-          'X-Client-ID': process.env.KAKAO_CLIENT_ID || '',
-          'X-Client-Secret': process.env.KAKAO_CLIENT_SECRET || ''
-        },
-        body: JSON.stringify({
-          token,
-          type: 'preplounge',
-          client_id: process.env.KAKAO_CLIENT_ID,
-          client_secret: process.env.KAKAO_CLIENT_SECRET
-        })
-      });
-      
-      if (!verifyResponse.ok) {
-        const errorText = await verifyResponse.text();
-        console.error('=== OAuth Token Verification Failed ===');
-        console.error('Status:', verifyResponse.status);
-        console.error('Status Text:', verifyResponse.statusText);
-        console.error('Response Body:', errorText);
-        console.error('Request Headers:', JSON.stringify({
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer [REDACTED]',
-          'X-Client-ID': process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
-          'X-Client-Secret': process.env.GOOGLE_CLIENT_SECRET ? '[SET]' : '[MISSING]'
-        }));
-        console.error('Request Body:', JSON.stringify({
-          token: '[REDACTED]',
-          type: 'preplounge',
-          client_id: process.env.GOOGLE_CLIENT_ID ? '[SET]' : '[MISSING]',
-          client_secret: '[SET]'
-        }));
-        console.error('=====================================');
-        return res.redirect('/?error=invalid_token');
-      }
-      
-      const verifiedData = await verifyResponse.json();
-      
-      if (!verifiedData.user || !verifiedData.user.id) {
-        console.error('Verification response missing user data');
-        return res.redirect('/?error=invalid_verification_response');
-      }
-      
-      userData = verifiedData.user;
-    } catch (verifyError) {
-      console.error('Token verification error:', verifyError);
-      return res.redirect('/?error=verification_failed');
+    if (success === 'false') {
+      console.error('OAuth authentication failed on provider side');
+      return res.redirect('/?error=oauth_failed');
     }
     
     req.login({
-      id: userData.id,
-      email: userData.email,
-      displayName: userData.name,
+      id: userId,
+      email: email || '',
+      displayName: name || '',
       provider: 'kakao',
-      photo: userData.photo,
-      token: token
+      accessToken: accessToken,
+      refreshToken: refreshToken || ''
     }, (err) => {
       if (err) {
         console.error('Login error:', err);
         return res.redirect('/?error=session_failed');
       }
       
+      console.log('User logged in successfully:', userId);
       const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
       const frontendUrl = replitDomain 
         ? `https://${replitDomain}`
