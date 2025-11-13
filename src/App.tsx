@@ -13,7 +13,8 @@ import SignupPage from './pages/SignupPage';
 import ComparePage from './pages/ComparePage';
 import HousingPage from './pages/HousingPage';
 import UniversityMapPage from './pages/UniversityMapPage';
-import AuthCallbackPage from './pages/AuthCallbackPage';
+import GoogleCallbackPage from './pages/GoogleCallbackPage';
+import KakaoCallbackPage from './pages/KakaoCallbackPage';
 import { AuthProvider } from './context/AuthContext';
 import { StudentProfileProvider } from './context/StudentProfileContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -42,7 +43,8 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/housing" element={<HousingPage />} />
-                <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                <Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
+                <Route path="/auth/kakao/callback" element={<KakaoCallbackPage />} />
               </Routes>
             </div>
             </Router>

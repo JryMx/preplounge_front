@@ -16,7 +16,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     const hostname = window.location.hostname;
     const protocol = window.location.protocol;
     const frontendUrl = `${protocol}//${hostname}`;
-    const callbackUrl = `${frontendUrl}/auth/callback?provider=google`;
+    const callbackUrl = `${frontendUrl}/auth/google/callback`;
     const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/google?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
     window.location.href = oauthUrl;
   };
@@ -25,7 +25,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     const hostname = window.location.hostname;
     const protocol = window.location.protocol;
     const frontendUrl = `${protocol}//${hostname}`;
-    const callbackUrl = `${frontendUrl}/auth/callback?provider=kakao`;
+    const callbackUrl = `${frontendUrl}/auth/kakao/callback`;
     const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/kakao?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
     window.location.href = oauthUrl;
   };

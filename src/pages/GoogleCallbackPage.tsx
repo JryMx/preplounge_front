@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getBackendURL } from '../lib/backendUrl';
 
-export default function AuthCallbackPage() {
+export default function GoogleCallbackPage() {
   const navigate = useNavigate();
   const { checkAuth } = useAuth();
 
@@ -20,7 +20,8 @@ export default function AuthCallbackPage() {
         const email = params.get('email');
         const role = params.get('role');
         const partner = params.get('partner');
-        const provider = params.get('provider') || 'google';
+
+        console.log('Google OAuth callback received:', { success, userId, email });
 
         if (success === 'false' || !accessToken || !userId) {
           console.error('OAuth authentication failed or missing required parameters');
@@ -42,13 +43,17 @@ export default function AuthCallbackPage() {
             email,
             role,
             partner,
-            provider,
+            provider: 'google',
           }),
         });
 
         if (!response.ok) {
+          console.error('Session creation failed:', response.status);
           throw new Error('Failed to create session');
         }
+
+        const data = await response.json();
+        console.log('Session created successfully:', data);
 
         await checkAuth();
         navigate('/dashboard');
@@ -65,7 +70,7 @@ export default function AuthCallbackPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center">
         <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-        <p className="text-gray-600">Completing authentication...</p>
+        <p className="text-gray-600">Completing Google authentication...</p>
       </div>
     </div>
   );
