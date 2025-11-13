@@ -13,14 +13,18 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   if (!isOpen) return null;
 
   const handleGoogleLogin = () => {
-    const frontendUrl = window.location.origin;
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+    const frontendUrl = `${protocol}//${hostname}`;
     const callbackUrl = `${frontendUrl}/auth/callback?provider=google`;
     const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/google?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
     window.location.href = oauthUrl;
   };
 
   const handleKakaoLogin = () => {
-    const frontendUrl = window.location.origin;
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+    const frontendUrl = `${protocol}//${hostname}`;
     const callbackUrl = `${frontendUrl}/auth/callback?provider=kakao`;
     const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/kakao?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
     window.location.href = oauthUrl;
