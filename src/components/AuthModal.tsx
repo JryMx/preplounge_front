@@ -1,5 +1,4 @@
 import { X } from 'lucide-react';
-import { getBackendURL } from '../lib/backendUrl';
 import { useLanguage } from '../context/LanguageContext';
 import '../styles/auth-modal.css';
 
@@ -14,11 +13,17 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   if (!isOpen) return null;
 
   const handleGoogleLogin = () => {
-    window.location.href = `${getBackendURL()}/api/auth/google`;
+    const frontendUrl = window.location.origin;
+    const callbackUrl = `${frontendUrl}/auth/callback?provider=google`;
+    const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/google?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
+    window.location.href = oauthUrl;
   };
 
   const handleKakaoLogin = () => {
-    window.location.href = `${getBackendURL()}/api/auth/kakao`;
+    const frontendUrl = window.location.origin;
+    const callbackUrl = `${frontendUrl}/auth/callback?provider=kakao`;
+    const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/kakao?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
+    window.location.href = oauthUrl;
   };
 
   return (

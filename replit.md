@@ -24,7 +24,7 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 - **Favorites System**: Client-side management with `localStorage` persistence.
 
 ### Feature Specifications
-- **Authentication System**: OAuth-only authentication (Google, Kakao) integrated with `loaning.ai`'s remote PostgreSQL database. Features secure token verification, bidirectional data transformation (camelCase/snake_case), and session management. Dynamic backend URL detection for Replit environments.
+- **Authentication System**: OAuth-only authentication (Google, Kakao) integrated with `loaning.ai`'s remote PostgreSQL database. Frontend initiates OAuth flow directly with `https://api-dev.loaning.ai/v1/oauth/{provider}` endpoint, receives tokens via query parameters, and establishes backend sessions via `/api/auth/session` POST endpoint. Features secure token verification, provider identification, bidirectional data transformation (camelCase/snake_case), and session management. Dynamic backend URL detection for Replit environments.
 - **AI-Powered Profile Analysis**: Provides real admission predictions via PrepLounge AI API, categorizing university recommendations (Safety/Target/Reach/Prestige). Displays live score previews and detailed recommendations on dedicated pages and the dashboard.
 - **AI-Powered Profile Assessment**: Integrates with an OpenAI-compatible API (`llm.signalplanner.ai`) via a Node.js/Express backend to generate personalized, honest assessments of student profiles.
 - **University Profile Pages**: Detailed profiles for 1,234 U.S. universities with comprehensive IPEDS 2024 data (address, size, Carnegie Classification, urbanization, website, majors). Features full bilingual support, clickable Google Maps links, and a favorites toggle.

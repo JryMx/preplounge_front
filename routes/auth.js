@@ -127,6 +127,43 @@ router.get('/kakao/callback', async (req, res) => {
   }
 });
 
+router.post('/session', async (req, res) => {
+  try {
+    console.log('=== Creating Session from OAuth Tokens ===');
+    console.log('Request body:', JSON.stringify(req.body, null, 2));
+    console.log('==========================================');
+    
+    const { accessToken, refreshToken, userId, name, email, role, partner, provider } = req.body;
+    
+    if (!accessToken || !userId) {
+      console.error('Session creation missing required parameters');
+      return res.status(400).json({ error: 'Missing required parameters' });
+    }
+    
+    req.login({
+      id: userId,
+      email: email || '',
+      displayName: name || '',
+      provider: provider || 'google',
+      accessToken: accessToken,
+      refreshToken: refreshToken || '',
+      role: role || '',
+      partner: partner || ''
+    }, (err) => {
+      if (err) {
+        console.error('Session creation error:', err);
+        return res.status(500).json({ error: 'Failed to create session' });
+      }
+      
+      console.log('Session created successfully for user:', userId, 'via provider:', provider || 'google');
+      res.json({ success: true, user: req.user });
+    });
+  } catch (error) {
+    console.error('Session creation error:', error);
+    res.status(500).json({ error: 'Authentication failed' });
+  }
+});
+
 router.get('/user', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({
