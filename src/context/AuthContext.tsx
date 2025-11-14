@@ -14,6 +14,7 @@ interface AuthContextType {
   loading: boolean;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
+  login: (email: string, password: string) => Promise<boolean>;
   isAuthenticated: boolean;
 }
 
@@ -29,12 +30,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         credentials: 'include',
       });
       const data = await response.json();
-      setUser(data.user);
+      setUser(data.user || null);
+      return data.user;
     } catch (error) {
       console.error('Error checking auth:', error);
       setUser(null);
+      return null;
     } finally {
       setLoading(false);
+    }
+  };
+
+  const login = async (email: string, password: string): Promise<boolean> => {
+    try {
+      const response = await fetch(`${getBackendURL()}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        await checkAuth();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error logging in:', error);
+      return false;
     }
   };
 
@@ -55,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout, checkAuth, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, loading, logout, checkAuth, login, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );

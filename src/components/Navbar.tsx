@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe, LogOut, User, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -12,8 +12,16 @@ const Navbar: React.FC = () => {
   const [isMobileUniversitiesMenuOpen, setIsMobileUniversitiesMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated, logout, checkAuth } = useAuth();
   const { language, setLanguage, t } = useLanguage();
+  const location = useLocation();
+  
+  // Re-check auth when navigating to dashboard (common after login) or from auth callbacks
+  useEffect(() => {
+    if (location.pathname === '/dashboard' || location.pathname.includes('/auth/')) {
+      checkAuth();
+    }
+  }, [location.pathname, checkAuth]);
   
   const toggleLanguage = () => {
     setLanguage(language === 'ko' ? 'en' : 'ko');
