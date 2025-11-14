@@ -167,7 +167,7 @@ const StudentProfilePage: React.FC = () => {
             프로필 분석
           </h1>
           <p className="profile-hero-description">
-            교과 및 비교과 프로필을 완성하여 종합적인 프로필 점수와 개인 맞춤 대학 추천을 받아보세요.
+            교과 및 비교과 프로필을 완성하고 종합적인 프로필 점수와 개인 맞춤 대학 추천을 받아보세요.
           </p>
         </div>
       </div>

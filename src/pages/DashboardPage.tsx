@@ -33,8 +33,9 @@ const DashboardPage: React.FC = () => {
     return (
       <div className="dashboard-page">
         <div className="dashboard-container">
-          <div className="dashboard-empty-state">
-            <p>{t('common.loading')}</p>
+          <div className="dashboard-header" style={{ opacity: 0.5 }}>
+            <div style={{ height: '40px', background: '#f0f0f0', borderRadius: '8px', marginBottom: '20px' }} />
+            <div style={{ height: '20px', background: '#f0f0f0', borderRadius: '4px', width: '60%' }} />
           </div>
         </div>
       </div>

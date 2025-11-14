@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import universitiesData from '../data/universities.json';
 import { getBackendURL } from '../lib/backendUrl';
 import { useAuth } from './AuthContext';
@@ -119,22 +119,35 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   const { user, loading: authLoading } = useAuth();
   const [profile, setProfile] = useState<StudentProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const loadedUserIdRef = useRef<string | null>(null);
 
   useEffect(() => {
-    setProfile(null);
-    
+    // Wait for auth to finish loading
     if (authLoading) {
-      setLoading(true);
       return;
     }
 
+    const currentUserId = user?.id || null;
+
+    // If no user, clear profile and stop loading
     if (!user) {
+      if (loadedUserIdRef.current !== null) {
+        setProfile(null);
+        loadedUserIdRef.current = null;
+      }
       setLoading(false);
       return;
     }
 
+    // Skip if already loaded for this user
+    if (loadedUserIdRef.current === currentUserId) {
+      return;
+    }
+
+    // Load profile for new user
     const loadProfile = async () => {
-      setLoading(true);
+      loadedUserIdRef.current = currentUserId;
+      
       try {
         const response = await fetch(`${getBackendURL()}/api/profile`, {
           credentials: 'include',
@@ -143,27 +156,47 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         if (response.ok) {
           const data = await response.json();
           if (data.profile) {
+            // API returned a valid profile - use it
             localStorage.setItem('student_profile', JSON.stringify(data.profile));
             setProfile(data.profile);
           } else {
+            // API returned 200 but no profile - fallback to localStorage
             const stored = localStorage.getItem('student_profile');
             if (stored) {
               setProfile(JSON.parse(stored));
+            } else {
+              setProfile(null);
             }
           }
         } else if (response.status === 401) {
+          // Unauthorized - clear profile
           setProfile(null);
+          localStorage.removeItem('student_profile');
         } else if (response.status === 403 || response.status === 500) {
+          // API not ready or error - fallback to localStorage
           const stored = localStorage.getItem('student_profile');
           if (stored) {
             setProfile(JSON.parse(stored));
+          } else {
+            setProfile(null);
+          }
+        } else {
+          // Other error - fallback to localStorage
+          const stored = localStorage.getItem('student_profile');
+          if (stored) {
+            setProfile(JSON.parse(stored));
+          } else {
+            setProfile(null);
           }
         }
       } catch (error) {
         console.error('Error loading profile:', error);
+        // Network error - fallback to localStorage
         const stored = localStorage.getItem('student_profile');
         if (stored) {
           setProfile(JSON.parse(stored));
+        } else {
+          setProfile(null);
         }
       } finally {
         setLoading(false);
