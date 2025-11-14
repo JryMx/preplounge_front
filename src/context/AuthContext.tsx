@@ -29,14 +29,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const checkAuth = async () => {
     try {
+      // Always check localStorage first - it's our source of truth
       const storedUser = localStorage.getItem('auth_user');
       if (storedUser) {
         const userData = JSON.parse(storedUser);
         setUser(userData);
-        setLoading(false);
         return userData;
       }
       
+      // If no localStorage user, check the server
       const response = await fetch(`${getBackendURL()}/api/auth/user`, {
         credentials: 'include',
       });
@@ -44,14 +45,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (data.user) {
         localStorage.setItem('auth_user', JSON.stringify(data.user));
         setUser(data.user);
+        return data.user;
       } else {
-        localStorage.removeItem('auth_user');
+        // Don't clear localStorage here - user might have just logged in
         setUser(null);
+        return null;
       }
-      return data.user;
     } catch (error) {
       console.error('Error checking auth:', error);
-      localStorage.removeItem('auth_user');
+      // Don't clear localStorage on error - maintain existing auth state
+      const storedUser = localStorage.getItem('auth_user');
+      if (storedUser) {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+        return userData;
+      }
       setUser(null);
       return null;
     } finally {
