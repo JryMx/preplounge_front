@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { getBackendURL } from '../lib/backendUrl';
 import '../styles/auth-modal.css';
 
 interface AuthModalProps {
@@ -13,21 +14,13 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   if (!isOpen) return null;
 
   const handleGoogleLogin = () => {
-    const hostname = window.location.hostname;
-    const protocol = window.location.protocol;
-    const frontendUrl = `${protocol}//${hostname}`;
-    const callbackUrl = `${frontendUrl}/auth/google/callback`;
-    const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/google?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
-    window.location.href = oauthUrl;
+    const backendUrl = getBackendURL();
+    window.location.href = `${backendUrl}/api/auth/google`;
   };
 
   const handleKakaoLogin = () => {
-    const hostname = window.location.hostname;
-    const protocol = window.location.protocol;
-    const frontendUrl = `${protocol}//${hostname}`;
-    const callbackUrl = `${frontendUrl}/auth/kakao/callback`;
-    const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/kakao?type=preplounge&platform=web&redirect=${encodeURIComponent(callbackUrl)}`;
-    window.location.href = oauthUrl;
+    const backendUrl = getBackendURL();
+    window.location.href = `${backendUrl}/api/auth/kakao`;
   };
 
   return (
