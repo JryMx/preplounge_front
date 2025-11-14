@@ -41,7 +41,16 @@ const DashboardPage: React.FC = () => {
             <p className="dashboard-empty-desc">
               {t('dashboard.empty.desc')}
             </p>
-            <Link to="/student-profile" className="dashboard-empty-button">
+            <Link 
+              to="/student-profile" 
+              className="dashboard-empty-button"
+              onClick={(e) => {
+                console.log('Link clicked - navigating to /student-profile');
+                // If Link doesn't work, use navigate as fallback
+                e.preventDefault();
+                navigate('/student-profile');
+              }}
+            >
               {t('dashboard.empty.button')}
               <ArrowRight className="h-5 w-5" />
             </Link>
