@@ -19,6 +19,53 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
   const loadedUserIdRef = useRef<string | null>(null);
 
   useEffect(() => {
+    const loadFavorites = async () => {
+      if (!user) return;
+      
+      const storageKey = `prepLoungeFavorites_${user.id}`;
+      console.log('[FavoritesContext] Loading favorites for user:', user.id);
+      
+      try {
+        const response = await fetch(`${getBackendURL()}/api/favorites`, {
+          credentials: 'include',
+        });
+        
+        console.log('[FavoritesContext] Favorites API response status:', response.status);
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('[FavoritesContext] Favorites data from server:', data);
+          if (data.favorites && Array.isArray(data.favorites)) {
+            localStorage.setItem(storageKey, JSON.stringify(data.favorites));
+            setFavorites(data.favorites);
+          } else {
+            const stored = localStorage.getItem(storageKey);
+            if (stored) {
+              setFavorites(JSON.parse(stored));
+            } else {
+              setFavorites([]);
+            }
+          }
+        } else {
+          console.warn('[FavoritesContext] Failed to load favorites from server');
+          const stored = localStorage.getItem(storageKey);
+          if (stored) {
+            setFavorites(JSON.parse(stored));
+          } else {
+            setFavorites([]);
+          }
+        }
+      } catch (error) {
+        console.error('[FavoritesContext] Error loading favorites:', error);
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          setFavorites(JSON.parse(stored));
+        } else {
+          setFavorites([]);
+        }
+      }
+    };
+    
     if (loading) return;
 
     if (user) {
@@ -32,53 +79,13 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
     }
   }, [user, loading]);
 
-  const loadFavorites = async () => {
-    if (!user) return;
-    
-    const storageKey = `prepLoungeFavorites_${user.id}`;
-    
-    try {
-      const response = await fetch(`${getBackendURL()}/api/favorites`, {
-        credentials: 'include',
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data.favorites && Array.isArray(data.favorites)) {
-          localStorage.setItem(storageKey, JSON.stringify(data.favorites));
-          setFavorites(data.favorites);
-        } else {
-          const stored = localStorage.getItem(storageKey);
-          if (stored) {
-            setFavorites(JSON.parse(stored));
-          } else {
-            setFavorites([]);
-          }
-        }
-      } else {
-        const stored = localStorage.getItem(storageKey);
-        if (stored) {
-          setFavorites(JSON.parse(stored));
-        } else {
-          setFavorites([]);
-        }
-      }
-    } catch (error) {
-      console.error('Error loading favorites:', error);
-      const stored = localStorage.getItem(storageKey);
-      if (stored) {
-        setFavorites(JSON.parse(stored));
-      } else {
-        setFavorites([]);
-      }
-    }
-  };
-
   const saveFavoritesToServer = async (updatedFavorites: string[]) => {
     if (!user) return;
     
+    console.log('[FavoritesContext] Saving favorites to server:', updatedFavorites);
+    
     try {
-      await fetch(`${getBackendURL()}/api/favorites`, {
+      const response = await fetch(`${getBackendURL()}/api/favorites`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,8 +93,14 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
         credentials: 'include',
         body: JSON.stringify({ favorites: updatedFavorites }),
       });
+      
+      console.log('[FavoritesContext] Save favorites response status:', response.status);
+      
+      if (!response.ok) {
+        console.error('[FavoritesContext] Failed to save favorites:', await response.text());
+      }
     } catch (error) {
-      console.error('Error saving favorites to server:', error);
+      console.error('[FavoritesContext] Error saving favorites to server:', error);
     }
   };
 
