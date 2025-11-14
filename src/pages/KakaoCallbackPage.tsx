@@ -56,9 +56,17 @@ export default function KakaoCallbackPage() {
         console.log('Session created successfully:', data);
 
         // Store user in localStorage since cookies are blocked
-        if (data.user) {
-          localStorage.setItem('auth_user', JSON.stringify(data.user));
-        }
+        // Create user object from the OAuth params (we have all the data we need)
+        const user = {
+          id: userId,
+          provider: 'kakao',
+          displayName: name || '',
+          email: email || '',
+          photo: undefined,
+        };
+        
+        localStorage.setItem('auth_user', JSON.stringify(user));
+        console.log('User saved to localStorage:', user);
 
         // Wait for auth state to update
         await checkAuth();
