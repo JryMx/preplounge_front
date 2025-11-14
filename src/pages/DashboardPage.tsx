@@ -9,7 +9,7 @@ import universitiesData from '../data/universities.json';
 import './dashboard-page.css';
 
 const DashboardPage: React.FC = () => {
-  const { profile, getRecommendations } = useStudentProfile();
+  const { profile, getRecommendations, loading } = useStudentProfile();
   const { user } = useAuth();
   const { t, language } = useLanguage();
   const { favorites } = useFavorites();
@@ -28,6 +28,18 @@ const DashboardPage: React.FC = () => {
     if (!profile) return 0;
     return (profile.satEBRW || 0) + (profile.satMath || 0);
   };
+
+  if (loading) {
+    return (
+      <div className="dashboard-page">
+        <div className="dashboard-container">
+          <div className="dashboard-empty-state">
+            <p>{t('common.loading')}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!profile || !user) {
     return (

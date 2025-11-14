@@ -626,6 +626,12 @@ const StudentProfilePage: React.FC = () => {
           : 'An error occurred while fetching school recommendations.'
       );
       setApiResults(null);
+      
+      // Still save profile even if recommendations fail
+      updateProfile({
+        ...profileData,
+        recommendations: [],
+      });
     } finally {
       setApiLoading(false);
     }
