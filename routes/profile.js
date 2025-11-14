@@ -71,7 +71,7 @@ router.get('/', requireAuth, async (req, res) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${req.user.token}`
+        'Authorization': `Bearer ${req.user.accessToken}`
       }
     });
     
@@ -102,7 +102,7 @@ router.post('/', requireAuth, async (req, res) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${req.user.token}`
+        'Authorization': `Bearer ${req.user.accessToken}`
       },
       body: JSON.stringify(apiProfile)
     });
