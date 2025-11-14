@@ -334,6 +334,15 @@ const StudentProfilePage: React.FC = () => {
           } else {
             delete errors.englishTestScore;
           }
+        } else if (testType === "PTE Academic Test") {
+          if (isNaN(num) || num < 10 || num > 90) {
+            errors.englishTestScore =
+              language === "ko"
+                ? "PTE Academic은 10-90 사이여야 합니다"
+                : "PTE Academic must be between 10-90";
+          } else {
+            delete errors.englishTestScore;
+          }
         }
       }
     } else {
@@ -550,6 +559,24 @@ const StudentProfilePage: React.FC = () => {
           language === "ko"
             ? "Duolingo 점수는 10과 160 사이여야 합니다."
             : "Duolingo score must be between 10 and 160.",
+        );
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+        return;
+      }
+      if (
+        academicData.englishProficiencyTest === "PTE Academic Test" &&
+        (isNaN(score) || score < 10 || score > 90)
+      ) {
+        setApiError(
+          language === "ko"
+            ? "PTE Academic 점수는 10과 90 사이여야 합니다."
+            : "PTE Academic score must be between 10 and 90.",
         );
         setShowResults(true);
         setTimeout(() => {
