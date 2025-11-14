@@ -41,10 +41,13 @@ const DashboardPage: React.FC = () => {
             <p className="dashboard-empty-desc">
               {t('dashboard.empty.desc')}
             </p>
-            <Link to={user ? "/student-profile" : "/login"} className="dashboard-empty-button">
+            <button 
+              onClick={() => navigate(user ? "/student-profile" : "/login")} 
+              className="dashboard-empty-button"
+            >
               {t('dashboard.empty.button')}
               <ArrowRight className="h-5 w-5" />
-            </Link>
+            </button>
           </div>
         </div>
       </div>
