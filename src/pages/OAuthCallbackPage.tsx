@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getBackendURL } from '../lib/backendUrl';
+import { useAuth } from '../context/AuthContext';
 
 export default function OAuthCallbackPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
+  const { checkAuth } = useAuth();
 
   useEffect(() => {
     const handleCallback = async () => {
@@ -53,6 +55,7 @@ export default function OAuthCallbackPage() {
         const data = await response.json();
         
         if (data.success) {
+          await checkAuth();
           navigate('/dashboard');
         } else {
           throw new Error('Session creation failed');
@@ -65,7 +68,7 @@ export default function OAuthCallbackPage() {
     };
 
     handleCallback();
-  }, [searchParams, navigate]);
+  }, [searchParams, navigate, checkAuth]);
 
   if (error) {
     return (
