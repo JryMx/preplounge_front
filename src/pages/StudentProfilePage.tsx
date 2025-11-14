@@ -1575,9 +1575,17 @@ const StudentProfilePage: React.FC = () => {
                             : "number"
                         }
                         min={
-                          academicData.englishProficiencyTest === "IELTS"
+                          academicData.englishProficiencyTest === "TOEFL iBT"
                             ? "0"
-                            : "0"
+                            : academicData.englishProficiencyTest === "IELTS"
+                              ? "0"
+                              : academicData.englishProficiencyTest ===
+                                  "PTE Academic Test"
+                                ? "10"
+                                : academicData.englishProficiencyTest ===
+                                    "Duolingo English Test"
+                                  ? "10"
+                                  : "0"
                         }
                         max={
                           academicData.englishProficiencyTest === "TOEFL iBT"
@@ -2259,8 +2267,8 @@ const StudentProfilePage: React.FC = () => {
                   type="text"
                   placeholder={
                     language === "ko"
-                      ? "학교명으로 검색하기 (선택사항)"
-                      : "Search for a specific school (optional)"
+                      ? "이름으로 검색"
+                      : "Search by school name"
                   }
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
