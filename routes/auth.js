@@ -162,6 +162,13 @@ router.post('/session', async (req, res) => {
       
       console.log('✓ Session created successfully for user:', userId, 'via provider:', provider || 'google');
       console.log('✓ Session ID:', req.sessionID);
+      console.log('✓ Session cookie will be set with options:', {
+        secure: req.session.cookie.secure,
+        httpOnly: req.session.cookie.httpOnly,
+        sameSite: req.session.cookie.sameSite,
+        domain: req.session.cookie.domain,
+        path: req.session.cookie.path
+      });
       res.json({ success: true, user: req.user });
     });
   } catch (error) {
@@ -171,6 +178,14 @@ router.post('/session', async (req, res) => {
 });
 
 router.get('/user', (req, res) => {
+  console.log('=== /api/auth/user called ===');
+  console.log('Session ID:', req.sessionID);
+  console.log('Session:', req.session);
+  console.log('Is Authenticated:', req.isAuthenticated());
+  console.log('User:', req.user);
+  console.log('Cookies:', req.headers.cookie);
+  console.log('============================');
+  
   if (req.isAuthenticated()) {
     res.json({
       user: {

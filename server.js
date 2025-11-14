@@ -40,7 +40,7 @@ if (!process.env.SESSION_SECRET) {
   process.exit(1);
 }
 
-const isReplit = process.env.REPLIT_DEV_DOMAIN || process.env.REPLIT_DOMAINS;
+const isReplit = !!(process.env.REPLIT_DEV_DOMAIN || process.env.REPLIT_DOMAINS);
 const isProduction = process.env.NODE_ENV === 'production';
 
 app.use(session({
