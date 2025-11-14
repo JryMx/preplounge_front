@@ -21,19 +21,37 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const stored = localStorage.getItem('auth_user');
+    return stored ? JSON.parse(stored) : null;
+  });
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
     try {
+      const storedUser = localStorage.getItem('auth_user');
+      if (storedUser) {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+        setLoading(false);
+        return userData;
+      }
+      
       const response = await fetch(`${getBackendURL()}/api/auth/user`, {
         credentials: 'include',
       });
       const data = await response.json();
-      setUser(data.user || null);
+      if (data.user) {
+        localStorage.setItem('auth_user', JSON.stringify(data.user));
+        setUser(data.user);
+      } else {
+        localStorage.removeItem('auth_user');
+        setUser(null);
+      }
       return data.user;
     } catch (error) {
       console.error('Error checking auth:', error);
+      localStorage.removeItem('auth_user');
       setUser(null);
       return null;
     } finally {
@@ -69,9 +87,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         method: 'POST',
         credentials: 'include',
       });
+      localStorage.removeItem('auth_user');
       setUser(null);
     } catch (error) {
       console.error('Error logging out:', error);
+      localStorage.removeItem('auth_user');
+      setUser(null);
     }
   };
 

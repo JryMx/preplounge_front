@@ -55,10 +55,13 @@ export default function GoogleCallbackPage() {
         const data = await response.json();
         console.log('Session created successfully:', data);
 
+        // Store user in localStorage since cookies are blocked
+        if (data.user) {
+          localStorage.setItem('auth_user', JSON.stringify(data.user));
+        }
+
         // Wait for auth state to update
         await checkAuth();
-        // Small delay to ensure state update propagates to all components
-        await new Promise(resolve => setTimeout(resolve, 100));
         navigate('/dashboard');
       } catch (error) {
         console.error('Error handling OAuth callback:', error);
