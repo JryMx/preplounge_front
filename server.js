@@ -43,6 +43,10 @@ if (!process.env.SESSION_SECRET) {
 const isReplit = !!(process.env.REPLIT_DEV_DOMAIN || process.env.REPLIT_DOMAINS);
 const isProduction = process.env.NODE_ENV === 'production';
 
+if (isProduction || isReplit) {
+  app.set('trust proxy', 1);
+}
+
 const sessionConfig = {
   secret: process.env.SESSION_SECRET,
   resave: false,
