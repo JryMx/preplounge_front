@@ -121,6 +121,11 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   const [loading, setLoading] = useState(true);
   const loadedUserIdRef = useRef<string | null>(null);
 
+  // Helper function to get user-specific storage key
+  const getStorageKey = (userId: string | undefined): string | null => {
+    return userId ? `student_profile_${userId}` : null;
+  };
+
   useEffect(() => {
     // Wait for auth to finish loading
     if (authLoading) {
@@ -147,6 +152,12 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     // Load profile for new user
     const loadProfile = async () => {
       loadedUserIdRef.current = currentUserId;
+      const storageKey = getStorageKey(user.id);
+      
+      if (!storageKey) {
+        setLoading(false);
+        return;
+      }
       
       try {
         const response = await fetch(`${getBackendURL()}/api/profile`, {
@@ -157,11 +168,11 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
           const data = await response.json();
           if (data.profile) {
             // API returned a valid profile - use it
-            localStorage.setItem('student_profile', JSON.stringify(data.profile));
+            localStorage.setItem(storageKey, JSON.stringify(data.profile));
             setProfile(data.profile);
           } else {
             // API returned 200 but no profile - fallback to localStorage
-            const stored = localStorage.getItem('student_profile');
+            const stored = localStorage.getItem(storageKey);
             if (stored) {
               setProfile(JSON.parse(stored));
             } else {
@@ -169,12 +180,12 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
             }
           }
         } else if (response.status === 401) {
-          // Unauthorized - clear profile
+          // Unauthorized - clear THIS user's profile
           setProfile(null);
-          localStorage.removeItem('student_profile');
+          localStorage.removeItem(storageKey);
         } else if (response.status === 403 || response.status === 500) {
           // API not ready or error - fallback to localStorage
-          const stored = localStorage.getItem('student_profile');
+          const stored = localStorage.getItem(storageKey);
           if (stored) {
             setProfile(JSON.parse(stored));
           } else {
@@ -182,7 +193,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
           }
         } else {
           // Other error - fallback to localStorage
-          const stored = localStorage.getItem('student_profile');
+          const stored = localStorage.getItem(storageKey);
           if (stored) {
             setProfile(JSON.parse(stored));
           } else {
@@ -192,7 +203,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       } catch (error) {
         console.error('Error loading profile:', error);
         // Network error - fallback to localStorage
-        const stored = localStorage.getItem('student_profile');
+        const stored = localStorage.getItem(storageKey);
         if (stored) {
           setProfile(JSON.parse(stored));
         } else {
@@ -401,8 +412,11 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     
     setProfile(updatedProfile);
     
-    // Save to localStorage immediately (source of truth)
-    localStorage.setItem('student_profile', JSON.stringify(updatedProfile));
+    // Save to localStorage immediately (source of truth) - use user-specific key
+    const storageKey = getStorageKey(user?.id);
+    if (storageKey) {
+      localStorage.setItem(storageKey, JSON.stringify(updatedProfile));
+    }
     
     // Save to backend (attempt but don't fail if it doesn't work due to cookie blocking)
     try {

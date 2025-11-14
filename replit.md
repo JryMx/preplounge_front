@@ -42,6 +42,7 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 
 ### Temporary Limitations & Migration Path
 - **Favorites Storage**: Currently stored in browser localStorage with per-user keys (`prepLoungeFavorites_${userId}`). Favorites persist across sessions on the same browser/device but not cross-device. When loaning.ai API supports favorites endpoints, the system will migrate to backend storage with localStorage caching. The abstraction layer in `favoritesStorage.ts` is designed for seamless migration.
+- **Student Profile Storage**: Stored in browser localStorage with per-user keys (`student_profile_${userId}`). Each user's profile data (academic info, test scores, extracurriculars, AI recommendations) is isolated by user ID, preventing data contamination when switching accounts. Profiles persist across sessions on the same browser/device. When loaning.ai API's profile endpoint is fully operational, the system uses the backend as the primary source with localStorage as fallback.
 
 ## External Dependencies
 - **loaning.ai Database API**: Remote PostgreSQL database for user authentication and profiles (`https://api-dev.loaning.ai`).
