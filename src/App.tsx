@@ -13,6 +13,7 @@ import SignupPage from './pages/SignupPage';
 import ComparePage from './pages/ComparePage';
 import HousingPage from './pages/HousingPage';
 import UniversityMapPage from './pages/UniversityMapPage';
+import OAuthCallbackPage from './pages/OAuthCallbackPage';
 import { AuthProvider } from './context/AuthContext';
 import { StudentProfileProvider } from './context/StudentProfileContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/housing" element={<HousingPage />} />
+                <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
               </Routes>
             </div>
             </Router>

@@ -28,40 +28,41 @@ router.get('/google/callback', async (req, res) => {
     
     const { accessToken, refreshToken, userId, name, email, success } = req.query;
     
+    const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+    const frontendUrl = replitDomain 
+      ? `https://${replitDomain}`
+      : 'http://localhost:5173';
+    
     if (!accessToken || !userId) {
       console.error('OAuth callback missing required parameters');
       console.error('Available query params:', Object.keys(req.query));
-      return res.redirect('/?error=missing_oauth_data');
+      return res.redirect(`${frontendUrl}/oauth/callback?error=missing_oauth_data`);
     }
     
     if (success === 'false') {
       console.error('OAuth authentication failed on provider side');
-      return res.redirect('/?error=oauth_failed');
+      return res.redirect(`${frontendUrl}/oauth/callback?success=false`);
     }
     
-    req.login({
-      id: userId,
+    const params = new URLSearchParams({
+      accessToken,
+      refreshToken: refreshToken || '',
+      userId,
+      name: name || '',
       email: email || '',
-      displayName: name || '',
       provider: 'google',
-      accessToken: accessToken,
-      refreshToken: refreshToken || ''
-    }, (err) => {
-      if (err) {
-        console.error('Login error:', err);
-        return res.redirect('/?error=session_failed');
-      }
-      
-      console.log('User logged in successfully:', userId);
-      const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
-      const frontendUrl = replitDomain 
-        ? `https://${replitDomain}`
-        : 'http://localhost:5173';
-      res.redirect(frontendUrl);
+      success: 'true'
     });
+    
+    console.log('Redirecting to frontend with OAuth tokens for session creation');
+    res.redirect(`${frontendUrl}/oauth/callback?${params.toString()}`);
   } catch (error) {
     console.error('OAuth callback error:', error);
-    res.redirect('/?error=authentication_failed');
+    const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+    const frontendUrl = replitDomain 
+      ? `https://${replitDomain}`
+      : 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/oauth/callback?error=authentication_failed`);
   }
 });
 
@@ -90,40 +91,41 @@ router.get('/kakao/callback', async (req, res) => {
     
     const { accessToken, refreshToken, userId, name, email, success } = req.query;
     
+    const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+    const frontendUrl = replitDomain 
+      ? `https://${replitDomain}`
+      : 'http://localhost:5173';
+    
     if (!accessToken || !userId) {
       console.error('OAuth callback missing required parameters');
       console.error('Available query params:', Object.keys(req.query));
-      return res.redirect('/?error=missing_oauth_data');
+      return res.redirect(`${frontendUrl}/oauth/callback?error=missing_oauth_data`);
     }
     
     if (success === 'false') {
       console.error('OAuth authentication failed on provider side');
-      return res.redirect('/?error=oauth_failed');
+      return res.redirect(`${frontendUrl}/oauth/callback?success=false`);
     }
     
-    req.login({
-      id: userId,
+    const params = new URLSearchParams({
+      accessToken,
+      refreshToken: refreshToken || '',
+      userId,
+      name: name || '',
       email: email || '',
-      displayName: name || '',
       provider: 'kakao',
-      accessToken: accessToken,
-      refreshToken: refreshToken || ''
-    }, (err) => {
-      if (err) {
-        console.error('Login error:', err);
-        return res.redirect('/?error=session_failed');
-      }
-      
-      console.log('User logged in successfully:', userId);
-      const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
-      const frontendUrl = replitDomain 
-        ? `https://${replitDomain}`
-        : 'http://localhost:5173';
-      res.redirect(frontendUrl);
+      success: 'true'
     });
+    
+    console.log('Redirecting to frontend with OAuth tokens for session creation');
+    res.redirect(`${frontendUrl}/oauth/callback?${params.toString()}`);
   } catch (error) {
     console.error('OAuth callback error:', error);
-    res.redirect('/?error=authentication_failed');
+    const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
+    const frontendUrl = replitDomain 
+      ? `https://${replitDomain}`
+      : 'http://localhost:5173';
+    res.redirect(`${frontendUrl}/oauth/callback?error=authentication_failed`);
   }
 });
 
