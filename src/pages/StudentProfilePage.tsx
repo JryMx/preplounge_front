@@ -1595,67 +1595,92 @@ const StudentProfilePage: React.FC = () => {
                             ? " (160점 만점)"
                             : " (out of 160)")}
                       </label>
-                      <input
-                        type={
-                          academicData.englishProficiencyTest === "Cambridge"
-                            ? "text"
-                            : "number"
-                        }
-                        min={
-                          academicData.englishProficiencyTest === "TOEFL iBT"
-                            ? "0"
-                            : academicData.englishProficiencyTest === "IELTS"
+                      {academicData.englishProficiencyTest === "Cambridge" ? (
+                        <select
+                          value={academicData.englishTestScore}
+                          onChange={(e) =>
+                            handleAcademicChange(
+                              "englishTestScore",
+                              e.target.value,
+                            )
+                          }
+                          className="profile-form-select"
+                          style={{
+                            borderColor: validationErrors.englishTestScore
+                              ? "#EF4444"
+                              : undefined,
+                            boxShadow: validationErrors.englishTestScore
+                              ? "0 0 0 3px rgba(239, 68, 68, 0.1)"
+                              : undefined,
+                          }}
+                        >
+                          <option value="">
+                            {language === "ko"
+                              ? "레벨을 선택하세요"
+                              : "Select level"}
+                          </option>
+                          <option value="A1">A1</option>
+                          <option value="A2">A2</option>
+                          <option value="B1">B1</option>
+                          <option value="B2">B2</option>
+                          <option value="C1">C1</option>
+                          <option value="C2">C2</option>
+                        </select>
+                      ) : (
+                        <input
+                          type="number"
+                          min={
+                            academicData.englishProficiencyTest === "TOEFL iBT"
                               ? "0"
-                              : academicData.englishProficiencyTest ===
-                                  "PTE Academic Test"
-                                ? "10"
+                              : academicData.englishProficiencyTest === "IELTS"
+                                ? "0"
                                 : academicData.englishProficiencyTest ===
-                                    "Duolingo English Test"
+                                    "PTE Academic Test"
                                   ? "10"
-                                  : "0"
-                        }
-                        max={
-                          academicData.englishProficiencyTest === "TOEFL iBT"
-                            ? "120"
-                            : academicData.englishProficiencyTest === "IELTS"
-                              ? "9"
-                              : academicData.englishProficiencyTest ===
-                                  "PTE Academic Test"
-                                ? "90"
+                                  : academicData.englishProficiencyTest ===
+                                      "Duolingo English Test"
+                                    ? "10"
+                                    : "0"
+                          }
+                          max={
+                            academicData.englishProficiencyTest === "TOEFL iBT"
+                              ? "120"
+                              : academicData.englishProficiencyTest === "IELTS"
+                                ? "9"
                                 : academicData.englishProficiencyTest ===
-                                    "Duolingo English Test"
-                                  ? "160"
-                                  : undefined
-                        }
-                        step={
-                          academicData.englishProficiencyTest === "IELTS"
-                            ? "0.5"
-                            : "1"
-                        }
-                        value={academicData.englishTestScore}
-                        onChange={(e) =>
-                          handleAcademicChange(
-                            "englishTestScore",
-                            e.target.value,
-                          )
-                        }
-                        className="profile-form-input"
-                        style={{
-                          borderColor: validationErrors.englishTestScore
-                            ? "#EF4444"
-                            : undefined,
-                          boxShadow: validationErrors.englishTestScore
-                            ? "0 0 0 3px rgba(239, 68, 68, 0.1)"
-                            : undefined,
-                        }}
-                        placeholder={
-                          academicData.englishProficiencyTest === "TOEFL iBT"
-                            ? "105"
-                            : academicData.englishProficiencyTest === "IELTS"
-                              ? "7.5"
-                              : academicData.englishProficiencyTest ===
-                                  "Cambridge"
-                                ? "C1"
+                                    "PTE Academic Test"
+                                  ? "90"
+                                  : academicData.englishProficiencyTest ===
+                                      "Duolingo English Test"
+                                    ? "160"
+                                    : undefined
+                          }
+                          step={
+                            academicData.englishProficiencyTest === "IELTS"
+                              ? "0.5"
+                              : "1"
+                          }
+                          value={academicData.englishTestScore}
+                          onChange={(e) =>
+                            handleAcademicChange(
+                              "englishTestScore",
+                              e.target.value,
+                            )
+                          }
+                          className="profile-form-input"
+                          style={{
+                            borderColor: validationErrors.englishTestScore
+                              ? "#EF4444"
+                              : undefined,
+                            boxShadow: validationErrors.englishTestScore
+                              ? "0 0 0 3px rgba(239, 68, 68, 0.1)"
+                              : undefined,
+                          }}
+                          placeholder={
+                            academicData.englishProficiencyTest === "TOEFL iBT"
+                              ? "105"
+                              : academicData.englishProficiencyTest === "IELTS"
+                                ? "7.5"
                                 : academicData.englishProficiencyTest ===
                                     "PTE Academic Test"
                                   ? "65"
@@ -1663,8 +1688,9 @@ const StudentProfilePage: React.FC = () => {
                                       "Duolingo English Test"
                                     ? "120"
                                     : ""
-                        }
-                      />
+                          }
+                        />
+                      )}
                       {validationErrors.englishTestScore && (
                         <p
                           style={{
