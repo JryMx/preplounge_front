@@ -283,7 +283,7 @@ const HousingPage = () => {
           <div className="housing-features-grid">
             <div className="housing-feature-item" data-testid="feature-location">
               <div className="housing-feature-icon-wrapper location">
-                <MapPin className="h-10 w-10" style={{color: '#F59E0B'}} />
+                <MapPin className="h-10 w-10" style={{color: '#0284C7'}} />
               </div>
               <h3 className="housing-feature-title">
                 {t('housing.features.location.title')}

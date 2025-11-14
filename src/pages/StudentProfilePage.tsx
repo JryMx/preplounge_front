@@ -1192,7 +1192,7 @@ const StudentProfilePage: React.FC = () => {
               },
               {
                 key: "secondarySchoolRank",
-                labelKo: "고등학교 석차",
+                labelKo: "고등학iz� 석차",
                 labelEn: "Secondary school rank",
               },
               {
