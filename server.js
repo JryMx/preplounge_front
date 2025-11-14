@@ -6,7 +6,6 @@ import passportLib from './config/passport.js';
 import { configurePassport, initializeDatabase } from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
-import favoritesRoutes from './routes/favorites.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -75,7 +74,6 @@ app.use(passportLib.session());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
-app.use('/api/favorites', favoritesRoutes);
 
 // Profile analysis endpoint
 app.post('/api/analyze-profile', async (req, res) => {

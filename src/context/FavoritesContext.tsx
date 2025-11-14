@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
-import { getBackendURL } from '../lib/backendUrl';
+import { favoritesStorage } from '../lib/favoritesStorage';
 
 interface FavoritesContextType {
   favorites: string[];
@@ -20,117 +20,34 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
     if (loading) return;
 
     if (user) {
-      fetchFavorites();
+      const loadedFavorites = favoritesStorage.load(user.id);
+      setFavorites(loadedFavorites);
     } else {
       setFavorites([]);
-      localStorage.removeItem('prepLoungeFavorites');
     }
   }, [user, loading]);
 
-  const fetchFavorites = async () => {
-    try {
-      const response = await fetch(`${getBackendURL()}/api/favorites`, {
-        credentials: 'include'
-      });
-      
-      if (response.status === 401) {
-        setFavorites([]);
-        localStorage.removeItem('prepLoungeFavorites');
-        return;
-      }
-      
-      if (response.ok) {
-        const data = await response.json();
-        const favs = data.favorites || [];
-        setFavorites(favs);
-        localStorage.setItem('prepLoungeFavorites', JSON.stringify(favs));
-      } else {
-        console.error('Failed to fetch favorites:', response.status);
-        setFavorites([]);
-      }
-    } catch (error) {
-      console.error('Error fetching favorites:', error);
-      setFavorites([]);
+  useEffect(() => {
+    if (user && favorites.length >= 0) {
+      favoritesStorage.save(user.id, favorites);
     }
-  };
+  }, [favorites, user]);
 
-  const addFavorite = async (universityId: string) => {
+  const addFavorite = (universityId: string) => {
     if (!user) return;
     
     setFavorites(prev => {
       if (!prev.includes(universityId)) {
-        const newFavorites = [...prev, universityId];
-        localStorage.setItem('prepLoungeFavorites', JSON.stringify(newFavorites));
-        return newFavorites;
+        return [...prev, universityId];
       }
       return prev;
     });
-
-    try {
-      const response = await fetch(`${getBackendURL()}/api/favorites`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: JSON.stringify({ universityId })
-      });
-      
-      if (!response.ok) {
-        console.error('Failed to add favorite:', response.status);
-        setFavorites(prev => {
-          const reverted = prev.filter(id => id !== universityId);
-          localStorage.setItem('prepLoungeFavorites', JSON.stringify(reverted));
-          return reverted;
-        });
-      }
-    } catch (error) {
-      console.error('Error adding favorite:', error);
-      setFavorites(prev => {
-        const reverted = prev.filter(id => id !== universityId);
-        localStorage.setItem('prepLoungeFavorites', JSON.stringify(reverted));
-        return reverted;
-      });
-    }
   };
 
-  const removeFavorite = async (universityId: string) => {
+  const removeFavorite = (universityId: string) => {
     if (!user) return;
     
-    setFavorites(prev => {
-      const newFavorites = prev.filter(id => id !== universityId);
-      localStorage.setItem('prepLoungeFavorites', JSON.stringify(newFavorites));
-      return newFavorites;
-    });
-
-    try {
-      const response = await fetch(`${getBackendURL()}/api/favorites/${universityId}`, {
-        method: 'DELETE',
-        credentials: 'include'
-      });
-      
-      if (!response.ok) {
-        console.error('Failed to remove favorite:', response.status);
-        setFavorites(prev => {
-          if (!prev.includes(universityId)) {
-            const reverted = [...prev, universityId];
-            localStorage.setItem('prepLoungeFavorites', JSON.stringify(reverted));
-            return reverted;
-          }
-          return prev;
-        });
-      }
-    } catch (error) {
-      console.error('Error removing favorite:', error);
-      setFavorites(prev => {
-        if (!prev.includes(universityId)) {
-          const reverted = [...prev, universityId];
-          localStorage.setItem('prepLoungeFavorites', JSON.stringify(reverted));
-          return reverted;
-        }
-        return prev;
-      });
-    }
+    setFavorites(prev => prev.filter(id => id !== universityId));
   };
 
   const isFavorite = (universityId: string) => {

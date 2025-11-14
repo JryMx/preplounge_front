@@ -21,7 +21,7 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 - **Internationalization**: Custom `LanguageContext` for translations.
 - **Data Handling**: University data from CSVs stored in `universities.json`.
 - **Infinite Scroll**: Implemented for university and consulting pages.
-- **Favorites System**: Client-side management with `localStorage` persistence.
+- **Favorites System**: Client-side management with per-user `localStorage` persistence (temporary until backend API is available). Uses storage abstraction layer in `favoritesStorage.ts` for easy future migration to backend.
 
 ### Feature Specifications
 - **Authentication System**: OAuth-only authentication (Google, Kakao) integrated with `loaning.ai`'s remote PostgreSQL database. Frontend initiates OAuth flow directly with `https://api-dev.loaning.ai/v1/oauth/{provider}` endpoint, receives tokens via query parameters, and establishes backend sessions via `/api/auth/session` POST endpoint. Features secure token verification, provider identification, bidirectional data transformation (camelCase/snake_case), and session management. Dynamic backend URL detection for Replit environments.
@@ -39,6 +39,9 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 ### System Design Choices
 - The profile score is a deterministic, mathematical calculation based on academic and non-academic components, ensuring transparency.
 - Scores categorize competitiveness from "Exceptional" (90-100) to "Early Stage" (Below 40).
+
+### Temporary Limitations & Migration Path
+- **Favorites Storage**: Currently stored in browser localStorage with per-user keys (`prepLoungeFavorites_${userId}`). Favorites persist across sessions on the same browser/device but not cross-device. When loaning.ai API supports favorites endpoints, the system will migrate to backend storage with localStorage caching. The abstraction layer in `favoritesStorage.ts` is designed for seamless migration.
 
 ## External Dependencies
 - **loaning.ai Database API**: Remote PostgreSQL database for user authentication and profiles (`https://api-dev.loaning.ai`).
