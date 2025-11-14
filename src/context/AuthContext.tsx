@@ -28,39 +28,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
-    setLoading(false); // Set loading to false immediately since we check localStorage synchronously
+    setLoading(false);
     
     try {
-      // Always check localStorage first - it's our source of truth
-      const storedUser = localStorage.getItem('auth_user');
-      if (storedUser) {
-        const userData = JSON.parse(storedUser);
-        setUser(userData);
-        return userData;
-      }
-      
-      // If no localStorage user, check the server
       const response = await fetch(`${getBackendURL()}/api/auth/user`, {
         credentials: 'include',
       });
       const data = await response.json();
+      
       if (data.user) {
         localStorage.setItem('auth_user', JSON.stringify(data.user));
         setUser(data.user);
         return data.user;
       } else {
-        // Don't clear localStorage here - user might have just logged in
+        localStorage.removeItem('auth_user');
         setUser(null);
         return null;
       }
     } catch (error) {
       console.error('Error checking auth:', error);
-      // Don't clear localStorage on error - maintain existing auth state
       const storedUser = localStorage.getItem('auth_user');
       if (storedUser) {
-        const userData = JSON.parse(storedUser);
-        setUser(userData);
-        return userData;
+        try {
+          const userData = JSON.parse(storedUser);
+          setUser(userData);
+          return userData;
+        } catch (parseError) {
+          console.error('Error parsing stored user:', parseError);
+          localStorage.removeItem('auth_user');
+          setUser(null);
+          return null;
+        }
       }
       setUser(null);
       return null;
@@ -105,7 +103,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    checkAuth();
+    const cleanup = async () => {
+      const storedUser = localStorage.getItem('auth_user');
+      if (storedUser) {
+        try {
+          JSON.parse(storedUser);
+        } catch (e) {
+          console.log('Clearing invalid localStorage auth data');
+          localStorage.removeItem('auth_user');
+        }
+      }
+      await checkAuth();
+    };
+    cleanup();
   }, []);
 
   return (
