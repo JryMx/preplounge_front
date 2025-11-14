@@ -2710,7 +2710,7 @@ const StudentProfilePage: React.FC = () => {
                 <Target className="h-12 w-12 mx-auto mb-4 text-gray-300" />
                 <p>
                   {language === "ko"
-                    ? "프로필 점수를 먼저 계산하면 맞춤 학교 추천을 받을 수 있습니다."
+                    ? "프로필 점수를 계산하고 맞춤 학교 추천을 받아보세요."
                     : "Calculate your profile score first to see personalized school recommendations."}
                 </p>
               </div>
