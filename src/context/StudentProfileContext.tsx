@@ -115,13 +115,27 @@ const schoolsDatabase = universitiesData.map((university: any) => {
 });
 
 export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ children }) => {
-  const [profile, setProfile] = useState<StudentProfile | null>(null);
+  const [profile, setProfile] = useState<StudentProfile | null>(() => {
+    const stored = localStorage.getItem('student_profile');
+    return stored ? JSON.parse(stored) : null;
+  });
   const [loading, setLoading] = useState(true);
 
   // Load profile from backend when component mounts
   useEffect(() => {
     const loadProfile = async () => {
+      setLoading(false);
+      
       try {
+        // Always check localStorage first - it's our source of truth
+        const storedProfile = localStorage.getItem('student_profile');
+        if (storedProfile) {
+          const profileData = JSON.parse(storedProfile);
+          setProfile(profileData);
+          return;
+        }
+        
+        // If no localStorage profile, check the server
         const response = await fetch(`${getBackendURL()}/api/profile`, {
           credentials: 'include',
         });
@@ -129,13 +143,18 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         if (response.ok) {
           const data = await response.json();
           if (data.profile) {
+            localStorage.setItem('student_profile', JSON.stringify(data.profile));
             setProfile(data.profile);
           }
         }
       } catch (error) {
         console.error('Error loading profile:', error);
-      } finally {
-        setLoading(false);
+        // Don't clear localStorage on error - maintain existing profile state
+        const storedProfile = localStorage.getItem('student_profile');
+        if (storedProfile) {
+          const profileData = JSON.parse(storedProfile);
+          setProfile(profileData);
+        }
       }
     };
 
@@ -337,7 +356,10 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     
     setProfile(updatedProfile);
     
-    // Save to backend
+    // Save to localStorage immediately (source of truth)
+    localStorage.setItem('student_profile', JSON.stringify(updatedProfile));
+    
+    // Save to backend (attempt but don't fail if it doesn't work due to cookie blocking)
     try {
       await fetch(`${getBackendURL()}/api/profile`, {
         method: 'POST',
@@ -348,7 +370,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         body: JSON.stringify(updatedProfile),
       });
     } catch (error) {
-      console.error('Error saving profile:', error);
+      console.error('Error saving profile to backend:', error);
     }
   };
 
