@@ -28,6 +28,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
+    setLoading(false); // Set loading to false immediately since we check localStorage synchronously
+    
     try {
       // Always check localStorage first - it's our source of truth
       const storedUser = localStorage.getItem('auth_user');
@@ -62,8 +64,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       setUser(null);
       return null;
-    } finally {
-      setLoading(false);
     }
   };
 
