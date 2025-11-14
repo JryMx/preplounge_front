@@ -145,12 +145,26 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
           if (data.profile) {
             localStorage.setItem('student_profile', JSON.stringify(data.profile));
             setProfile(data.profile);
+          } else {
+            const stored = localStorage.getItem('student_profile');
+            if (stored) {
+              setProfile(JSON.parse(stored));
+            }
           }
         } else if (response.status === 401) {
           setProfile(null);
+        } else if (response.status === 403 || response.status === 500) {
+          const stored = localStorage.getItem('student_profile');
+          if (stored) {
+            setProfile(JSON.parse(stored));
+          }
         }
       } catch (error) {
         console.error('Error loading profile:', error);
+        const stored = localStorage.getItem('student_profile');
+        if (stored) {
+          setProfile(JSON.parse(stored));
+        }
       } finally {
         setLoading(false);
       }
