@@ -43,17 +43,24 @@ if (!process.env.SESSION_SECRET) {
 const isReplit = !!(process.env.REPLIT_DEV_DOMAIN || process.env.REPLIT_DOMAINS);
 const isProduction = process.env.NODE_ENV === 'production';
 
-app.use(session({
+const sessionConfig = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: isProduction || isReplit,
+    secure: false,
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: (isProduction || isReplit) ? 'none' : 'lax'
+    sameSite: 'lax'
   }
-}));
+};
+
+if (isProduction || isReplit) {
+  sessionConfig.cookie.secure = true;
+  sessionConfig.cookie.sameSite = 'none';
+}
+
+app.use(session(sessionConfig));
 
 initializeDatabase();
 
