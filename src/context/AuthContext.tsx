@@ -21,15 +21,11 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(() => {
-    const stored = localStorage.getItem('auth_user');
-    return stored ? JSON.parse(stored) : null;
-  });
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   const checkAuth = async () => {
-    setLoading(false);
-    
+    setLoading(true);
     try {
       const response = await fetch(`${getBackendURL()}/api/auth/user`, {
         credentials: 'include',
@@ -47,21 +43,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error('Error checking auth:', error);
-      const storedUser = localStorage.getItem('auth_user');
-      if (storedUser) {
-        try {
-          const userData = JSON.parse(storedUser);
-          setUser(userData);
-          return userData;
-        } catch (parseError) {
-          console.error('Error parsing stored user:', parseError);
-          localStorage.removeItem('auth_user');
-          setUser(null);
-          return null;
-        }
-      }
+      localStorage.removeItem('auth_user');
       setUser(null);
       return null;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -93,11 +79,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         method: 'POST',
         credentials: 'include',
       });
-      localStorage.removeItem('auth_user');
-      setUser(null);
     } catch (error) {
       console.error('Error logging out:', error);
+    } finally {
       localStorage.removeItem('auth_user');
+      localStorage.removeItem('student_profile');
+      
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('prepLoungeFavorites_')) {
+          localStorage.removeItem(key);
+        }
+      });
+      
       setUser(null);
     }
   };

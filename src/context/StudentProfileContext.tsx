@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import universitiesData from '../data/universities.json';
 import { getBackendURL } from '../lib/backendUrl';
+import { useAuth } from './AuthContext';
 
 export interface StudentProfile {
   // Academic Inputs
@@ -115,27 +116,26 @@ const schoolsDatabase = universitiesData.map((university: any) => {
 });
 
 export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ children }) => {
-  const [profile, setProfile] = useState<StudentProfile | null>(() => {
-    const stored = localStorage.getItem('student_profile');
-    return stored ? JSON.parse(stored) : null;
-  });
+  const { user, loading: authLoading } = useAuth();
+  const [profile, setProfile] = useState<StudentProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Load profile from backend when component mounts
   useEffect(() => {
-    const loadProfile = async () => {
+    setProfile(null);
+    
+    if (authLoading) {
+      setLoading(true);
+      return;
+    }
+
+    if (!user) {
       setLoading(false);
-      
+      return;
+    }
+
+    const loadProfile = async () => {
+      setLoading(true);
       try {
-        // Always check localStorage first - it's our source of truth
-        const storedProfile = localStorage.getItem('student_profile');
-        if (storedProfile) {
-          const profileData = JSON.parse(storedProfile);
-          setProfile(profileData);
-          return;
-        }
-        
-        // If no localStorage profile, check the server
         const response = await fetch(`${getBackendURL()}/api/profile`, {
           credentials: 'include',
         });
@@ -146,20 +146,18 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
             localStorage.setItem('student_profile', JSON.stringify(data.profile));
             setProfile(data.profile);
           }
+        } else if (response.status === 401) {
+          setProfile(null);
         }
       } catch (error) {
         console.error('Error loading profile:', error);
-        // Don't clear localStorage on error - maintain existing profile state
-        const storedProfile = localStorage.getItem('student_profile');
-        if (storedProfile) {
-          const profileData = JSON.parse(storedProfile);
-          setProfile(profileData);
-        }
+      } finally {
+        setLoading(false);
       }
     };
 
     loadProfile();
-  }, []);
+  }, [user, authLoading]);
 
   const calculateProfileScore = (profileData: Partial<StudentProfile>): number => {
     let score = 0;
