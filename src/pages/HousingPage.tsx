@@ -311,7 +311,7 @@ const HousingPage = () => {
 
             <div className="housing-feature-item" data-testid="feature-expert">
               <div className="housing-feature-icon-wrapper expert">
-                <Users className="h-10 w-10" style={{color: '#F59E0B'}} />
+                <Users className="h-10 w-10" style={{color: '#C2410C'}} />
               </div>
               <h3 className="housing-feature-title">
                 {t('housing.features.expert.title')}
