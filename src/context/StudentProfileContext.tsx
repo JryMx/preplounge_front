@@ -80,6 +80,7 @@ interface StudentProfileContextType {
   getRecommendations: () => SchoolRecommendation[];
   searchSchools: (query: string, currentLanguage?: string) => SchoolSearchResult[];
   loading: boolean;
+  error: string | null;
 }
 
 export interface SchoolSearchResult {
@@ -119,12 +120,8 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   const { user, loading: authLoading } = useAuth();
   const [profile, setProfile] = useState<StudentProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const loadedUserIdRef = useRef<string | null>(null);
-
-  // Helper function to get user-specific storage key
-  const getStorageKey = (userId: string | undefined): string | null => {
-    return userId ? `student_profile_${userId}` : null;
-  };
 
   useEffect(() => {
     // Wait for auth to finish loading
@@ -152,63 +149,43 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     // Load profile for new user
     const loadProfile = async () => {
       loadedUserIdRef.current = currentUserId;
-      const storageKey = getStorageKey(user.id);
-      
-      if (!storageKey) {
-        setLoading(false);
-        return;
-      }
+      setError(null); // Clear previous errors
       
       try {
+        console.log('[StudentProfileContext] Loading profile from API for user:', user.id);
         const response = await fetch(`${getBackendURL()}/api/profile`, {
           credentials: 'include',
         });
         
         if (response.ok) {
           const data = await response.json();
+          console.log('[StudentProfileContext] Profile loaded from API:', data);
           if (data.profile) {
-            // API returned a valid profile - use it
-            localStorage.setItem(storageKey, JSON.stringify(data.profile));
             setProfile(data.profile);
+            setError(null);
           } else {
-            // API returned 200 but no profile - fallback to localStorage
-            const stored = localStorage.getItem(storageKey);
-            if (stored) {
-              setProfile(JSON.parse(stored));
-            } else {
-              setProfile(null);
-            }
+            // API returned 200 but no profile exists on server - this is OK, user hasn't created profile yet
+            console.log('[StudentProfileContext] No profile found on server');
+            setProfile(null);
+            setError(null);
           }
         } else if (response.status === 401) {
-          // Unauthorized - clear THIS user's profile
+          // Unauthorized - user not logged in, clear profile
+          console.error('[StudentProfileContext] Unauthorized - user not logged in');
           setProfile(null);
-          localStorage.removeItem(storageKey);
-        } else if (response.status === 403 || response.status === 500) {
-          // API not ready or error - fallback to localStorage
-          const stored = localStorage.getItem(storageKey);
-          if (stored) {
-            setProfile(JSON.parse(stored));
-          } else {
-            setProfile(null);
-          }
+          setError('Please log in to view your profile');
         } else {
-          // Other error - fallback to localStorage
-          const stored = localStorage.getItem(storageKey);
-          if (stored) {
-            setProfile(JSON.parse(stored));
-          } else {
-            setProfile(null);
-          }
+          // API error - preserve current profile, surface error
+          const errorMsg = `Failed to load profile from server (Error ${response.status})`;
+          console.error('[StudentProfileContext] API error:', response.status);
+          setError(errorMsg);
+          // Don't clear profile - preserve in-memory state
         }
       } catch (error) {
-        console.error('Error loading profile:', error);
-        // Network error - fallback to localStorage
-        const stored = localStorage.getItem(storageKey);
-        if (stored) {
-          setProfile(JSON.parse(stored));
-        } else {
-          setProfile(null);
-        }
+        console.error('[StudentProfileContext] Error loading profile:', error);
+        // Network error - preserve current profile, surface error
+        setError('Network error: Unable to connect to server');
+        // Don't clear profile - preserve in-memory state
       } finally {
         setLoading(false);
       }
@@ -412,15 +389,10 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     
     setProfile(updatedProfile);
     
-    // Save to localStorage immediately (source of truth) - use user-specific key
-    const storageKey = getStorageKey(user?.id);
-    if (storageKey) {
-      localStorage.setItem(storageKey, JSON.stringify(updatedProfile));
-    }
-    
-    // Save to backend (attempt but don't fail if it doesn't work due to cookie blocking)
+    // Save to backend API (loaning.ai server - source of truth)
     try {
-      await fetch(`${getBackendURL()}/api/profile`, {
+      console.log('[StudentProfileContext] Saving profile to API:', updatedProfile);
+      const response = await fetch(`${getBackendURL()}/api/profile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -428,8 +400,22 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
         credentials: 'include',
         body: JSON.stringify(updatedProfile),
       });
+      
+      if (!response.ok) {
+        console.error('[StudentProfileContext] Failed to save profile to API:', response.status);
+        const errorMsg = `Failed to save profile to server (Error ${response.status})`;
+        setError(errorMsg);
+        throw new Error(errorMsg);
+      }
+      
+      console.log('[StudentProfileContext] Profile saved successfully to API');
+      setError(null); // Clear any previous errors on success
     } catch (error) {
-      console.error('Error saving profile to backend:', error);
+      console.error('[StudentProfileContext] Error saving profile to backend:', error);
+      const errorMsg = error instanceof Error ? error.message : 'Network error: Unable to save profile';
+      setError(errorMsg);
+      // Re-throw error so UI can handle it
+      throw error;
     }
   };
 
@@ -524,6 +510,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     getRecommendations,
     searchSchools,
     loading,
+    error,
   };
 
   return (
