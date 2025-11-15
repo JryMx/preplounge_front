@@ -124,8 +124,11 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   const loadedUserIdRef = useRef<string | null>(null);
 
   useEffect(() => {
+    console.log('[StudentProfileContext] useEffect triggered - authLoading:', authLoading, 'user:', user?.id, 'loadedUserIdRef:', loadedUserIdRef.current);
+    
     // Wait for auth to finish loading
     if (authLoading) {
+      console.log('[StudentProfileContext] Auth still loading, skipping...');
       return;
     }
 
@@ -133,6 +136,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
 
     // If no user, clear profile and stop loading
     if (!user) {
+      console.log('[StudentProfileContext] No user logged in, clearing profile');
       if (loadedUserIdRef.current !== null) {
         setProfile(null);
         loadedUserIdRef.current = null;
@@ -143,16 +147,19 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
 
     // Skip if already loaded for this user
     if (loadedUserIdRef.current === currentUserId) {
+      console.log('[StudentProfileContext] Profile already loaded for this user, skipping');
+      setLoading(false);
       return;
     }
 
     // Load profile for new user
+    console.log('[StudentProfileContext] Starting profile load for user:', currentUserId);
     const loadProfile = async () => {
       loadedUserIdRef.current = currentUserId;
       setError(null); // Clear previous errors
       
       try {
-        console.log('[StudentProfileContext] Loading profile from API for user:', user.id);
+        console.log('[StudentProfileContext] Fetching profile from API for user:', user.id);
         const response = await fetch(`${getBackendURL()}/api/profile`, {
           credentials: 'include',
         });
