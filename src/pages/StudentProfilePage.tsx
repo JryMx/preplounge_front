@@ -885,8 +885,9 @@ const StudentProfilePage: React.FC = () => {
       setAiAnalysis(data.analysis);
       
       // Save AI analysis to profile context for persistence
-      // Use fresh recommendations if available, otherwise use captured current recommendations
+      // Must provide full profile data to avoid resetting other fields
       updateProfile({
+        ...profileData,
         aiAnalysis: data.analysis,
         recommendations: freshRecommendationsRef.current.length > 0 
           ? freshRecommendationsRef.current 
