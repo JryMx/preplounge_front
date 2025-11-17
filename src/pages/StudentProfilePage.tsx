@@ -90,7 +90,7 @@ const findUniversityId = (bilingualName: string): string | null => {
 };
 
 const StudentProfilePage: React.FC = () => {
-  const { profile, updateProfile, calculateProfileScore, searchSchools } =
+  const { profile, updateProfile, searchSchools } =
     useStudentProfile();
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -986,31 +986,10 @@ const StudentProfilePage: React.FC = () => {
   const searchResults = searchQuery.trim()
     ? searchSchools(searchQuery, language)
     : [];
-  const currentScore = calculateProfileScore({
-    ...academicData,
-    ...nonAcademicData,
-    extracurriculars,
-    recommendationLetters,
-    gpa: parseFloat(academicData.gpa) || 0,
-    satEBRW:
-      academicData.standardizedTest === "SAT"
-        ? parseInt(academicData.satEBRW) || 0
-        : 0,
-    satMath:
-      academicData.standardizedTest === "SAT"
-        ? parseInt(academicData.satMath) || 0
-        : 0,
-    actScore:
-      academicData.standardizedTest === "ACT"
-        ? parseInt(academicData.actScore) || 0
-        : 0,
-    apCourses: 0,
-    ibScore: 0,
-    toeflScore:
-      academicData.englishProficiencyTest === "TOEFL iBT"
-        ? parseInt(academicData.englishTestScore) || 0
-        : 0,
-  });
+  
+  // Use saved profile score (frozen) instead of recalculating from current inputs
+  // This ensures the score stays fixed until user explicitly clicks "Save Profile" again
+  const displayScore = profile?.profileScore || 0;
 
   return (
     <div className="student-profile-page">
@@ -1112,7 +1091,7 @@ const StudentProfilePage: React.FC = () => {
                     </span>
                     <div className="profile-calculator-score-display score-pop-in">
                       <span className="profile-calculator-score-value">
-                        {currentScore}
+                        {displayScore}
                       </span>
                       <span className="profile-calculator-score-total">
                         /100
@@ -1121,26 +1100,26 @@ const StudentProfilePage: React.FC = () => {
                   </div>
                   <p className="profile-calculator-description">
                     {language === "ko"
-                      ? currentScore === 0
+                      ? displayScore === 0
                         ? "개선 필요"
-                        : currentScore >= 90
+                        : displayScore >= 90
                           ? "우수함"
-                          : currentScore >= 80
+                          : displayScore >= 80
                             ? "매우 좋음"
-                            : currentScore >= 70
+                            : displayScore >= 70
                               ? "좋음"
-                              : currentScore >= 60
+                              : displayScore >= 60
                                 ? "보통"
                                 : "개선 필요"
-                      : currentScore === 0
+                      : displayScore === 0
                         ? "Needs Improvement"
-                        : currentScore >= 90
+                        : displayScore >= 90
                           ? "Excellent"
-                          : currentScore >= 80
+                          : displayScore >= 80
                             ? "Very Good"
-                            : currentScore >= 70
+                            : displayScore >= 70
                               ? "Good"
-                              : currentScore >= 60
+                              : displayScore >= 60
                                 ? "Fair"
                                 : "Needs Improvement"}
                   </p>
