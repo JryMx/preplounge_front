@@ -103,10 +103,10 @@ router.post('/', requireAuth, async (req, res) => {
     const frontendProfile = req.body;
     const apiProfile = frontendToApi(frontendProfile);
     
-    // Log payload size for debugging
+    // Log payload for debugging
     const payloadSize = JSON.stringify(apiProfile).length;
     console.log(`Payload size: ${payloadSize} bytes (${(payloadSize / 1024).toFixed(2)} KB)`);
-    console.log('Recommendations count:', apiProfile.recommendations?.length || 0);
+    console.log('Payload to loaning.ai:', JSON.stringify(apiProfile, null, 2));
     
     const response = await fetch(`https://api-dev.loaning.ai/v1/user/${req.user.id}/profile`, {
       method: 'PUT',
