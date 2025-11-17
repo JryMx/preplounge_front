@@ -460,15 +460,45 @@ const StudentProfilePage: React.FC = () => {
       return;
     }
 
+    // Require test scores (SAT or ACT)
+    if (!academicData.standardizedTest || academicData.standardizedTest === "") {
+      setApiError(
+        language === "ko"
+          ? "대학 추천을 받으려면 SAT 또는 ACT 점수가 필요합니다."
+          : "Test scores (SAT or ACT) are required to receive university recommendations.",
+      );
+      setShowResults(true);
+      setTimeout(() => {
+        schoolRecommendationsRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+      return;
+    }
+
     // Validate SAT scores if SAT is selected
     if (academicData.standardizedTest === "SAT") {
       const satEBRW = parseInt(academicData.satEBRW);
       const satMath = parseInt(academicData.satMath);
 
-      if (
-        academicData.satEBRW &&
-        (isNaN(satEBRW) || satEBRW < 200 || satEBRW > 800)
-      ) {
+      if (!academicData.satEBRW || academicData.satEBRW === "") {
+        setApiError(
+          language === "ko"
+            ? "SAT EBRW 점수를 입력해주세요."
+            : "SAT EBRW score is required.",
+        );
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+        return;
+      }
+
+      if (isNaN(satEBRW) || satEBRW < 200 || satEBRW > 800) {
         setApiError(
           language === "ko"
             ? "SAT EBRW 점수는 200과 800 사이여야 합니다."
@@ -484,10 +514,23 @@ const StudentProfilePage: React.FC = () => {
         return;
       }
 
-      if (
-        academicData.satMath &&
-        (isNaN(satMath) || satMath < 200 || satMath > 800)
-      ) {
+      if (!academicData.satMath || academicData.satMath === "") {
+        setApiError(
+          language === "ko"
+            ? "SAT Math 점수를 입력해주세요."
+            : "SAT Math score is required.",
+        );
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+        return;
+      }
+
+      if (isNaN(satMath) || satMath < 200 || satMath > 800) {
         setApiError(
           language === "ko"
             ? "SAT Math 점수는 200과 800 사이여야 합니다."
@@ -507,7 +550,24 @@ const StudentProfilePage: React.FC = () => {
     // Validate ACT score if ACT is selected
     if (academicData.standardizedTest === "ACT") {
       const act = parseInt(academicData.actScore);
-      if (academicData.actScore && (isNaN(act) || act < 1 || act > 36)) {
+      
+      if (!academicData.actScore || academicData.actScore === "") {
+        setApiError(
+          language === "ko"
+            ? "ACT 점수를 입력해주세요."
+            : "ACT score is required.",
+        );
+        setShowResults(true);
+        setTimeout(() => {
+          schoolRecommendationsRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+        return;
+      }
+      
+      if (isNaN(act) || act < 1 || act > 36) {
         setApiError(
           language === "ko"
             ? "ACT 점수는 1과 36 사이여야 합니다."
@@ -1398,7 +1458,8 @@ const StudentProfilePage: React.FC = () => {
 
                   <div className="profile-form-group full-width">
                     <label className="profile-form-label">
-                      {language === "ko" ? "입학 시험" : "Standardized Test"}
+                      {language === "ko" ? "입학 시험" : "Standardized Test"}{" "}
+                      <span className="required-asterisk">*</span>
                     </label>
                     <select
                       value={academicData.standardizedTest}
@@ -1409,8 +1470,8 @@ const StudentProfilePage: React.FC = () => {
                     >
                       <option value="">
                         {language === "ko"
-                          ? "시험을 선택하세요 (선택사항)"
-                          : "Select a test (optional)"}
+                          ? "시험을 선택하세요 (필수)"
+                          : "Select a test (required)"}
                       </option>
                       <option value="SAT">SAT</option>
                       <option value="ACT">ACT</option>
@@ -1423,7 +1484,8 @@ const StudentProfilePage: React.FC = () => {
                         <label className="profile-form-label">
                           {language === "ko"
                             ? "SAT EBRW (800점 만점)"
-                            : "SAT EBRW (out of 800)"}
+                            : "SAT EBRW (out of 800)"}{" "}
+                          <span className="required-asterisk">*</span>
                         </label>
                         <input
                           type="number"
@@ -1462,7 +1524,8 @@ const StudentProfilePage: React.FC = () => {
                         <label className="profile-form-label">
                           {language === "ko"
                             ? "SAT Math (800점 만점)"
-                            : "SAT Math (out of 800)"}
+                            : "SAT Math (out of 800)"}{" "}
+                          <span className="required-asterisk">*</span>
                         </label>
                         <input
                           type="number"
@@ -1504,7 +1567,8 @@ const StudentProfilePage: React.FC = () => {
                       <label className="profile-form-label">
                         {language === "ko"
                           ? "ACT 점수 (36점 만점)"
-                          : "ACT Score (out of 36)"}
+                          : "ACT Score (out of 36)"}{" "}
+                        <span className="required-asterisk">*</span>
                       </label>
                       <input
                         type="number"
