@@ -33,6 +33,7 @@ export interface StudentProfile {
   profileScore: number;
   profileRigorScore: number;
   recommendations: SchoolRecommendation[];
+  aiAnalysis?: AIAnalysisResult; // AI-generated profile analysis (strengths/weaknesses)
 }
 
 export interface ApplicationComponents {
@@ -71,6 +72,11 @@ export interface SchoolRecommendation {
   admissionChance: number;
   strengthenAreas: string[];
   qualityScore?: number; // Quality score from API for sorting
+}
+
+export interface AIAnalysisResult {
+  strengths: string[];
+  weaknesses: string[];
 }
 
 interface StudentProfileContextType {
