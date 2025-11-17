@@ -443,6 +443,15 @@ const ProfileCalculatorPage: React.FC = () => {
 
                 <Link
                   to="/student-profile"
+                  state={{
+                    prefilledData: {
+                      gpa,
+                      testType,
+                      satEBRW,
+                      satMath,
+                      actScore
+                    }
+                  }}
                   className="profile-calculator-button"
                   style={{ marginTop: '30px' }}
                   data-testid="button-full-analysis"
