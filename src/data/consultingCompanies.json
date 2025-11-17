@@ -642,29 +642,25 @@
       "email": "contact@harvestacademy.kr",
       "website": "https://harvestacademy.kr/"
     }
-  }
+  },
   {
     "id": "company-22",
     "name": "블루키프렙",
-    "location": "서울특별시 양천구 목동로 19길 11 4층 252호",
+    "location": "서울특별시 강남구 압구정로30길 16 3층",
     "specialties": [
       "집중 컨설팅",
       "대외활동",
-      "에세이 작성",
-      "인턴십",
-      "연구활동"
+      "대회"
     ],
     "tags": [
       "집중 컨설팅",
       "대외활동",
-      "에세이 작성",
-      "인턴십",
-      "연구활동"
+      "대회"
     ],
     "contact": {
-      "phone": "02-6954-2055",
-      "email": "contact@harvestacademy.kr",
-      "website": "https://harvestacademy.kr/"
+      "phone": "02-548-2228",
+      "email": "bluekeyprep@gmail.com",
+      "website": "https://bluekeyprep.com/"
     }
   }
 ]

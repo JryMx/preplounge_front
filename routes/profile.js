@@ -95,6 +95,12 @@ router.get('/', requireAuth, async (req, res) => {
 // Save or update user's profile
 router.post('/', requireAuth, async (req, res) => {
   try {
+    console.log('=== POST /api/profile called ===');
+    console.log('Session ID:', req.sessionID);
+    console.log('Is Authenticated:', req.isAuthenticated());
+    console.log('User:', req.user);
+    console.log('================================');
+    
     const frontendProfile = req.body;
     const apiProfile = frontendToApi(frontendProfile);
     
