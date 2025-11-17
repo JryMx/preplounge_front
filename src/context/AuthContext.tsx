@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useRef, useCallback } from 'react';
 import { getBackendURL } from '../lib/backendUrl';
 
 interface User {
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const isCheckingAuthRef = useRef(false);
 
-  const checkAuth = async () => {
+  const checkAuth = useCallback(async () => {
     console.log('[AuthContext] checkAuth called - isCheckingAuth:', isCheckingAuthRef.current);
     
     // Prevent multiple simultaneous auth checks using ref (not state)
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isCheckingAuthRef.current = false;
       console.log('[AuthContext] Auth check complete');
     }
-  };
+  }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
