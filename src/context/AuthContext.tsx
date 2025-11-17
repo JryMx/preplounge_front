@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react';
 import { getBackendURL } from '../lib/backendUrl';
 
 interface User {
@@ -23,14 +23,27 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const isCheckingAuthRef = useRef(false);
 
   const checkAuth = async () => {
+    console.log('[AuthContext] checkAuth called - isCheckingAuth:', isCheckingAuthRef.current);
+    
+    // Prevent multiple simultaneous auth checks using ref (not state)
+    if (isCheckingAuthRef.current) {
+      console.log('[AuthContext] Auth check already in progress, skipping');
+      return;
+    }
+    
+    isCheckingAuthRef.current = true;
     setLoading(true);
     try {
+      console.log('[AuthContext] Fetching /api/auth/user');
       const response = await fetch(`${getBackendURL()}/api/auth/user`, {
         credentials: 'include',
       });
       const data = await response.json();
+      
+      console.log('[AuthContext] Auth response:', data.user ? 'User found' : 'No user');
       
       if (data.user) {
         localStorage.setItem('auth_user', JSON.stringify(data.user));
@@ -42,12 +55,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return null;
       }
     } catch (error) {
-      console.error('Error checking auth:', error);
+      console.error('[AuthContext] Error checking auth:', error);
       localStorage.removeItem('auth_user');
       setUser(null);
       return null;
     } finally {
       setLoading(false);
+      isCheckingAuthRef.current = false;
+      console.log('[AuthContext] Auth check complete');
     }
   };
 
