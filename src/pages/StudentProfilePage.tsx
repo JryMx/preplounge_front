@@ -255,48 +255,6 @@ const StudentProfilePage: React.FC = () => {
     }
   }, [profile?.aiAnalysis]);
 
-  // Restore form fields from profile when navigating back
-  useEffect(() => {
-    if (profile && !prefilledData) {
-      // Only restore if we're not using prefilled data from calculator
-      setAcademicData({
-        gpa: profile.gpa?.toString() || "",
-        highSchoolType: "",
-        standardizedTest:
-          profile.satEBRW && profile.satMath
-            ? "SAT"
-            : profile.actScore
-              ? "ACT"
-              : "",
-        satEBRW: profile.satEBRW?.toString() || "",
-        satMath: profile.satMath?.toString() || "",
-        actScore: profile.actScore?.toString() || "",
-        englishProficiencyTest: profile.toeflScore ? "TOEFL iBT" : "",
-        englishTestScore: profile.toeflScore?.toString() || "",
-        intendedMajor: profile.intendedMajor || "",
-      });
-
-      setNonAcademicData({
-        personalStatement: profile.personalStatement || "",
-        legacyStatus: profile.legacyStatus || false,
-        citizenship: profile.citizenship || "domestic",
-      });
-
-      setExtracurriculars(profile.extracurriculars || []);
-      setRecommendationLetters(profile.recommendationLetters || []);
-      setApplicationComponents(profile.applicationComponents || {
-        secondarySchoolGPA: false,
-        secondarySchoolRank: false,
-        secondarySchoolRecord: false,
-        collegePrepProgram: false,
-        recommendations: false,
-        extracurricularActivities: false,
-        essay: false,
-        testScores: false,
-      });
-    }
-  }, [profile, prefilledData]);
-
   const handleAcademicChange = (field: string, value: string) => {
     // Update the value
     setAcademicData((prev) => ({ ...prev, [field]: value }));
