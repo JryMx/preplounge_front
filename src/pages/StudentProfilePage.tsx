@@ -246,6 +246,13 @@ const StudentProfilePage: React.FC = () => {
     }
   }, [profile?.recommendations, location.state]);
 
+  // Restore AI analysis when navigating back
+  useEffect(() => {
+    if (profile?.aiAnalysis) {
+      setAiAnalysis(profile.aiAnalysis);
+    }
+  }, [profile?.aiAnalysis]);
+
   const handleAcademicChange = (field: string, value: string) => {
     // Update the value
     setAcademicData((prev) => ({ ...prev, [field]: value }));
@@ -868,6 +875,11 @@ const StudentProfilePage: React.FC = () => {
 
       const data = await response.json();
       setAiAnalysis(data.analysis);
+      
+      // Save AI analysis to profile context for persistence
+      updateProfile({
+        aiAnalysis: data.analysis
+      });
     } catch (error) {
       console.error("Error generating analysis:", error);
       const errorMessage =
