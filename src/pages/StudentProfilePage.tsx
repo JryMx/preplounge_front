@@ -18,6 +18,7 @@ import {
   ExtracurricularActivity,
   RecommendationLetter,
   ApplicationComponents,
+  SchoolRecommendation,
 } from "../context/StudentProfileContext";
 import { useLanguage } from "../context/LanguageContext";
 import universitiesData from "../data/universities.json";
@@ -97,6 +98,7 @@ const StudentProfilePage: React.FC = () => {
 
   const profileScoreRef = useRef<HTMLDivElement>(null);
   const schoolRecommendationsRef = useRef<HTMLDivElement>(null);
+  const freshRecommendationsRef = useRef<SchoolRecommendation[]>([]);
   const [activeTab, setActiveTab] = useState<"academic" | "non-academic">(
     "academic",
   );
@@ -437,6 +439,9 @@ const StudentProfilePage: React.FC = () => {
   };
 
   const handleSaveProfile = async () => {
+    // Capture current recommendations before async operations to avoid stale data
+    const currentRecommendations = profile?.recommendations || [];
+    
     // Validate inputs before submission
     const gpa = parseFloat(academicData.gpa);
     if (isNaN(gpa) || gpa < 0 || gpa > 4.0) {
@@ -822,6 +827,9 @@ const StudentProfilePage: React.FC = () => {
         `Unique schools after deduplication: ${uniqueRecommendations.length}`,
       );
 
+      // Store fresh recommendations in ref for use when saving AI analysis later
+      freshRecommendationsRef.current = uniqueRecommendations;
+
       updateProfile({
         ...profileData,
         recommendations: uniqueRecommendations,
@@ -877,8 +885,12 @@ const StudentProfilePage: React.FC = () => {
       setAiAnalysis(data.analysis);
       
       // Save AI analysis to profile context for persistence
+      // Use fresh recommendations if available, otherwise use captured current recommendations
       updateProfile({
-        aiAnalysis: data.analysis
+        aiAnalysis: data.analysis,
+        recommendations: freshRecommendationsRef.current.length > 0 
+          ? freshRecommendationsRef.current 
+          : currentRecommendations
       });
     } catch (error) {
       console.error("Error generating analysis:", error);
