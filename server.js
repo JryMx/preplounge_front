@@ -1,12 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
+import pg from 'pg';
+import connectPgSimple from 'connect-pg-simple';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import passportLib from './config/passport.js';
 import { configurePassport, initializeDatabase } from './config/passport.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 import favoritesRoutes from './routes/favorites.js';
+
+const PgSession = connectPgSimple(session);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -49,6 +53,11 @@ if (isProduction || isReplit) {
 }
 
 const sessionConfig = {
+  store: new PgSession({
+    conString: process.env.DATABASE_URL,
+    createTableIfMissing: true,
+    pruneSessionInterval: 60 * 15
+  }),
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
