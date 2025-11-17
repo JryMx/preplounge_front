@@ -59,8 +59,7 @@ const frontendToApi = (frontendProfile) => {
     volunteering: frontendProfile.volunteering || [],
     awards: frontendProfile.awards || [],
     profile_score: frontendProfile.profileScore || 0,
-    profile_rigor_score: frontendProfile.profileRigorScore || 0,
-    recommendations: frontendProfile.recommendations || []
+    profile_rigor_score: frontendProfile.profileRigorScore || 0
   };
 };
 
@@ -103,6 +102,11 @@ router.post('/', requireAuth, async (req, res) => {
     
     const frontendProfile = req.body;
     const apiProfile = frontendToApi(frontendProfile);
+    
+    // Log payload size for debugging
+    const payloadSize = JSON.stringify(apiProfile).length;
+    console.log(`Payload size: ${payloadSize} bytes (${(payloadSize / 1024).toFixed(2)} KB)`);
+    console.log('Recommendations count:', apiProfile.recommendations?.length || 0);
     
     const response = await fetch(`https://api-dev.loaning.ai/v1/user/${req.user.id}/profile`, {
       method: 'PUT',
