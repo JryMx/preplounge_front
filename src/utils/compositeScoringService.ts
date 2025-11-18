@@ -129,8 +129,8 @@ export const estimateCompositePercentile = (
   weightTest: number = 0.5,
   weightGPA: number = 0.5
 ): CompositeResult => {
-  const usingSAT = satScore !== undefined && satScore !== null;
-  const usingACT = actScore !== undefined && actScore !== null;
+  const usingSAT = satScore !== undefined && satScore !== null && satScore > 0;
+  const usingACT = actScore !== undefined && actScore !== null && actScore > 0;
   
   if (usingSAT && usingACT) {
     throw new Error('Provide only one of satScore or actScore, not both.');
@@ -181,7 +181,7 @@ export const describeCompetitiveness = (
   const weakerRounded = nApplicants - strongerRounded;
   
   let bandPhrase: string;
-  if (percentilePct >= 50) {
+  if (percentilePct > 50) {
     const topPct = Math.round(100 - percentilePct);
     bandPhrase = `Top ${topPct}%`;
   } else {
@@ -211,7 +211,7 @@ export const describeCompetitivenessKorean = (
   const weakerRounded = nApplicants - strongerRounded;
   
   let bandPhrase: string;
-  if (percentilePct >= 50) {
+  if (percentilePct > 50) {
     const topPct = Math.round(100 - percentilePct);
     bandPhrase = `상위 ${topPct}%`;
   } else {

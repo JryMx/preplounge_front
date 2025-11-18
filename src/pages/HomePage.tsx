@@ -1064,7 +1064,7 @@ const HomePage: React.FC = () => {
                     }}>
                       {(() => {
                         const topPercent = Math.round(100 - animatedScore);
-                        if (animatedScore >= 50) {
+                        if (animatedScore > 50) {
                           return language === 'ko' 
                             ? `상위 ${topPercent}%`
                             : `Top ${topPercent}%`;

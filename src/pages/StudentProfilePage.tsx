@@ -1122,7 +1122,7 @@ const StudentProfilePage: React.FC = () => {
                       }}>
                         {(() => {
                           const topPercent = Math.round(100 - displayScore);
-                          if (displayScore >= 50) {
+                          if (displayScore > 50) {
                             return language === 'ko' 
                               ? `상위 ${topPercent}%`
                               : `Top ${topPercent}%`;
