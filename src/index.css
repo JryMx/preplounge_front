@@ -102,3 +102,9 @@ body {
 .thumb-right {
   z-index: 4;
 }
+
+/* Tooltip hover effect */
+.info-tooltip-trigger:hover .info-tooltip {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}

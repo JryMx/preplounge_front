@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Target, Users, BookOpen, Trophy, Globe, Loader2 } from 'lucide-react';
+import { Search, Target, Users, BookOpen, Trophy, Globe, Loader2, HelpCircle } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import { useLanguage } from '../context/LanguageContext';
@@ -1050,8 +1050,60 @@ const HomePage: React.FC = () => {
               <div className="profile-calculator-results fade-in">
                 <div className="score-preview-box" style={{ marginTop: 0, marginBottom: '24px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '20px' }}>
-                    <div className="score-preview-label">
-                      {language === 'ko' ? '경쟁력 분석' : 'Competitive Analysis'}
+                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <div className="score-preview-label">
+                        {language === 'ko' ? '경쟁력 분석' : 'Competitive Analysis'}
+                      </div>
+                      <div 
+                        className="info-tooltip-trigger"
+                        style={{ 
+                          position: 'relative',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          cursor: 'help'
+                        }}
+                      >
+                        <HelpCircle size={16} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
+                        <div 
+                          className="info-tooltip"
+                          style={{
+                            position: 'absolute',
+                            bottom: '100%',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            marginBottom: '8px',
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            color: 'white',
+                            padding: '12px 16px',
+                            borderRadius: '8px',
+                            fontSize: '13px',
+                            lineHeight: '1.5',
+                            maxWidth: '280px',
+                            whiteSpace: 'normal',
+                            textAlign: 'center',
+                            opacity: 0,
+                            pointerEvents: 'none',
+                            transition: 'opacity 0.2s ease',
+                            zIndex: 1000,
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+                          }}
+                        >
+                          {language === 'ko' 
+                            ? '프로필 점수는 제공된 GPA 및 SAT/ACT를 기반으로 합니다. 과거 데이터, 통계 및 수학을 기반으로 한 결과를 제공합니다.'
+                            : 'Your profile score is based on your provided GPA and SAT/ACT. We give you a result grounded in historical data, statistics, and math.'}
+                          <div style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: 0,
+                            height: 0,
+                            borderLeft: '6px solid transparent',
+                            borderRight: '6px solid transparent',
+                            borderTop: '6px solid rgba(0, 0, 0, 0.9)'
+                          }} />
+                        </div>
+                      </div>
                     </div>
                     
                     {/* Top X% Display */}
