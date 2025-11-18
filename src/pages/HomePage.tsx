@@ -1049,7 +1049,7 @@ const HomePage: React.FC = () => {
             {results && (
               <div className="profile-calculator-results fade-in">
                 <div className="score-preview-box" style={{ marginTop: 0, marginBottom: '24px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', padding: '20px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '20px' }}>
                     <div className="score-preview-label">
                       {language === 'ko' ? '경쟁력 분석' : 'Competitive Analysis'}
                     </div>
@@ -1060,7 +1060,8 @@ const HomePage: React.FC = () => {
                       fontWeight: 800,
                       color: '#FACC15',
                       lineHeight: 1,
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      marginTop: '4px'
                     }}>
                       {(() => {
                         const topPercent = Math.round(100 - animatedScore);
@@ -1082,7 +1083,8 @@ const HomePage: React.FC = () => {
                       fontSize: '18px',
                       fontWeight: 600,
                       color: 'rgba(255, 255, 255, 0.9)',
-                      textAlign: 'center'
+                      textAlign: 'center',
+                      marginTop: '2px'
                     }}>
                       {language === 'ko' 
                         ? `${animatedScore}번째 백분위수`
@@ -1096,7 +1098,8 @@ const HomePage: React.FC = () => {
                       color: 'rgba(255, 255, 255, 0.8)',
                       textAlign: 'center',
                       lineHeight: 1.6,
-                      maxWidth: '320px'
+                      maxWidth: '320px',
+                      marginTop: '4px'
                     }}>
                       {(() => {
                         const strongerThan = Math.round((animatedScore / 100) * 10000 / 10) * 10;
