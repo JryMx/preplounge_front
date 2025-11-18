@@ -1,0 +1,286 @@
+"""
+Composite Admissions Competitiveness
+
+- Estimate SAT percentile (using SAT 25/50/75 from IPEDS-style data)
+- Estimate ACT percentile (using ACT 25/50/75)
+- Estimate GPA percentile (using SAT→GPA regression and SAT quartiles)
+- Combine GPA + SAT OR GPA + ACT into one composite percentile
+"""
+
+from typing import Union, Optional
+import os
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from scipy.stats import norm
+
+
+EXCEL_PATH = "../data/Universities_Profile_Data.xlsx"
+SHEET_NAME = "Main"
+
+
+# ---------- SAT → GPA ESTIMATION ----------
+
+def estimate_average_school_gpa(sat_average: Union[int, float]) -> float:
+    """
+    Estimate a school's average admitted student GPA based on the school's
+    average SAT score, using satgpa.csv and a simple linear regression.
+
+    Args:
+        sat_average: SAT score (400–1600)
+
+    Returns:
+        Estimated average GPA (capped at 4.0)
+    """
+
+    # Dataset uses 3-digit SAT (e.g., 154 -> 1540); trim last digit
+    sat_average = sat_average // 10
+
+    possible_paths = [
+        os.path.join("src", "data", "satgpa.csv"),          # From project root
+        os.path.join("data", "satgpa.csv"),                 # From src/
+        os.path.join("..", "data", "satgpa.csv"),           # From src/admissions/
+        os.path.join("..", "..", "src", "data", "satgpa.csv"),
+        "satgpa.csv",                                       # Current dir fallback
+    ]
+
+    csv_path = None
+    for path in possible_paths:
+        if os.path.exists(path):
+            csv_path = path
+            break
+
+    if csv_path is None:
+        raise FileNotFoundError(f"satgpa.csv not found. Searched: {possible_paths}")
+
+    df = pd.read_csv(csv_path)
+
+    X = df[["sat_sum"]]   # predictor must be 2D
+    y = df["hs_gpa"]
+
+    model = LinearRegression()
+    model.fit(X, y)
+
+    m = model.coef_[0]
+    b = model.intercept_
+    result = m * sat_average + b
+
+    # Cap at 4.0
+    return result if result <= 4.0 else 4.0
+
+
+# ---------- SHARED HELPER: PERCENTILE FROM QUARTILES ----------
+
+def _estimate_percentile_from_quartiles(q25_series: pd.Series,
+                                        q50_series: pd.Series,
+                                        q75_series: pd.Series,
+                                        value: float) -> float:
+    """
+    Generic helper: assume approximate normality, use 25/50/75 percentiles
+    across schools to estimate a percentile for a given value.
+    """
+    avg_25 = q25_series.mean()
+    avg_50 = q50_series.mean()  # ~ mean
+    avg_75 = q75_series.mean()
+
+    iqr = avg_75 - avg_25
+    stdev = iqr / 1.349 if iqr != 0 else 1e-6  # avoid divide-by-zero
+
+    z = (value - avg_50) / stdev
+    return norm.cdf(z)  # 0–1
+
+
+def _load_main_df() -> pd.DataFrame:
+    return pd.read_excel(EXCEL_PATH, sheet_name=SHEET_NAME)
+
+
+# ---------- SAT PERCENTILE ----------
+
+def estimate_sat_percentile(sat_score_total: int,
+                            df: Optional[pd.DataFrame] = None) -> float:
+    """
+    Estimate percentile for SAT total (EBRW + Math) score.
+    Uses 25th/50th/75th percentile SAT data across universities.
+    """
+    if df is None:
+        df = _load_main_df()
+
+    ebrw_25 = df["ADM2023.SAT Evidence-Based Reading and Writing 25th percentile score"]
+    ebrw_50 = df["ADM2023.SAT Evidence-Based Reading and Writing 50th percentile score"]
+    ebrw_75 = df["ADM2023.SAT Evidence-Based Reading and Writing 75th percentile score"]
+
+    math_25 = df["ADM2023.SAT Math 25th percentile score"]
+    math_50 = df["ADM2023.SAT Math 50th percentile score"]
+    math_75 = df["ADM2023.SAT Math 75th percentile score"]
+
+    total_25 = ebrw_25 + math_25
+    total_50 = ebrw_50 + math_50
+    total_75 = ebrw_75 + math_75
+
+    return _estimate_percentile_from_quartiles(
+        total_25, total_50, total_75, sat_score_total
+    )
+
+
+# ---------- ACT PERCENTILE ----------
+
+def estimate_act_percentile(act_score_total: Union[int, float],
+                            df: Optional[pd.DataFrame] = None) -> float:
+    """
+    Estimate percentile for ACT Composite score.
+    Uses 25th/50th/75th percentile ACT data across universities.
+    """
+    if df is None:
+        df = _load_main_df()
+
+    act_25 = df["ADM2023.ACT Composite 25th percentile score"]
+    act_50 = df["ADM2023.ACT Composite 50th percentile score"]
+    act_75 = df["ADM2023.ACT Composite 75th percentile score"]
+
+    return _estimate_percentile_from_quartiles(
+        act_25, act_50, act_75, act_score_total
+    )
+
+
+# ---------- GPA PERCENTILE (VIA SAT→GPA) ----------
+
+def estimate_gpa_percentile(student_gpa: float,
+                            df: Optional[pd.DataFrame] = None) -> float:
+    """
+    Estimate percentile for a student's GPA, using:
+      - SAT 25/50/75 overall across universities
+      - SAT→GPA regression to convert those quartiles into GPA quartiles
+      - Normal approximation from those GPA quartiles
+    """
+    if df is None:
+        df = _load_main_df()
+
+    # First get SAT total quartiles across schools
+    ebrw_25 = df["ADM2023.SAT Evidence-Based Reading and Writing 25th percentile score"]
+    ebrw_50 = df["ADM2023.SAT Evidence-Based Reading and Writing 50th percentile score"]
+    ebrw_75 = df["ADM2023.SAT Evidence-Based Reading and Writing 75th percentile score"]
+
+    math_25 = df["ADM2023.SAT Math 25th percentile score"]
+    math_50 = df["ADM2023.SAT Math 50th percentile score"]
+    math_75 = df["ADM2023.SAT Math 75th percentile score"]
+
+    total_25_overall = (ebrw_25 + math_25).mean()
+    total_50_overall = (ebrw_50 + math_50).mean()
+    total_75_overall = (ebrw_75 + math_75).mean()
+
+    # Map SAT quartiles → GPA quartiles using your regression
+    gpa_25 = estimate_average_school_gpa(total_25_overall)
+    gpa_50 = estimate_average_school_gpa(total_50_overall)
+    gpa_75 = estimate_average_school_gpa(total_75_overall)
+
+    # Now treat these as the quartiles of a (roughly) normal GPA distribution
+    iqr_gpa = gpa_75 - gpa_25
+    stdev_gpa = iqr_gpa / 1.349 if iqr_gpa != 0 else 1e-6
+
+    z = (student_gpa - gpa_50) / stdev_gpa
+    return norm.cdf(z)  # 0–1
+
+
+# ---------- COMPOSITE: GPA + (SAT OR ACT) ----------
+
+def estimate_composite_percentile(
+    gpa: float,
+    sat_score: Optional[Union[int, float]] = None,
+    act_score: Optional[Union[int, float]] = None,
+    weight_test: float = 0.5,
+    weight_gpa: float = 0.5,
+    df: Optional[pd.DataFrame] = None,
+) -> dict:
+    """
+    Combine GPA percentile + test percentile into one composite.
+
+    Exactly one of sat_score or act_score must be provided.
+
+    Args:
+        gpa: student's GPA (assumed 0–4 scale)
+        sat_score: SAT total (if using SAT)
+        act_score: ACT composite (if using ACT)
+        weight_test: weight on test percentile (0–1)
+        weight_gpa: weight on GPA percentile (0–1)
+        df: optional pre-loaded Universities_Profile_Data dataframe
+
+    Returns:
+        dict with:
+            - 'composite'
+            - 'gpa_percentile'
+            - 'test_percentile'
+            - 'test_label' ("SAT" or "ACT")
+    """
+    if df is None:
+        df = _load_main_df()
+
+    # Enforce: either SAT OR ACT, not both / neither
+    using_sat = sat_score is not None
+    using_act = act_score is not None
+
+    if using_sat and using_act:
+        raise ValueError("Provide only one of sat_score or act_score, not both.")
+    if not using_sat and not using_act:
+        raise ValueError("You must provide either sat_score or act_score.")
+
+    if using_sat:
+        test_percentile = estimate_sat_percentile(sat_score, df=df)
+        test_label = "SAT"
+    else:
+        test_percentile = estimate_act_percentile(act_score, df=df)
+        test_label = "ACT"
+
+    gpa_percentile = estimate_gpa_percentile(gpa, df=df)
+
+    # Normalize weights (in case they don't sum to 1)
+    total_weight = weight_test + weight_gpa
+    weight_test_norm = weight_test / total_weight
+    weight_gpa_norm = weight_gpa / total_weight
+
+    composite = (
+        weight_test_norm * test_percentile
+        + weight_gpa_norm * gpa_percentile
+    )
+
+    return {
+        "composite": composite,
+        "gpa_percentile": gpa_percentile,
+        "test_percentile": test_percentile,
+        "test_label": test_label,
+    }
+
+
+# ---------- "TOP X%" / "BETTER THAN Y OF 10,000" ----------
+
+def describe_competitiveness(percentile: float,
+                             n_applicants: int = 10_000) -> dict:
+    """
+    Turn a percentile (0–1) into:
+      - nice percentile %
+      - "top/bottom X%" phrase
+      - "stronger than Y of N applicants"
+    """
+    percentile_pct = percentile * 100
+    stronger_than = percentile * n_applicants
+
+    perc_rounded = round(percentile_pct)
+    stronger_rounded = round(stronger_than, -1)  # nearest 10
+    weaker_rounded = n_applicants - stronger_rounded
+
+    if percentile_pct >= 50:
+        top_pct = round(100 - percentile_pct)
+        band_phrase = f"top {top_pct}%"
+    else:
+        bottom_pct = round(percentile_pct)
+        band_phrase = f"bottom {bottom_pct}%"
+
+    return {
+        "percentile": percentile,
+        "percentile_pct": perc_rounded,
+        "band_phrase": band_phrase,
+        "stronger_than": stronger_rounded,
+        "weaker_than": weaker_rounded,
+        "n_applicants": n_applicants,
+    }
+
+

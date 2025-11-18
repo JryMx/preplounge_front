@@ -37,13 +37,14 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, UniversityMapPage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 
 ### System Design Choices
-- **Profile Score Algorithm (Updated Nov 2025)**: Percentile-based scoring system using statistical distribution from 1,234+ U.S. universities' IPEDS 2023 admission data. Score represents student's test score percentile relative to university admission standards:
-  - Calculates z-score using SAT/ACT compared to national university averages
-  - SAT Statistics: Mean=1185, StdDev=150 (25th: 1083, 75th: 1285)
-  - ACT Statistics: Mean=24.95, StdDev=4.09 (25th: 22.2, 75th: 27.7)
-  - Score 0-100 represents percentile ranking among university applicants
-  - Examples: SAT 1600→100/100 (top 0%), SAT 1400→92/100 (top 8%), ACT 36→100/100, ACT 28→77/100
-- Test scores (SAT or ACT) are now required fields for profile submission and university recommendations.
+- **Profile Score Algorithm (Updated Nov 2025)**: Composite scoring system combining GPA + test scores using IPEDS 2023 quartile data from 1,234+ U.S. universities:
+  - **SAT Percentile**: Calculated using 25th/50th/75th percentile data (Q25=1083, Q50=1185, Q75=1285)
+  - **ACT Percentile**: Calculated using 25th/50th/75th percentile data (Q25=22.2, Q50=24.95, Q75=27.7)
+  - **GPA Percentile**: Estimated via SAT→GPA linear regression trained on satgpa.csv (m=0.0163, b=1.5106)
+  - **Composite Score**: 50% Test Percentile + 50% GPA Percentile (0-100 scale)
+  - Uses normal CDF with IQR-based standard deviation estimation (σ = IQR / 1.349)
+  - Examples: SAT 1400 + GPA 3.8 → ~85/100 (top 15%), SAT 1200 + GPA 3.5 → ~50/100 (top 50%)
+- Both GPA and test scores (SAT or ACT) are required fields for profile submission and scoring.
 
 ### Data Persistence Architecture
 - **Student Profile Storage (Updated Nov 2025)**: All profile data (academic scores, test scores, extracurriculars, AI recommendations) now persists EXCLUSIVELY on loaning.ai servers via `/api/profile` endpoints. No localStorage fallbacks. On API failures, error state is exposed to UI while preserving in-memory data. Users must be authenticated to access profile data.

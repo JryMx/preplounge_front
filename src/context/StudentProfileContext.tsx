@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useRef, ReactNod
 import universitiesData from '../data/universities.json';
 import { getBackendURL } from '../lib/backendUrl';
 import { useAuth } from './AuthContext';
+import { estimateCompositePercentile } from '../utils/compositeScoringService';
 
 export interface StudentProfile {
   // Academic Inputs
@@ -216,67 +217,36 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   }, [user, authLoading]);
 
   const calculateProfileScore = (profileData: Partial<StudentProfile>): number => {
-    // NEW SCORING ALGORITHM: Percentile-based scoring using university admission data
-    // Based on SAT/ACT score distribution from 1,234+ U.S. universities
+    // NEW COMPOSITE SCORING: GPA + (SAT OR ACT) using quartile data
+    // Based on SAT/ACT/GPA score distribution from 1,234+ U.S. universities
     
-    // University admission statistics from IPEDS 2023 data
-    const SAT_STATS = {
-      avg_25_overall: 1082.73,   // 25th percentile
-      avg_50_overall: 1184.58,   // 50th percentile (mean)
-      avg_75_overall: 1285.07,   // 75th percentile
-      stdev: 150.00              // Standard deviation
-    };
+    const gpa = profileData.gpa || 0;
     
-    const ACT_STATS = {
-      avg_25_act: 22.22,         // 25th percentile
-      avg_50_act: 24.95,         // 50th percentile (mean)
-      avg_75_act: 27.73,         // 75th percentile
-      stdev_act: 4.09            // Standard deviation
-    };
+    if (gpa === 0) return 0;
     
-    // Helper function: Calculate cumulative distribution function (normal distribution)
-    // Uses error function (erf) approximation for standard normal distribution
-    const normalCDF = (z: number): number => {
-      // CDF(z) = 0.5 * (1 + erf(z / sqrt(2)))
-      // Scale z by sqrt(2) for the erf function
-      const SQRT2 = Math.sqrt(2);
-      const scaled = z / SQRT2;
+    try {
+      let compositeResult;
       
-      // Abramowitz and Stegun approximation of erf
-      const sign = scaled >= 0 ? 1 : -1;
-      const x = Math.abs(scaled);
+      if (profileData.satEBRW && profileData.satMath) {
+        const totalSAT = profileData.satEBRW + profileData.satMath;
+        if (totalSAT === 0) return 0;
+        
+        compositeResult = estimateCompositePercentile(gpa, totalSAT, undefined);
+      } else if (profileData.actScore) {
+        if (profileData.actScore === 0) return 0;
+        
+        compositeResult = estimateCompositePercentile(gpa, undefined, profileData.actScore);
+      } else {
+        return 0;
+      }
       
-      // erf approximation constants
-      const a1 =  0.254829592;
-      const a2 = -0.284496736;
-      const a3 =  1.421413741;
-      const a4 = -1.453152027;
-      const a5 =  1.061405429;
-      const p  =  0.3275911;
-      
-      const t = 1.0 / (1.0 + p * x);
-      const erfApprox = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-      
-      return 0.5 * (1.0 + sign * erfApprox);
-    };
-    
-    let percentile = 0;
-    
-    // Calculate percentile based on SAT or ACT score
-    if (profileData.satEBRW && profileData.satMath) {
-      const totalSAT = profileData.satEBRW + profileData.satMath;
-      const z = (totalSAT - SAT_STATS.avg_50_overall) / SAT_STATS.stdev;
-      percentile = normalCDF(z);
-    } else if (profileData.actScore) {
-      const z = (profileData.actScore - ACT_STATS.avg_50_act) / ACT_STATS.stdev_act;
-      percentile = normalCDF(z);
+      // Convert percentile (0-1) to score (0-100)
+      const score = Math.min(Math.max(compositeResult.composite * 100, 0), 100);
+      return Math.round(score);
+    } catch (error) {
+      console.error('Error calculating composite score:', error);
+      return 0;
     }
-    
-    // Convert percentile (0-1) to score (0-100)
-    // Clamp first, then round to preserve accuracy
-    const score = Math.min(Math.max(percentile * 100, 0), 100);
-    
-    return Math.round(score);
   };
 
   const describeCompetitiveScore = (percentile: number): CompetitiveScoreDescription => {

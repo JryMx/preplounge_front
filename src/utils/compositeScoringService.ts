@@ -62,10 +62,13 @@ const estimatePercentileFromQuartiles = (
 };
 
 const estimateAverageSchoolGPA = (satAverage: number): number => {
+  // Dataset uses 3-digit SAT (e.g., 120 -> 1200); scale down by 10
   const satScaled = satAverage / 10;
   
-  const m = 0.002;
-  const b = 2.5;
+  // Linear regression coefficients from satgpa.csv
+  // Formula: GPA = m * SAT_scaled + b
+  const m = 0.016331587769584977;
+  const b = 1.5105733673565551;
   
   const result = m * satScaled + b;
   return result <= 4.0 ? result : 4.0;
