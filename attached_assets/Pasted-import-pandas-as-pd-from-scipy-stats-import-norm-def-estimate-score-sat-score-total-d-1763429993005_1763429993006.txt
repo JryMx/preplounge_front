@@ -1,0 +1,74 @@
+import pandas as pd
+from scipy.stats import norm
+
+
+def estimate_score(sat_score_total):
+
+    df = pd.read_excel('../data/Universities_Profile_Data.xlsx', sheet_name='Main')
+
+    # Extract columns
+    ebrw_25 = df['ADM2023.SAT Evidence-Based Reading and Writing 25th percentile score']
+    ebrw_50 = df['ADM2023.SAT Evidence-Based Reading and Writing 50th percentile score']
+    ebrw_75 = df['ADM2023.SAT Evidence-Based Reading and Writing 75th percentile score']
+
+    math_25 = df['ADM2023.SAT Math 25th percentile score']
+    math_50 = df['ADM2023.SAT Math 50th percentile score']
+    math_75 = df['ADM2023.SAT Math 75th percentile score']
+
+    # Averages across universities
+    avg_25_ebrw = ebrw_25.mean()
+    avg_50_ebrw = ebrw_50.mean()
+    avg_75_ebrw = ebrw_75.mean()
+
+    avg_25_math = math_25.mean()
+    avg_50_math = math_50.mean()
+    avg_75_math = math_75.mean()
+
+    # Combined total SAT percentiles (E+M)
+    avg_25_overall = avg_25_ebrw + avg_25_math
+    avg_50_overall = avg_50_ebrw + avg_50_math      # ≈ mean
+    avg_75_overall = avg_75_ebrw + avg_75_math
+
+    # Estimate stdev from IQR (Q3 - Q1)
+    IQR = avg_75_overall - avg_25_overall
+    stdev = IQR / 1.349
+
+    # z-score relative to overall mean
+    z = (sat_score_total - avg_50_overall) / stdev
+    percentile = norm.cdf(z)
+
+    return percentile
+
+
+def describe_competitive_score_n_10000(percentile):
+    """
+    percentile: decimal (0–1), e.g., 0.9594
+    returns:
+        top_percent (rounded int)
+        stronger_than (rounded int)
+        phrasing ("top X%" or "bottom Y%")
+    """
+
+    percentile_pct = percentile * 100           # e.g., 95.94
+    top_pct = 100 - percentile_pct              # e.g., 4.06 → top 4%
+    stronger_than = percentile * 10000          # e.g., 9594
+
+    # ROUND VALUES to make them digestible
+    perc_rounded = round(percentile_pct)        # 96%
+    top_rounded = round(top_pct)                # 4%
+    stronger_rounded = round(stronger_than, -1) # nearest 10 for nicer reading
+
+    # Choose best phrasing:
+    if top_rounded <= 50:
+        phrase = f"top {top_rounded}%"
+    else:
+        bottom_pct = 100 - top_rounded
+        phrase = f"bottom {bottom_pct}%"
+
+    return {
+        "percentile_pct": perc_rounded,
+        "top_percent": top_rounded,
+        "stronger_than": stronger_rounded,
+        "phrasing": phrase
+    }
+
