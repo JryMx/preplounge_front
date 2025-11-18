@@ -662,5 +662,35 @@
       "email": "bluekeyprep@gmail.com",
       "website": "https://bluekeyprep.com/"
     }
+  },
+  {
+    "id": "company-23",
+    "name": "아이앤트에듀케이션",
+    "location": "서울특별시 강남구 논현로168길 32 4층",
+    "specialties": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "연구활동",
+      "대회",
+      "SAT",
+      "AP",
+      "IB"
+    ],
+    "tags": [
+      "집중 컨설팅",
+      "에세이 작성",
+      "대외활동",
+      "연구활동",
+      "대회",
+      "SAT",
+      "AP",
+      "IB"
+    ],
+    "contact": {
+      "phone": "02-6204-3377",
+      "email": "ianthasnolimits@gmail.com",
+      "website": "https://www.iantedu.com/"
+    }
   }
 ]

@@ -31,7 +31,7 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 - **University Browsing**: Displays 1,234 curated U.S. universities with infinite scroll, dual-handle range sliders for tuition/SAT, and sorting options.
 - **University Comparison**: Side-by-side comparison of up to 4 universities based on key metrics.
 - **Housing Support**: Provides real estate listings, currently limited to California and Georgia.
-- **Consulting Programs Directory**: Lists 21 verified Korean study abroad consulting companies with filtering by 24 service tags and infinite scroll.
+- **Consulting Programs Directory**: Lists 23 verified Korean study abroad consulting companies with filtering by 24 service tags and infinite scroll.
 - **Interactive University Map**: Displays 38 universities with geographic coordinates, custom markers, zoom-based filtering, and real-time search functionality. Uses CARTO tile provider.
 - **Dashboard**: Personalized for authenticated users, displaying profile statistics, a history of profile inputs, favorited schools, and AI-recommended universities with actionable insights.
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, UniversityMapPage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
