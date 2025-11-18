@@ -37,8 +37,13 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 - **Core Pages**: Includes HomePage, UniversitiesPage, UniversityProfilePage, UniversityMapPage, StudentProfilePage, ProfileCalculatorPage, DashboardPage, ConsultingPage, ComparePage, HousingPage, LoginPage, and SignupPage.
 
 ### System Design Choices
-- The profile score is a deterministic, mathematical calculation based on academic and non-academic components, ensuring transparency.
-- Scores categorize competitiveness from "Exceptional" (90-100) to "Early Stage" (Below 40).
+- **Profile Score Algorithm (Updated Nov 2025)**: Percentile-based scoring system using statistical distribution from 1,234+ U.S. universities' IPEDS 2023 admission data. Score represents student's test score percentile relative to university admission standards:
+  - Calculates z-score using SAT/ACT compared to national university averages
+  - SAT Statistics: Mean=1185, StdDev=150 (25th: 1083, 75th: 1285)
+  - ACT Statistics: Mean=24.95, StdDev=4.09 (25th: 22.2, 75th: 27.7)
+  - Score 0-100 represents percentile ranking among university applicants
+  - Examples: SAT 1600→100/100 (top 0%), SAT 1400→92/100 (top 8%), ACT 36→100/100, ACT 28→77/100
+- Test scores (SAT or ACT) are now required fields for profile submission and university recommendations.
 
 ### Data Persistence Architecture
 - **Student Profile Storage (Updated Nov 2025)**: All profile data (academic scores, test scores, extracurriculars, AI recommendations) now persists EXCLUSIVELY on loaning.ai servers via `/api/profile` endpoints. No localStorage fallbacks. On API failures, error state is exposed to UI while preserving in-memory data. Users must be authenticated to access profile data.

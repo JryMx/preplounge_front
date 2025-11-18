@@ -79,10 +79,18 @@ export interface AIAnalysisResult {
   weaknesses: string[];
 }
 
+export interface CompetitiveScoreDescription {
+  percentile_pct: number;        // e.g., 96
+  top_percent: number;           // e.g., 4 (top 4%)
+  stronger_than: number;         // e.g., 9590 (out of 10,000)
+  phrasing: string;              // e.g., "top 4%" or "bottom 30%"
+}
+
 interface StudentProfileContextType {
   profile: StudentProfile | null;
   updateProfile: (profile: Partial<StudentProfile>) => Promise<void>;
   calculateProfileScore: (profile: Partial<StudentProfile>) => number;
+  describeCompetitiveScore: (percentile: number) => CompetitiveScoreDescription;
   getRecommendations: () => SchoolRecommendation[];
   searchSchools: (query: string, currentLanguage?: string) => SchoolSearchResult[];
   loading: boolean;
@@ -208,138 +216,99 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
   }, [user, authLoading]);
 
   const calculateProfileScore = (profileData: Partial<StudentProfile>): number => {
-    let score = 0;
+    // NEW SCORING ALGORITHM: Percentile-based scoring using university admission data
+    // Based on SAT/ACT score distribution from 1,234+ U.S. universities
     
-    // NOTE: This scoring function IGNORES checklist items (applicationComponents)
-    // and ONLY uses actual form inputs for objective, deterministic scoring.
+    // University admission statistics from IPEDS 2023 data
+    const SAT_STATS = {
+      avg_25_overall: 1082.73,   // 25th percentile
+      avg_50_overall: 1184.58,   // 50th percentile (mean)
+      avg_75_overall: 1285.07,   // 75th percentile
+      stdev: 150.00              // Standard deviation
+    };
     
-    // ACADEMIC COMPONENTS (65 points total)
+    const ACT_STATS = {
+      avg_25_act: 22.22,         // 25th percentile
+      avg_50_act: 24.95,         // 50th percentile (mean)
+      avg_75_act: 27.73,         // 75th percentile
+      stdev_act: 4.09            // Standard deviation
+    };
     
-    // 1. GPA (30 points) - Most important academic metric
-    // Scaled to reflect competitiveness across ALL school types
-    if (profileData.gpa) {
-      const gpa = profileData.gpa;
-      if (gpa >= 3.9) score += 30;        // Top tier schools (Ivy League, Top 20)
-      else if (gpa >= 3.7) score += 28;   // Highly competitive (Top 50)
-      else if (gpa >= 3.5) score += 25;   // Competitive (Top 100)
-      else if (gpa >= 3.3) score += 22;   // Good schools (Top 200)
-      else if (gpa >= 3.0) score += 19;   // Solid state universities
-      else if (gpa >= 2.7) score += 15;   // Many colleges accept
-      else if (gpa >= 2.5) score += 12;   // Community colleges, less selective
-      else if (gpa >= 2.0) score += 8;    // Open admission schools
-      else score += (gpa / 4.0) * 8;      // Proportional for below 2.0
-    }
+    // Helper function: Calculate cumulative distribution function (normal distribution)
+    // Uses error function (erf) approximation for standard normal distribution
+    const normalCDF = (z: number): number => {
+      // CDF(z) = 0.5 * (1 + erf(z / sqrt(2)))
+      // Scale z by sqrt(2) for the erf function
+      const SQRT2 = Math.sqrt(2);
+      const scaled = z / SQRT2;
+      
+      // Abramowitz and Stegun approximation of erf
+      const sign = scaled >= 0 ? 1 : -1;
+      const x = Math.abs(scaled);
+      
+      // erf approximation constants
+      const a1 =  0.254829592;
+      const a2 = -0.284496736;
+      const a3 =  1.421413741;
+      const a4 = -1.453152027;
+      const a5 =  1.061405429;
+      const p  =  0.3275911;
+      
+      const t = 1.0 / (1.0 + p * x);
+      const erfApprox = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+      
+      return 0.5 * (1.0 + sign * erfApprox);
+    };
     
-    // 2. Standardized Test Scores (25 points)
-    // Reflects competitiveness across school spectrum
+    let percentile = 0;
+    
+    // Calculate percentile based on SAT or ACT score
     if (profileData.satEBRW && profileData.satMath) {
       const totalSAT = profileData.satEBRW + profileData.satMath;
-      if (totalSAT >= 1500) score += 25;      // Top tier (Ivy League, MIT, Stanford)
-      else if (totalSAT >= 1400) score += 23; // Highly selective (Top 30)
-      else if (totalSAT >= 1300) score += 20; // Competitive (Top 100)
-      else if (totalSAT >= 1200) score += 17; // Good schools (Top 200)
-      else if (totalSAT >= 1100) score += 14; // Many state universities
-      else if (totalSAT >= 1000) score += 11; // Less selective colleges
-      else if (totalSAT >= 900) score += 8;   // Open admission schools
-      else score += (totalSAT / 1600) * 8;    // Proportional below 900
+      const z = (totalSAT - SAT_STATS.avg_50_overall) / SAT_STATS.stdev;
+      percentile = normalCDF(z);
     } else if (profileData.actScore) {
-      const act = profileData.actScore;
-      if (act >= 34) score += 25;       // Top tier
-      else if (act >= 31) score += 23;  // Highly selective
-      else if (act >= 28) score += 20;  // Competitive
-      else if (act >= 25) score += 17;  // Good schools
-      else if (act >= 22) score += 14;  // Many state universities
-      else if (act >= 19) score += 11;  // Less selective
-      else if (act >= 16) score += 8;   // Open admission
-      else score += (act / 36) * 8;     // Proportional below 16
+      const z = (profileData.actScore - ACT_STATS.avg_50_act) / ACT_STATS.stdev_act;
+      percentile = normalCDF(z);
     }
     
-    // 3. Course Rigor - AP/IB (10 points)
-    // This is a placeholder as we don't collect this data yet
-    // For now, we'll award baseline points if student has good GPA
-    if (profileData.apCourses && profileData.apCourses > 0) {
-      score += Math.min(profileData.apCourses * 1.5, 10);
-    } else if (profileData.ibScore && profileData.ibScore > 0) {
-      score += (profileData.ibScore / 45) * 10;
-    } else if (profileData.gpa && profileData.gpa >= 3.5) {
-      score += 5; // Assume some rigor if GPA is strong
+    // Convert percentile (0-1) to score (0-100)
+    // Clamp first, then round to preserve accuracy
+    const score = Math.min(Math.max(percentile * 100, 0), 100);
+    
+    return Math.round(score);
+  };
+
+  const describeCompetitiveScore = (percentile: number): CompetitiveScoreDescription => {
+    // percentile: 0-100 (e.g., 95.94 means 95.94th percentile, top 4.06%)
+    const percentile_pct = percentile;
+    const top_pct = 100 - percentile_pct;
+    const stronger_than = (percentile_pct / 100) * 10000;
+    
+    // Round values for readability
+    const perc_rounded = Math.round(percentile_pct);
+    const top_rounded = Math.round(top_pct);
+    const stronger_rounded = Math.round(stronger_than / 10) * 10; // Round to nearest 10
+    
+    // Choose best phrasing based on actual position
+    // If percentile > 50, student is in top half ("top X%")
+    // If percentile < 50, student is in bottom half ("bottom Y%")
+    let phrase: string;
+    if (percentile_pct >= 50) {
+      // Top half: use "top X%"
+      phrase = `top ${top_rounded}%`;
+    } else {
+      // Bottom half: use "bottom Y%"
+      const bottom_pct = Math.round(percentile_pct);
+      phrase = `bottom ${bottom_pct}%`;
     }
     
-    // NON-ACADEMIC COMPONENTS (35 points total)
-    
-    // 4. Extracurricular Activities (15 points)
-    if (profileData.extracurriculars && profileData.extracurriculars.length > 0) {
-      let ecScore = 0;
-      
-      profileData.extracurriculars.forEach(activity => {
-        let points = 0;
-        
-        // Recognition level (0-3 points per activity)
-        switch (activity.recognitionLevel) {
-          case 'International': points += 3; break;
-          case 'National': points += 2.5; break;
-          case 'Regional': points += 1.5; break;
-          case 'Local': points += 0.5; break;
-        }
-        
-        // Time commitment (0-1.5 points per activity)
-        if (activity.hoursPerWeek >= 15) points += 1.5;
-        else if (activity.hoursPerWeek >= 10) points += 1;
-        else if (activity.hoursPerWeek >= 5) points += 0.5;
-        
-        ecScore += points;
-      });
-      
-      // Cap at 15 points (roughly 3-4 strong activities max out the score)
-      score += Math.min(ecScore, 15);
-    }
-    
-    // 5. Personal Statement (10 points) - Simple check if they have it
-    if (profileData.personalStatement && profileData.personalStatement.trim().length > 0) {
-      score += 10;
-    }
-    
-    // 6. Recommendation Letters (5 points)
-    if (profileData.recommendationLetters && profileData.recommendationLetters.length > 0) {
-      const letters = profileData.recommendationLetters;
-      let letterScore = 0;
-      
-      // Base points for having letters
-      if (letters.length >= 3) letterScore += 2;
-      else if (letters.length >= 2) letterScore += 1.5;
-      else letterScore += 0.5;
-      
-      // Quality bonus based on depth and relevance
-      letters.forEach(letter => {
-        if (letter.depth === 'knows very well') letterScore += 0.8;
-        else if (letter.depth === 'knows well') letterScore += 0.5;
-        else if (letter.depth === 'knows somewhat') letterScore += 0.2;
-        
-        if (letter.relevance === 'very relevant') letterScore += 0.5;
-        else if (letter.relevance === 'somewhat relevant') letterScore += 0.2;
-      });
-      
-      score += Math.min(letterScore, 5);
-    }
-    
-    // 7. Legacy Status (2 points) - Small boost
-    if (profileData.legacyStatus) {
-      score += 2;
-    }
-    
-    // 8. English Proficiency for International Students (3 points)
-    if (profileData.citizenship === 'international' && profileData.toeflScore) {
-      if (profileData.toeflScore >= 110) score += 3;
-      else if (profileData.toeflScore >= 100) score += 2.5;
-      else if (profileData.toeflScore >= 90) score += 2;
-      else if (profileData.toeflScore >= 80) score += 1.5;
-      else score += (profileData.toeflScore / 120) * 1.5;
-    } else if (profileData.citizenship === 'domestic') {
-      // Domestic students get full 3 points (no language barrier)
-      score += 3;
-    }
-    
-    return Math.round(Math.min(score, 100));
+    return {
+      percentile_pct: perc_rounded,
+      top_percent: top_rounded,
+      stronger_than: stronger_rounded,
+      phrasing: phrase
+    };
   };
 
   const updateProfile = async (newProfileData: Partial<StudentProfile>) => {
@@ -520,6 +489,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     profile,
     updateProfile,
     calculateProfileScore,
+    describeCompetitiveScore,
     getRecommendations,
     searchSchools,
     loading,
