@@ -9,6 +9,7 @@ import universitiesData from '../data/universities.json';
 import { searchListings, CozyingListing, geocodeAddress } from '../lib/cozyingApi';
 import { getUniversityCoordinates } from '../data/universityCoordinates';
 import { getUniversityLocation } from '../data/universityLocations';
+import { estimateCompositePercentile } from '../utils/compositeScoringService';
 import '../hero-section-style.css';
 import './profile-calculator.css';
 import './homepage-calculator.css';
@@ -724,68 +725,39 @@ const HomePage: React.FC = () => {
   const calculateProfileScore = (): number => {
     if (!results) return 0;
     
-    // NEW SCORING ALGORITHM: Percentile-based scoring using university admission data
-    // Based on SAT/ACT score distribution from 1,234+ U.S. universities
+    // NEW COMPOSITE SCORING: GPA + (SAT OR ACT) using quartile data
+    const gpaNum = gpa ? parseFloat(gpa) : 0;
     
-    // University admission statistics from IPEDS 2023 data
-    const SAT_STATS = {
-      avg_50_overall: 1184.58,   // 50th percentile (mean)
-      stdev: 150.00              // Standard deviation
-    };
+    if (gpaNum === 0) return 0;
     
-    const ACT_STATS = {
-      avg_50_act: 24.95,         // 50th percentile (mean)
-      stdev_act: 4.09            // Standard deviation
-    };
-    
-    // Helper function: Calculate cumulative distribution function (normal distribution)
-    const normalCDF = (z: number): number => {
-      // CDF(z) = 0.5 * (1 + erf(z / sqrt(2)))
-      const SQRT2 = Math.sqrt(2);
-      const scaled = z / SQRT2;
+    try {
+      let compositeResult;
       
-      // Abramowitz and Stegun approximation of erf
-      const sign = scaled >= 0 ? 1 : -1;
-      const x = Math.abs(scaled);
-      
-      const a1 =  0.254829592;
-      const a2 = -0.284496736;
-      const a3 =  1.421413741;
-      const a4 = -1.453152027;
-      const a5 =  1.061405429;
-      const p  =  0.3275911;
-      
-      const t = 1.0 / (1.0 + p * x);
-      const erfApprox = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
-      
-      return 0.5 * (1.0 + sign * erfApprox);
-    };
-    
-    let percentile = 0;
-    
-    // Calculate percentile based on SAT or ACT score
-    if (testType === 'SAT') {
-      const mathNum = satMath ? parseInt(satMath) : 0;
-      const ebrwNum = satEBRW ? parseInt(satEBRW) : 0;
-      const totalSAT = mathNum + ebrwNum;
-      
-      if (totalSAT > 0) {
-        const z = (totalSAT - SAT_STATS.avg_50_overall) / SAT_STATS.stdev;
-        percentile = normalCDF(z);
+      if (testType === 'SAT') {
+        const mathNum = satMath ? parseInt(satMath) : 0;
+        const ebrwNum = satEBRW ? parseInt(satEBRW) : 0;
+        const totalSAT = mathNum + ebrwNum;
+        
+        if (totalSAT === 0) return 0;
+        
+        compositeResult = estimateCompositePercentile(gpaNum, totalSAT, undefined);
+      } else if (testType === 'ACT') {
+        const actNum = actScore ? parseInt(actScore) : 0;
+        
+        if (actNum === 0) return 0;
+        
+        compositeResult = estimateCompositePercentile(gpaNum, undefined, actNum);
+      } else {
+        return 0;
       }
-    } else if (testType === 'ACT') {
-      const actNum = actScore ? parseInt(actScore) : 0;
       
-      if (actNum > 0) {
-        const z = (actNum - ACT_STATS.avg_50_act) / ACT_STATS.stdev_act;
-        percentile = normalCDF(z);
-      }
+      // Convert percentile (0-1) to score (0-100)
+      const score = Math.min(Math.max(compositeResult.composite * 100, 0), 100);
+      return Math.round(score);
+    } catch (error) {
+      console.error('Error calculating composite score:', error);
+      return 0;
     }
-    
-    // Convert percentile (0-1) to score (0-100)
-    const score = Math.min(Math.max(percentile * 100, 0), 100);
-    
-    return Math.round(score);
   };
 
   // Animate score counter
