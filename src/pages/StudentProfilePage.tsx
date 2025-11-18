@@ -1274,7 +1274,7 @@ const StudentProfilePage: React.FC = () => {
               },
               {
                 key: "secondarySchoolRank",
-                labelKo: "고등학iz� 석차",
+                labelKo: "고등학교 석차",
                 labelEn: "Secondary school rank",
               },
               {
@@ -2328,7 +2328,7 @@ const StudentProfilePage: React.FC = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {language === "ko" ? "시민권" : "Citizenship"}
+                      {language === "ko" ? "미국 시민권 여부" : "Citizenship"}
                     </label>
                     <div className="flex items-center space-x-4">
                       <label className="flex items-center">
@@ -2341,7 +2341,7 @@ const StudentProfilePage: React.FC = () => {
                           }
                           className="mr-2"
                         />
-                        {language === "ko" ? "국내" : "Domestic"}
+                        {language === "ko" ? "있음" : "Domestic"}
                       </label>
                       <label className="flex items-center">
                         <input
@@ -2358,7 +2358,7 @@ const StudentProfilePage: React.FC = () => {
                           }
                           className="mr-2"
                         />
-                        {language === "ko" ? "국제" : "International"}
+                        {language === "ko" ? "없음" : "International"}
                       </label>
                     </div>
                   </div>
