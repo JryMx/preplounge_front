@@ -1106,41 +1106,59 @@ const StudentProfilePage: React.FC = () => {
                 <div className="profile-calculator-result-content analysis-results-fade-in">
                   <div className="profile-calculator-score-group">
                     <span className="profile-calculator-score-label">
-                      {language === "ko" ? "프로필 점수" : "Profile Score"}
+                      {language === "ko" ? "경쟁력 분석" : "Competitive Analysis"}
                     </span>
-                    <div className="profile-calculator-score-display score-pop-in">
-                      <span className="profile-calculator-score-value">
-                        {displayScore}
+                    <div className="profile-calculator-score-display score-pop-in" style={{ 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '20px 0'
+                    }}>
+                      {/* Top X% Display */}
+                      <span className="profile-calculator-score-value" style={{
+                        fontSize: '48px',
+                        fontWeight: 800
+                      }}>
+                        {(() => {
+                          const topPercent = Math.round(100 - displayScore);
+                          if (displayScore >= 50) {
+                            return language === 'ko' 
+                              ? `상위 ${topPercent}%`
+                              : `Top ${topPercent}%`;
+                          } else {
+                            const bottomPercent = Math.round(100 - displayScore);
+                            return language === 'ko'
+                              ? `하위 ${bottomPercent}%`
+                              : `Bottom ${bottomPercent}%`;
+                          }
+                        })()}
                       </span>
-                      <span className="profile-calculator-score-total">
-                        /100
+                      
+                      {/* Percentile */}
+                      <span style={{
+                        fontSize: '16px',
+                        fontWeight: 600,
+                        color: 'rgba(8, 47, 73, 0.7)'
+                      }}>
+                        {language === 'ko' 
+                          ? `${displayScore}번째 백분위수`
+                          : `${displayScore}th percentile`}
                       </span>
                     </div>
                   </div>
-                  <p className="profile-calculator-description">
-                    {language === "ko"
-                      ? displayScore === 0
-                        ? "개선 필요"
-                        : displayScore >= 90
-                          ? "우수함"
-                          : displayScore >= 80
-                            ? "매우 좋음"
-                            : displayScore >= 70
-                              ? "좋음"
-                              : displayScore >= 60
-                                ? "보통"
-                                : "개선 필요"
-                      : displayScore === 0
-                        ? "Needs Improvement"
-                        : displayScore >= 90
-                          ? "Excellent"
-                          : displayScore >= 80
-                            ? "Very Good"
-                            : displayScore >= 70
-                              ? "Good"
-                              : displayScore >= 60
-                                ? "Fair"
-                                : "Needs Improvement"}
+                  <p className="profile-calculator-description" style={{
+                    fontSize: '15px',
+                    lineHeight: 1.6,
+                    textAlign: 'center',
+                    marginTop: '8px'
+                  }}>
+                    {(() => {
+                      const strongerThan = Math.round((displayScore / 100) * 10000 / 10) * 10;
+                      return language === 'ko'
+                        ? `10,000명의 지원자 중 ${strongerThan.toLocaleString()}명보다 경쟁력이 높습니다`
+                        : `In a pool of 10,000 applicants, you'd be stronger than ${strongerThan.toLocaleString()} of them`;
+                    })()}
                   </p>
 
                   <div className="ai-analysis-container">
