@@ -643,6 +643,7 @@
   letter-spacing: -0.02em;
   color: #082F49;
   margin: 0;
+  text-align: center;
   animation: fadeIn 0.6s ease-out 0.2s both;
 }
 
