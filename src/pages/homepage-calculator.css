@@ -288,6 +288,39 @@
   align-self: stretch;
 }
 
+/* Mobile Responsive Styles */
+@media (max-width: 1024px) {
+  .profile-calculator-section .profile-calculator-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-calculator-section .profile-calculator-form {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .score-preview-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 32px 24px 24px 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .score-preview-box {
+    padding: 24px 20px 20px 20px;
+  }
+  
+  .score-preview-value {
+    font-size: 48px;
+  }
+  
+  .score-preview-value .score-max {
+    font-size: 28px;
+  }
+}
+
 .score-preview-label {
   font-family: 'Wanted Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-style: normal;
