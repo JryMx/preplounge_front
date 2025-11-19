@@ -645,6 +645,22 @@
   margin: 0;
   text-align: center;
   animation: fadeIn 0.6s ease-out 0.2s both;
+  min-height: 32px;
+}
+
+.analysis-loading-title.rotating-message {
+  animation: messageSlide 0.5s ease-in-out;
+}
+
+@keyframes messageSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .analysis-loading-subtitle {
@@ -660,6 +676,34 @@
   max-width: 400px;
   text-align: center;
   animation: fadeIn 0.6s ease-out 0.4s both;
+}
+
+.analysis-progress-bar {
+  width: 100%;
+  max-width: 320px;
+  height: 6px;
+  background: rgba(8, 47, 73, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FACC15 0%, #F59E0B 50%, #FACC15 100%);
+  background-size: 200% 100%;
+  border-radius: 3px;
+  animation: progressShimmer 2s ease-in-out infinite;
+  width: 100%;
+}
+
+@keyframes progressShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .analysis-loading-dots {

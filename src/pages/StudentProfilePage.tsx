@@ -109,6 +109,25 @@ const StudentProfilePage: React.FC = () => {
   const [analysisError, setAnalysisError] = useState<string>("");
   const [apiResults, setApiResults] = useState<APIResponse | null>(null);
   const [apiLoading, setApiLoading] = useState(false);
+  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+
+  // Rotating loading messages
+  const loadingMessages = {
+    en: [
+      "Analyzing your profile...",
+      "Comparing with 1,200+ universities...",
+      "Calculating admission probabilities...",
+      "Matching you with best-fit schools...",
+      "Generating personalized recommendations..."
+    ],
+    ko: [
+      "프로필 분석 중...",
+      "1,200개 이상의 대학과 비교 중...",
+      "합격 확률 계산 중...",
+      "최적의 학교 매칭 중...",
+      "맞춤형 추천 생성 중..."
+    ]
+  };
   const [apiError, setApiError] = useState<string>("");
   const [visibleSchools, setVisibleSchools] = useState<{
     [key: string]: number;
@@ -254,6 +273,18 @@ const StudentProfilePage: React.FC = () => {
       setAiAnalysis(profile.aiAnalysis);
     }
   }, [profile?.aiAnalysis]);
+
+  // Rotate loading messages while analyzing
+  useEffect(() => {
+    if (isAnalyzing) {
+      setLoadingMessageIndex(0);
+      const interval = setInterval(() => {
+        setLoadingMessageIndex((prev) => (prev + 1) % loadingMessages.en.length);
+      }, 2500); // Change message every 2.5 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [isAnalyzing, loadingMessages.en.length]);
 
   const handleAcademicChange = (field: string, value: string) => {
     // Update the value
@@ -1083,20 +1114,13 @@ const StudentProfilePage: React.FC = () => {
                     <div className="pulse-ring pulse-ring-3"></div>
                     <Loader2 className="analysis-spinner" size={32} />
                   </div>
-                  <h3 className="analysis-loading-title">
+                  <h3 className="analysis-loading-title rotating-message">
                     {language === "ko"
-                      ? "프로필 분석 중..."
-                      : "Analyzing Your Profile..."}
+                      ? loadingMessages.ko[loadingMessageIndex]
+                      : loadingMessages.en[loadingMessageIndex]}
                   </h3>
-                  <p className="analysis-loading-subtitle">
-                    {language === "ko"
-                      ? "잠시만 기다려 주세요, 프로필을 분석하고 있습니다"
-                      : "Give us a minute, we're analyzing your profile"}
-                  </p>
-                  <div className="analysis-loading-dots">
-                    <span className="dot"></span>
-                    <span className="dot"></span>
-                    <span className="dot"></span>
+                  <div className="analysis-progress-bar">
+                    <div className="progress-bar-fill"></div>
                   </div>
                 </div>
               )}
