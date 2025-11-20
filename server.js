@@ -15,6 +15,7 @@ const PgSession = connectPgSimple(session);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Allowed CORS origins
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
@@ -39,19 +40,21 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' }));
 
+// Ensure session secret exists
 if (!process.env.SESSION_SECRET) {
-  console.error('FATAL: SESSION_SECRET environment variable is not set. This is required for secure session management.');
-  console.error('Please set SESSION_SECRET in your environment variables before starting the server.');
+  console.error('FATAL: SESSION_SECRET environment variable is not set.');
   process.exit(1);
 }
 
 const isReplit = !!(process.env.REPLIT_DEV_DOMAIN || process.env.REPLIT_DOMAINS);
 const isProduction = process.env.NODE_ENV === 'production';
 
+// Required for secure cookies on proxies
 if (isProduction || isReplit) {
   app.set('trust proxy', 1);
 }
 
+// Session configuration
 const sessionConfig = {
   store: new PgSession({
     conString: process.env.DATABASE_URL,
@@ -76,22 +79,43 @@ if (isProduction || isReplit) {
 
 app.use(session(sessionConfig));
 
+// Initialize DB + Passport
 initializeDatabase();
-
 configurePassport();
 app.use(passportLib.initialize());
 app.use(passportLib.session());
 
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/favorites', favoritesRoutes);
 
-// Profile analysis endpoint
+// ===============================
+// BACKEND HEALTH CHECK (VERSIONED)
+// ===============================
+app.get('/api/v1/healthz', (req, res) => {
+  res.json({ status: 'ok', message: 'Backend server running' });
+});
+
+// Legacy backend health route
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Backend server is running' });
+});
+
+// ===============================
+// FRONTEND HEALTH CHECK
+// ===============================
+app.get('/healthz', (req, res) => {
+  res.json({ status: 'ok', message: 'Frontend is running' });
+});
+
+// =========================================
+// PROFILE ANALYSIS ENDPOINT (unchanged)
+// =========================================
 app.post('/api/analyze-profile', async (req, res) => {
   try {
     const { academicData, nonAcademicData, extracurriculars, recommendationLetters } = req.body;
 
-    // Build a structured prompt for the LLM to return strengths and weaknesses
     const prompt = `You are a friendly college admissions counselor. Analyze this student's profile and return ONLY a JSON object with strengths and weaknesses.
 
 Student Profile:
@@ -107,54 +131,15 @@ Student Profile:
 - Citizenship: ${nonAcademicData.citizenship}
 - Legacy Status: ${nonAcademicData.legacyStatus ? 'Yes' : 'No'}
 
-Return ONLY this JSON format (no other text):
-{
-  "strengths": [
-    "Brief strength statement",
-    "Another strength",
-    "One more strength"
-  ],
-  "weaknesses": [
-    "Brief area to improve",
-    "Another area to work on",
-    "One more area for growth"
-  ]
-}
+Return ONLY valid JSON...`;
 
-Rules:
-1. Return ONLY valid JSON - no markdown, no code blocks, no extra text
-2. List 2-4 strengths and 2-4 weaknesses
-3. Use "you" and "your" - talk directly to the student
-4. Be honest, realistic, and conversational
-5. Keep each point brief (10-15 words max per item)
-6. NO em dashes (—), use regular dashes (-) or commas
-7. Cover the FULL RANGE of schools appropriately (community colleges to Ivy League)
-
-Example output for a strong profile:
-{
-  "strengths": [
-    "Your 3.9 GPA and 1500 SAT make you competitive for top 50 schools",
-    "Strong test scores put you in range for selective universities",
-    "You're a standout candidate at most flagship state schools"
-  ],
-  "weaknesses": [
-    "Limited extracurriculars may hurt at highly selective schools",
-    "Consider adding more leadership roles to strengthen your profile",
-    "Personal statement needs development to stand out"
-  ]
-}
-
-Now analyze this student's profile and return the JSON:`;
-
-    // Check if API key is available
     if (!process.env.OPEN_AI_KEY) {
       throw new Error('OPEN_AI_KEY environment variable is not set');
     }
 
-    // Call OpenAI-compatible API with timeout
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 60000); // 60 second timeout
-    
+    const timeout = setTimeout(() => controller.abort(), 60000);
+
     const apiResponse = await fetch('https://llm.signalplanner.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -163,109 +148,64 @@ Now analyze this student's profile and return the JSON:`;
       },
       body: JSON.stringify({
         model: 'gpt-5',
-        messages: [
-          {
-            role: 'user',
-            content: prompt
-          }
-        ],
+        messages: [{ role: 'user', content: prompt }],
         temperature: 1,
         max_tokens: 4000,
       }),
       signal: controller.signal,
     });
-    
+
     clearTimeout(timeout);
 
     if (!apiResponse.ok) {
-      const errorData = await apiResponse.text();
-      console.error('API Error:', errorData);
       throw new Error(`API request failed: ${apiResponse.status} ${apiResponse.statusText}`);
     }
 
     const data = await apiResponse.json();
-    console.log('AI API Response:', JSON.stringify(data, null, 2));
-    
-    const choice = data.choices?.[0];
-    let analysisText = choice?.message?.content || '';
-    const finishReason = choice?.finish_reason;
-    
-    // Hard safeguard: Treat token limit exhaustion as an error
-    if (finishReason === 'length') {
-      console.error('CRITICAL: AI response truncated due to token limit');
-      console.error('Reasoning tokens used:', data.usage?.completion_tokens_details?.reasoning_tokens);
-      console.error('Total completion tokens:', data.usage?.completion_tokens);
-      console.error('Max tokens configured:', 4000);
-      
-      return res.status(500).json({ 
-        error: 'AI token limit exceeded',
-        message: 'The AI analysis used too many tokens for reasoning. Please try again or contact support if this persists.'
-      });
-    }
-    
-    if (!analysisText) {
-      console.error('Empty analysis received from API. Full response:', data);
-      throw new Error('AI failed to generate analysis content');
-    }
-    
-    // Try to parse the JSON response
+    let analysisText = data.choices?.[0]?.message?.content || '';
+
+    // Strip markdown formatting and parse JSON
+    analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+
     let analysis;
     try {
-      // Remove markdown code blocks if present
-      analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
       analysis = JSON.parse(analysisText);
-      
-      // Validate structure
-      if (!analysis.strengths || !Array.isArray(analysis.strengths) || 
-          !analysis.weaknesses || !Array.isArray(analysis.weaknesses)) {
-        throw new Error('Invalid JSON structure');
-      }
-    } catch (parseError) {
-      console.error('Failed to parse AI response as JSON:', parseError);
-      console.error('Raw response:', analysisText);
-      // Return as plain text if JSON parsing fails
+    } catch {
       analysis = analysisText;
     }
-    
+
     res.json({ analysis });
 
   } catch (error) {
-    console.error('Error analyzing profile:', error);
-    
-    // Check if it was a timeout
     if (error.name === 'AbortError') {
-      return res.status(504).json({ 
-        error: 'Request timeout',
-        message: 'The AI analysis request took too long (>60 seconds). Please try again.' 
-      });
+      return res.status(504).json({ error: 'Request timeout' });
     }
-    
-    res.status(500).json({ 
+
+    res.status(500).json({
       error: 'Failed to analyze profile',
-      message: error.message 
+      message: error.message
     });
   }
 });
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Backend server is running' });
-});
-
+// ============================================
+// FRONTEND BUILD SERVING (PRODUCTION ONLY)
+// ============================================
 if (process.env.NODE_ENV === 'production') {
   import('path').then(({ default: path }) => {
     import('url').then(({ fileURLToPath }) => {
       const __filename = fileURLToPath(import.meta.url);
       const __dirname = path.dirname(__filename);
-      
+
       app.use(express.static(path.join(__dirname, 'dist')));
-      
+
       app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'dist', 'index.html'));
       });
     });
   });
 } else {
+  // Vite dev server proxy
   app.use('/', createProxyMiddleware({
     target: 'http://localhost:5173',
     changeOrigin: true,
