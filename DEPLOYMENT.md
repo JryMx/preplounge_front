@@ -1,5 +1,83 @@
 # PrepLounge Deployment Guide
 
+---
+
+## Replit Autoscale Deployment (Current: dev.preplounge.ai)
+
+### Quick Summary
+
+The Replit deployment is configured for **autoscale** hosting with automatic build and deployment.
+
+### Configuration (`.replit`)
+
+```ini
+[deployment]
+deploymentTarget = "autoscale"
+run = ["npm", "run", "start"]
+build = ["npm", "run", "build"]
+```
+
+### How It Works
+
+1. **Build Phase**: `npm run build` creates production files in `/dist`
+2. **Run Phase**: `npm run start` launches Express server on port 5000
+3. **Production Detection**: Server automatically detects deployment environment
+4. **Static Serving**: Express serves built React app from `/dist` folder
+
+### Health Check Endpoints
+
+- **`/healthz`** - Container health check (Replit uses this)
+- **`/api/health`** - Backend API health check
+
+### Environment Variables (Replit Secrets)
+
+Required variables already configured:
+- ✅ **SESSION_SECRET** - Secure session encryption key
+- ✅ **DATABASE_URL** - Neon PostgreSQL connection string
+
+Auto-detected variables:
+- **NODE_ENV** - Auto-detected in production deployment
+- **FRONTEND_URL** - Auto-detected from Replit domain
+- **REPLIT_DEPLOYMENT** - Set to `1` in deployed environment
+
+### Production vs Development
+
+| Feature | Development (Workspace) | Production (dev.preplounge.ai) |
+|---------|------------------------|-------------------------------|
+| Frontend | Vite dev server (5173) | Built static files in `/dist` |
+| Backend | Express proxy to Vite | Express serves static files |
+| Port | 5000 (proxies to 5173) | 5000 (serves everything) |
+| Hot Reload | ✅ Enabled | ❌ Disabled |
+| Build | ❌ Not required | ✅ Required before deploy |
+
+### Deployment Process
+
+1. **Commit changes** to your repository
+2. **Replit automatically**:
+   - Runs `npm run build` to create production bundle
+   - Runs `npm run start` to launch server
+   - Server detects production mode
+   - Serves static files from `/dist`
+
+### Troubleshooting Production Issues
+
+**Proxy Error on main domain:**
+- ✅ Fixed: Added `/healthz` endpoint
+- ✅ Fixed: Added `start` script to package.json
+- ✅ Fixed: Improved production environment detection
+
+**Check deployment logs:**
+- Server should log: `Serving: Static files from /dist`
+- If it says `Proxying to Vite dev server`, environment detection failed
+
+**Verify build output:**
+```bash
+ls -la dist/
+# Should see: index.html, assets/, etc.
+```
+
+---
+
 ## Docker Deployment Instructions
 
 ### Prerequisites
