@@ -15,6 +15,14 @@ export default defineConfig({
         target: process.env.VITE_BACKEND_URL || 'http://localhost:5000',
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => {
+          // In production, rewrite /api/* to /api/v1/*
+          if (process.env.VITE_BACKEND_URL) {
+            return path.replace(/^\/api/, '/api/v1');
+          }
+          // In local dev, keep /api/* as-is
+          return path;
+        },
       },
     },
   },

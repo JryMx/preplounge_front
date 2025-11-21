@@ -22,7 +22,7 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 - **Data Handling**: University data from CSVs stored in `universities.json`.
 - **Infinite Scroll**: Implemented for university and consulting pages.
 - **Favorites System**: Client-side management with per-user `localStorage` persistence (temporary until backend API is available). Uses storage abstraction layer in `favoritesStorage.ts` for easy future migration to backend.
-- **Environment Configuration**: Vite proxy configured via `VITE_BACKEND_URL` environment variable (defaults to `http://localhost:5000` for local development). Production deployments should set this to the actual backend service URL to enable proper API routing.
+- **Environment Configuration**: Vite proxy configured via `VITE_BACKEND_URL` environment variable (defaults to `http://localhost:5000` for local development). Production deployments should set this to the actual backend service URL to enable proper API routing. When `VITE_BACKEND_URL` is set, paths are automatically rewritten from `/api/*` to `/api/v1/*` to match production backend routing.
 
 ### Feature Specifications
 - **Authentication System**: OAuth-only authentication (Google, Kakao) integrated with `loaning.ai`'s remote PostgreSQL database. Frontend initiates OAuth flow directly with `https://api-dev.loaning.ai/v1/oauth/{provider}` endpoint, receives tokens via query parameters, and establishes backend sessions via `/api/auth/session` POST endpoint. Features secure token verification, provider identification, bidirectional data transformation (camelCase/snake_case), and session management. Dynamic backend URL detection for Replit environments.
