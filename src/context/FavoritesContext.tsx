@@ -26,7 +26,7 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
       console.log('[FavoritesContext] Loading favorites for user:', user.id);
       
       try {
-        const response = await fetch(`${getBackendURL()}/api/favorites`, {
+        const response = await fetch(`${getBackendURL()}/api/v1/favorites`, {
           credentials: 'include',
         });
         
@@ -85,7 +85,7 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
     console.log('[FavoritesContext] Saving favorites to server:', updatedFavorites);
     
     try {
-      const response = await fetch(`${getBackendURL()}/api/favorites`, {
+      const response = await fetch(`${getBackendURL()}/api/v1/favorites`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -953,7 +953,7 @@ const StudentProfilePage: React.FC = () => {
 
     // Generate AI analysis
     try {
-      const response = await fetch("/api/analyze-profile", {
+      const response = await fetch("/api/v1/analyze-profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

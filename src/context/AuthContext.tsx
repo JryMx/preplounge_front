@@ -37,8 +37,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isCheckingAuthRef.current = true;
     setLoading(true);
     try {
-      console.log('[AuthContext] Fetching /api/auth/user');
-      const response = await fetch(`${getBackendURL()}/api/auth/user`, {
+      console.log('[AuthContext] Fetching /api/v1/auth/user');
+      const response = await fetch(`${getBackendURL()}/api/v1/auth/user`, {
         credentials: 'include',
       });
       const data = await response.json();
@@ -68,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch(`${getBackendURL()}/api/auth/login`, {
+      const response = await fetch(`${getBackendURL()}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await fetch(`${getBackendURL()}/api/auth/logout`, {
+      await fetch(`${getBackendURL()}/api/v1/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       });

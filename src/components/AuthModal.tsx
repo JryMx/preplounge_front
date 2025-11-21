@@ -15,12 +15,12 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   const handleGoogleLogin = () => {
     const backendUrl = getBackendURL();
-    window.location.href = `${backendUrl}/api/auth/google`;
+    window.location.href = `${backendUrl}/api/v1/auth/google`;
   };
 
   const handleKakaoLogin = () => {
     const backendUrl = getBackendURL();
-    window.location.href = `${backendUrl}/api/auth/kakao`;
+    window.location.href = `${backendUrl}/api/v1/auth/kakao`;
   };
 
   return (

@@ -175,7 +175,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
       
       try {
         console.log('[StudentProfileContext] Fetching profile from API for user:', user.id);
-        const response = await fetch(`${getBackendURL()}/api/profile`, {
+        const response = await fetch(`${getBackendURL()}/api/v1/profile`, {
           credentials: 'include',
         });
         
@@ -344,7 +344,7 @@ export const StudentProfileProvider: React.FC<StudentProfileProviderProps> = ({ 
     // Save to backend API (loaning.ai server - source of truth)
     try {
       console.log('[StudentProfileContext] Saving profile to API:', updatedProfile);
-      const response = await fetch(`${getBackendURL()}/api/profile`, {
+      const response = await fetch(`${getBackendURL()}/api/v1/profile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

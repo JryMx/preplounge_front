@@ -32,7 +32,7 @@ export default function OAuthCallbackPage() {
       }
 
       try {
-        const response = await fetch(`${getBackendURL()}/api/auth/session`, {
+        const response = await fetch(`${getBackendURL()}/api/v1/auth/session`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
