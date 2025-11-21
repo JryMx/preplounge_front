@@ -247,21 +247,12 @@ Now analyze this student's profile and return the JSON:`;
   }
 });
 
-// Health check endpoints
+// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend server is running' });
 });
 
-app.get('/healthz', (req, res) => {
-  res.json({ status: 'ok', message: 'PrepLounge backend is healthy' });
-});
-
-// Detect production environment
-const isProductionEnv = process.env.NODE_ENV === 'production' || 
-                        process.env.REPLIT_DEPLOYMENT === '1' ||
-                        !process.env.REPLIT_DEV_DOMAIN;
-
-if (isProductionEnv) {
+if (process.env.NODE_ENV === 'production') {
   import('path').then(({ default: path }) => {
     import('url').then(({ fileURLToPath }) => {
       const __filename = fileURLToPath(import.meta.url);
@@ -285,6 +276,5 @@ if (isProductionEnv) {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend server running on http://0.0.0.0:${PORT}`);
-  console.log(`Environment: ${isProductionEnv ? 'production' : 'development'}`);
-  console.log(`Serving: ${isProductionEnv ? 'Static files from /dist' : 'Proxying to Vite dev server'}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
