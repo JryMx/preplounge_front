@@ -386,30 +386,37 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend server is running' });
 });
 
-if (process.env.NODE_ENV === 'production') {
-  import('path').then(({ default: path }) => {
-    import('url').then(({ fileURLToPath }) => {
+// Serve static files and SPA in production, OR if dist/ folder exists (safer fallback)
+import('path').then(({ default: path }) => {
+  import('url').then(({ fileURLToPath }) => {
+    import('fs').then(({ default: fs }) => {
       const __filename = fileURLToPath(import.meta.url);
       const __dirname = path.dirname(__filename);
+      const distPath = path.join(__dirname, 'dist');
       
-      app.use(express.static(path.join(__dirname, 'dist')));
+      // Check if we should serve static files (production OR dist exists)
+      const shouldServeStatic = process.env.NODE_ENV === 'production' || fs.existsSync(distPath);
       
-      app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-      });
+      if (shouldServeStatic) {
+        console.log('Serving static files from dist/ folder');
+        app.use(express.static(distPath));
+        
+        app.get('*', (req, res) => {
+          res.sendFile(path.join(distPath, 'index.html'));
+        });
+      } else {
+        // ONLY proxy to Vite if we're definitely in development AND dist/ doesn't exist
+        console.log('Development mode: proxying to Vite dev server at localhost:5173');
+        app.use('/', createProxyMiddleware({
+          target: 'http://localhost:5173',
+          changeOrigin: true,
+          ws: true,
+          logLevel: 'silent'
+        }));
+      }
     });
   });
-} else {
-  // In development: proxy non-API requests to Vite dev server
-  // API requests are handled by Express routes above (at /api/v1/*)
-  // Frontend requests to /api/* are rewritten to /api/v1/* by Vite proxy
-  app.use('/', createProxyMiddleware({
-    target: 'http://localhost:5173',
-    changeOrigin: true,
-    ws: true,
-    logLevel: 'silent'
-  }));
-}
+});
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Backend server running on http://0.0.0.0:${PORT}`);
