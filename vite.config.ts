@@ -16,12 +16,8 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
         rewrite: (path) => {
-          // In production, rewrite /api/* to /api/v1/*
-          if (process.env.VITE_BACKEND_URL) {
-            return path.replace(/^\/api/, '/api/v1');
-          }
-          // In local dev, keep /api/* as-is
-          return path;
+          // Always rewrite /api/* to /api/v1/* (backend serves at /api/v1/*)
+          return path.replace(/^\/api/, '/api/v1');
         },
       },
     },

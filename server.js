@@ -82,12 +82,13 @@ configurePassport();
 app.use(passportLib.initialize());
 app.use(passportLib.session());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/favorites', favoritesRoutes);
+// API routes at /api/v1/* (versioned)
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/profile', profileRoutes);
+app.use('/api/v1/favorites', favoritesRoutes);
 
 // Profile analysis endpoint
-app.post('/api/analyze-profile', async (req, res) => {
+app.post('/api/v1/analyze-profile', async (req, res) => {
   try {
     const { academicData, nonAcademicData, extracurriculars, recommendationLetters } = req.body;
 
@@ -248,7 +249,7 @@ Now analyze this student's profile and return the JSON:`;
 });
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/v1/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend server is running' });
 });
 
@@ -266,6 +267,9 @@ if (process.env.NODE_ENV === 'production') {
     });
   });
 } else {
+  // In development: proxy non-API requests to Vite dev server
+  // API requests are handled by Express routes above (at /api/v1/*)
+  // Frontend requests to /api/* are rewritten to /api/v1/* by Vite proxy
   app.use('/', createProxyMiddleware({
     target: 'http://localhost:5173',
     changeOrigin: true,
