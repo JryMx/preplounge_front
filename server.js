@@ -82,10 +82,17 @@ configurePassport();
 app.use(passportLib.initialize());
 app.use(passportLib.session());
 
-// API routes at /api/v1/* (versioned)
+// API routes at /api/v1/* (versioned) AND /api/* (for infrastructure proxy compatibility)
+// Some hosting providers (like dev.preplounge.ai) have hard-coded /api/* → Node proxying
+// So we serve routes at both paths to ensure compatibility
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', profileRoutes);
 app.use('/api/v1/favorites', favoritesRoutes);
+
+// Duplicate routes at /api/* for infrastructure proxy compatibility
+app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/favorites', favoritesRoutes);
 
 // Profile analysis endpoint
 app.post('/api/v1/analyze-profile', async (req, res) => {
@@ -248,8 +255,134 @@ Now analyze this student's profile and return the JSON:`;
   }
 });
 
-// Health check endpoint
+// Duplicate analyze-profile endpoint at /api/* for infrastructure proxy compatibility
+app.post('/api/analyze-profile', async (req, res) => {
+  // Forward to the versioned handler by calling the same endpoint internally
+  // This is a simple wrapper to avoid code duplication
+  try {
+    const { academicData, nonAcademicData, extracurriculars, recommendationLetters } = req.body;
+
+    // Build a structured prompt for the LLM to return strengths and weaknesses
+    const prompt = `You are a friendly college admissions counselor. Analyze this student's profile and return ONLY a JSON object with strengths and weaknesses.
+
+Student Profile:
+- GPA: ${academicData.gpa}/4.0
+- High School Type: ${academicData.highSchoolType}
+- Intended Major: ${academicData.intendedMajor || 'Undecided'}
+- ${academicData.standardizedTest === 'SAT' ? `SAT: ${parseInt(academicData.satEBRW) + parseInt(academicData.satMath)}/1600 (EBRW: ${academicData.satEBRW}, Math: ${academicData.satMath})` : ''}
+- ${academicData.standardizedTest === 'ACT' ? `ACT: ${academicData.actScore}/36` : ''}
+- ${academicData.englishProficiencyTest ? `${academicData.englishProficiencyTest}: ${academicData.englishTestScore}` : ''}
+- Personal Statement Quality: ${nonAcademicData.personalStatement || 'Not provided'}
+- Extracurricular Activities: ${extracurriculars.length} activities
+- Recommendation Letters: ${recommendationLetters.length} letters
+- Citizenship: ${nonAcademicData.citizenship}
+- Legacy Status: ${nonAcademicData.legacyStatus ? 'Yes' : 'No'}
+
+Return ONLY this JSON format (no other text):
+{
+  "strengths": [
+    "Brief strength statement",
+    "Another strength",
+    "One more strength"
+  ],
+  "weaknesses": [
+    "Brief weakness statement",
+    "Another weakness",
+    "One more weakness"
+  ]
+}`;
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60000);
+
+    const apiResponse = await fetch('https://llm.signalplanner.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.SIGNALPLANNER_API_KEY || 'dummy-key'}`,
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        temperature: 0.7,
+        max_tokens: 4000,
+      }),
+      signal: controller.signal,
+    });
+    
+    clearTimeout(timeout);
+
+    if (!apiResponse.ok) {
+      const errorData = await apiResponse.text();
+      console.error('API Error:', errorData);
+      throw new Error(`API request failed: ${apiResponse.status} ${apiResponse.statusText}`);
+    }
+
+    const data = await apiResponse.json();
+    console.log('AI API Response:', JSON.stringify(data, null, 2));
+    
+    const choice = data.choices?.[0];
+    let analysisText = choice?.message?.content || '';
+    const finishReason = choice?.finish_reason;
+    
+    if (finishReason === 'length') {
+      console.error('CRITICAL: AI response truncated due to token limit');
+      return res.status(500).json({ 
+        error: 'AI token limit exceeded',
+        message: 'The AI analysis used too many tokens for reasoning. Please try again or contact support if this persists.'
+      });
+    }
+    
+    if (!analysisText) {
+      console.error('Empty analysis received from API. Full response:', data);
+      throw new Error('AI failed to generate analysis content');
+    }
+    
+    let analysis;
+    try {
+      analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+      analysis = JSON.parse(analysisText);
+      
+      if (!analysis.strengths || !Array.isArray(analysis.strengths) || 
+          !analysis.weaknesses || !Array.isArray(analysis.weaknesses)) {
+        throw new Error('Invalid JSON structure');
+      }
+    } catch (parseError) {
+      console.error('Failed to parse AI response as JSON:', parseError);
+      console.error('Raw response:', analysisText);
+      analysis = analysisText;
+    }
+    
+    res.json({ analysis });
+
+  } catch (error) {
+    console.error('Error analyzing profile:', error);
+    
+    if (error.name === 'AbortError') {
+      return res.status(504).json({ 
+        error: 'Request timeout',
+        message: 'The AI analysis request took too long (>60 seconds). Please try again.' 
+      });
+    }
+    
+    res.status(500).json({ 
+      error: 'Failed to analyze profile',
+      message: error.message 
+    });
+  }
+});
+
+// Health check endpoint (both versioned and unversioned for compatibility)
 app.get('/api/v1/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Backend server is running' });
+});
+
+app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend server is running' });
 });
 

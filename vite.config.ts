@@ -10,15 +10,16 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
+    // Note: Vite proxy is NOT used in the current architecture
+    // Frontend is served through Express proxy in dev, and static files in production
+    // All API calls go directly through Express at port 5000, not through Vite
+    // This proxy config is kept for reference but not actively used
     proxy: {
       '/api': {
         target: process.env.VITE_BACKEND_URL || 'http://localhost:5000',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => {
-          // Always rewrite /api/* to /api/v1/* (backend serves at /api/v1/*)
-          return path.replace(/^\/api/, '/api/v1');
-        },
+        // No rewriting needed - frontend calls /api/v1/* directly
       },
     },
   },

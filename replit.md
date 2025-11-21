@@ -24,12 +24,13 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
 - **Favorites System**: Client-side management with per-user `localStorage` persistence (temporary until backend API is available). Uses storage abstraction layer in `favoritesStorage.ts` for easy future migration to backend.
 - **Environment Configuration**: Vite proxy configured via `VITE_BACKEND_URL` environment variable (defaults to `http://localhost:5000` for local development). Production deployments should set this to the actual backend service URL to enable proper API routing.
 - **API Routing Architecture** (Updated Nov 2025):
-  - **Backend**: All API routes served at `/api/v1/*` (versioned endpoints)
-  - **Frontend**: All code directly calls `/api/v1/*` endpoints (no proxy rewriting needed)
-  - **Same-Origin Deployment**: Production serves both frontend static files AND backend API from the same domain (`dev.preplounge.ai`)
+  - **Backend**: All API routes served at BOTH `/api/*` AND `/api/v1/*` paths for infrastructure compatibility
+  - **Frontend**: All code calls `/api/v1/*` endpoints (versioned paths preferred)
+  - **Dual-Path Support**: Backend serves routes at both paths because dev.preplounge.ai infrastructure proxy only forwards `/api/*` to Node
+  - **Same-Origin Deployment**: Production serves both frontend static files AND backend API from the same domain
   - **Local Dev Flow**: User → Express (port 5000) → Vite (port 5173) for HTML → Frontend calls `/api/v1/*` → Express responds
-  - **Production Flow**: User → Static frontend at `dev.preplounge.ai` → Frontend calls `/api/v1/*` → Backend at same origin
-  - **Key Benefit**: Eliminates CORS issues and proxy complexity by using relative URLs with same-origin deployment
+  - **Production Flow**: User → Static frontend at `dev.preplounge.ai` → Frontend calls `/api/v1/*` → Infrastructure proxy forwards `/api/*` → Backend handles both paths
+  - **Key Benefit**: Eliminates CORS issues, supports infrastructure proxy limitations, and maintains version compatibility
 
 ### Feature Specifications
 - **Authentication System**: OAuth-only authentication (Google, Kakao) integrated with `loaning.ai`'s remote PostgreSQL database. Frontend initiates OAuth flow directly with `https://api-dev.loaning.ai/v1/oauth/{provider}` endpoint, receives tokens via query parameters, and establishes backend sessions via `/api/auth/session` POST endpoint. Features secure token verification, provider identification, bidirectional data transformation (camelCase/snake_case), and session management. Dynamic backend URL detection for Replit environments.
