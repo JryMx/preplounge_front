@@ -55,13 +55,20 @@ PrepLounge is an AI-powered platform assisting students with U.S. university app
   - Examples: SAT 1400 + GPA 3.8 → ~85/100 (top 15%), SAT 1200 + GPA 3.5 → ~50/100 (top 50%)
 - Both GPA and test scores (SAT or ACT) are required fields for profile submission and scoring.
 
-### Data Persistence Architecture
-- **Student Profile Storage (Updated Nov 2025)**: All profile data (academic scores, test scores, extracurriculars, AI recommendations) now persists EXCLUSIVELY on loaning.ai servers via `/api/profile` endpoints. No localStorage fallbacks. On API failures, error state is exposed to UI while preserving in-memory data. Users must be authenticated to access profile data.
+### Data Persistence Architecture (Updated Nov 2025)
+- **Database Architecture**: PrepLounge uses TWO separate databases with distinct purposes:
+  1. **loaning.ai Remote API** (`LOANING_API_BASE_URL`): ALL user data (profiles, favorites, authentication) stored remotely
+  2. **Local PostgreSQL** (`DATABASE_URL`): ONLY for Express session storage (login tokens) - NOT for user data
+- **Student Profile Storage**: All profile data (academic scores, test scores, extracurriculars, AI recommendations) persists EXCLUSIVELY on loaning.ai servers via `/api/profile` endpoints. No localStorage fallbacks. On API failures, error state is exposed to UI while preserving in-memory data. Users must be authenticated to access profile data.
 - **Favorites Storage (Pending Migration)**: Still uses browser localStorage with per-user keys (`prepLoungeFavorites_${userId}`). Backend `/api/favorites` route exists and logs requests, but frontend FavoritesContext.tsx still needs to be updated to remove localStorage and use API exclusively (same pattern as StudentProfileContext).
+- **Session Management**: PostgreSQL session store maintains user login state between requests. Sessions are NOT stored on loaning.ai.
+- **Environment Variables**:
+  - `LOANING_API_BASE_URL`: Base URL for loaning.ai API (default: `https://api-dev.loaning.ai/v1`)
+  - `DATABASE_URL`: PostgreSQL connection string for session store only
 - **Error Handling**: API failures surface clear error messages to users instead of silently falling back to localStorage, ensuring data integrity and user awareness.
 
 ## External Dependencies
-- **loaning.ai Database API**: Remote PostgreSQL database for user authentication and profiles (`https://api-dev.loaning.ai`).
+- **loaning.ai Remote API** (`LOANING_API_BASE_URL`): Remote PostgreSQL database for user authentication and profiles. All API calls use environment variable configuration (routes/profile.js, routes/favorites.js, routes/auth.js). Default: `https://api-dev.loaning.ai/v1`.
 - **PrepLounge AI API**: For admission probability analysis and university recommendations (`https://dev.preplounge.ai/`).
 - **SignalPlanner AI API**: OpenAI-compatible API for student profile analysis (`https://llm.signalplanner.ai`).
 - **OpenStreetMap Nominatim API**: Geocoding for housing search.
