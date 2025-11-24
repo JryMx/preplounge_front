@@ -3,6 +3,9 @@ import passport from '../config/passport.js';
 
 const router = express.Router();
 
+// loaning.ai API base URL from environment variable
+const LOANING_API_URL = process.env.LOANING_API_BASE_URL || 'https://api-dev.loaning.ai/v1';
+
 router.get('/google', (req, res) => {
   const replitDomain = process.env.REPLIT_DOMAINS || process.env.REPLIT_DEV_DOMAIN;
   
@@ -15,7 +18,7 @@ router.get('/google', (req, res) => {
     : 'http://localhost:5000';
   
   const redirectUri = `${backendUrl}/api/auth/google/callback`;
-  const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/google?type=preplounge&redirect=${encodeURIComponent(redirectUri)}&platform=web`;
+  const oauthUrl = `${LOANING_API_URL}/oauth/google?type=preplounge&redirect=${encodeURIComponent(redirectUri)}&platform=web`;
   
   res.redirect(oauthUrl);
 });
@@ -78,7 +81,7 @@ router.get('/kakao', (req, res) => {
     : 'http://localhost:5000';
   
   const redirectUri = `${backendUrl}/api/auth/kakao/callback`;
-  const oauthUrl = `https://api-dev.loaning.ai/v1/oauth/kakao?type=preplounge&redirect=${encodeURIComponent(redirectUri)}&platform=web`;
+  const oauthUrl = `${LOANING_API_URL}/oauth/kakao?type=preplounge&redirect=${encodeURIComponent(redirectUri)}&platform=web`;
   
   res.redirect(oauthUrl);
 });

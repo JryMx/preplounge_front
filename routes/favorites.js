@@ -2,6 +2,9 @@ import express from 'express';
 
 const router = express.Router();
 
+// loaning.ai API base URL from environment variable
+const LOANING_API_URL = process.env.LOANING_API_BASE_URL || 'https://api-dev.loaning.ai/v1';
+
 // Middleware to check if user is authenticated
 const requireAuth = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -14,7 +17,7 @@ const requireAuth = (req, res, next) => {
 router.get('/', requireAuth, async (req, res) => {
   console.log(`[GET /api/favorites] Loading favorites for user: ${req.user.id}`);
   try {
-    const response = await fetch(`https://api-dev.loaning.ai/v1/user/${req.user.id}/favorites`, {
+    const response = await fetch(`${LOANING_API_URL}/user/${req.user.id}/favorites`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +52,7 @@ router.post('/', requireAuth, async (req, res) => {
   try {
     const { favorites } = req.body;
     
-    const response = await fetch(`https://api-dev.loaning.ai/v1/user/${req.user.id}/favorites`, {
+    const response = await fetch(`${LOANING_API_URL}/user/${req.user.id}/favorites`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
